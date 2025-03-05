@@ -1,1 +1,11 @@
-pip install fastapi uvicorn sqlalchemy pydantic psymysql
+fastapi==0.78.0
+uvicorn==0.17.6
+sqlalchemy==1.4.36
+pydantic==1.9.0
+pymysql==1.0.2
+python-dotenv==0.20.0
+
+#pour tout installer d'un coup : pip install -r requirements.txt
+# dans le dossier qui contient les fichiers, pour lancer l'api il faut entrer la commande : uvicorn main:app --reload
+# Créer un fichier .env contenant : DATABASE_URL=mysql+pymysql://user:password@localhost/dbname
+# et remplacer les valeurs de user, password, dbname
