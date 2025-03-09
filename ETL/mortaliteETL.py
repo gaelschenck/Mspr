@@ -4,7 +4,7 @@ import re
 # ---------------------- 🟢 EXTRACTION (Extract) ---------------------- 
 
 #  Définition des chemins des fichiers sources
-pays_file = "./Csv2Table/pays_clean.csv"  # Fichier contenant la table des pays avec `id_pays`
+pays_file = "./Csv2Table/pays_clean2.csv"  # Fichier contenant la table des pays avec `id_pays`
 deaths_file = "./DataSet/no_of_deaths_by_country_clean.csv"  # Fichier contenant les données de mortalité
 
 #  Fichier de sortie

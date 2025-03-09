@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 #  Chemins des fichiers sources
-pays_file = "./Csv2Table/pays_clean.csv"
+pays_file = "./Csv2Table/pays_clean2.csv"
 hiv_file = "./DataSet/no_of_people_living_with_hiv_by_country_clean.csv"
 
 #  Fichier de sortie

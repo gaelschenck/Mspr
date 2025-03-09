@@ -1,7 +1,7 @@
 import pandas as pd
 
 #  Définition des chemins des fichiers sources
-pays_file = "./Csv2Table/pays_clean.csv"
+pays_file = "./Csv2Table/pays_clean2.csv"
 files = {
     "cases_adults": "./DataSet/no_of_cases_adults_15_to_49_by_country_clean.csv",
     "deaths": "./DataSet/no_of_deaths_by_country_clean.csv",
@@ -14,7 +14,7 @@ output_file = "./Csv2Table/statistique_clean.csv"
 
 #  Charger la table des pays
 pays_df = pd.read_csv(pays_file)
-print(f" Colonnes disponibles dans `pays_clean.csv` : {pays_df.columns.tolist()}")
+print(f" Colonnes disponibles dans `pays_clean2.csv` : {pays_df.columns.tolist()}")
 
 #  Assurer la cohérence des colonnes
 pays_df.rename(columns={"pays": "Country"}, inplace=True)
@@ -30,39 +30,34 @@ statistique_mapping = {
 #  Fonction pour charger et nettoyer les fichiers de statistiques
 def process_statistique(file_path, id_type_statistique):
     df = pd.read_csv(file_path)
-
-    # Nettoyer les colonnes
     df.columns = df.columns.str.strip()
-
-    #  Vérification des colonnes disponibles
     print(f" Colonnes disponibles dans `{file_path}` : {df.columns.tolist()}")
+    print(f" Shape of {file_path}: {df.shape}")
 
-    # Vérifier si "Country" est bien présent
     if "Country" not in df.columns:
         raise KeyError(f" La colonne `Country` est absente de `{file_path}`")
 
-    # Vérifier les valeurs de "Country"
-    if "Country" in df.columns:
-        print(f"🔍 Exemples de pays dans `{file_path}` : {df['Country'].dropna().unique()[:10]}")
-    
-    print(f"🔍 Exemples de pays dans `pays_clean.csv` : {pays_df['Country'].dropna().unique()[:10]}")
+    # Normaliser les noms des pays
+    df["Country"] = df["Country"].str.lower().str.strip()
+    pays_df["Country"] = pays_df["Country"].str.lower().str.strip()
 
-    # Associer chaque pays à son `id_pays`
+    print(f" Exemples de pays dans `{file_path}` : {df['Country'].dropna().unique()[:10]}")
+    print(f" Exemples de pays dans `pays_clean2.csv` : {pays_df['Country'].dropna().unique()[:10]}")
+
     df = df.merge(pays_df[["Country", "id_pays"]], on="Country", how="inner")
+    print(f" Shape after merge: {df.shape}")
 
-    # Ajouter `id_type_statistique`
     df["id_type_statistique"] = id_type_statistique
 
-    # Vérifier si "Year" est présent et le renommer en "annee"
     if "Year" in df.columns:
         df.rename(columns={"Year": "annee"}, inplace=True)
     else:
-        df["annee"] = 2020  #  À adapter si nécessaire
+        df["annee"] = 2020
 
-    # Supprimer la colonne `Country`
     df.drop(columns=["Country"], inplace=True)
 
     return df
+
 
 #  Traiter chaque fichier et les fusionner
 statistique_dfs = []
@@ -73,6 +68,8 @@ for key, path in files.items():
 #  Fusionner les datasets
 statistique_df = pd.concat(statistique_dfs, ignore_index=True)
 
+# Remplir les valeurs NaN avec une valeur par défaut
+statistique_df.fillna(0, inplace=True)
 #  Sauvegarder le fichier final
 statistique_df.to_csv(output_file, index=False)
 print(f" Table `statistique_clean` enregistrée sous : {output_file}")
