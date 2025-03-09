@@ -2,7 +2,6 @@ import pandas as pd
 
 # ---------------------- 🟢 EXTRACTION (Extract) ----------------------
 
-# 📂 Chemins des fichiers sources
 pays_file = "../DatasetClean/pays_clean.csv"
 prevention_file = "../SourceData/prevention_of_mother_to_child_transmission_by_country_clean.csv"
 output_file = "../DatasetClean/prevention_mere_enfant_clean.csv"
@@ -42,7 +41,6 @@ try:
     df["taux_prevention"] = ((df["recus_antiretroviraux"] / df["besoin_antiretroviraux_max"]) * 100)
     df["taux_prevention"] = df["taux_prevention"].replace([float('inf'), -float('inf')], 0).fillna(0).astype(int)
 
-    # 📌 Suppression des lignes avec valeurs à 0
     df = df[~((df["recus_antiretroviraux"] == 0) & (df["besoin_antiretroviraux_max"] == 0))]
     df = df[df["taux_prevention"] != 0]
 
@@ -64,7 +62,6 @@ except Exception as e:
     print(f"❌ Erreur lors de l'enregistrement : {e}")
     exit()
 
-# 📂 Aperçu
 if df.empty:
     print("⚠️ Attention, le fichier généré est vide. Vérifie les données !")
 else:

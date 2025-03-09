@@ -1,82 +1,75 @@
 import pandas as pd
-import re
 
-# ---------------------- 🟢 EXTRACTION (Extract) ---------------------- 
+# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
 
-#  Définition des chemins des fichiers sources
-pays_file = "../DatasetClean/pays_clean.csv"  # Fichier contenant la table des pays avec `id_pays`
-deaths_file = "../SourceData/no_of_deaths_by_country_clean.csv"  # Fichier contenant les données de mortalité
+pays_file = "../DatasetClean/pays_clean.csv"
+mortalite_file = "../SourceData/no_of_deaths_by_country_clean.csv"
+output_file = "../DatasetClean/mortalite_clean.csv"
 
-#  Fichier de sortie
-output_file = "../DatasetClean/mortalite_clean.csv"  # Destination des données transformées
+try:
+    pays_df = pd.read_csv(pays_file)
+    mortalite_df = pd.read_csv(mortalite_file)
 
-#  Chargement de la table des pays
-pays_df = pd.read_csv(pays_file)  # Lecture du fichier pays
-pays_df.rename(columns={"pays": "Country"}, inplace=True)  # Renommage pour correspondre aux autres fichiers
+    mortalite_df.columns = mortalite_df.columns.str.strip()
+    pays_df.rename(columns={"pays": "Country"}, inplace=True)
+    pays_df["Country"] = pays_df["Country"].str.strip().str.lower()
 
-#  Nettoyage des noms de pays (supprimer espaces et mettre en minuscule)
-pays_df["Country"] = pays_df["Country"].str.strip().str.lower()  # Uniformisation des noms de pays
+    print("✅ Extraction réussie.")
+    print(f"📊 Colonnes disponibles : {mortalite_df.columns.tolist()}")
 
-# Chargement du fichier de mortalité
-df = pd.read_csv(deaths_file)  # Lecture du fichier de mortalité
-df.columns = df.columns.str.strip()  # Suppression des espaces dans les noms de colonnes
+except Exception as e:
+    print(f"❌ Erreur lors de l'extraction : {e}")
+    exit()
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ---------------------- 
+# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
 
-#  Vérification des colonnes disponibles dans le fichier source
-print(f" Colonnes disponibles dans `{deaths_file}` : {df.columns.tolist()}")
+try:
+    mortalite_df["Country"] = mortalite_df["Country"].str.strip().str.lower()
 
-#  Normalisation des noms de pays
-df["Country"] = df["Country"].str.strip().str.lower()  # Nettoyage et mise en minuscule
+    mortalite_df = mortalite_df.merge(pays_df[["Country", "id_pays"]], on="Country", how="inner")
 
-#  Vérification de la correspondance entre les pays des deux fichiers
-common_pays = set(df["Country"]).intersection(set(pays_df["Country"]))  # Vérification des pays en commun
-if not common_pays:  # Si aucun pays ne correspond, affichage d'un message d'erreur
-    print(" Aucun pays ne correspond entre les fichiers. Vérifie les noms de pays !")
-    print(" Exemples de pays dans `deaths_file` :", df["Country"].unique()[:10])  # Exemples de noms de pays dans le fichier des décès
-    print(" Exemples de pays dans `pays_file` :", pays_df["Country"].unique()[:10])  # Exemples de noms de pays dans le fichier des pays
-    exit()  # Arrêt du script si aucun pays ne correspond
+    mortalite_df = mortalite_df.rename(columns={
+        "Count_median": "mortalite_median",
+        "Count_min": "mortalite_min",
+        "Count_max": "mortalite_max",
+        "Year": "annee"
+    })
 
-#  Fusionner avec la table `pays` pour récupérer `id_pays`
-df = df.merge(pays_df[["Country", "id_pays"]], on="Country", how="inner")  # Jointure sur `Country`
+    mortalite_df = mortalite_df[["id_pays", "annee", "mortalite_median", "mortalite_min", "mortalite_max"]]
 
-#  Extraction de la valeur médiane de `nombre_deces`
-def extract_median(value):
-    """
-    Extrait uniquement la valeur médiane des données de mortalité.
-    Exemples :
-    - "1000[900–1100]" -> 1000  (on extrait la médiane)
-    - "500" -> 500  (valeur simple)
-    - NaN ou valeurs invalides -> None
-    """
-    match = re.match(r"(\d+)\[(\d+)–(\d+)\]", str(value))  # Vérifie si la valeur contient une médiane
-    if match:
-        return int(match.group(1))  # Extraction de la médiane
-    elif str(value).isdigit():  # Vérifie si la valeur est un nombre entier simple
-        return int(value)  # Conversion directe
-    else:
-        return None  # Retourne `None` si la valeur est NaN ou invalide
+    cols_to_numeric = ["mortalite_median", "mortalite_min", "mortalite_max"]
+    for col in cols_to_numeric:
+        mortalite_df[col] = pd.to_numeric(mortalite_df[col], errors="coerce")
 
-df["nombre_deces"] = df["Count"].apply(extract_median)  # Application de la fonction à la colonne `Count`
+    mortalite_df.dropna(inplace=True)
 
-# Suppression des lignes avec des valeurs NaN (décès non renseignés)
-df.dropna(subset=["nombre_deces"], inplace=True)
+    for col in cols_to_numeric:
+        mortalite_df[col] = mortalite_df[col].astype(int)
+    
+    mortalite_df["annee"] = mortalite_df["annee"].astype(int)
 
-#  Conversion en entier
-df["nombre_deces"] = df["nombre_deces"].astype(int)  # Conversion en type `int`
+    mortalite_df.sort_values(by=["id_pays", "annee"], inplace=True)
 
-#  Sélectionner les colonnes finales et renommer
-df = df[["id_pays", "Year", "nombre_deces"]].rename(columns={"Year": "annee"})  # Sélection et renommage des colonnes
+    print("✅ Transformation des données réussie.")
+    print(f"📊 Nombre de pays avec données de mortalité : {len(mortalite_df)}")
+    print(f"📅 Période couverte : de {mortalite_df['annee'].min()} à {mortalite_df['annee'].max()}")
 
-# ---------------------- 🔵 CHARGEMENT (Load) ---------------------- 
+except Exception as e:
+    print(f"❌ Erreur lors de la transformation : {e}")
+    exit()
 
-#  Sauvegarde du fichier nettoyé
-df.to_csv(output_file, index=False)  # Exportation en CSV sans index
-print(f" Table `mortalite_clean` enregistrée sous : {output_file}")
+# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
 
-#  Aperçu des données finales
-if df.empty:  # Vérification si le fichier est vide après transformation
-    print(" Attention, le fichier généré est vide. Vérifie les noms des pays et les valeurs !")
+try:
+    mortalite_df.to_csv(output_file, index=False)
+    print(f"✅ Table enregistrée sous : {output_file}")
+
+except Exception as e:
+    print(f"❌ Erreur lors de l'enregistrement : {e}")
+    exit()
+
+if mortalite_df.empty:
+    print("⚠️ Attention, le fichier généré est vide. Vérifie les données !")
 else:
-    print(" Aperçu de la table `mortalite_clean` :")
-    print(df.head(10))  # Affichage des 10 premières lignes
+    print("📊 Aperçu des données finales :")
+    print(mortalite_df.head(10))

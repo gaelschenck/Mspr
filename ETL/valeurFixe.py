@@ -1,28 +1,18 @@
 import pandas as pd
 
-# ---------------------- 🟢 EXTRACTION (Extract) ---------------------- 
-# (Ici, on crée les données directement dans le script, pas d'extraction externe)
- 
-#  Création de la table type_statistique avec un dictionnaire de données
+# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+
 data = {
-    "id_type_stat": [1, 2, 3],  # Identifiant unique pour chaque type de statistique
-    "libelle": ["Taux HIV", "Taux mortalité", "Nombre de cas"]  # Libellé du type de statistique
+    "id_type_stat": [1, 2, 3],
+    "libelle": ["Taux HIV", "Taux mortalité", "Nombre de cas"]
 }
 
 # ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
-# (Pas de transformation ici car les données sont déjà propres)
 
-#  Création d'un DataFrame à partir du dictionnaire
 type_stat_df = pd.DataFrame(data)
 
 # ---------------------- 🔵 CHARGEMENT (Load) ----------------------
-# (Chargement des données dans un fichier CSV)
 
-#  Définition du chemin de sortie
 output_file = "../DatasetClean/type_statistique_clean.csv"
-
-#  Sauvegarde du DataFrame sous forme de CSV
-type_stat_df.to_csv(output_file, index=False)  # Pas d'index Pandas dans le fichier final
-
-#  Affichage de confirmation
+type_stat_df.to_csv(output_file, index=False)
 print(f" Table `type_statistique` enregistrée sous : {output_file}")
