@@ -1,3 +1,13 @@
+-- =============================================================================
+-- Script : clean_tables.sql
+-- Description : 
+-- Ce script nettoie la base de données en :
+-- - Supprimant toutes les tables existantes
+-- - Réinitialisant les séquences
+-- - Préparant la base pour une nouvelle importation
+-- À utiliser avec précaution car il supprime toutes les données !
+-- =============================================================================
+
 -- Désactiver temporairement les contraintes de clé étrangère
 SET session_replication_role = 'replica';
 
