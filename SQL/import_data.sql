@@ -1,3 +1,16 @@
+-- =============================================================================
+-- Script : import_data.sql
+-- Description : 
+-- Ce script importe toutes les données des fichiers CSV dans les tables :
+-- - Import des données de référence en premier
+-- - Import des données principales ensuite
+-- - Vérification des contraintes d'intégrité
+-- Les données proviennent du dossier DatasetClean.
+-- =============================================================================
+
+-- Désactiver temporairement les contraintes pour l'import
+SET session_replication_role = 'replica';
+
 -- Import des données de référence
 \COPY pays(id_pays, nom_pays, region) FROM 'DatasetClean/pays_clean.csv' WITH CSV HEADER;
 \COPY unite(id_unite, nom_unite) FROM 'DatasetClean/unite_clean.csv' WITH CSV HEADER;
@@ -22,11 +35,21 @@ CREATE TEMP TABLE temp_population_hiv (
 
 \COPY temp_population_hiv FROM 'DatasetClean/table_population_hiv.csv' WITH CSV HEADER;
 
+-- Vérification et import des données population_hiv
 INSERT INTO population_hiv (id_pays, annee, valeur, id_unite)
-SELECT id_pays, annee, population_median, id_unite
-FROM temp_population_hiv;
+SELECT 
+    id_pays, 
+    annee, 
+    CASE 
+        WHEN population_median < 0 THEN 0 
+        ELSE population_median 
+    END as valeur,
+    id_unite
+FROM temp_population_hiv
+WHERE id_pays IN (SELECT id_pays FROM pays)
+  AND id_unite IN (SELECT id_unite FROM unite);
 
--- Répéter le même processus pour les autres tables
+-- Import des données mortalité
 CREATE TEMP TABLE temp_mortalite (
     id_pays INTEGER,
     annee INTEGER,
@@ -38,11 +61,21 @@ CREATE TEMP TABLE temp_mortalite (
 
 \COPY temp_mortalite FROM 'DatasetClean/table_mortalite.csv' WITH CSV HEADER;
 
+-- Vérification et import des données mortalité
 INSERT INTO mortalite (id_pays, annee, valeur, id_unite)
-SELECT id_pays, annee, mortalite_median, id_unite
-FROM temp_mortalite;
+SELECT 
+    id_pays, 
+    annee, 
+    CASE 
+        WHEN mortalite_median < 0 THEN 0 
+        ELSE mortalite_median 
+    END as valeur,
+    id_unite
+FROM temp_mortalite
+WHERE id_pays IN (SELECT id_pays FROM pays)
+  AND id_unite IN (SELECT id_unite FROM unite);
 
--- Import des données de transmission mère-enfant
+-- Import des données transmission mère-enfant
 CREATE TEMP TABLE temp_transmission (
     id_transmission INTEGER,
     id_pays INTEGER,
@@ -56,14 +89,20 @@ CREATE TEMP TABLE temp_transmission (
 
 \COPY temp_transmission FROM 'DatasetClean/table_transmission_mere_enfant.csv' WITH CSV HEADER;
 
+-- Vérification et import des données transmission
 INSERT INTO transmission_mere_enfant (id_pays, valeur, id_unite)
 SELECT 
     id_pays, 
-    COALESCE(pourcentage_recu_median, 0), 
-    2
-FROM temp_transmission;
+    CASE 
+        WHEN pourcentage_recu_median < 0 THEN 0
+        WHEN pourcentage_recu_median > 100 THEN 100
+        ELSE pourcentage_recu_median
+    END as valeur,
+    2  -- ID pour pourcentage
+FROM temp_transmission
+WHERE id_pays IN (SELECT id_pays FROM pays);
 
--- Import des données de traitement
+-- Import des données traitement
 CREATE TEMP TABLE temp_traitement (
     id_traitement INTEGER,
     id_pays INTEGER,
@@ -73,9 +112,20 @@ CREATE TEMP TABLE temp_traitement (
 
 \COPY temp_traitement FROM 'DatasetClean/table_traitement.csv' WITH CSV HEADER;
 
+-- Vérification et import des données traitement
 INSERT INTO traitement (id_pays, valeur, id_unite, id_type_traitement)
-SELECT id_pays, couverture, 1, id_type_traitement
-FROM temp_traitement;
+SELECT 
+    id_pays, 
+    CASE 
+        WHEN couverture < 0 THEN 0
+        WHEN couverture > 100 THEN 100
+        ELSE couverture
+    END as valeur,
+    1,  -- ID pour pourcentage
+    id_type_traitement
+FROM temp_traitement
+WHERE id_pays IN (SELECT id_pays FROM pays)
+  AND id_type_traitement IN (SELECT id_type_traitement FROM type_traitement);
 
 -- Import des données statistiques
 CREATE TEMP TABLE temp_statistique (
@@ -89,6 +139,49 @@ CREATE TEMP TABLE temp_statistique (
 
 \COPY temp_statistique FROM 'DatasetClean/table_statistique.csv' WITH CSV HEADER;
 
+-- Vérification et import des données statistiques
 INSERT INTO statistique (id_pays, annee, valeur, id_unite, id_type_statistique)
-SELECT id_pays, annee, valeur, id_unite, id_type_statistique
-FROM temp_statistique; 
+SELECT 
+    id_pays, 
+    annee, 
+    CASE 
+        WHEN valeur < 0 THEN 0
+        ELSE valeur
+    END as valeur,
+    id_unite,
+    id_type_statistique
+FROM temp_statistique
+WHERE id_pays IN (SELECT id_pays FROM pays)
+  AND id_unite IN (SELECT id_unite FROM unite)
+  AND id_type_statistique IN (SELECT id_type_statistique FROM type_statistique);
+
+-- Réactiver les contraintes
+SET session_replication_role = 'origin';
+
+-- Vérification finale des données
+DO $$
+BEGIN
+    -- Vérifier qu'il n'y a pas de valeurs négatives
+    IF EXISTS (
+        SELECT 1 FROM population_hiv WHERE valeur < 0
+        UNION ALL
+        SELECT 1 FROM mortalite WHERE valeur < 0
+        UNION ALL
+        SELECT 1 FROM transmission_mere_enfant WHERE valeur < 0
+        UNION ALL
+        SELECT 1 FROM traitement WHERE valeur < 0
+        UNION ALL
+        SELECT 1 FROM statistique WHERE valeur < 0
+    ) THEN
+        RAISE EXCEPTION 'Des valeurs négatives ont été trouvées dans les données';
+    END IF;
+
+    -- Vérifier que les pourcentages sont entre 0 et 100
+    IF EXISTS (
+        SELECT 1 FROM transmission_mere_enfant WHERE valeur > 100
+        UNION ALL
+        SELECT 1 FROM traitement WHERE valeur > 100
+    ) THEN
+        RAISE EXCEPTION 'Des pourcentages invalides ont été trouvés dans les données';
+    END IF;
+END $$; 

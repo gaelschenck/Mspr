@@ -1,3 +1,13 @@
+-- =============================================================================
+-- Script : create_tables.sql
+-- Description : 
+-- Ce script crée toutes les tables nécessaires dans la base de données :
+-- - Tables de référence (pays, unités, types)
+-- - Tables de données (population_hiv, mortalité, transmission, traitements)
+-- - Tables de statistiques
+-- Il définit également toutes les contraintes et relations entre les tables.
+-- =============================================================================
+
 -- Création des tables de référence
 CREATE TABLE IF NOT EXISTS pays (
     id_pays SERIAL PRIMARY KEY,
@@ -26,7 +36,7 @@ CREATE TABLE IF NOT EXISTS population_hiv (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL,
+    valeur DECIMAL(10,2),
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays, annee)
 );
@@ -35,7 +45,7 @@ CREATE TABLE IF NOT EXISTS mortalite (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL,
+    valeur DECIMAL(10,2),
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays, annee)
 );
@@ -43,7 +53,7 @@ CREATE TABLE IF NOT EXISTS mortalite (
 CREATE TABLE IF NOT EXISTS transmission_mere_enfant (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
-    valeur DECIMAL,
+    valeur DECIMAL(10,2),
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays)
 );
@@ -51,7 +61,7 @@ CREATE TABLE IF NOT EXISTS transmission_mere_enfant (
 CREATE TABLE IF NOT EXISTS traitement (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
-    valeur DECIMAL,
+    valeur DECIMAL(10,2),
     id_unite INTEGER REFERENCES unite(id_unite),
     id_type_traitement INTEGER REFERENCES type_traitement(id_type_traitement),
     UNIQUE(id_pays, id_type_traitement)
@@ -61,7 +71,7 @@ CREATE TABLE IF NOT EXISTS statistique (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL,
+    valeur DECIMAL(10,2),
     id_unite INTEGER REFERENCES unite(id_unite),
     id_type_statistique INTEGER REFERENCES type_statistique(id_type_statistique),
     UNIQUE(id_pays, annee, id_type_statistique)
