@@ -1,70 +1,43 @@
 #!/bin/bash
 
-echo "🚀 Démarrage du processus ETL..."
+# =============================================================================
+# Script : run_etl.sh
+# Description : 
+# Ce script exécute tous les scripts ETL dans l'ordre logique :
+# 1. Tables de référence
+# 2. Tables principales
+# =============================================================================
 
-# Se déplacer dans le répertoire ETL
-cd "$(dirname "$0")"
+echo "🚀 Début du processus ETL global"
+echo "==============================="
 
-# Création de l'environnement virtuel si nécessaire
-if [ ! -d "etl_env" ]; then
-    echo "📦 Création de l'environnement virtuel..."
-    python3 -m venv etl_env
-fi
-
-# Activation de l'environnement virtuel
-echo "🔌 Activation de l'environnement virtuel..."
-source etl_env/bin/activate
-
-# Vérification et installation des dépendances si nécessaire
-echo "📥 Vérification des dépendances..."
-if ! pip show pandas > /dev/null 2>&1; then
-    echo "📦 Installation de pandas..."
-    pip install pandas
-else
-    echo "✅ pandas est déjà installé"
-fi
-
-# Vérification de l'existence des fichiers Python
-echo "🔍 Vérification des fichiers Python..."
-python_files=(
-    "etl_table_pays.py"
-    "etl_table_unite.py"
-    "etl_table_type_statistique.py"
-    "etl_table_type_traitement.py"
-    "etl_table_population_hiv.py"
-    "etl_table_mortalite.py"
-    "etl_table_transmission_mere_enfant.py"
-    "etl_table_traitement.py"
-    "etl_table_statistique.py"
-)
-
-for file in "${python_files[@]}"; do
-    if [ ! -f "$file" ]; then
-        echo "❌ Erreur : Le fichier $file n'existe pas"
+# Fonction pour exécuter un script Python et vérifier son statut
+run_etl_script() {
+    echo "⏳ Exécution de $1..."
+    python "$1"
+    if [ $? -eq 0 ]; then
+        echo "✅ $1 terminé avec succès"
+        echo "-----------------------------"
+    else
+        echo "❌ Erreur lors de l'exécution de $1"
         exit 1
     fi
-done
+}
 
-# Exécution des scripts ETL dans l'ordre
-echo "🔄 Exécution des scripts ETL..."
+echo "📚 1. Tables de référence"
+echo "-----------------------------"
+run_etl_script "etl_table_unite.py"
+run_etl_script "etl_table_type_statistique.py"
+run_etl_script "etl_table_type_traitement.py"
 
-# 1. Tables de référence
-echo "📊 Création des tables de référence..."
-python etl_table_pays.py
-python etl_table_unite.py
-python etl_table_type_statistique.py
-python etl_table_type_traitement.py
+echo "📊 2. Tables principales"
+echo "-----------------------------"
+run_etl_script "etl_table_pays.py"
+run_etl_script "etl_table_population_hiv.py"
+run_etl_script "etl_table_mortalite.py"
+run_etl_script "etl_table_transmission_mere_enfant.py"
+run_etl_script "etl_table_traitement.py"
+run_etl_script "etl_table_statistique.py"
 
-# 2. Tables principales
-echo "📈 Création des tables principales..."
-python etl_table_population_hiv.py
-python etl_table_mortalite.py
-python etl_table_transmission_mere_enfant.py
-python etl_table_traitement.py
-python etl_table_statistique.py
-
-# Désactivation de l'environnement virtuel
-echo "🔌 Désactivation de l'environnement virtuel..."
-deactivate
-
-echo "✅ Processus ETL terminé avec succès !" 
+echo "✨ Processus ETL global terminé avec succès"
+echo "===============================" 
