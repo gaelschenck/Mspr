@@ -1,4 +1,6 @@
-id_type_stat,libelle
-1,Taux HIV
-2,Taux mortalité
-3,Nombre de cas
+id_type_statistique,libelle
+1,taux_hiv
+2,taux_mortalite
+3,taux_transmission
+4,taux_couverture
+5,population_hiv

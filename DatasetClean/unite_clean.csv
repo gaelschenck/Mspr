@@ -1,3 +1,5 @@
 id_unite,libelle
-1,Pourcentage
-2,Effectif
+1,nombre
+2,pourcentage
+3,taux
+4,ratio

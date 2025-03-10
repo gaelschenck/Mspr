@@ -74,3 +74,25 @@ try:
 except Exception as e:
     print(f" Erreur lors de l'enregistrement du fichier : {e}")
     exit()
+
+"""
+Résumé du script paysETL.py :
+1. Extraction :
+   - Lecture de 6 fichiers source contenant des données par pays
+   - Extraction des colonnes Country et WHO Region de chaque fichier
+   - Fusion des données de tous les fichiers en un seul DataFrame
+   - Suppression des doublons de pays
+
+2. Transformation :
+   - Nettoyage et standardisation des noms de pays (minuscules, espaces)
+   - Nettoyage et standardisation des noms de régions OMS
+   - Suppression des doublons de pays
+   - Ajout d'un identifiant unique (id_pays) pour chaque pays
+
+3. Chargement :
+   - Sauvegarde du résultat dans pays_clean.csv
+   - Affichage du nombre de pays et de leurs régions OMS
+
+Résultat : Table de référence des pays avec 170 entrées, incluant l'identifiant unique, 
+          le nom du pays et sa région OMS correspondante.
+"""
