@@ -1,4 +1,4 @@
-# Projet ETL - Données VIH Mondiales
+# Projet MSPR - Données VIH Mondiales
 
 ## Description
 Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VIH pour créer une base de données structurée PostgreSQL. Il comprend des informations sur la prévalence, la mortalité, les traitements et la transmission mère-enfant du VIH par pays.

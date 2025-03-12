@@ -124,18 +124,16 @@ def transform_data(pays_df, population_df):
             raise ValueError(f"Erreur lors de la conversion numérique : {str(e)}")
             
         # 5. Construction du DataFrame final
-        population_hiv_data = []
+        population_data = []
         error_count = 0
         for _, row in merged_df.iterrows():
             try:
                 if pd.notna(row['Count_median']) and pd.notna(row['id_pays']):
-                    population_hiv_data.append({
+                    population_data.append({
+                        'id': len(population_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': int(row['Year']),
-                        'population_min': int(row['Count_min']),
-                        'population_median': int(row['Count_median']),
-                        'population_max': int(row['Count_max']),
-                        'id_unite': 1  # 1 = nombre de personnes
+                        'valeur': int(round(float(row['Count_median'])))
                     })
             except ValueError as e:
                 error_count += 1
@@ -145,7 +143,7 @@ def transform_data(pays_df, population_df):
         if error_count > 0:
             logging.warning(f"⚠️ {error_count} lignes ignorées pendant la transformation")
             
-        result_df = pd.DataFrame(population_hiv_data)
+        result_df = pd.DataFrame(population_data)
         if result_df.empty:
             raise ValueError("Aucune donnée valide après transformation")
             

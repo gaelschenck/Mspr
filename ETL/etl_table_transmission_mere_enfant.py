@@ -138,12 +138,12 @@ def transform_data(pays_df, prevention_df):
                     transmission_data.append({
                         'id_transmission': len(transmission_data) + 1,
                         'id_pays': int(row['id_pays']),
-                        'besoin_arv_min': float(row['Needing antiretrovirals_min']),
-                        'besoin_arv_median': float(row['Needing antiretrovirals_median']),
-                        'besoin_arv_max': float(row['Needing antiretrovirals_max']),
-                        'pourcentage_recu_min': float(row['Percentage Recieved_min']),
-                        'pourcentage_recu_median': float(row['Percentage Recieved_median']),
-                        'pourcentage_recu_max': float(row['Percentage Recieved_max'])
+                        'besoin_arv_min': int(round(float(row['Needing antiretrovirals_min']))),
+                        'besoin_arv_median': int(round(float(row['Needing antiretrovirals_median']))),
+                        'besoin_arv_max': int(round(float(row['Needing antiretrovirals_max']))),
+                        'pourcentage_recu_min': int(round(float(row['Percentage Recieved_min']))) if pd.notna(row['Percentage Recieved_min']) else 0,
+                        'pourcentage_recu_median': int(round(float(row['Percentage Recieved_median']))) if pd.notna(row['Percentage Recieved_median']) else 0,
+                        'pourcentage_recu_max': int(round(float(row['Percentage Recieved_max']))) if pd.notna(row['Percentage Recieved_max']) else 0
                     })
             except ValueError as e:
                 error_count += 1

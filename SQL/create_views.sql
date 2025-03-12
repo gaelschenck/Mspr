@@ -94,19 +94,48 @@ LEFT JOIN transmission_mere_enfant tme ON p.id_pays = tme.id_pays
 LEFT JOIN traitement tr_adulte ON p.id_pays = tr_adulte.id_pays AND tr_adulte.id_type_traitement = 1
 LEFT JOIN traitement tr_enfant ON p.id_pays = tr_enfant.id_pays AND tr_enfant.id_type_traitement = 2;
 
--- Vue des évolutions temporelles par pays
-CREATE OR REPLACE VIEW vue_evolution_temporelle AS
+-- Vue globale par pays et année
+CREATE OR REPLACE VIEW vue_pays_annee AS
 SELECT 
     p.id_pays,
     p.nom_pays,
     p.region,
-    ph.annee,
-    ph.valeur as population_hiv,
+    m.annee,
     m.valeur as mortalite,
-    s.valeur as valeur_statistique,
-    ts.nom_type_statistique
+    ph.population_hiv,
+    tme.taux_transmission as transmission_mere_enfant
 FROM pays p
-LEFT JOIN population_hiv ph ON p.id_pays = ph.id_pays
-LEFT JOIN mortalite m ON p.id_pays = m.id_pays AND m.annee = ph.annee
-LEFT JOIN statistique s ON p.id_pays = s.id_pays AND s.annee = ph.annee
-LEFT JOIN type_statistique ts ON s.id_type_statistique = ts.id_type_statistique; 
+LEFT JOIN mortalite m ON p.id_pays = m.id_pays
+LEFT JOIN population_hiv ph ON p.id_pays = ph.id_pays AND ph.annee = m.annee
+LEFT JOIN transmission_mere_enfant tme ON p.id_pays = tme.id_pays;
+
+-- Vue statistiques détaillées
+CREATE OR REPLACE VIEW vue_statistiques_detaillees AS
+SELECT 
+    p.id_pays,
+    p.nom_pays,
+    p.region,
+    s.annee,
+    ts.libelle as type_statistique,
+    s.valeur,
+    u.libelle as unite
+FROM pays p
+JOIN statistique s ON p.id_pays = s.id_pays
+JOIN type_statistique ts ON s.id_type_statistique = ts.id_type_statistique
+JOIN unite u ON s.id_unite = u.id_unite;
+
+-- Vue évolution temporelle
+CREATE OR REPLACE VIEW vue_evolution_temporelle AS
+SELECT 
+    p.region,
+    m.annee,
+    COUNT(DISTINCT p.id_pays) as nombre_pays,
+    SUM(m.valeur) as total_mortalite,
+    SUM(ph.population_hiv) as total_population_hiv,
+    AVG(tme.taux_transmission) as moyenne_transmission
+FROM pays p
+LEFT JOIN mortalite m ON p.id_pays = m.id_pays
+LEFT JOIN population_hiv ph ON p.id_pays = ph.id_pays AND ph.annee = m.annee
+LEFT JOIN transmission_mere_enfant tme ON p.id_pays = tme.id_pays
+GROUP BY p.region, m.annee
+ORDER BY p.region, m.annee; 

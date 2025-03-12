@@ -132,12 +132,10 @@ def transform_data(pays_df, mortalite_df):
             try:
                 if pd.notna(row['Count_median']) and pd.notna(row['id_pays']):
                     mortalite_data.append({
+                        'id': len(mortalite_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': int(row['Year']),
-                        'mortalite_min': int(row['Count_min']),
-                        'mortalite_median': int(row['Count_median']),
-                        'mortalite_max': int(row['Count_max']),
-                        'id_unite': 1  # 1 = nombre de personnes
+                        'valeur': int(round(float(row['Count_median'])))
                     })
             except ValueError as e:
                 error_count += 1

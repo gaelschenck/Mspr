@@ -157,81 +157,49 @@ def transform_data(pays_df, population_df, mortalite_df, prevention_df):
             raise ValueError(f"Erreur lors de la fusion : {str(e)}")
             
         # 4. Construction du DataFrame final
-        statistiques = []
-        id_statistique = 1
+        statistique_data = []
         error_count = 0
-        
-        # 1. Taux de prévalence (pourcentage de la population infectée)
         for _, row in population_df.iterrows():
             try:
                 if pd.notna(row['Count_median']) and pd.notna(row['id_pays']):
-                    # Conversion explicite en float et gestion des valeurs nulles
-                    count_str = str(row['Count_median']).replace(',', '')
-                    if count_str.strip() == '' or count_str.lower() == 'nan':
-                        continue
-                    count_median = float(count_str)
-                    if count_median <= 0:  # Ignorer les valeurs négatives ou nulles
-                        continue
-                    # Calcul du taux de prévalence (en pourcentage)
-                    prevalence = round((count_median / 1000000) * 100, 2)
-                    statistiques.append({
-                        'id_statistique': id_statistique,
+                    statistique_data.append({
+                        'id': len(statistique_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': int(row['Year']),
-                        'id_type_statistique': 1,  # 1 = taux de prévalence
-                        'valeur': float(prevalence),
-                        'id_unite': 2  # 2 = pourcentage
+                        'valeur': int(round(float(row['Count_median']))),
+                        'id_unite': 2,  # 2 = pourcentage
+                        'id_type_statistique': 1  # 1 = taux de prévalence
                     })
-                    id_statistique += 1
             except ValueError:
                 error_count += 1
                 continue  # Silencieusement ignorer les erreurs de conversion
         
-        # 2. Taux de mortalité (pourcentage des décès liés au VIH)
         for _, row in mortalite_df.iterrows():
             try:
                 if pd.notna(row['Count_median']) and pd.notna(row['id_pays']):
-                    # Conversion explicite en float et gestion des valeurs nulles
-                    count_str = str(row['Count_median']).replace(',', '')
-                    if count_str.strip() == '' or count_str.lower() == 'nan':
-                        continue
-                    count_median = float(count_str)
-                    if count_median <= 0:  # Ignorer les valeurs négatives ou nulles
-                        continue
-                    # Calcul du taux de mortalité (en pourcentage)
-                    mortalite = round((count_median / 1000000) * 100, 2)
-                    statistiques.append({
-                        'id_statistique': id_statistique,
+                    statistique_data.append({
+                        'id': len(statistique_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': int(row['Year']),
-                        'id_type_statistique': 2,  # 2 = taux de mortalité
-                        'valeur': float(mortalite),
-                        'id_unite': 2  # 2 = pourcentage
+                        'valeur': int(round(float(row['Count_median']))),
+                        'id_unite': 2,  # 2 = pourcentage
+                        'id_type_statistique': 2  # 2 = taux de mortalité
                     })
-                    id_statistique += 1
             except ValueError:
                 error_count += 1
                 continue  # Silencieusement ignorer les erreurs de conversion
         
-        # 3. Taux de transmission mère-enfant
         for _, row in prevention_df.iterrows():
             try:
                 if pd.notna(row['Percentage Recieved_median']) and pd.notna(row['id_pays']):
-                    percentage_str = str(row['Percentage Recieved_median']).replace(',', '')
-                    if percentage_str.strip() == '' or percentage_str.lower() == 'nan':
-                        continue
-                    percentage = float(percentage_str)
-                    if percentage < 0 or percentage > 100:  # Valider le pourcentage
-                        continue
-                    statistiques.append({
-                        'id_statistique': id_statistique,
+                    statistique_data.append({
+                        'id': len(statistique_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': 2018,  # Année de référence
-                        'id_type_statistique': 3,  # 3 = taux de transmission mère-enfant
-                        'valeur': round(percentage, 2),
-                        'id_unite': 2  # 2 = pourcentage
+                        'valeur': int(round(float(row['Percentage Recieved_median']))),
+                        'id_unite': 2,  # 2 = pourcentage
+                        'id_type_statistique': 3  # 3 = taux de transmission mère-enfant
                     })
-                    id_statistique += 1
             except ValueError:
                 error_count += 1
                 continue  # Silencieusement ignorer les erreurs de conversion
@@ -239,7 +207,7 @@ def transform_data(pays_df, population_df, mortalite_df, prevention_df):
         if error_count > 0:
             logging.warning(f"⚠️ {error_count} lignes ignorées pendant la transformation")
             
-        result_df = pd.DataFrame(statistiques)
+        result_df = pd.DataFrame(statistique_data)
         if result_df.empty:
             raise ValueError("Aucune donnée valide après transformation")
             

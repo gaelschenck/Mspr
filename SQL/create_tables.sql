@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS population_hiv (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL(10,2),
+    valeur INTEGER,
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays, annee)
 );
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS mortalite (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL(10,2),
+    valeur INTEGER,
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays, annee)
 );
@@ -53,7 +53,12 @@ CREATE TABLE IF NOT EXISTS mortalite (
 CREATE TABLE IF NOT EXISTS transmission_mere_enfant (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
-    valeur DECIMAL(10,2),
+    besoin_arv_min INTEGER,
+    besoin_arv_median INTEGER,
+    besoin_arv_max INTEGER,
+    pourcentage_recu_min INTEGER,
+    pourcentage_recu_median INTEGER,
+    pourcentage_recu_max INTEGER,
     id_unite INTEGER REFERENCES unite(id_unite),
     UNIQUE(id_pays)
 );
@@ -61,7 +66,7 @@ CREATE TABLE IF NOT EXISTS transmission_mere_enfant (
 CREATE TABLE IF NOT EXISTS traitement (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
-    valeur DECIMAL(10,2),
+    valeur INTEGER,
     id_unite INTEGER REFERENCES unite(id_unite),
     id_type_traitement INTEGER REFERENCES type_traitement(id_type_traitement),
     UNIQUE(id_pays, id_type_traitement)
@@ -71,7 +76,7 @@ CREATE TABLE IF NOT EXISTS statistique (
     id SERIAL PRIMARY KEY,
     id_pays INTEGER REFERENCES pays(id_pays),
     annee INTEGER,
-    valeur DECIMAL(10,2),
+    valeur INTEGER,
     id_unite INTEGER REFERENCES unite(id_unite),
     id_type_statistique INTEGER REFERENCES type_statistique(id_type_statistique),
     UNIQUE(id_pays, annee, id_type_statistique)

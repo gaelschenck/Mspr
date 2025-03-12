@@ -1,21 +1,47 @@
-from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from sqlalchemy.orm import sessionmaker, declarative_base
 import os
+from dotenv import load_dotenv
 
-load_dotenv()  # Charger les variables d'environnement depuis le fichier .env
+# Charge les variables d'environnement depuis .env
+load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+# Récupération des variables d'environnement
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Vérification des variables d'environnement
+if not all(
+    [POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB]
+):
+    raise ValueError(
+        "❌ Erreur : Certaines variables d'environnement ne sont pas chargées. Vérifie ton fichier .env !"
+    )
+
+# Construction sécurisée de l'URL de la base de données
+DATABASE_URL = f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+
+print(f"✅ Connexion à la base de données : {DATABASE_URL}")
+
+# Création du moteur SQLAlchemy asynchrone avec optimisation des connexions
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=True,  # Active les logs SQL pour le débogage
+    pool_size=10,  # Nombre max de connexions en pool
+    max_overflow=20,  # Nombre max de connexions excédentaires
+)
+
+# Création de la session asynchrone
+SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
+
+# Base déclarative pour les modèles
 Base = declarative_base()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
+# Dépendance pour récupérer la session de la base de données
+async def get_db():
+    async with SessionLocal() as session:
+        yield session
