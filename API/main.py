@@ -1,13 +1,26 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 from typing import List
 import models, schemas
 from database import engine, get_db
+import sys
+import os
+from prediction import load_data_from_db, make_prediction, preprocess_data, train_model
+import pandas as pd
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Déclare `app`
 app = FastAPI(title="MSPR API", version="1.0.0")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Initialisation de la base de données
 async def init_db():
@@ -19,6 +32,15 @@ async def init_db():
 async def startup():
     await init_db()
 
+# ========================
+# Endpoints REGION
+# ========================
+
+@app.get("/regions/")
+async def get_regions(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(models.Pays.region).distinct())
+    regions = [row[0] for row in result.fetchall()]
+    return {"regions": regions}
 
 # ========================
 # Endpoints PAYS
@@ -166,6 +188,79 @@ async def create_statistique(
 @app.get("/")
 async def read_root():
     return {"message": "Bienvenue sur l'API MSPR!"}
+
+
+# ========================
+# ENDPOINT prédiction
+# ========================
+
+@app.post("/dataframe/")
+async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour générer un DataFrame croisé basé sur les choix de l'utilisateur.
+    """
+    region = payload.get("region")
+    table = payload.get("table")
+    
+    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
+        raise HTTPException(status_code=400, detail="Table invalide")
+    
+    # Récupérer les données de la table `pays`
+    query_pays = select(models.Pays).filter(models.Pays.region == region)
+    result_pays = await db.execute(query_pays)
+    data_pays = result_pays.scalars().all()
+
+    # Récupérer les données de la seconde table
+    query_table = select(getattr(models, table.capitalize()))
+    result_table = await db.execute(query_table)
+    data_table = result_table.scalars().all()
+
+    # Construire le DataFrame croisé
+    df_pays = pd.DataFrame([item.__dict__ for item in data_pays])
+    df_table = pd.DataFrame([item.__dict__ for item in data_table])
+    
+    df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
+    df_table = df_table.drop("_sa_instance_state", axis=1, errors="ignore")
+    
+    dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
+    
+    return {"dataframe": dataframe_croise.to_dict()}
+
+
+@app.get("/tables/")
+async def get_available_tables():
+    """
+    Endpoint pour fournir les noms des tables disponibles et leurs relations.
+    """
+    tables = {
+        "pays": ["region"],
+        "mortalite": [],
+        "population_hiv": [],
+        "statistique": [],
+        "traitement": [],
+        "transmission_mere_enfant": [],
+        "type_statistique": [],
+        "type_traitement": [],
+        "unite": [],
+    }
+    return {"tables": tables}
+
+
+@app.post("/predict/")
+async def predict(data: dict):  # Assure-toi que les données d'entrée respectent le modèle attendu
+    features = data["features"]  # Exemple : extraire les caractéristiques depuis le JSON
+    try:
+        result = make_prediction(features)
+        return {"prediction": result}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/train_model/")
+async def train_model_endpoint(db: AsyncSession = Depends(get_db)):
+    data = await load_data_from_db(db)
+    df = preprocess_data(data)
+    model = train_model(df)
+    return {"message": "Modèle entraîné avec succès"}
 
 
 # ========================

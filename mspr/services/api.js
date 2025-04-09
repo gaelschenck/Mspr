@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000', // Change cette URL si ton backend est hébergé ailleurs.
+  baseURL: 'http://127.0.0.1:8084',
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
 export default apiClient;
