@@ -7,6 +7,7 @@ from database import engine, get_db
 import sys
 import os
 from prediction import load_data_from_db, make_prediction, preprocess_data, train_model
+import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Déclare `app`
