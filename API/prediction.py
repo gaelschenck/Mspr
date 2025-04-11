@@ -5,57 +5,96 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier  
 import joblib
+from sklearn.ensemble import VotingRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.svm import SVR
+import joblib
+from sklearn.preprocessing import OneHotEncoder
 
 
+def prepare_data_generic(df, target_column=None):
+    """
+    Prépare les données pour l'entraînement d'un modèle de machine learning.
+    - Sépare les caractéristiques (`features`) et la cible (`target`).
+    - Si `target_column` n'est pas fourni, essaye de l'inférer ou retourne uniquement les features.
 
-async def load_data_from_db(db: AsyncSession):
-    """
-    Fonction pour charger les données nécessaires depuis la base de données.
-    """
-    result = await db.execute(select(models.PopulationHIV))  # Adapte à la table que tu utilises.
-    data = result.scalars().all()
-    return data
+    Args:
+        df (pd.DataFrame): Le DataFrame à traiter.
+        target_column (str): La colonne cible (si elle est connue).
 
-def preprocess_data(data):
+    Returns:
+        X (pd.DataFrame): Les caractéristiques.
+        y (pd.Series ou None): La cible (ou None si non spécifiée).
     """
-    Fonction pour transformer les données brutes en un DataFrame prêt à l'emploi.
-    """
-    df = pd.DataFrame([item.__dict__ for item in data])  # Convertir les objets SQLAlchemy en DataFrame.
-    df = df.drop('_sa_instance_state', axis=1, errors='ignore')  # Supprimer les métadonnées SQLAlchemy.
-    
-    # Ajoute ici les transformations nécessaires (par ex : nettoyage, encodage, gestion des valeurs manquantes).
-    return df
+    print(f"Taille du DataFrame avant préparation : {df.shape}")
+    print(f"Colonnes présentes : {df.columns}")
 
-def train_model(df):
+    
+    if target_column and target_column in df.columns:
+        # Séparer la cible et les caractéristiques
+        X = df.drop(columns=[target_column])
+        y = df[target_column]
+        print(f"🔍 Colonne cible : { target_column }")
+    else:
+        # Si la colonne cible n'est pas spécifiée ou introuvable, on ne retourne que les features
+        print("🔍 Colonne cible non spécifiée ou absente. Utilisation des seules caractéristiques.")
+        X = df
+        y = None
+
+    print(f"✅ Données préparées. Dimensions des caractéristiques : {X.shape}")
+    if y is not None:
+        print(f"✅ Colonne cible détectée. Nombre de cibles : {len(y)}")
+    return X, y
+
+def create_voting_regressor():
     """
-    Fonction pour entraîner un modèle de machine learning.
+    Crée un modèle combiné VotingRegressor.
     """
-    # Séparer les caractéristiques (features) et la cible (target)
-    X = df.drop(columns=['target_column'])  # Remplace 'target_column' par le nom de ta colonne cible.
-    y = df['target_column']
-    
-    # Diviser les données en ensembles d'entraînement et de test
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Créer et entraîner le modèle
-    model = RandomForestClassifier()
-    model.fit(X_train, y_train)
-    
-    # Évalue le modèle sur l'ensemble de test
-    score = model.score(X_test, y_test)
-    print(f"Score du modèle : {score}")
-    
-    # Sauvegarder le modèle pour utilisation future
-    joblib.dump(model, "model.pkl")
+    model = VotingRegressor([
+        ('rf', RandomForestRegressor()),
+        ('knn', KNeighborsRegressor()),
+        ('svr', SVR())
+    ])
     return model
 
+def save_training_data(new_data, file_path="training_data.csv"):
+    try:
+        existing_data = pd.read_csv(file_path)
+        combined_data = pd.concat([existing_data, pd.DataFrame(new_data)]).drop_duplicates()
+    except FileNotFoundError:
+        combined_data = pd.DataFrame(new_data)
 
-# Charger ton modèle de prédiction (fichier .pkl)
-model = joblib.load("model.pkl")  # Assure-toi que le chemin est correct.
+    combined_data.to_csv(file_path, index=False)
 
-def make_prediction(features):
+def load_training_data(file_path="training_data.csv"):
+    return pd.read_csv(file_path)
+
+
+def preprocess_features(X):
     """
-    Fonction pour exécuter une prédiction basée sur les caractéristiques fournies.
+    Prépare les caractéristiques (features) pour l'entraînement du modèle.
+    - Supprime ou encode les colonnes non numériques.
     """
-    prediction = model.predict([features])
-    return prediction.tolist()
+    
+
+    print(f"Avant prétraitement, types des colonnes :\n{X.dtypes}")
+
+    # Identifier les colonnes catégoriques
+    categorical_cols = X.select_dtypes(include=['object', 'string']).columns
+
+    if len(categorical_cols) > 0:
+        print(f"Colonnes catégoriques détectées : {categorical_cols.tolist()}")
+
+        # OneHotEncoder pour les colonnes catégoriques
+        encoder = OneHotEncoder(sparse_output=False)
+        encoded = pd.DataFrame(encoder.fit_transform(X[categorical_cols]), columns=encoder.get_feature_names_out(categorical_cols))
+        
+        # Retirer les colonnes non numériques et ajouter les colonnes encodées
+        X = X.drop(columns=categorical_cols).reset_index(drop=True)
+        X = pd.concat([X, encoded], axis=1)
+    else:
+        print("Aucune colonne catégorique détectée.")
+
+    print(f"Après prétraitement, dimensions de X : {X.shape}")
+    return X
