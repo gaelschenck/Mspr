@@ -15,6 +15,8 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 ```sh
 npm install
 npm install axios
+npm install vue-router@next
+npm install chart.js
 ```
 
 ### Compile and Hot-Reload for Development
