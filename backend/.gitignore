@@ -1,5 +1,5 @@
 # Environnement virtuel
-API/.env/
+API/.env
 API/venv/
 
 # Fichiers Python
