@@ -8,7 +8,7 @@ from database import engine, get_db
 import sys
 import os
 from fastapi.middleware.cors import CORSMiddleware
-
+from contextlib import asynccontextmanager
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -18,7 +18,7 @@ app = FastAPI(title="MSPR API", version="1.0.0")
 
 # ========================
 # Configuration des CORS
-# ========================
+# ========================  
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Permet toutes les origines. Tu peux spécifier ici une liste d'origines autorisées.
@@ -37,9 +37,12 @@ async def init_db():
         await conn.run_sync(models.Base.metadata.create_all)
 
 
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await init_db()
+    yield
+
+app = FastAPI(title="MSPR API", version="1.0.0", lifespan=lifespan)
 
 
 # ========================

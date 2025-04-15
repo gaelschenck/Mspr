@@ -4,8 +4,7 @@ import os
 from dotenv import load_dotenv
 
 # Charge les variables d'environnement depuis .env
-load_dotenv(dotenv_path="C:/Users/gaels/OneDrive/Documents/ECOLE-EPSI/Mspr/API/.env")
-
+load_dotenv()  # Cherche .env dans le répertoire courant
 # Récupération des variables d'environnement
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")

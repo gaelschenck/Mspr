@@ -1,8 +1,6 @@
 # Environnement virtuel
-etl_env/
-venv/
-env/
-.env/
+API/.env/
+API/venv/
 
 # Fichiers Python
 __pycache__/
