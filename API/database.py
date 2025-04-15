@@ -2,9 +2,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-# Charge les variables d'environnement depuis .env
-load_dotenv()
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 # Récupération des variables d'environnement
 POSTGRES_USER = os.getenv("POSTGRES_USER")
@@ -12,10 +13,10 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
-
+print(f"User: {POSTGRES_USER}, Password: {POSTGRES_PASSWORD}, Host: {POSTGRES_HOST}, Port: {POSTGRES_PORT}, DB: {POSTGRES_DB}")
 # Vérification des variables d'environnement
 if not all(
-    [POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB]
+    [POSTGRES_USER,POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB]
 ):
     raise ValueError(
         "❌ Erreur : Certaines variables d'environnement ne sont pas chargées. Vérifie ton fichier .env !"
@@ -23,7 +24,6 @@ if not all(
 
 # Construction sécurisée de l'URL de la base de données
 DATABASE_URL = f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-
 print(f"✅ Connexion à la base de données : {DATABASE_URL}")
 
 # Création du moteur SQLAlchemy asynchrone avec optimisation des connexions

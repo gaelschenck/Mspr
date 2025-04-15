@@ -4,3 +4,11 @@ sqlalchemy==2.0.23
 psycopg[binary]==3.2.5
 python-dotenv==1.0.0
 pydantic==2.5.2
+pandas-2.2.3
+scikit-learn-1.6.1
+
+# cd API
+#uvicorn main:app --reload --port 8084
+
+#cd mspr
+#npm run dev

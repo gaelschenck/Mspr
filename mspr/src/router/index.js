@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/home.vue';
 import Graphiques from '../components/predictionGraphs.vue';
-import Prediction from '../components/testPrediction.vue';
+import Prediction from '../components/TestPrediction.vue';
 
 const routes = [
   { path: '/', component: Home },
