@@ -17,8 +17,7 @@ import matplotlib.pyplot as plt
 
 
 def prepare_data_generic(df, target_column=None):
-    """
-    Prépare les données pour l'entraînement d'un modèle de machine learning.
+    """²    
     - Sépare les caractéristiques (`features`) et la cible (`target`).
     - Si `target_column` n'est pas fourni, essaye de l'inférer ou retourne uniquement les features.
     Args:

@@ -14,14 +14,19 @@ import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Déclare `app`
-app = FastAPI(title="MSPR API", version="1.0.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
+app = FastAPI(title="MSPR API", version="1.0.0", lifespan=lifespan)
 
 # ========================
 # Configuration des CORS
 # ========================  
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permet toutes les origines. Tu peux spécifier ici une liste d'origines autorisées.
+    allow_origins=["http://localhost:5173"],  # Permet toutes les origines. Tu peux spécifier ici une liste d'origines autorisées.
     allow_credentials=True,
     allow_methods=["*"],  # Permet toutes les méthodes HTTP (GET, POST, etc.).
     allow_headers=["Authorization", "Content-Type","*"],  # Permet tous les types d'en-têtes.
@@ -37,12 +42,7 @@ async def init_db():
         await conn.run_sync(models.Base.metadata.create_all)
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await init_db()
-    yield
 
-app = FastAPI(title="MSPR API", version="1.0.0", lifespan=lifespan)
 
 
 # ========================
@@ -214,6 +214,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     pays = payload.get("pays")
     table = payload.get("table")
     target_column = payload.get("target_column")
+    print(region,pays,table,target_column)
 
     if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
         raise HTTPException(status_code=400, detail="Table invalide")
@@ -259,14 +260,8 @@ async def get_available_tables():
     """
     Endpoint pour fournir les noms des tables disponibles et leurs relations.
     """
-    tables = {
-        "pays": ["region"],
-        "mortalite": [],
-        "population_hiv": [],
-        "statistique": [],
-        "traitement": [],
-        "transmission_mere_enfant": [],
-    }
+    tables = {"mortalite", "population_hiv", "statistque","traitement","transmission_mere_enfant"}
+   
     return {"tables": tables}
 
 @app.get("/columns/{table_name}")
