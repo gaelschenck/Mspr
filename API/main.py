@@ -2,12 +2,12 @@ from fastapi import FastAPI, Depends, HTTPException
 import joblib
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import models, schemas
 from database import engine, get_db
 import sys
 import os
-from fastapi.middleware.cors import CORSMiddleware
 
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
