@@ -2,12 +2,12 @@ from fastapi import FastAPI, Depends, HTTPException
 import joblib
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import models, schemas
 from database import engine, get_db
 import sys
 import os
-from fastapi.middleware.cors import CORSMiddleware
 
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
@@ -207,12 +207,13 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     """
     Endpoint pour générer un DataFrame croisé basé sur les choix de l'utilisateur.
     """
+    print("📦 Payload reçu :", payload)
     region = payload.get("region")
     pays = payload.get("pays")
     table = payload.get("table")
     target_column = payload.get("target_column")
 
-    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
+    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite", "pays"]:
         raise HTTPException(status_code=400, detail="Table invalide")
     # Vérification des paramètres
     if not region and not pays:
@@ -227,8 +228,24 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     result_pays = await db.execute(query_pays)
     data_pays = result_pays.scalars().all()
 
-    # Charger les données de la table sélectionnée
-    query_table = select(getattr(models, table.capitalize()))
+    table_map = {
+        "mortalite": models.Mortalite,
+        "population_hiv": models.PopulationHIV,
+        "statistique": models.Statistique,
+        "traitement": models.Traitement,
+        "transmission_mere_enfant": models.TransmissionMereEnfant,
+        "type_statistique": models.TypeStatistique,
+        "type_traitement": models.TypeTraitement,
+        "unite": models.Unite,
+    }
+
+    # Utilise le mapping ici :
+    model_class = table_map.get(table)
+    if not model_class:
+        raise HTTPException(status_code=400, detail="Table non reconnue")
+
+    query_table = select(model_class)
+
     result_table = await db.execute(query_table)
     data_table = result_table.scalars().all()
 

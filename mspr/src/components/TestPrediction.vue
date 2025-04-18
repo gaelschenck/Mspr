@@ -7,8 +7,8 @@
       </select>
 
       <!-- Sélection des pays -->
-      <label for="pays" aria-label="Sélection du pays">Choisissez un pays :</label>
-      <select v-model="selectedPays" id="pays" tabindex="0">
+      <label for="pays">Choisissez un pays :</label>
+      <select v-model="selectedPays" id="pays">
         <option v-for="pays in paysList" :key="pays.id" :value="pays.nom">{{ pays.nom }}</option>
       </select>
 
@@ -16,7 +16,7 @@
       <!-- Sélection de la table -->
     <label for="table">Choisissez une table :</label>
     <select v-model="selectedTable" id="table" @change="fetchColumns">
-      <option v-for="table in tables" :key="table" :value="table">{{ table }}</option>
+      <option v-for="table in tables" v-if="table !== 'pays'" :key="table" :value="table">{{ table }}</option>
     </select>
 
     <!-- Sélection de la colonne cible (après choix de la table) -->
@@ -50,18 +50,14 @@ async mounted() {
 try {
   const responseTables = await apiClient.get("/tables/");
   this.tables = Object.keys(responseTables.data.tables);
-  console.log("Tables disponibles :", responseTables.data);
-
 
   const responsePays = await apiClient.get("/payslist/");
-  console.log("Réponse brute /payslist/ :", responsePays.data);
+  console.log("Données pays récupérées :", responsePays.data);
   const pays = responsePays.data;
-
+  this.paysList = pays;
 
   const regionsSet = new Set(pays.map(p => p.region));
-  this.regions = [...regionsSet];
-  console.log("Regions :", this.regions);
-
+  this.regions = [...regionsSet]; // dédoublonné
 
 } catch (error) {
   console.error("Erreur lors du chargement des données :", error);
@@ -97,20 +93,26 @@ methods: {
 
     try {
       const response = await apiClient.post("/dataframe/", payload);
+      console.error("Détails de l'erreur :", error.response.data);
       const dataframe = response.data.dataframe;
       console.log("Dataframe généré :", response.data);
       // Envoyer le DataFrame et la colonne cible à /train_model/
-    const trainPayload = {
-      dataframe,
-      target_column: payload.target_column, // Ajouter la colonne cible ici
-    };
-    console.log("Payload envoyé à /train_model/ :", trainPayload);
+      const trainPayload = {
+        dataframe,
+        target_column: payload.target_column, // Ajouter la colonne cible ici
+      };
+      console.log("Payload envoyé à /train_model/ :", trainPayload);
 
-    await apiClient.post("/train_model/", trainPayload);
-    console.log("Modèle entraîné avec succès !");
+      await apiClient.post("/train_model/", trainPayload);
+      console.log("Modèle entraîné avec succès !");
 
     } catch (error) {
       console.error("Erreur lors de la soumission :", error);
+      if (error.response) {
+        console.log("Détails de l'erreur :", error.response.data);
+      } else {
+        console.log("Erreur sans réponse du serveur :", error.message);
+      }
     }
   },
 },
