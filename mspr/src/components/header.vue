@@ -4,7 +4,6 @@
       <nav>
         <ul>
           <li><router-link to="/">Accueil</router-link></li>
-          <li><router-link to="/graphiques">Graphiques</router-link></li>
           <li><router-link to="/prediction">Prédiction</router-link></li>
         </ul>
       </nav>

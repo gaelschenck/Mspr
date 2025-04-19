@@ -256,13 +256,15 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     # Nettoyage des colonnes inutiles
     df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
     df_table = df_table.drop("_sa_instance_state", axis=1, errors="ignore")
+    df_table = df_table[df_table['id_pays'].isin(df_pays['id_pays'])]
+
     print(f"✅ df_pays : { df_pays }")
     print(f"✅ df_table { df_table }")  
     # Fusion des deux DataFrames pour créer un DataFrame croisé
     try:
         dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner") 
         print(f"✅ Données chargées. Dataframe croisé : { dataframe_croise }") # `id_pays` est la clé de fusion
-        return {"dataframe": dataframe_croise.to_dict()}  # Retourne le DataFrame croisé sous forme de dictionnaire
+        return {"dataframe": dataframe_croise.to_dict(orient="records")}
     except KeyError:
         raise HTTPException(status_code=400, detail="Les clés de fusion ne correspondent pas entre les tables")
 
