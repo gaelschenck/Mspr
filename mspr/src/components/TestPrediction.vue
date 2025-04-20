@@ -2,7 +2,7 @@
   <div class="form-container">
     <h1 class="title">Choix des données</h1>
 
-    <!-- Choix de la région -->
+    <!-- Choix des filtres -->
     <div class="form-group">
       <label for="region">Choisissez une région :</label>
       <select v-model="selectedRegion" id="region">
@@ -11,22 +11,16 @@
       </select>
     </div>
 
-    <!-- Choix du pays -->
     <div class="form-group">
       <label for="pays">Choisissez un pays :</label>
       <select v-model="selectedPays" id="pays">
         <option disabled value="">-- Sélectionner un pays --</option>
-        <option
-          v-for="pays in filteredPaysList"
-          :key="pays.id"
-          :value="pays.nom"
-        >
+        <option v-for="pays in filteredPaysList" :key="pays.id" :value="pays.nom">
           {{ pays.nom }}
         </option>
       </select>
     </div>
 
-    <!-- Choix de la table -->
     <div class="form-group">
       <label for="table">Choisissez une table :</label>
       <select v-model="selectedTable" id="table" @change="fetchColumns">
@@ -37,7 +31,6 @@
       </select>
     </div>
 
-    <!-- Choix de la colonne cible -->
     <div class="form-group" v-if="columns.length > 0">
       <label for="target_column">Choisissez une colonne cible :</label>
       <select v-model="selectedColumn" id="target_column">
@@ -48,22 +41,35 @@
       </select>
     </div>
 
-    <!-- Bouton de soumission -->
-    <button
-      type="button"
-      @click="submitChoices"
-      :disabled="!selectedTable || !selectedColumn"
-    >
+    <button type="button" @click="submitChoices" :disabled="!selectedTable || !selectedColumn">
       Soumettre
     </button>
+
+    <!-- 🎨 Affichage du graphique -->
+    <div v-if="showChart" class="chart-container">
+      <Line :data="chartData" :options="chartOptions" />
+    </div>
   </div>
 </template>
 
 <script>
 import apiClient from "/services/api";
-import { usePredictionStore } from "@/store/predictionStore";
+import { Line } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale);
 
 export default {
+  components: { Line },
   data() {
     return {
       regions: [],
@@ -74,27 +80,40 @@ export default {
       selectedPays: "",
       selectedTable: null,
       selectedColumn: null,
+
+      // Pour le graphique
+      showChart: false,
+      chartData: null,
+      chartOptions: {
+        responsive: true,
+        plugins: {
+          legend: { position: "top" },
+          title: {
+            display: true,
+            text: "Prédiction vs Réel",
+          },
+        },
+      },
     };
   },
   computed: {
     filteredPaysList() {
-      // Filtrer les pays selon la région sélectionnée
-      if (!this.selectedRegion) return [];
-      return this.paysList.filter(p => p.region === this.selectedRegion);
+      return this.selectedRegion
+        ? this.paysList.filter(p => p.region === this.selectedRegion)
+        : [];
     },
   },
   async mounted() {
     try {
-      const responseTables = await apiClient.get("/tables/");
-      this.tables = Object.keys(responseTables.data.tables);
+      const tablesRes = await apiClient.get("/tables/");
+      this.tables = Object.keys(tablesRes.data.tables);
 
-      const responsePays = await apiClient.get("/payslist/");
-      this.paysList = responsePays.data;
-
+      const paysRes = await apiClient.get("/payslist/");
+      this.paysList = paysRes.data;
       const regionsSet = new Set(this.paysList.map(p => p.region));
       this.regions = [...regionsSet];
     } catch (error) {
-      console.error("Erreur lors du chargement des données :", error);
+      console.error("Erreur lors du chargement initial :", error);
     }
   },
   methods: {
@@ -104,16 +123,15 @@ export default {
         const response = await apiClient.get(`/columns/${this.selectedTable}`);
         this.columns = response.data.columns;
       } catch (error) {
-        console.error("Erreur lors de la récupération des colonnes :", error);
+        console.error("Erreur colonnes :", error);
       }
     },
-    async submitChoices(event) {
-      event?.preventDefault();
+    async submitChoices() {
       const payload = {
-        region: this.selectedRegion || null,
-        pays: this.selectedPays || null,
         table: this.selectedTable,
         target_column: this.selectedColumn,
+        region: this.selectedRegion || null,
+        pays: this.selectedPays || null,
       };
 
       if (!payload.region && !payload.pays) {
@@ -133,12 +151,26 @@ export default {
         const result = await apiClient.post("/train_model/", trainPayload);
         const { real_data, predicted_data, labels } = result.data;
 
-        const store = usePredictionStore();
-        store.setPredictionData(real_data, predicted_data, labels);
-
-        this.$router.push("/graphiques");
+        this.chartData = {
+          labels,
+          datasets: [
+            {
+              label: "Données réelles",
+              data: real_data,
+              borderColor: "#3498db",
+              backgroundColor: "transparent",
+            },
+            {
+              label: "Prédictions",
+              data: predicted_data,
+              borderColor: "#e74c3c",
+              backgroundColor: "transparent",
+            },
+          ],
+        };
+        this.showChart = true;
       } catch (error) {
-        console.error("Erreur lors de la soumission :", error);
+        console.error("Erreur submitChoices :", error);
       }
     },
   },
@@ -195,5 +227,9 @@ button {
 button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.chart-container {
+  margin-top: 2rem;
 }
 </style>
