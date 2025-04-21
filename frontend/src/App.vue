@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-100">
     <Header />
-    <div class="container mx-auto px-4 py-8">
+    <div >
       <!-- Utilisation du router-view pour afficher les vues associées aux routes -->
       <router-view />
     </div>

@@ -11,6 +11,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
+from sklearn.ensemble import VotingRegressor, RandomForestRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Déclare `app`
@@ -54,7 +59,9 @@ async def get_pays(db: AsyncSession = Depends(get_db)):
     Endpoint pour récupérer les informations des pays depuis la table `pays`.
     """
     result = await db.execute(select(models.Pays))  # Adapte `Pays` à ton modèle SQLAlchemy
+
     pays_list = result.scalars().all()
+    print({"id": pays.id_pays, "nom": pays.nom_pays, "region": pays.region} for pays in pays_list)
     return [{"id": pays.id_pays, "nom": pays.nom_pays, "region": pays.region} for pays in pays_list]
 
 
@@ -205,23 +212,28 @@ async def read_root():
 # ENDPOINT prédiction
 # ========================
 
+
+import pandas as pd
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+
 @app.post("/dataframe/")
 async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
-    """
-    Endpoint pour générer un DataFrame croisé basé sur les choix de l'utilisateur.
-    """
     region = payload.get("region")
-    pays = payload.get("pays")
-    table = payload.get("table")
+    pays = payload.get("pays") or None
+    table = payload.get("table") or None
     target_column = payload.get("target_column")
-    print(region,pays,table,target_column)
 
-    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
-        raise HTTPException(status_code=400, detail="Table invalide")
-    # Vérification des paramètres
     if not region and not pays:
         raise HTTPException(status_code=400, detail="Region ou pays doivent être renseignés")
 
+    if table not in [
+        "Mortalite", "PopulationHIV", "Statistique", "Traitement", 
+        "TransmissionMereEnfant", "type_statistique", "type_traitement", "unite"
+    ]:
+        raise HTTPException(status_code=400, detail="Table invalide")
+
+    # Requête sur les pays
     query_pays = select(models.Pays)
     if region:
         query_pays = query_pays.filter(models.Pays.region == region)
@@ -231,37 +243,48 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     result_pays = await db.execute(query_pays)
     data_pays = result_pays.scalars().all()
 
+    if not data_pays:
+        raise HTTPException(status_code=404, detail="Aucun pays trouvé pour les critères donnés.")
+
+    # Convertir les résultats SQLAlchemy en dictionnaires, puis en DataFrame
+    df_pays = pd.DataFrame([p.__dict__ for p in data_pays])
+    df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
+
     # Charger les données de la table sélectionnée
-    query_table = select(getattr(models, table.capitalize()))
+    query_table = select(getattr(models, table))
     result_table = await db.execute(query_table)
     data_table = result_table.scalars().all()
 
-    # Conversion des données en DataFrames
-    df_pays = pd.DataFrame([item.__dict__ for item in data_pays])
-    df_table = pd.DataFrame([item.__dict__ for item in data_table])
-
-    # Nettoyage des colonnes inutiles
-    df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
+    df_table = pd.DataFrame([t.__dict__ for t in data_table])
     df_table = df_table.drop("_sa_instance_state", axis=1, errors="ignore")
-    print(f"✅ df_pays : { df_pays }")
-    print(f"✅ df_table { df_table }")  
-    # Fusion des deux DataFrames pour créer un DataFrame croisé
-    try:
-        dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner") 
-        print(f"✅ Données chargées. Dataframe croisé : { dataframe_croise }") # `id_pays` est la clé de fusion
-        return {"dataframe": dataframe_croise.to_dict()}  # Retourne le DataFrame croisé sous forme de dictionnaire
-    except KeyError:
-        raise HTTPException(status_code=400, detail="Les clés de fusion ne correspondent pas entre les tables")
+
+    if table.lower() == "pays":
+        dataframe_croise = df_pays
+    else:
+        # Filtrage par pays
+        df_table = df_table[df_table["id_pays"].isin(df_pays["id_pays"])]
+        # Fusion
+        dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
+
+    return {"dataframe": dataframe_croise.to_dict(orient="records")}
 
 
 
 @app.get("/tables/")
 async def get_available_tables():
     """
-    Endpoint pour fournir les noms des tables disponibles et leurs relations.
+    Endpoint pour récupérer les tables disponibles.
     """
-    tables = {"mortalite", "population_hiv", "statistque","traitement","transmission_mere_enfant"}
-   
+    TABLE_MAPPING = {
+        "Mortalite": models.Mortalite,
+        "PopulationHIV": models.PopulationHIV,
+        "Statistique": models.Statistique,
+        "Traitement": models.Traitement,
+        "TransmissionMereEnfant": models.TransmissionMereEnfant
+        # Ajoute ici d'autres tables et leurs modèles
+    }
+
+    tables = list(TABLE_MAPPING.keys())
     return {"tables": tables}
 
 @app.get("/columns/{table_name}")
@@ -270,11 +293,11 @@ async def get_columns(table_name: str):
     Endpoint pour récupérer la liste des colonnes disponibles dans une table donnée.
     """
     TABLE_MAPPING = {
-        "mortalite": models.Mortalite,
-        "population_hiv": models.PopulationHIV,
-        "statistique": models.Statistique,
-        "traitement": models.Traitement,
-        "transmission_mere_enfant": models.TransmissionMereEnfant
+        "Mortalite": models.Mortalite,
+        "PopulationHIV": models.PopulationHIV,
+        "Statistique": models.Statistique,
+        "Traitement": models.Traitement,
+        "TransmissionMereEnfant": models.TransmissionMereEnfant
         # Ajoute ici d'autres tables et leurs modèles
     }
 
@@ -288,48 +311,62 @@ async def get_columns(table_name: str):
     return {"columns": columns}
 
 @app.post("/train_model/")
-async def train_model_endpoint(payload: dict):
+async def train_model(payload: dict):
     """
     Endpoint pour entraîner le modèle avec les données fournies.
     """
     dataframe_dict = payload.get("dataframe")
     target_column = payload.get("target_column")  # Récupérer dynamiquement la colonne cible
-    print(f"✅ Données chargées. Dataframe : { dataframe_dict }")
-    print(f"✅ Données chargées. Colonne cible : { target_column }")
-    if not dataframe_dict:
-        raise HTTPException(status_code=400, detail="Le DataFrame est manquant")
-
-    # Convertir le dictionnaire en DataFrame
+    if not dataframe_dict or not target_column:
+        raise HTTPException(status_code=400, detail="Données ou colonne cible manquantes")
     df = pd.DataFrame.from_dict(dataframe_dict)
-    print(f"Avant séparation, taille du DataFrame : {df.shape}")
+    try:
+        # Nettoyage : suppression des colonnes non pertinentes
+        columns_to_drop = ["region", "nom_pays", "sous_region", "id_unite"]
+        if target_column in columns_to_drop:
+            columns_to_drop.remove(target_column)
 
-    #test
-    X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region","id_unite"])  # Définir X avant usage
-    
-    y = df[target_column]
+        # Définir X et y
+        y = df[target_column]
+        X = df.drop(columns=columns_to_drop + [target_column], errors="ignore")
+        # Garder seulement les colonnes numériques
+        X = X.select_dtypes(include=["number"])
+        if X.empty:
+            raise HTTPException(status_code=400, detail="Aucune colonne numérique valide pour l'entraînement.")
+        # Créer pipeline avec normalisation + modèle
+        model = VotingRegressor(estimators=[
+            ("lr", LinearRegression()),
+            ("rf", RandomForestRegressor(n_estimators=100)),
+            ("svr", SVR())
+        ])
+        pipeline = Pipeline([
+            ("scaler", StandardScaler()),
+            ("model", model)
+        ])
+        pipeline.fit(X, y)
+        joblib.dump(pipeline, "voting_regressor.pkl")
+        predictions = pipeline.predict(X)
+        return {
 
-# Nettoyer le DataFrame avec la fonction importée depuis prediction.py
-    X = preprocess_features(X)
+            "labels": df["annee"].tolist() if "annee" in df.columns else list(range(len(predictions))),
+ 
 
-   # Préparer les données de manière générique
-    X, y = prepare_data_generic(df, target_column=target_column)
+            "real_data": y.tolist(),
+ 
 
-    # Vérification : une colonne cible est-elle fournie ?
-    if y is None:
-        raise HTTPException(status_code=400, detail="La colonne cible est requise pour l'entraînement")
+            "predicted_data": predictions.tolist()
+ 
 
-    # Créer le modèle
-    model = create_voting_regressor()
-
-    # Entraîner le modèle
-    trained_model = train_voting_regressor(model, X, y)
-    
-    # Sauvegarder le modèle
-    joblib.dump(trained_model, "voting_regressor.pkl")
+        }
+ 
 
 
-    return {"message": "Modèle entraîné avec succès"}
+ 
 
+    except Exception as e:
+ 
+
+        raise HTTPException(status_code=500, detail=f"Erreur lors de l'entraînement du modèle : {str(e)}")
 
 # ========================
 # RUN SERVER

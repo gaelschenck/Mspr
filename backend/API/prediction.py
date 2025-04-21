@@ -16,40 +16,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def prepare_data_generic(df, target_column=None):
-    """²    
-    - Sépare les caractéristiques (`features`) et la cible (`target`).
-    - Si `target_column` n'est pas fourni, essaye de l'inférer ou retourne uniquement les features.
-    Args:
-        df (pd.DataFrame): Le DataFrame à traiter.
-        target_column (str): La colonne cible (si elle est connue).
+def prepare_data_generic(df, target_column):
+    print("Colonnes disponibles :", df.columns)
 
-    Returns:
-        X (pd.DataFrame): Les caractéristiques.
-        y (pd.Series ou None): La cible (ou None si non spécifiée).
-    """
-    print(f"Taille du DataFrame avant préparation : {df.shape}")
-    print(f"Colonnes présentes : {df.columns}")
-
-    
-    if target_column and target_column in df.columns:
-        # Séparer la cible et les caractéristiques
-        X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region","id_unite"])
-        y = df[target_column]
-        print(f"🔍 Colonne cible : { target_column }")
-        print("Index actuel :", df.index)
-        df.set_index('annee', inplace=True)
-        print("Index actuel :", df.index)
-
+    if "annee" in df.columns:
+        df.set_index("annee", inplace=True)
     else:
-        # Si la colonne cible n'est pas spécifiée ou introuvable, on ne retourne que les features
-        print("🔍 Colonne cible non spécifiée ou absente. Utilisation des seules caractéristiques.")
-        X = df
-        y = None
+        print("⚠️ Aucune colonne 'annee' trouvée. L'index ne sera pas modifié.")
 
-    print(f"✅ Données préparées. Dimensions des caractéristiques : {X.shape}")
-    if y is not None:
-        print(f"✅ Colonne cible détectée. Nombre de cibles : {len(y)}")
+    # puis suite du traitement...
+    X = df.select_dtypes(include=["int", "float"]).drop(columns=[target_column], errors="ignore")
+    y = df[target_column]
     return X, y
 
 def create_voting_regressor():
@@ -132,6 +109,7 @@ def train_voting_regressor(model, X, y):
     y_pred = model.predict(X_test)
 
     # Calculer les métriques
+    print(y_pred)
     mse = mean_squared_error(y_test, y_pred)
     rmse = np.sqrt(mse)
     r2 = r2_score(y_test, y_pred)
