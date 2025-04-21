@@ -75,6 +75,7 @@ export default {
       regions: [],
       paysList: [],
       tables: [],
+      table: null,
       columns: [],
       selectedRegion: "",
       selectedPays: "",
