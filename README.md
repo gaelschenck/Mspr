@@ -1,24 +1,40 @@
 # Projet MSPR - Données VIH Mondiales
 
 ## Description
+
 Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VIH pour créer une base de données structurée PostgreSQL. Il comprend des informations sur la prévalence, la mortalité, les traitements et la transmission mère-enfant du VIH par pays.
 
 ## Structure du Projet
+
 ```
 .
-├── ETL/                    # Scripts ETL
-│   ├── run_etl.sh         # Script principal d'exécution
-│   ├── etl.log            # Fichier de logs
-│   └── *.py               # Scripts Python ETL
-├── SQL/                    # Scripts SQL
-│   ├── create_tables.sql  # Création des tables
-│   ├── clean_tables.sql   # Nettoyage des tables
-│   ├── import_data.sql    # Import des données
-│   └── create_views.sql   # Création des vues
-├── SourceData/            # Données sources
-├── DatasetClean/          # Données transformées
-├── requirements.txt       # Dépendances Python
-└── README.md             # Ce fichier
+├── backend/                # Code serveur (API, ETL, données)
+│   ├── API/                # Backend FastAPI (MSPR 02)
+│   │   ├── main.py
+│   │   ├── prediction.py
+│   │   ├── database.py
+│   │   ├── models.py
+│   │   ├── schemas.py
+│   │   └── requirements.txt
+│   ├── ETL/                # Scripts ETL (MSPR 01)
+│   │   ├── etl_table_*.py
+│   │   └── run_etl.sh
+│   ├── SourceData/         # Données sources brutes (CSV)
+│   ├── DatasetClean/       # Données nettoyées
+│   └── SQL/                # Scripts SQL (tables, import, vues)
+├── frontend/               # Application Vue.js + Chart.js
+│   ├── public/             # Assets statiques (index.html, favicon)
+│   ├── src/                # Composants et views Vue.js
+│   ├── services/           # Modules d’appel API
+│   ├── test/               # Tests unitaires et E2E
+│   ├── index.html
+│   ├── jsconfig.json
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+├── docs/                   # Documentation PDF (benchmarks, accessibilité)
+├── PowerBi/                # Fichier Power BI (MSPR 01)
+└── README.md               # Ce fichier
 ```
 
 ## Structure de la Base de Données
@@ -26,16 +42,19 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
 ### Tables de Référence
 
 1. **pays**
+
    - `id_pays` SERIAL PRIMARY KEY
    - `nom_pays` VARCHAR(100) NOT NULL
    - `region` VARCHAR(100)
    - `sous_region` VARCHAR(100)
 
 2. **unite**
+
    - `id_unite` SERIAL PRIMARY KEY
    - `nom_unite` VARCHAR(50) NOT NULL
 
 3. **type_statistique**
+
    - `id_type_statistique` SERIAL PRIMARY KEY
    - `nom_type_statistique` VARCHAR(100) NOT NULL
 
@@ -46,6 +65,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
 ### Tables Principales
 
 5. **population_hiv**
+
    - `id` SERIAL PRIMARY KEY
    - `id_pays` INTEGER (FK → pays)
    - `annee` INTEGER
@@ -54,6 +74,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
    - UNIQUE(id_pays, annee)
 
 6. **mortalite**
+
    - `id` SERIAL PRIMARY KEY
    - `id_pays` INTEGER (FK → pays)
    - `annee` INTEGER
@@ -62,6 +83,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
    - UNIQUE(id_pays, annee)
 
 7. **transmission_mere_enfant**
+
    - `id` SERIAL PRIMARY KEY
    - `id_pays` INTEGER (FK → pays)
    - `valeur` DECIMAL(10,2)
@@ -69,6 +91,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
    - UNIQUE(id_pays)
 
 8. **traitement**
+
    - `id` SERIAL PRIMARY KEY
    - `id_pays` INTEGER (FK → pays)
    - `valeur` DECIMAL(10,2)
@@ -88,6 +111,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
 ### Vues
 
 1. **vue_powerbi_complete**
+
    - Informations pays :
      - `id_pays` (INTEGER)
      - `nom_pays` (VARCHAR)
@@ -122,6 +146,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
      - `moyenne_traitement_enfant_region` (DECIMAL)
 
 2. **vue_indicateurs_pays**
+
    - `id_pays` (INTEGER)
    - `nom_pays` (VARCHAR)
    - `region` (VARCHAR)
@@ -144,6 +169,7 @@ Ce projet ETL (Extract, Transform, Load) traite les données mondiales sur le VI
 La base de données contient une vue unique et complète nommée **vue_globale** qui regroupe toutes les informations nécessaires pour PowerBI :
 
 1. **Informations de base**
+
    - Pays :
      - `id_pays` (INTEGER)
      - `nom_pays` (VARCHAR)
@@ -153,6 +179,7 @@ La base de données contient une vue unique et complète nommée **vue_globale**
      - `annee` (INTEGER)
 
 2. **Indicateurs principaux**
+
    - Population HIV :
      - `population_hiv` (DECIMAL)
      - `unite_population_hiv` (VARCHAR)
@@ -188,19 +215,32 @@ La base de données contient une vue unique et complète nommée **vue_globale**
      - `percentile_mortalite` (DECIMAL)
 
 Cette vue unique permet de :
+
 - Créer tous types de visualisations dans PowerBI
 - Analyser les tendances temporelles
 - Comparer les pays et les régions
 - Calculer des statistiques avancées
 - Optimiser les performances des requêtes
 
+## Application Front‑End (Vue.js)
+
+Import CSV/JSON, sélection de la colonne cible.
+
+Appel Axios à /train_model.
+
+Affichage Chart.js interactif des prédictions.
+
+Responsive et accessible (WCAG) grâce à Tailwind CSS.
+
 ## Dépendances
 
 ### Base de Données
+
 - PostgreSQL 12 ou supérieur
 - Encodage UTF-8
 
 ### Python et Bibliothèques
+
 - Python 3.8 ou supérieur
 - pandas >= 2.0.0
 - numpy >= 1.24.0
@@ -209,6 +249,7 @@ Cette vue unique permet de :
 - six >= 1.16.0
 
 ### Modules Python Standard
+
 - logging (journalisation)
 - sys (fonctions système)
 - pathlib (gestion des chemins)
@@ -216,25 +257,38 @@ Cette vue unique permet de :
 ## Installation
 
 1. Créer la base de données :
+
 ```bash
 createdb mspr_dev
 ```
 
 2. Installer les dépendances Python :
+
 ```bash
+cd backend
 pip install -r ETL/requirements.txt
 ```
 
 3. Initialiser la base de données :
+
 ```bash
 psql mspr_dev -f SQL/create_tables.sql
 psql mspr_dev -f SQL/import_data.sql
 psql mspr_dev -f SQL/create_views.sql
 ```
 
+4. Lancé le front :
+
+```bash
+cd FrontEnd
+npm install
+npm run dev
+```
+
 ## Validation des Données
 
 Le script d'import effectue les vérifications suivantes :
+
 - Pas de valeurs négatives (converties en 0)
 - Pourcentages limités entre 0 et 100
 - Vérification des clés étrangères
@@ -242,7 +296,9 @@ Le script d'import effectue les vérifications suivantes :
 - Cohérence des types de données
 
 ## Logs
+
 Les logs sont enregistrés dans `ETL/etl.log` avec :
+
 - Horodatage de chaque opération
 - Niveau de gravité (INFO, WARNING, ERROR)
 - Description détaillée des événements
@@ -251,14 +307,17 @@ Les logs sont enregistrés dans `ETL/etl.log` avec :
 ## Choix Techniques
 
 ### Approche Procédurale vs POO
+
 Le projet utilise une approche procédurale plutôt que la Programmation Orientée Objet (POO) pour plusieurs raisons :
 
 1. **Nature du projet ETL**
+
    - Scripts ETL simples et directs
    - Opérations principalement linéaires (Extraction → Transformation → Chargement)
    - Pas de comportements complexes qui justifieraient des classes
 
 2. **Type de données**
+
    - Données tabulaires simples
    - Transformations directes
    - Pas de hiérarchies complexes d'objets

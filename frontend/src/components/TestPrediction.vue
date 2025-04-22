@@ -5,14 +5,14 @@
       <h1 class="form-title" id="data-form-title">Choix des données</h1>
       <form aria-labelledby="data-form-title">
         <div class="form-group">
-          <label for="region" id="label-region">Choisissez une région :</label>
+          <label for="region" id="label-region">Choisissez une région :</label>
           <select id="region" v-model="selectedRegion" aria-labelledby="label-region" required>
             <option disabled value="">-- Sélectionner une région --</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="pays" id="label-pays">Choisissez un pays :</label>
+          <label for="pays" id="label-pays">Choisissez un pays :</label>
           <select id="pays" v-model="selectedPays" aria-labelledby="label-pays" required>
             <option disabled value="">-- Sélectionner un pays --</option>
             <option v-for="pays in filteredPaysList" :key="pays.id" :value="pays.nom">
@@ -45,11 +45,11 @@
         <h2 class="graph-title">Prédiction vs Réel</h2>
         <div aria-labelledby="chart-desc" role="img" class="chart-area">
           <div class="chart-container">
-            
-              <Line :data="chartData" :options="chartOptions"
-                aria-label="Graphique comparatif entre les données réelles et les prédictions" role="img"
-                aria-describedby="chart-desc" tabindex="0" />
-            
+
+            <Line :data="chartData" :options="chartOptions"
+              aria-label="Graphique comparatif entre les données réelles et les prédictions" role="img"
+              aria-describedby="chart-desc" tabindex="0" />
+
           </div>
         </div>
         <div class="chart-legend" aria-hidden="true">
@@ -61,6 +61,20 @@
             <span class="legend-color bg-a11yred"></span>
             <span class="legend-label">Prédictions</span>
           </span>
+        </div>
+      </section>
+    </div>
+    <div v-if="!showChart" class="chart-wrapper">
+      <p id="chart-desc" class="sr-only">
+        Pour visualiser le graphique, veuillez remplir le formulaire du gauche et après le soumettre
+      </p>
+      <section aria-label="information" tabindex="0" class="info-section">
+        <div class="info-card" role="status" aria-live="polite">
+          <font-awesome-icon icon="info-circle" aria-hidden="true" />
+          <p>
+            <span class="sr-only">Information : </span>
+            Veuillez remplir le formulaire puis le soumettre pour afficher le graphique et les metrics de performances de notre modéles de prediction du VIH
+          </p>
         </div>
       </section>
     </div>
@@ -233,13 +247,17 @@ export default {
 </script>
 
 <style scoped>
+.info-section {
+  display: flex;
+    justify-content: center;
+}
 .container {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   padding: 1rem;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .form-container {
@@ -251,20 +269,22 @@ export default {
   flex: 1;
   min-width: 320px;
   max-width: 380px;
- /* Modification pour une meilleure gestion de la largeur initiale */
+  /* Modification pour une meilleure gestion de la largeur initiale */
 }
 
 .chart-wrapper {
-  flex: 2; /* Modification pour une meilleure gestion de la largeur initiale */
- /* Prend toute la largeur par défaut */
-  min-width: 400px; /* Empêche le graphique de devenir trop étroit */
+  flex: 2;
+  /* Modification pour une meilleure gestion de la largeur initiale */
+  /* Prend toute la largeur par défaut */
+  min-width: 400px;
+  /* Empêche le graphique de devenir trop étroit */
 }
 
 
 .graph-section {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   padding: 1rem 1rem 1.5rem;
   width: 100%;
   height: 100%;
@@ -401,6 +421,25 @@ export default {
   border: 0 !important;
 }
 
-/* Pour les écrans plus grands (tablettes et ordinateurs) */
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #cbf7e1; /* Bleu clair pour contraste */
+  border-left: 5px solid #0284c7; /* Accent visuel */
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  max-width: 600px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: #0c4a6e; /* Texte bien contrasté */
+  font-size: 1rem;
+}
 
+.info-card i {
+  font-size: 1.5rem;
+  color: #0284c7;
+}
+
+
+/* Pour les écrans plus grands (tablettes et ordinateurs) */
 </style>

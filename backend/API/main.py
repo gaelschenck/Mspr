@@ -350,13 +350,10 @@ async def train_model(payload: dict):
 
             "labels": df["annee"].tolist() if "annee" in df.columns else list(range(len(predictions))),
  
-
             "real_data": y.tolist(),
  
-
             "predicted_data": predictions.tolist()
  
-
         }
  
 
