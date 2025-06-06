@@ -49,6 +49,7 @@ data() {
 async mounted() {
 try {
   const responseTables = await apiClient.get("/tables/");
+  console.log("Réponse brute /tables/ :", responseTables.data);
   this.tables = Object.keys(responseTables.data.tables);
 
   const responsePays = await apiClient.get("/payslist/");

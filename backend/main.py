@@ -16,6 +16,11 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # Déclare `app`
 app = FastAPI(title="MSPR API", version="1.0.0")
 
+@app.post("/set-country")
+async def set_country(country: str):
+    os.environ["USER_COUNTRY"] = country.upper()
+    return {"message": f"Pays sélectionné : {country}"}
+
 # ========================
 # Configuration des CORS
 # ========================
@@ -340,4 +345,4 @@ async def train_model_endpoint(payload: dict):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run(app, port=8084, reload=True)

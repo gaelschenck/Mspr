@@ -8,12 +8,28 @@
           <li><router-link to="/prediction">Prédiction</router-link></li>
         </ul>
       </nav>
+      <div>
+        <button @click="setCountry('FR')">FR</button>
+        <button @click="setCountry('US')">US</button>
+        <button @click="setCountry('CH')">CH</button>
+      </div>
     </header>
   </template>
   
   <script>
+  import axios from "axios";
   export default {
     name: "Header",
+    methods: {
+    async setCountry(country) {
+      try {
+        const response = await axios.post("api/set-country", { country });
+        console.log(response.data.message);
+      } catch (error) {
+        console.error("Erreur de connexion :", error);
+      }
+    }
+  }
   };
   </script>
   

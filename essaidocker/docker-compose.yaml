@@ -1,0 +1,84 @@
+services:
+  reverse_proxy:
+    build:
+      context: .
+    container_name: reverse_proxy
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "80:80"
+  db:
+    image: postgres:latest
+    container_name: database
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_HOST: "database"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "bdd_mspr"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - essaidocker_my_network
+  db_us:
+    image: postgres:latest
+    container_name: db_us
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "bdd_us"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - pg_us_data:/var/lib/postgresql/data
+    networks:
+      - essaidocker_my_network
+  db_ch:
+    image: postgres:latest
+    container_name: db_ch
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "bdd_ch"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - pg_ch_data:/var/lib/postgresql/data
+    networks:
+      - essaidocker_my_network
+  backend:
+    image: my_backend_image
+    container_name: backend
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_HOST: "db"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "bdd_mspr"
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "8084:8084" 
+
+  frontend:
+    image: my_frontend_image
+    container_name: frontend
+    depends_on:
+      - backend
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "3000:3000"
+
+volumes:
+  pg_data:
+  pg_us_data:
+  pg_ch_data:
+
+networks:
+  essaidocker_my_network:
+    driver: bridge
