@@ -17,6 +17,86 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 app = FastAPI(title="MSPR API", version="1.0.0")
 
 # ========================
+# Configuration de la langue
+# ========================
+
+LANG = os.getenv("LANG", "fr")  # "fr" par défaut
+
+# Dictionnaire de traductions
+TRANSLATIONS = {
+    "root_message": {
+        "fr": "Bienvenue sur l'API MSPR!",
+        "en": "Welcome to the MSPR API!",
+        "de": "Willkommen bei der MSPR API!"
+    },
+    "preflight_ok": {
+        "fr": "Préflight OPTIONS accepté",
+        "en": "Preflight OPTIONS accepted",
+        "de": "Preflight OPTIONS akzeptiert"
+    },
+    "country_not_found": {
+        "fr": "Pays non trouvé",
+        "en": "Country not found",
+        "de": "Land nicht gefunden"
+    },
+    "country_deleted": {
+        "fr": "Pays supprimé avec succès",
+        "en": "Country successfully deleted",
+        "de": "Land erfolgreich gelöscht"
+    },
+    "invalid_table": {
+        "fr": "Table invalide",
+        "en": "Invalid table",
+        "de": "Ungültige Tabelle"
+    },
+    "region_or_country_required": {
+        "fr": "Region ou pays doivent être renseignés",
+        "en": "Region or country must be provided",
+        "de": "Region oder Land müssen angegeben werden"
+    },
+    "unknown_table": {
+        "fr": "Table inconnue",
+        "en": "Unknown table",
+        "de": "Unbekannte Tabelle"
+    },
+    "merge_key_error": {
+        "fr": "Les clés de fusion ne correspondent pas entre les tables",
+        "en": "Merge keys do not match between tables",
+        "de": "Die Schlüsselfelder stimmen zwischen den Tabellen nicht überein"
+    },
+    "table_not_found": {
+        "fr": "Table '{table}' introuvable",
+        "en": "Table '{table}' not found",
+        "de": "Tabelle '{table}' nicht gefunden"
+    },
+    "missing_dataframe": {
+        "fr": "Le DataFrame est manquant",
+        "en": "DataFrame is missing",
+        "de": "DataFrame fehlt"
+    },
+    "target_required": {
+        "fr": "La colonne cible est requise pour l'entraînement",
+        "en": "Target column is required for training",
+        "de": "Zielspalte für das Training erforderlich"
+    },
+    "avant_separation": {
+    "fr": "Avant séparation, taille du DataFrame : {shape}",
+    "en": "Before split, DataFrame shape: {shape}",
+    "de": "Vor der Trennung, DataFrame-Größe: {shape}"
+    },
+    "model_trained": {
+        "fr": "Modèle entraîné avec succès",
+        "en": "Model trained successfully",
+        "de": "Modell erfolgreich trainiert"
+    }
+}
+
+def tr(key, **kwargs):
+    """Fonction utilitaire pour traduire les messages."""
+    msg = TRANSLATIONS.get(key, {}).get(LANG, TRANSLATIONS.get(key, {}).get("fr", key))
+    return msg.format(**kwargs) if kwargs else msg
+
+# ========================
 # Configuration des CORS
 # ========================
 app.add_middleware(
@@ -28,7 +108,7 @@ app.add_middleware(
 )
 @app.options("/{path:path}")
 async def options_handler():
-    return {"message": "Préflight OPTIONS accepté"}
+    return {"message": tr("preflight_ok")}
 
 
 # Initialisation de la base de données
@@ -50,7 +130,7 @@ async def get_pays(db: AsyncSession = Depends(get_db)):
     """
     Endpoint pour récupérer les informations des pays depuis la table `pays`.
     """
-    result = await db.execute(select(models.Pays))  # Adapte `Pays` à ton modèle SQLAlchemy
+    result = await db.execute(select(models.Pays))
     pays_list = result.scalars().all()
     return [{"id": pays.id_pays, "nom": pays.nom_pays, "region": pays.region} for pays in pays_list]
 
@@ -78,7 +158,7 @@ async def update_pays(
     db_pays = result.scalar_one_or_none()
 
     if not db_pays:
-        raise HTTPException(status_code=404, detail="Pays non trouvé")
+        raise HTTPException(status_code=404, detail=tr("country_not_found"))
 
     await db.execute(
         update(models.Pays).where(models.Pays.id_pays == pays_id).values(**pays.dict())
@@ -93,11 +173,11 @@ async def delete_pays(pays_id: int, db: AsyncSession = Depends(get_db)):
     db_pays = result.scalar_one_or_none()
 
     if not db_pays:
-        raise HTTPException(status_code=404, detail="Pays non trouvé")
+        raise HTTPException(status_code=404, detail=tr("country_not_found"))
 
     await db.execute(delete(models.Pays).where(models.Pays.id_pays == pays_id))
     await db.commit()
-    return {"message": "Pays supprimé avec succès"}
+    return {"message": tr("country_deleted")}
 
 
 # ========================
@@ -195,7 +275,7 @@ async def create_statistique(
 
 @app.get("/")
 async def read_root():
-    return {"message": "Bienvenue sur l'API MSPR!"}
+    return {"message": tr("root_message"), "langue": LANG}
 
 
 # ========================
@@ -213,10 +293,10 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     target_column = payload.get("target_column")
 
     if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
-        raise HTTPException(status_code=400, detail="Table invalide")
-    # Vérification des paramètres
+        raise HTTPException(status_code=400, detail=tr("invalid_table"))
     if not region and not pays:
-        raise HTTPException(status_code=400, detail="Region ou pays doivent être renseignés")
+        raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
+
 
     query_pays = select(models.Pays)
     if region:
@@ -241,7 +321,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     }
     model = MODEL_MAPPING.get(table)
     if not model:
-        raise HTTPException(status_code=400, detail="Table inconnue")
+        raise HTTPException(status_code=400, detail=tr("unknown_table"))
     query_table = select(model)
     result_table = await db.execute(query_table)
     data_table = result_table.scalars().all()
@@ -257,11 +337,10 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     print(f"✅ df_table { df_table }")  
     # Fusion des deux DataFrames pour créer un DataFrame croisé
     try:
-        dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner") 
-        print(f"✅ Données chargées. Dataframe croisé : { dataframe_croise }") # `id_pays` est la clé de fusion
-        return {"dataframe": dataframe_croise.to_dict()}  # Retourne le DataFrame croisé sous forme de dictionnaire
+        dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
+        return {"dataframe": dataframe_croise.to_dict()}
     except KeyError:
-        raise HTTPException(status_code=400, detail="Les clés de fusion ne correspondent pas entre les tables")
+        raise HTTPException(status_code=400, detail=tr("merge_key_error"))
 
 
 
@@ -297,7 +376,7 @@ async def get_columns(table_name: str):
     # Vérifie si la table existe
     model = TABLE_MAPPING.get(table_name)
     if not model:
-        raise HTTPException(status_code=404, detail=f"Table '{table_name}' introuvable")
+        raise HTTPException(status_code=404, detail=tr("table_not_found", table=table_name))
 
     # Récupère les colonnes du modèle
     columns = [column.key for column in model.__table__.columns]
@@ -309,15 +388,13 @@ async def train_model_endpoint(payload: dict):
     Endpoint pour entraîner le modèle avec les données fournies.
     """
     dataframe_dict = payload.get("dataframe")
-    target_column = payload.get("target_column")  # Récupérer dynamiquement la colonne cible
-    print(f"✅ Données chargées. Dataframe : { dataframe_dict }")
-    print(f"✅ Données chargées. Colonne cible : { target_column }")
+    target_column = payload.get("target_column")
     if not dataframe_dict:
-        raise HTTPException(status_code=400, detail="Le DataFrame est manquant")
+        raise HTTPException(status_code=400, detail=tr("missing_dataframe"))
 
     # Convertir le dictionnaire en DataFrame
     df = pd.DataFrame.from_dict(dataframe_dict)
-    print(f"Avant séparation, taille du DataFrame : {df.shape}")
+    print(tr("avant_separation", shape=df.shape))
 
     #test
     X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region","id_unite"])  # Définir X avant usage
@@ -332,7 +409,7 @@ async def train_model_endpoint(payload: dict):
 
     # Vérification : une colonne cible est-elle fournie ?
     if y is None:
-        raise HTTPException(status_code=400, detail="La colonne cible est requise pour l'entraînement")
+        raise HTTPException(status_code=400, detail=tr("target_required"))
 
     # Créer le modèle
     model = create_voting_regressor()
@@ -344,7 +421,7 @@ async def train_model_endpoint(payload: dict):
     joblib.dump(trained_model, "voting_regressor.pkl")
 
 
-    return {"message": "Modèle entraîné avec succès"}
+    return {"message": tr("model_trained")}
 
 
 # ========================
