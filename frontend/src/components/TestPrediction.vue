@@ -1,25 +1,30 @@
 <template>
   <div>
+    <div>
     <h1>{{ $t('testprediction_title') }}</h1>
     <label for="region">{{ $t('testprediction_choose_region') }}</label>
     <select v-model="selectedRegion" id="region">
       <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
     </select>
-
+  </div>
+  <div>
     <label for="pays">{{ $t('testprediction_choose_country') }}</label>
     <select v-model="selectedPays" id="pays">
       <option v-for="pays in paysList" :key="pays.id" :value="pays.nom">{{ pays.nom }}</option>
     </select>
-
+  </div>
+  <div>
     <label for="table">{{ $t('testprediction_choose_table') }}</label>
     <select v-model="selectedTable" id="table" @change="fetchColumns">
       <option v-for="table in tables" :key="table" :value="table">{{ table }}</option>
     </select>
-
+  </div>
+  <div>
     <label for="target_column">{{ $t('testprediction_choose_column') }}</label>
     <select v-model="selectedColumn" id="target_column" v-if="columns.length > 0">
       <option v-for="column in columns" :key="column" :value="column">{{ column }}</option>
     </select>
+  </div>
 
     <button @click="submitChoices" :disabled="!selectedTable || !selectedColumn">
       {{ $t('testprediction_submit') }}

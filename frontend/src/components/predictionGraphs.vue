@@ -6,12 +6,12 @@
     <div v-else>
       <p>{{ $t('prediction_graphs_no_result') }}</p>
     </div>
-    <pre>{{ result }}</pre>
+    
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import { usePredictionStore } from "@/stores/predictionStore";
 import Chart from "chart.js/auto";
@@ -52,6 +52,11 @@ onMounted(() => {
       }
     });
   }
+});
+
+// Réinitialise le store quand on quitte la page
+onUnmounted(() => {
+  predictionStore.setResult(null);
 });
 </script>
 
