@@ -4,7 +4,9 @@ services:
       context: .
     container_name: reverse_proxy
     depends_on:
-      - backend
+      - backend_fr
+      - backend_us
+      - backend_ch
       - frontend
     networks:
       - essaidocker_my_network
@@ -22,6 +24,7 @@ services:
       POSTGRES_PORT: "5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
     networks:
       - essaidocker_my_network
   db_us:
@@ -34,6 +37,7 @@ services:
       POSTGRES_PORT: "5432"
     volumes:
       - pg_us_data:/var/lib/postgresql/data
+      - ./init_us:/docker-entrypoint-initdb.d
     networks:
       - essaidocker_my_network
   db_ch:
@@ -46,29 +50,76 @@ services:
       POSTGRES_PORT: "5432"
     volumes:
       - pg_ch_data:/var/lib/postgresql/data
+      - ./init_ch:/docker-entrypoint-initdb.d
     networks:
       - essaidocker_my_network
-  backend:
+  backend_fr:
     image: my_backend_image
-    container_name: backend
-    depends_on:
-      - db
+    container_name: backend_fr
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "admin"
-      POSTGRES_HOST: "db"
+      POSTGRES_HOST: "database"
       POSTGRES_PORT: "5432"
       POSTGRES_DB: "bdd_mspr"
+      USER_COUNTRY: "FR"
     networks:
       - essaidocker_my_network
     ports:
-      - "8084:8084" 
+      - "8084:8084"
+    depends_on:
+      - db
+    build: ../backend
+    command: ["/wait-for", "database:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
+    
+
+  backend_us:
+    image: my_backend_image
+    container_name: backend_us
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_HOST: "db_us"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "bdd_us"
+      USER_COUNTRY: "US"
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "8085:8084"
+    depends_on:
+      - db_us
+    build: ../backend
+    command: ["/wait-for", "db_us:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
+
+
+  backend_ch:
+    image: my_backend_image
+    container_name: backend_ch
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_HOST: "db_ch"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "bdd_ch"
+      USER_COUNTRY: "CH"
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "8086:8084"
+    depends_on:
+      - db_ch
+    build: ../backend
+    command: ["/wait-for", "db_ch:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
+   
 
   frontend:
     image: my_frontend_image
     container_name: frontend
     depends_on:
-      - backend
+      - backend_fr
+      - backend_us
+      - backend_ch
     networks:
       - essaidocker_my_network
     ports:

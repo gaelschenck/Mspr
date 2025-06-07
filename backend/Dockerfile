@@ -11,8 +11,15 @@ COPY . .
 # Installation des dépendances
 RUN pip install -r requirements.txt
 
+# Installation de netcat pour wait-for
+RUN apt-get update && apt-get install -y netcat-openbsd
+
+# Ajout du script wait-for
+ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /wait-for
+RUN chmod +x /wait-for
+
 # Exposition du port
 EXPOSE 8084
 
 # Commande de lancement du backend
-CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0","--port", "8084"]
+CMD ["/wait-for", "db_ch:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]

@@ -9,9 +9,9 @@
         </ul>
       </nav>
       <div>
-        <button @click="setCountry('FR')">FR</button>
-        <button @click="setCountry('US')">US</button>
-        <button @click="setCountry('CH')">CH</button>
+        <button @click="setCountry('fr')">FR</button>
+        <button @click="setCountry('us')">US</button>
+        <button @click="setCountry('ch')">CH</button>
       </div>
     </header>
   </template>
@@ -20,14 +20,12 @@
   import axios from "axios";
   export default {
     name: "Header",
-    methods: {
-    async setCountry(country) {
-      try {
-        const response = await axios.post("api/set-country", { country });
-        console.log(response.data.message);
-      } catch (error) {
-        console.error("Erreur de connexion :", error);
-      }
+     methods: {
+    setCountry(country) {
+      // On stocke le code pays en minuscule dans le localStorage
+      localStorage.setItem("selectedCountry", country.toLowerCase());
+      // Optionnel : recharger la page ou émettre un event pour prévenir les autres composants
+      window.location.reload();
     }
   }
   };

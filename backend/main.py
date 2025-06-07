@@ -16,11 +16,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # Déclare `app`
 app = FastAPI(title="MSPR API", version="1.0.0")
 
-@app.post("/set-country")
-async def set_country(country: str):
-    os.environ["USER_COUNTRY"] = country.upper()
-    return {"message": f"Pays sélectionné : {country}"}
-
 # ========================
 # Configuration des CORS
 # ========================
@@ -232,8 +227,22 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     result_pays = await db.execute(query_pays)
     data_pays = result_pays.scalars().all()
 
-    # Charger les données de la table sélectionnée
-    query_table = select(getattr(models, table.capitalize()))
+# Mapping précis entre nom de table (frontend) et classe modèle Python
+    MODEL_MAPPING = {
+        "mortalite": models.Mortalite,
+        "population_hiv": models.PopulationHIV,
+        "statistique": models.Statistique,
+        "traitement": models.Traitement,
+        "transmission_mere_enfant": models.TransmissionMereEnfant,
+        "type_statistique": models.TypeStatistique,
+        "type_traitement": models.TypeTraitement,
+        "unite": models.Unite,
+        "pays": models.Pays,
+    }
+    model = MODEL_MAPPING.get(table)
+    if not model:
+        raise HTTPException(status_code=400, detail="Table inconnue")
+    query_table = select(model)
     result_table = await db.execute(query_table)
     data_table = result_table.scalars().all()
 

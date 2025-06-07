@@ -3,13 +3,6 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv
 
-# Récupération du pays sélectionné (ex. via une variable d'environnement ou une requête)
-country = os.getenv("USER_COUNTRY", "FRANCE")  # Par défaut, France
-
-# Choisir la base de données en fonction du pays
-POSTGRES_DB = os.getenv(f"POSTGRES_DB_{country.upper()}", "bdd_mspr")  # Fallback sur France
-
-
 # Charge les variables d'environnement depuis .env
 load_dotenv(dotenv_path="C:/Users/gaels/OneDrive/Documents/ECOLE-EPSI/Mspr/API/.env")
 
