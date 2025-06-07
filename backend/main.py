@@ -396,33 +396,30 @@ async def train_model_endpoint(payload: dict):
     df = pd.DataFrame.from_dict(dataframe_dict)
     print(tr("avant_separation", shape=df.shape))
 
-    #test
-    X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region","id_unite"])  # Définir X avant usage
-    
+    # Préparer X et y
+    X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region", "id_unite"], errors="ignore")
     y = df[target_column]
 
-# Nettoyer le DataFrame avec la fonction importée depuis prediction.py
     X = preprocess_features(X)
-
-   # Préparer les données de manière générique
     X, y = prepare_data_generic(df, target_column=target_column)
 
-    # Vérification : une colonne cible est-elle fournie ?
     if y is None:
         raise HTTPException(status_code=400, detail=tr("target_required"))
 
-    # Créer le modèle
     model = create_voting_regressor()
-
-    # Entraîner le modèle
     trained_model = train_voting_regressor(model, X, y)
-    
-    # Sauvegarder le modèle
     joblib.dump(trained_model, "voting_regressor.pkl")
 
+    # Prédictions sur tout X
+    predictions = trained_model.predict(X)
+    # Labels pour l'axe X (exemple : années si dispo, sinon index)
+    labels = list(df["annee"]) if "annee" in df.columns else list(range(len(predictions)))
 
-    return {"message": tr("model_trained")}
-
+    return {
+        "prediction": list(predictions),
+        "labels": labels,
+        "message": tr("model_trained")
+    }
 
 # ========================
 # RUN SERVER

@@ -1,81 +1,80 @@
 <template>
   <div>
-      <h1>Choix des données</h1>
-      <label for="region">Choisissez un pays ou une région :</label>
-      <select v-model="selectedRegion" id="region">
+    <h1>{{ $t('testprediction_title') }}</h1>
+    <label for="region">{{ $t('testprediction_choose_region') }}</label>
+    <select v-model="selectedRegion" id="region">
       <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-      </select>
+    </select>
 
-      <!-- Sélection des pays -->
-      <label for="pays">Choisissez un pays :</label>
-      <select v-model="selectedPays" id="pays">
-        <option v-for="pays in paysList" :key="pays.id" :value="pays.nom">{{ pays.nom }}</option>
-      </select>
+    <label for="pays">{{ $t('testprediction_choose_country') }}</label>
+    <select v-model="selectedPays" id="pays">
+      <option v-for="pays in paysList" :key="pays.id" :value="pays.nom">{{ pays.nom }}</option>
+    </select>
 
-
-      <!-- Sélection de la table -->
-    <label for="table">Choisissez une table :</label>
+    <label for="table">{{ $t('testprediction_choose_table') }}</label>
     <select v-model="selectedTable" id="table" @change="fetchColumns">
       <option v-for="table in tables" :key="table" :value="table">{{ table }}</option>
     </select>
 
-    <!-- Sélection de la colonne cible (après choix de la table) -->
-    <label for="target_column">Choisissez une colonne cible :</label>
+    <label for="target_column">{{ $t('testprediction_choose_column') }}</label>
     <select v-model="selectedColumn" id="target_column" v-if="columns.length > 0">
       <option v-for="column in columns" :key="column" :value="column">{{ column }}</option>
     </select>
 
-    <button @click="submitChoices" :disabled="!selectedTable || !selectedColumn">Soumettre</button>
+    <button @click="submitChoices" :disabled="!selectedTable || !selectedColumn">
+      {{ $t('testprediction_submit') }}
+    </button>
   </div>
-
 </template>
 
 <script>
 import apiClient from "/services/api";
+import { usePredictionStore } from '@/stores/predictionStore';
 
 export default {
 data() {
   return {
-  regions: [],
-  paysList: [],
-  tables: [],
-  columns: [],
-  selectedRegion: null,
-  selectedPays: null,
-  selectedTable: null,
-  selectedColumn: null,
+    regions: [],
+    paysList: [],
+    tables: [],
+    columns: [],
+    selectedRegion: null,
+    selectedPays: null,
+    selectedTable: null,
+    selectedColumn: null,
+    predictionResult: null,
   };
 },
 async mounted() {
-try {
-  const responseTables = await apiClient.get("/tables/");
-  console.log("Réponse brute /tables/ :", responseTables.data);
-  this.tables = Object.keys(responseTables.data.tables);
+  try {
+    const responseTables = await apiClient.get("/tables/");
+    console.log(this.$t('testprediction_log_tables'), responseTables.data);
+    this.tables = Object.keys(responseTables.data.tables);
 
-  const responsePays = await apiClient.get("/payslist/");
-  console.log("Données pays récupérées :", responsePays.data);
-  const pays = responsePays.data;
-  this.paysList = pays;
+    const responsePays = await apiClient.get("/payslist/");
+    console.log(this.$t('testprediction_log_countries'), responsePays.data);
+    const pays = responsePays.data;
+    this.paysList = pays;
 
-  const regionsSet = new Set(pays.map(p => p.region));
-  this.regions = [...regionsSet]; // dédoublonné
+    const regionsSet = new Set(pays.map(p => p.region));
+    this.regions = [...regionsSet]; // dédoublonné
 
-} catch (error) {
-  console.error("Erreur lors du chargement des données :", error);
-}
+  } catch (error) {
+    console.error(this.$t('testprediction_error_load'), error);
+  }
 },
 methods: {
   async fetchColumns() {
-      if (!this.selectedTable) return;
+    if (!this.selectedTable) return;
 
-      try {
-        const response = await apiClient.get(`/columns/${this.selectedTable}`);
-        this.columns = response.data.columns;
-        console.log("Colonnes disponibles :", this.columns);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des colonnes :", error);
-      }
-    },
+    try {
+      const response = await apiClient.get(`/columns/${this.selectedTable}`);
+      this.columns = response.data.columns;
+      console.log(this.$t('testprediction_log_columns'), this.columns);
+    } catch (error) {
+      console.error(this.$t('testprediction_error_columns'), error);
+    }
+  },
   async submitChoices() {
     const payload = {
       region: this.selectedRegion || null,
@@ -84,32 +83,42 @@ methods: {
       target_column: this.selectedColumn,
     };
 
-    console.log("Payload envoyé :", payload); 
-    // Vérifie que les données sont valides avant envoi
+    console.log(this.$t('testprediction_log_payload'), payload); 
     if (!payload.region && !payload.pays) {
-      console.error("Erreur : Vous devez sélectionner soit une région, soit un pays.");
-      alert("Veuillez sélectionner une région ou un pays avant de soumettre !");
-      return; // Arrête la soumission
+      console.error(this.$t('testprediction_error_select'));
+      alert(this.$t('testprediction_alert'));
+      return;
     }
 
     try {
-      const response = await apiClient.post("/dataframe/", payload);
-      const dataframe = response.data.dataframe;
-      console.log("Dataframe généré :", response.data);
-      // Envoyer le DataFrame et la colonne cible à /train_model/
+    const response = await apiClient.post("/dataframe/", payload);
+    const dataframe = response.data.dataframe;
+    console.log(this.$t('testprediction_log_dataframe'), response.data);
+
     const trainPayload = {
       dataframe,
-      target_column: payload.target_column, // Ajouter la colonne cible ici
+      target_column: payload.target_column,
     };
-    console.log("Payload envoyé à /train_model/ :", trainPayload);
+    console.log(this.$t('testprediction_log_train_payload'), trainPayload);
 
-    await apiClient.post("/train_model/", trainPayload);
-    console.log("Modèle entraîné avec succès !");
+    const trainResponse = await apiClient.post("/train_model/", trainPayload);
+    console.log(this.$t('testprediction_log_success'), trainResponse.data);
 
-    } catch (error) {
-      console.error("Erreur lors de la soumission :", error);
-    }
-  },
+    // Stocke le résultat dans le store
+    const predictionStore = usePredictionStore();
+    predictionStore.setResult(trainResponse.data);
+
+    // Stocke le résultat dans une variable pour l'afficher ou le transmettre
+    this.predictionResult = trainResponse.data; // Ajoute predictionResult dans data()
+    this.$router.push({
+      name: 'PredictionGraphs',
+      query: { result: JSON.stringify(trainResponse.data) }
+    });
+
+  } catch (error) {
+    console.error(this.$t('testprediction_error_submit'), error);
+  }
+}
 },
 };
 </script>

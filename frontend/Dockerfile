@@ -9,6 +9,9 @@ COPY . .
 
 # Installation des dépendances
 RUN npm install
+RUN npm install vue-i18n
+RUN npm install pinia
+RUN npm install chart.js
 RUN npm install axios
 RUN npm install vue-router@next
 RUN npm install chart.js

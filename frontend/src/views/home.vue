@@ -1,8 +1,8 @@
 <!-- src/views/home.vue -->
 <template>
     <div class="home">
-      <h1>Bienvenue sur l'application</h1>
-      <p>Visualisez les données de manière interactive et obtenez des prédictions.</p>
+      <h1>{{ $t('welcome') }}</h1>
+    <p>{{ $t('home_description') }}</p>
     </div>
   </template>
   

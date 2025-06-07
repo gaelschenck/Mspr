@@ -6,7 +6,9 @@ services:
     depends_on:
       - backend_fr
       - backend_us
-      - backend_ch
+      - backend_ch_de
+      - backend_ch_fr
+      - backend_ch_en
       - frontend
     networks:
       - essaidocker_my_network

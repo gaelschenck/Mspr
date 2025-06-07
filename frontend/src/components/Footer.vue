@@ -1,7 +1,7 @@
 <!-- src/components/footer.vue -->
 <template>
     <footer class="footer">
-      <p>&copy; 2025 Visualisation VIH. Tous droits réservés.</p>
+      <p>&copy; 2025 {{ $t('footer_title') }}. {{ $t('footer_rights') }}</p>
     </footer>
   </template>
   
