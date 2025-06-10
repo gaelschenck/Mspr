@@ -2,6 +2,8 @@
 <template>
     <footer class="footer">
       <p>&copy; 2025 {{ $t('footer_title') }}. {{ $t('footer_rights') }}</p>
+      <a href="#" @click.prevent="showRGPD = true">Gérer mes cookies</a>
+      <a href="/confidentialite">Politique de confidentialité</a>
     </footer>
   </template>
   
