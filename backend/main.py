@@ -429,3 +429,50 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, port=8084, reload=True)
+
+
+#========================= 
+# END POINTS US - GESTION SCALABILITE
+#=========================
+
+from fastapi import Query
+from sqlalchemy.orm import selectinload
+
+@app.get("/us/mortalite/")
+async def get_us_mortalite(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=1000),
+    year: int = Query(None),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(models.Mortalite).options(selectinload(models.Mortalite.pays))
+    if year:
+        query = query.where(models.Mortalite.annee == year)
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    return [
+        {
+            "id": m.id,
+            "id_pays": m.id_pays,
+            "nom_pays": m.pays.nom_pays if m.pays else None,  # <-- Ajout ici
+            "annee": m.annee,
+            "valeur": m.valeur,
+            "id_unite": m.id_unite
+        }
+        for m in data
+    ]
+
+from sqlalchemy import func
+
+@app.get("/us/mortalite/count/")
+async def count_us_mortalite(
+    year: int = Query(None),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(func.count(models.Mortalite.id))
+    if year:
+        query = query.where(models.Mortalite.annee == year)
+    result = await db.execute(query)
+    count = result.scalar()
+    return {"count": count}

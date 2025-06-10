@@ -42,7 +42,7 @@ class PopulationHIVBase(BaseModel):
     id_pays: int
     annee: int = Field(..., ge=1900, le=2100)
     valeur: float = Field(..., gt=0)
-    id_unite: int
+    id_unite: Optional[int] = None
 
 
 class PopulationHIVCreate(PopulationHIVBase):
@@ -61,7 +61,7 @@ class MortaliteBase(BaseModel):
     id_pays: int
     annee: int = Field(..., ge=1900, le=2100)
     valeur: float = Field(..., gt=0)
-    id_unite: int
+    id_unite: Optional[int] = None
 
 
 class MortaliteCreate(MortaliteBase):
@@ -79,7 +79,7 @@ class Mortalite(MortaliteBase):
 class TransmissionMereEnfantBase(BaseModel):
     id_pays: int
     valeur: float = Field(..., ge=0, le=100)
-    id_unite: int
+    id_unite: Optional[int] = None
 
 
 class TransmissionMereEnfantCreate(TransmissionMereEnfantBase):
@@ -97,7 +97,7 @@ class TransmissionMereEnfant(TransmissionMereEnfantBase):
 class TraitementBase(BaseModel):
     id_pays: int
     valeur: float = Field(..., ge=0, le=100)
-    id_unite: int
+    id_unite: Optional[int] = None
     id_type_traitement: int
 
 
@@ -117,7 +117,7 @@ class StatistiqueBase(BaseModel):
     id_pays: int
     annee: int = Field(..., ge=1900, le=2100)
     valeur: float = Field(..., gt=0)
-    id_unite: int
+    id_unite: Optional[int] = None
     id_type_statistique: int
 
 

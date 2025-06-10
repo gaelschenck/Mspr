@@ -46,6 +46,7 @@ const messages = {
     testprediction_error_submit: "Erreur lors de la soumission :",
     testprediction_error_select: "Erreur : Vous devez sélectionner soit une région, soit un pays.",
     prediction_graphs_no_result: "Aucun résultat à afficher.",
+    nav_data: "Données",
   },
   en: {
     welcome: "Welcome to the MSPR application",
@@ -83,6 +84,7 @@ const messages = {
     testprediction_error_submit: "Error during submission:",
     testprediction_error_select: "Error: You must select either a region or a country.",
     prediction_graphs_no_result: "No result to display.",
+    nav_data: "Data",
   },
   de: {
     welcome: "Willkommen bei der MSPR-Anwendung",
@@ -120,6 +122,7 @@ const messages = {
     testprediction_error_submit: "Fehler beim Absenden:",
     testprediction_error_select: "Fehler: Sie müssen entweder eine Region oder ein Land auswählen.",
     prediction_graphs_no_result: "Kein Ergebnis anzuzeigen.",
+    nav_data: "Daten",
   }
 }
 

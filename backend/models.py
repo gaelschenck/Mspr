@@ -45,7 +45,7 @@ class PopulationHIV(Base):
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     annee: Mapped[int] = mapped_column(Integer, nullable=False)
     valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[int] = mapped_column(Integer, ForeignKey("unite.id_unite"))
+    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
 
     pays: Mapped["Pays"] = relationship("Pays", back_populates="population_hiv")
     unite: Mapped["Unite"] = relationship("Unite")
@@ -58,7 +58,7 @@ class Mortalite(Base):
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     annee: Mapped[int] = mapped_column(Integer, nullable=False)
     valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[int] = mapped_column(Integer, ForeignKey("unite.id_unite"))
+    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
 
     pays: Mapped["Pays"] = relationship("Pays", back_populates="mortalite")
     unite: Mapped["Unite"] = relationship("Unite")
@@ -70,7 +70,7 @@ class TransmissionMereEnfant(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[int] = mapped_column(Integer, ForeignKey("unite.id_unite"))
+    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
 
     pays: Mapped["Pays"] = relationship("Pays", back_populates="transmission")
     unite: Mapped["Unite"] = relationship("Unite")
@@ -82,7 +82,7 @@ class Traitement(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[int] = mapped_column(Integer, ForeignKey("unite.id_unite"))
+    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
     id_type_traitement: Mapped[int] = mapped_column(
         Integer, ForeignKey("type_traitement.id_type_traitement")
     )
@@ -99,7 +99,7 @@ class Statistique(Base):
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     annee: Mapped[int] = mapped_column(Integer, nullable=False)
     valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[int] = mapped_column(Integer, ForeignKey("unite.id_unite"))
+    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
     id_type_statistique: Mapped[int] = mapped_column(
         Integer, ForeignKey("type_statistique.id_type_statistique")
     )

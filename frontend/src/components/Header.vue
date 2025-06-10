@@ -15,6 +15,7 @@
       <nav>
         <ul>
           <li><router-link to="/">{{ $t('nav_home') }}</router-link></li>
+          <li><router-link to="/data">{{ $t('nav_data') }}</router-link></li>
           <li><router-link to="/graphiques">{{ $t('nav_charts') }}</router-link></li>
           <li><router-link to="/prediction">{{ $t('nav_prediction') }}</router-link></li>
         </ul>
