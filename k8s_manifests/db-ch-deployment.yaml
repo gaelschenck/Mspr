@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-ch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-ch
+  template:
+    metadata:
+      labels:
+        app: db-ch
+    spec:
+      containers:
+        - name: db-ch
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent #cette ligne empêche Kind de télécharger l'image depuis internet, il prends uniquement la locale
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_HOST
+              value: db-ch
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "admin"
+            - name: POSTGRES_DB
+              value: "bdd_ch"
+              
+          volumeMounts:
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-sql
+          configMap:
+            name: init-ch-sql   

@@ -1,6 +1,6 @@
-FROM nginx:latest
+FROM nginx:alpine
 
-# Copie de la configuration vers le dossier Nginx
+# Copie de la configuration personnalisée
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80

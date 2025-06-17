@@ -25,4 +25,8 @@ COPY . .
 EXPOSE 8084
 
 # Commande de lancement du backend
-CMD ["/wait-for", "db_ch:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
+# Remarque : le nom du service DB doit être passé par la variable d'env POSTGRES_HOST
+CMD ["/wait-for", \
+     "${POSTGRES_HOST:-database}:5432", \
+     "--timeout=60", "--", \
+     "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8084"]

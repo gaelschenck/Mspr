@@ -1,0 +1,31 @@
+# Crée un nouveau fichier nginx-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  nginx.conf: |
+    events {}
+    http {
+      server {
+        listen 80;
+        location /api/fr/ {
+          proxy_pass http://backend-fr-service:8084/;
+        }
+        location /api/us/ {
+          proxy_pass http://backend-us-service:8084/;
+        }
+        location /api/ch/fr/ {
+          proxy_pass http://backend-ch-fr-service:8084/;
+        }
+        location /api/ch/en/ {
+          proxy_pass http://backend-ch-en-service:8084/;
+        }
+        location /api/ch/de/ {
+          proxy_pass http://backend-ch-de-service:8084/;
+        }
+        location / {
+          proxy_pass http://frontend-service:80/;
+        }
+      }
+    }

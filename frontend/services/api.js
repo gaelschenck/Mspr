@@ -4,15 +4,19 @@ import axios from 'axios';
 const country = localStorage.getItem("selectedCountry") || "fr";
 console.log(localStorage.getItem("selectedCountry"));
 
+// Obtenir l'URL de base dynamiquement à partir de window.location
+const host = window.location.hostname;
+const port = window.location.port || "32655"; // Port par défaut si non spécifié
+
+// Créer l'URL avec le port actuel du navigateur
 let baseURL;
 if (country === "fr" || country === "us") {
-  baseURL = `/api/${country}/`;
+  baseURL = `http://${host}:${port}/api/${country}/`;
 } else if (country.startsWith("ch_")) {
-  // country = 'ch_fr', 'ch_en', 'ch_de'
   const lang = country.split("_")[1];
-  baseURL = `/api/ch/${lang}/`;
+  baseURL = `http://${host}:${port}/api/ch/${lang}/`;
 } else {
-  baseURL = `/api/fr/`; // fallback
+  baseURL = `http://${host}:${port}/api/fr/`; // fallback
 }
 
 const apiClient = axios.create({

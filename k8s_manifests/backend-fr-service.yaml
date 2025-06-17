@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-fr-service
+spec:
+  selector:
+    app: backend-fr
+  ports:
+    - protocol: TCP
+      port: 8084
+      targetPort: 8084
+  type: NodePort

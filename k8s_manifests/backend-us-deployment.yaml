@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-us
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-us
+  template:
+    metadata:
+      labels:
+        app: backend-us
+    spec:
+      containers:
+        - name: backend-us
+          image: my_backend_image:latest
+          imagePullPolicy: Never #cette ligne empêche Kind de télécharger l'image depuis internet, il prends uniquement la locale
+          ports:
+            - containerPort: 8084
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "admin"
+            - name: POSTGRES_HOST
+              value: "db-us"
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: "bdd_us"
+            - name: USER_COUNTRY
+              value: "US"
+            - name: LANG
+              value: "en"
