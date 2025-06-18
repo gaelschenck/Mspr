@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Données mortalité US (paginées)</h1>
+    <h1>{{ $t('mortalite_title') }}</h1>
     <ul>
       <li v-for="item in usData" :key="item.id">
-         Pays : {{ item.nom_pays || item.id_pays }} | Année : {{ item.annee }} | Valeur : {{ item.valeur }}
+         {{ $t('pays') }} : {{ item.nom_pays || item.id_pays }} | {{ $t('annee') }} : {{ item.annee }} | {{ $t('valeur') }} : {{ item.valeur }}
       </li>
     </ul>
   </div>

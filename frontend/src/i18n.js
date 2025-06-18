@@ -47,6 +47,11 @@ const messages = {
     testprediction_error_select: "Erreur : Vous devez sélectionner soit une région, soit un pays.",
     prediction_graphs_no_result: "Aucun résultat à afficher.",
     nav_data: "Données",
+    mortalite_title: "Analyse de la mortalité",
+    pays: "Pays",
+    annee: "Année",
+    valeur: "Valeur",
+
   },
   en: {
     welcome: "Welcome to the MSPR application",
@@ -85,6 +90,11 @@ const messages = {
     testprediction_error_select: "Error: You must select either a region or a country.",
     prediction_graphs_no_result: "No result to display.",
     nav_data: "Data",
+    mortalite_title: "Mortality analysis",
+    pays: "Country",
+    annee: "Year",
+    valeur: "Value",
+
   },
   de: {
     welcome: "Willkommen bei der MSPR-Anwendung",
@@ -123,6 +133,10 @@ const messages = {
     testprediction_error_select: "Fehler: Sie müssen entweder eine Region oder ein Land auswählen.",
     prediction_graphs_no_result: "Kein Ergebnis anzuzeigen.",
     nav_data: "Daten",
+    mortalite_title: "Sterblichkeitsanalyse",
+    pays: "Land",
+    annee: "Jahr",
+    valeur: "Wert",
   }
 }
 
