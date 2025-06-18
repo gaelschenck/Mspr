@@ -1,6 +1,4 @@
 @echo off
-REM filepath: c:\Users\gaels\OneDrive\Documents\ECOLE-EPSI\Mspr\init_and_deploy.bat
-
 REM Vérifier si Docker Desktop est lancé (optionnel, sinon message d'erreur)
 docker info >nul 2>&1
 if errorlevel 1 (
@@ -10,12 +8,12 @@ if errorlevel 1 (
 )
 
 REM Vérifier si le cluster Kind existe déjà
-kind get clusters | findstr /i "mspr-cluster" >nul
+kind get clusters | findstr /i "mspr" >nul
 if errorlevel 1 (
     echo Cluster Kind absent, creation en cours...
-    kind create cluster --name mspr-cluster
+    kind create cluster --name mspr
     if errorlevel 1 (
-        echo [ERREUR] Echec de la creation du cluster Kind.
+        echo [ERREUR] Echec de la creation du cluster mspr.
         pause
         exit /b
     )
@@ -74,7 +72,7 @@ goto MENU
 :DEPLOY
 echo.
 REM ============================
-REM [0/6] Sauvegarde des bases PostgreSQL
+REM [0/6] Sauvegarde des bases PostgreSQL (si existantes)
 REM ============================
 echo Sauvegarde des bases PostgreSQL...
 
@@ -87,17 +85,35 @@ if errorlevel 1 (
     goto MENU
 )
 
-kubectl exec deploy/database -- pg_dump -U postgres bdd_mspr > "%BACKUP_DIR%\bdd_mspr_fr.sql"
+REM Sauvegarde conditionnelle pour chaque base
+kubectl get deploy database >nul 2>&1
 if errorlevel 1 (
-    echo [ERREUR] Echec de la sauvegarde de bdd_mspr_fr.
+    echo [INFO] Pas de base FR existante, sauvegarde sautee.
+) else (
+    kubectl exec deploy/database -- pg_dump -U postgres bdd_mspr > "%BACKUP_DIR%\bdd_mspr_fr.sql"
+    if errorlevel 1 (
+        echo [ERREUR] Echec de la sauvegarde de bdd_mspr_fr.
+    )
 )
-kubectl exec deploy/db-us -- pg_dump -U postgres bdd_us > "%BACKUP_DIR%\bdd_us.sql"
+
+kubectl get deploy db-us >nul 2>&1
 if errorlevel 1 (
-    echo [ERREUR] Echec de la sauvegarde de bdd_us.
+    echo [INFO] Pas de base US existante, sauvegarde sautee.
+) else (
+    kubectl exec deploy/db-us -- pg_dump -U postgres bdd_us > "%BACKUP_DIR%\bdd_us.sql"
+    if errorlevel 1 (
+        echo [ERREUR] Echec de la sauvegarde de bdd_us.
+    )
 )
-kubectl exec deploy/db-ch -- pg_dump -U postgres bdd_ch > "%BACKUP_DIR%\bdd_ch.sql"
+
+kubectl get deploy db-ch >nul 2>&1
 if errorlevel 1 (
-    echo [ERREUR] Echec de la sauvegarde de bdd_ch.
+    echo [INFO] Pas de base CH existante, sauvegarde sautee.
+) else (
+    kubectl exec deploy/db-ch -- pg_dump -U postgres bdd_ch > "%BACKUP_DIR%\bdd_ch.sql"
+    if errorlevel 1 (
+        echo [ERREUR] Echec de la sauvegarde de bdd_ch.
+    )
 )
 
 echo Sauvegardes terminees dans %BACKUP_DIR%
@@ -145,13 +161,13 @@ cd ..
 echo ============================
 echo [3/6] Chargement des images dans Kind
 echo ============================
-kind load docker-image my_backend_image:latest
+kind load docker-image my_backend_image:latest --name mspr
 if errorlevel 1 (
     echo [ERREUR] Echec du chargement de l'image backend dans Kind.
     pause
     goto MENU
 )
-kind load docker-image my_frontend_image:latest
+kind load docker-image my_frontend_image:latest --name mspr
 if errorlevel 1 (
     echo [ERREUR] Echec du chargement de l'image frontend dans Kind.
     pause
