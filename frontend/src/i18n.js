@@ -51,6 +51,8 @@ const messages = {
     pays: "Pays",
     annee: "Année",
     valeur: "Valeur",
+    data_title: "Accès aux données",
+    data_mortalite_us: "Mortalité",
 
   },
   en: {
@@ -94,6 +96,8 @@ const messages = {
     pays: "Country",
     annee: "Year",
     valeur: "Value",
+    data_title: "Data access",
+    data_mortalite_us: "Mortality",
 
   },
   de: {
@@ -137,6 +141,8 @@ const messages = {
     pays: "Land",
     annee: "Jahr",
     valeur: "Wert",
+    data_title: "Datenzugriff",
+    data_mortalite_us: "Sterblichkeit",
   }
 }
 
