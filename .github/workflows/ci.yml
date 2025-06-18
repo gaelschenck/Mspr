@@ -2,9 +2,9 @@ name: Build Docker images
 
 on:
   push:
-    branches: [ main ]
+    branches: [ kubernetes ]
   pull_request:
-    branches: [ main ]
+    branches: [ kubernetes ]
 
 jobs:
   build:
