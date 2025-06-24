@@ -22,6 +22,20 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
+
+-- Création de la table utilisateur si elle n'existe pas déjà
+CREATE TABLE IF NOT EXISTS public.utilisateur (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR UNIQUE NOT NULL,
+    hashed_password VARCHAR NOT NULL,
+    role VARCHAR NOT NULL,
+    rgpd_accept INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT INTO public.utilisateur (username, hashed_password, role,rgpd_accept) VALUES
+('adminfr', '$2b$12$AShMCC6b1szz9OXfdqLNxuO2gQW7dCKuCwv7B.uKktLeTycb15kZS', 'admin',0),
+('userfr',  '$2b$12$kq2KdxI4x0MP1/KZvPb33eFm7AmSTb/xmtviTMhxQtcbT.A5E2Nk.', 'user',0);
+
 --
 -- TOC entry 224 (class 1259 OID 16443)
 -- Name: mortalite; Type: TABLE; Schema: public; Owner: postgres

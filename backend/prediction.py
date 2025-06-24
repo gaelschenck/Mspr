@@ -176,17 +176,7 @@ def create_voting_regressor():
     ])
     return model
 
-def save_training_data(new_data, file_path="training_data.csv"):
-    try:
-        existing_data = pd.read_csv(file_path)
-        combined_data = pd.concat([existing_data, pd.DataFrame(new_data)]).drop_duplicates()
-    except FileNotFoundError:
-        combined_data = pd.DataFrame(new_data)
 
-    combined_data.to_csv(file_path, index=False)
-
-def load_training_data(file_path="training_data.csv"):
-    return pd.read_csv(file_path)
 
 
 def preprocess_features(X):
@@ -267,7 +257,25 @@ def train_voting_regressor(model, X, y):
     plt.tight_layout()
     plt.show()
 
-    return model
+# Prédiction sur l'année suivante (si 'annee' est une feature)
+    future_pred_value = None
+    future_year = None
+    if 'annee' in X.columns:
+        last_year = X['annee'].max()
+        future_year = last_year + 1
+        future_features = X.mean(numeric_only=True).to_dict()
+        future_features['annee'] = future_year
+        future_df = pd.DataFrame([future_features])
+        future_df = preprocess_features(future_df)
+        future_pred = model.predict(future_df)
+        future_pred_value = float(future_pred[0])
+        print(tr("results"))
+        print(f"Prédiction pour l'année {future_year} : {future_pred_value}")
+    else:
+        print("Impossible de prédire l'année suivante (pas de colonne 'annee').")
+
+    return model, rmse, r2, future_pred_value, future_year if 'annee' in X.columns else None
+
 
 def save_training_data(new_data, file_path="training_data.csv"):
     try:
@@ -280,4 +288,3 @@ def save_training_data(new_data, file_path="training_data.csv"):
 
 def load_training_data(file_path="training_data.csv"):
     return pd.read_csv(file_path)
-

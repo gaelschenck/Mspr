@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-ch-de
+  name: backend-ch-it
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: backend-ch-de
+      app: backend-ch-it
   template:
     metadata:
       labels:
-        app: backend-ch-de
+        app: backend-ch-it
     spec:
       containers:
-        - name: backend-ch-de
+        - name: backend-ch-it
           image: my_backend_image:latest
-          imagePullPolicy: Never 
+          imagePullPolicy: Never
           ports:
             - containerPort: 8084
           env:
@@ -32,4 +32,4 @@ spec:
             - name: USER_COUNTRY
               value: "CH"
             - name: LANG
-              value: "de"
+              value: "it"

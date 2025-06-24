@@ -8,21 +8,42 @@
 
 <script setup>
 import { ref } from "vue";
+import apiClient from "/services/api";
 
 const show = ref(false);
 
-// Affiche le bandeau si aucun choix n'a été fait
-show.value = localStorage.getItem("rgpdConsent") === null;
+// Vérifie le cluster sélectionné
+const currentCountry = localStorage.getItem("selectedCountry");
 
-function accept() {
+// Affiche le bandeau RGPD uniquement si cluster FR
+show.value = currentCountry === "fr" && localStorage.getItem("rgpdConsent") === null;
+
+async function accept() {
   localStorage.setItem("rgpdConsent", "accepted");
   show.value = false;
   loadAnalytics();
+  await saveConsent(1);
 }
 
-function decline() {
+async function decline() {
   localStorage.setItem("rgpdConsent", "declined");
   show.value = false;
+  await saveConsent(0);
+}
+
+async function saveConsent(val) {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    try {
+      await apiClient.put(
+        "/me/rgpd",
+        { rgpd_accept: val },
+        { headers: { Authorization: "Bearer " + token } }
+      );
+    } catch (e) {
+      // Optionnel : afficher une erreur ou logger
+    }
+  }
 }
 
 function loadAnalytics() {
@@ -39,13 +60,15 @@ function loadAnalytics() {
   }
 }
 
-// Charge analytics si déjà accepté
-if (localStorage.getItem("rgpdConsent") === "accepted") {
+// Charge analytics si déjà accepté (et cluster FR)
+if (currentCountry === "fr" && localStorage.getItem("rgpdConsent") === "accepted") {
   loadAnalytics();
 }
 
 // Permet d'afficher le bandeau depuis le footer
-window.showRGPDConsent = () => { show.value = true; };
+window.showRGPDConsent = () => { 
+  if (localStorage.getItem("selectedCountry") === "fr") show.value = true;
+};
 </script>
 
 <style scoped>

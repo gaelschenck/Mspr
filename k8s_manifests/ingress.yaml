@@ -44,6 +44,13 @@ spec:
                 port:
                   number: 8084
           - pathType: Prefix
+            path: /api/ch/it(/|$)(.*)
+            backend:
+              service:
+                name: backend-ch-it-service
+                port:
+                  number: 8084
+          - pathType: Prefix
             path: /
             backend:
               service:

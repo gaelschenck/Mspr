@@ -161,3 +161,20 @@ class TypeTraitement(TypeTraitementBase):
 
     class Config:
         from_attributes = True
+
+
+###Authentification
+
+class UtilisateurBase(BaseModel):
+    username: str
+
+class UtilisateurCreate(UtilisateurBase):
+    password: str
+    role: str
+
+class UtilisateurOut(UtilisateurBase):
+    id: int
+    role: str
+
+    class Config:
+        orm_mode = True

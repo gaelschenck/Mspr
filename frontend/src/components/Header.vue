@@ -1,4 +1,3 @@
-<!-- src/components/header.vue -->
 <template>
   <header class="header">
     <div class="header-content">
@@ -10,6 +9,7 @@
           <button @click="setSwissLang('fr')">FR-CH</button>
           <button @click="setSwissLang('en')">EN-CH</button>
           <button @click="setSwissLang('de')">DE-CH</button>
+          <button @click="setSwissLang('it')">IT-CH</button>
         </span>
       </div>
       <nav>
@@ -21,36 +21,80 @@
         </ul>
       </nav>
     </div>
+    <div>
+      <span v-if="currentCountry" class="cluster-info">
+        Cluster : {{ displayCountry }}
+      </span>
+      <span v-if="currentUser" class="user-info">
+        | Connecté en tant que : {{ currentUser }}
+      </span>
+      <button @click="logout">Déconnexion</button>
+    </div>
   </header>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Header",
   data() {
     return {
-      showSwissLang: false
+      showSwissLang: false,
+      currentCountry: localStorage.getItem("selectedCountry") || null,
     };
+  },
+  computed: {
+    displayCountry() {
+      if (!this.currentCountry) return "";
+      if (this.currentCountry.startsWith("ch")) return "Suisse";
+      if (this.currentCountry === "fr") return "France";
+      if (this.currentCountry === "us") return "USA";
+      return this.currentCountry;
+    },
+    currentUser() {
+      const token = localStorage.getItem("access_token");
+      if (!token) return null;
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.sub;
+      } catch {
+        return null;
+      }
+    }
   },
   methods: {
     setCountry(country) {
+      const oldCountry = localStorage.getItem("selectedCountry");
+      if (oldCountry && oldCountry !== country.toLowerCase()) {
+        // Déconnexion automatique si changement de cluster
+        localStorage.removeItem("access_token");
+        this.$router.push("/login");
+      }
       localStorage.setItem("selectedCountry", country.toLowerCase());
-      // Pour la France et les US, on définit aussi la langue
       if (country === "fr") this.$i18n.locale = "fr";
       if (country === "us") this.$i18n.locale = "en";
       window.location.reload();
     },
     setSwissLang(lang) {
-      localStorage.setItem("selectedCountry", `ch_${lang}`);
+      const oldCountry = localStorage.getItem("selectedCountry");
+      const newCountry = `ch_${lang}`;
+      if (oldCountry && oldCountry !== newCountry) {
+        localStorage.removeItem("access_token");
+        this.$router.push("/login");
+      }
+      localStorage.setItem("selectedCountry", newCountry);
       this.$i18n.locale = lang;
       window.location.reload();
+    },
+    logout() {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('selectedCountry');
+      this.$router.push('/login');
     }
   }
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .header {
   background-color: #333;
   color: white;
@@ -110,5 +154,13 @@ button {
 
 button:hover {
   background: #666;
+}
+
+.cluster-info {
+  margin-right: 1em;
+  font-weight: bold;
+}
+.user-info {
+  margin-right: 1em;
 }
 </style>

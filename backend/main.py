@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 import joblib
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy import select, update, delete
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
@@ -8,14 +8,167 @@ import models, schemas
 from database import engine, get_db
 import sys
 import os
+import numpy as np
+import math
 
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from passlib.context import CryptContext
+from jose import JWTError, jwt
+from datetime import datetime, timedelta
+from sqlalchemy.future import select
+
 # Déclare `app`
 app = FastAPI(title="MSPR API", version="1.0.0")
 
+# ========================
+# Configuration de la securité/authentification
+# ========================
+
+SECRET_KEY = "supersecret"  # À remplacer par une vraie clé secrète en prod
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+async def get_user_by_username(db, username):
+    result = await db.execute(select(models.Utilisateur).where(models.Utilisateur.username == username))
+    return result.scalar_one_or_none()
+
+async def authenticate_user(db, username: str, password: str):
+    user = await get_user_by_username(db, username)
+    if not user or not verify_password(password, user.hashed_password):
+        return None
+    return user
+
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = await get_user_by_username(db, username)
+    if user is None:
+        raise credentials_exception
+    return user
+
+def require_role(role: str):
+    async def role_checker(current_user=Depends(get_current_user)):
+        if current_user.role != role:
+            raise HTTPException(status_code=403, detail="Not enough permissions")
+        return current_user
+    return role_checker
+
+#Endpoints authentification
+
+
+@app.post("/register/", response_model=schemas.UtilisateurOut)
+async def register(user: schemas.UtilisateurCreate, db: AsyncSession = Depends(get_db)):
+    hashed_password = get_password_hash(user.password)
+    db_user = models.Utilisateur(username=user.username, hashed_password=hashed_password, role=user.role)
+    db.add(db_user)
+    await db.commit()
+    await db.refresh(db_user)
+    return db_user
+
+@app.post("/token")
+async def login(
+    request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends()
+):
+    # Récupère le cluster depuis le header ou localStorage (frontend)
+    cluster = request.headers.get("X-Cluster")
+    if not cluster:
+        raise HTTPException(status_code=400, detail="Cluster non spécifié")
+
+    # Sélectionne la bonne base selon le cluster
+    if cluster == "fr":
+        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_FR')}"
+    elif cluster == "us":
+        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_US')}"
+    elif cluster == "ch":
+        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_CH')}"
+    else:
+        raise HTTPException(status_code=400, detail="Cluster inconnu")
+
+
+    # Crée une session temporaire sur la bonne base
+    local_engine = create_async_engine(db_url, echo=False, future=True)
+    async with AsyncSession(local_engine) as db:
+        user = await authenticate_user(db, form_data.username, form_data.password)
+        if not user:
+            raise HTTPException(status_code=401, detail="Incorrect username or password")
+        access_token = create_access_token(data={"sub": user.username, "role": user.role, "cluster": cluster})
+        return {"access_token": access_token, "token_type": "bearer"}
+    
+def safe(val):
+    # Convertit les types numpy en natif, gère les nan
+    if isinstance(val, (np.integer,)):
+        return int(val)
+    if isinstance(val, (np.floating,)):
+        if math.isnan(val) or math.isinf(val):
+            return None
+        return float(val)
+    return val
+
+from fastapi import Body
+
+@app.put("/me/rgpd")
+async def accept_rgpd(
+    rgpd: dict = Body(...),
+    db: AsyncSession = Depends(get_db),
+    current_user: models.Utilisateur = Depends(get_current_user)
+):
+    current_user.rgpd_accept = rgpd.get("rgpd_accept", 1)
+    db.add(current_user)
+    await db.commit()
+    return {"ok": True}
+
+@app.get("/admin-only/")
+async def admin_only(current_user=Depends(require_role("admin"))):
+    return {"message": f"Bienvenue, admin {current_user.username}!"}
+
+@app.get("/user-only/")
+async def user_only(current_user=Depends(require_role("user"))):
+    return {"message": f"Bienvenue, utilisateur {current_user.username}!"}
+
+@app.get("/route-protegee/")
+async def route_protegee(current_user=Depends(require_role("admin"))):
+    return {"message": "Ceci est une route protégée pour les admins"}
+
+@app.on_event("startup")
+async def startup():
+    await init_db()
+
+async def init_db():
+    async with engine.begin() as conn:
+        await conn.run_sync(models.Base.metadata.create_all)
 # ========================
 # Configuration de la langue
 # ========================
@@ -27,67 +180,80 @@ TRANSLATIONS = {
     "root_message": {
         "fr": "Bienvenue sur l'API MSPR!",
         "en": "Welcome to the MSPR API!",
-        "de": "Willkommen bei der MSPR API!"
+        "de": "Willkommen bei der MSPR API!",
+        "it": "Benvenuto nell'API MSPR!"
     },
     "preflight_ok": {
         "fr": "Préflight OPTIONS accepté",
         "en": "Preflight OPTIONS accepted",
-        "de": "Preflight OPTIONS akzeptiert"
+        "de": "Preflight OPTIONS akzeptiert",
+        "it": "Preflight OPTIONS accettato"
     },
     "country_not_found": {
         "fr": "Pays non trouvé",
         "en": "Country not found",
-        "de": "Land nicht gefunden"
+        "de": "Land nicht gefunden",
+        "it": "Paese non trovato"
     },
     "country_deleted": {
         "fr": "Pays supprimé avec succès",
         "en": "Country successfully deleted",
-        "de": "Land erfolgreich gelöscht"
+        "de": "Land erfolgreich gelöscht",
+        "it": "Paese eliminato con successo"
     },
     "invalid_table": {
         "fr": "Table invalide",
         "en": "Invalid table",
-        "de": "Ungültige Tabelle"
+        "de": "Ungültige Tabelle",
+        "it": "Tabella non valida"
     },
     "region_or_country_required": {
         "fr": "Region ou pays doivent être renseignés",
         "en": "Region or country must be provided",
-        "de": "Region oder Land müssen angegeben werden"
+        "de": "Region oder Land müssen angegeben werden",
+        "it": "Regione o paese devono essere forniti"
     },
     "unknown_table": {
         "fr": "Table inconnue",
         "en": "Unknown table",
-        "de": "Unbekannte Tabelle"
+        "de": "Unbekannte Tabelle",
+        "it": "Tabella sconosciuta"
     },
     "merge_key_error": {
         "fr": "Les clés de fusion ne correspondent pas entre les tables",
         "en": "Merge keys do not match between tables",
-        "de": "Die Schlüsselfelder stimmen zwischen den Tabellen nicht überein"
+        "de": "Die Schlüsselfelder stimmen zwischen den Tabellen nicht überein",
+        "it": "Le chiavi di unione non corrispondono tra le tabelle"
     },
     "table_not_found": {
         "fr": "Table '{table}' introuvable",
         "en": "Table '{table}' not found",
-        "de": "Tabelle '{table}' nicht gefunden"
+        "de": "Tabelle '{table}' nicht gefunden",
+        "it": "Tabella '{table}' non trovata"
     },
     "missing_dataframe": {
         "fr": "Le DataFrame est manquant",
         "en": "DataFrame is missing",
-        "de": "DataFrame fehlt"
+        "de": "DataFrame fehlt",
+        "it": "Manca il DataFrame"
     },
     "target_required": {
         "fr": "La colonne cible est requise pour l'entraînement",
         "en": "Target column is required for training",
-        "de": "Zielspalte für das Training erforderlich"
+        "de": "Zielspalte für das Training erforderlich",
+        "it": "La colonna target è richiesta per l'addestramento"
     },
     "avant_separation": {
-    "fr": "Avant séparation, taille du DataFrame : {shape}",
-    "en": "Before split, DataFrame shape: {shape}",
-    "de": "Vor der Trennung, DataFrame-Größe: {shape}"
+        "fr": "Avant séparation, taille du DataFrame : {shape}",
+        "en": "Before split, DataFrame shape: {shape}",
+        "de": "Vor der Trennung, DataFrame-Größe: {shape}",
+        "it": "Prima della separazione, dimensione del DataFrame: {shape}"
     },
     "model_trained": {
         "fr": "Modèle entraîné avec succès",
         "en": "Model trained successfully",
-        "de": "Modell erfolgreich trainiert"
+        "de": "Modell erfolgreich trainiert",
+        "it": "Modello addestrato con successo"
     }
 }
 
@@ -113,6 +279,7 @@ async def options_handler():
 
 # Initialisation de la base de données
 async def init_db():
+    print(f"engine in main.py: {engine}")
     async with engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.create_all)
 
@@ -384,42 +551,53 @@ async def get_columns(table_name: str):
 
 @app.post("/train_model/")
 async def train_model_endpoint(payload: dict):
-    """
-    Endpoint pour entraîner le modèle avec les données fournies.
-    """
-    dataframe_dict = payload.get("dataframe")
-    target_column = payload.get("target_column")
-    if not dataframe_dict:
-        raise HTTPException(status_code=400, detail=tr("missing_dataframe"))
+    try:
+        """
+        Endpoint pour entraîner le modèle avec les données fournies.
+        """
+        dataframe_dict = payload.get("dataframe")
+        target_column = payload.get("target_column")
+        if not dataframe_dict:
+            raise HTTPException(status_code=400, detail=tr("missing_dataframe"))
 
-    # Convertir le dictionnaire en DataFrame
-    df = pd.DataFrame.from_dict(dataframe_dict)
-    print(tr("avant_separation", shape=df.shape))
+        # Convertir le dictionnaire en DataFrame
+        df = pd.DataFrame.from_dict(dataframe_dict)
+        print(tr("avant_separation", shape=df.shape))
+        print("DataFrame reçu :", df.head())
+        print("Colonnes :", df.columns)
+        print("Target column :", target_column)
 
-    # Préparer X et y
-    X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region", "id_unite"], errors="ignore")
-    y = df[target_column]
+        # Préparer X et y
+        X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region", "id_unite"], errors="ignore")
+        y = df[target_column]
 
-    X = preprocess_features(X)
-    X, y = prepare_data_generic(df, target_column=target_column)
+        X = preprocess_features(X)
+        X, y = prepare_data_generic(df, target_column=target_column)
 
-    if y is None:
-        raise HTTPException(status_code=400, detail=tr("target_required"))
+        if y is None:
+            raise HTTPException(status_code=400, detail=tr("target_required"))
 
-    model = create_voting_regressor()
-    trained_model = train_voting_regressor(model, X, y)
-    joblib.dump(trained_model, "voting_regressor.pkl")
+        model = create_voting_regressor()
+        trained_model, rmse, r2, future_pred_value, future_year = train_voting_regressor(model, X, y)
+        joblib.dump(trained_model, "voting_regressor.pkl")
 
-    # Prédictions sur tout X
-    predictions = trained_model.predict(X)
-    # Labels pour l'axe X (exemple : années si dispo, sinon index)
-    labels = list(df["annee"]) if "annee" in df.columns else list(range(len(predictions)))
+        predictions = trained_model.predict(X)
+        labels = list(df["annee"]) if "annee" in df.columns else list(range(len(predictions)))
 
-    return {
-        "prediction": list(predictions),
-        "labels": labels,
-        "message": tr("model_trained")
+        return {
+        "prediction": [safe(x) for x in predictions],
+        "labels": [safe(x) for x in labels],
+        "message": tr("model_trained"),
+        "rmse": safe(rmse),
+        "r2": safe(r2),
+        "future_prediction": safe(future_pred_value),
+        "future_year": safe(future_year)
     }
+    except Exception as e:
+            import traceback
+            print("Erreur dans /train_model/:", e)
+            traceback.print_exc()
+            raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
 # RUN SERVER
@@ -441,7 +619,7 @@ from sqlalchemy.orm import selectinload
 @app.get("/us/mortalite/")
 async def get_us_mortalite(
     offset: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=1000),
+    limit: int = Query(25, ge=1, le=1000),
     year: int = Query(None),
     db: AsyncSession = Depends(get_db)
 ):
@@ -476,3 +654,67 @@ async def count_us_mortalite(
     result = await db.execute(query)
     count = result.scalar()
     return {"count": count}
+
+@app.get("/population_hiv/paginated/")
+async def get_population_hiv_paginated(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(25, ge=1, le=1000),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(models.PopulationHIV).options(selectinload(models.PopulationHIV.pays))
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    return [
+        {
+            "id": m.id,
+            "id_pays": m.id_pays,
+            "nom_pays": m.pays.nom_pays if m.pays else None,
+            "annee": m.annee,
+            "valeur": m.valeur
+        }
+        for m in data
+    ]
+
+@app.get("/traitement/paginated/")
+async def get_traitement_paginated(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(25, ge=1, le=1000),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(models.Traitement).options(selectinload(models.Traitement.pays))
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    return [
+        {
+            "id": t.id,
+            "id_pays": t.id_pays,
+            "nom_pays": t.pays.nom_pays if t.pays else None,
+            "annee": t.annee,
+            "valeur": t.valeur
+        }
+        for t in data
+    ]
+
+@app.get("/transmission_mere_enfant/paginated/")
+async def get_transmission_mere_enfant_paginated(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(25, ge=1, le=1000),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(models.TransmissionMereEnfant).options(selectinload(models.TransmissionMereEnfant.pays))
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    return [
+        {
+            "id": t.id,
+            "id_pays": t.id_pays,
+            "nom_pays": t.pays.nom_pays if t.pays else None,
+            "annee": t.annee,
+            "valeur": t.valeur
+        }
+        for t in data
+    ]
+

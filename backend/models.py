@@ -125,3 +125,13 @@ class TypeTraitement(Base):
         Integer, primary_key=True, index=True
     )
     nom_type_traitement: Mapped[str] = mapped_column(String(100), nullable=False)
+
+# Authentification
+
+class Utilisateur(Base):
+    __tablename__ = "utilisateur"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    role = Column(String)
+    rgpd_accept = Column(Integer, nullable=False, default=0)  # 0: non accepté, 1: accepté

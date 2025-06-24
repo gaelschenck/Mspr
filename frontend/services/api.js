@@ -26,6 +26,14 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use(config => {
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 /**
  * Récupère les données de mortalité US avec pagination et filtrage par année.
  * @param {number} page - Numéro de page (défaut 1)
@@ -33,12 +41,24 @@ const apiClient = axios.create({
  * @param {number|null} year - Année à filtrer (optionnel)
  * @returns {Promise<Array>} - Tableau de résultats
  */
-export async function fetchUSMortalite(page = 1, pageSize = 100, year = null) {
+export async function fetchUSMortalite(page = 1, pageSize = 25, year = null) {
   const offset = (page - 1) * pageSize;
   let url = `mortalite/?offset=${offset}&limit=${pageSize}`;
   if (year) url += `&year=${year}`;
   const response = await apiClient.get(url);
   return response.data;
+}
+export async function fetchPopulationHiv(offset = 0, limit = 25) {
+  const res = await apiClient.get(`/population_hiv/paginated/?offset=${offset}&limit=${limit}`);
+  return res.data;
+}
+export async function fetchTraitement(offset = 0, limit = 25) {
+  const res = await apiClient.get(`/traitement/paginated/?offset=${offset}&limit=${limit}`);
+  return res.data;
+}
+export async function fetchTransmissionMereEnfant(offset = 0, limit = 25) {
+  const res = await apiClient.get(`/transmission_mere_enfant/paginated/?offset=${offset}&limit=${limit}`);
+  return res.data;
 }
 
 export default apiClient;

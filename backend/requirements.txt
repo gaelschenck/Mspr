@@ -8,6 +8,10 @@ pandas==2.2.3
 scikit-learn==1.6.1
 asyncpg
 matplotlib
+passlib==1.7.4
+python-jose[cryptography]
+bcrypt==4.3.0
+python-multipart
 
 # cd API
 #uvicorn main:app --reload --port 8084
