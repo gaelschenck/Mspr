@@ -159,6 +159,26 @@ services:
     build: ../backend
     command: ["/wait-for", "db_ch:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
 
+  backend_ch_it:
+    image: my_backend_image
+    container_name: backend_ch_it
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_HOST: "db_ch"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "bdd_ch"
+      USER_COUNTRY: "CH"
+      LANG: "it"
+    networks:
+      - essaidocker_my_network
+    ports:
+      - "8088:8084"
+    depends_on:
+      - db_ch
+    build: ../backend
+    command: ["/wait-for", "db_ch:5432", "--timeout=60", "--", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8084"]
+    
   frontend:
     image: my_frontend_image
     container_name: frontend
@@ -168,6 +188,7 @@ services:
       - backend_ch_de
       - backend_ch_fr
       - backend_ch_en
+      - backend_ch_it
     networks:
       - essaidocker_my_network
     ports:

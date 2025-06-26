@@ -5,7 +5,7 @@ let locale = "fr";
 if (savedCountry === "us") locale = "en";
 else if (savedCountry === "fr") locale = "fr";
 else if (savedCountry && savedCountry.startsWith("ch_")) {
-  locale = savedCountry.split("_")[1]; // "fr", "en", "de", it
+  locale = savedCountry.split("_")[1]; // "fr", "en", "de", "it"
 }
 
 

@@ -53,6 +53,12 @@ export default defineConfig({
           changeOrigin: true,
           secure: false,
           rewrite: path => path.replace(/^\/api/, '')
+        },
+        '/api/ch_it': {
+          target: 'http://backend_ch_it:8084',
+          changeOrigin: true,
+          secure: false,
+          rewrite: path => path.replace(/^\/api/, '')
         }
       }
     }
