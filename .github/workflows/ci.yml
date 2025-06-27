@@ -1,21 +1,119 @@
-name: Build Docker images
+name: CI/CD MSPR
 
 on:
   push:
-    branches: [ kubernetes ]
+    branches: [ main, kubernetes, addauth ]
   pull_request:
-    branches: [ kubernetes ]
+    branches: [ main, kubernetes, addauth ]
+
+env:
+  BACKEND_IMAGE_NAME: my_backend_image
+  FRONTEND_IMAGE_NAME: my_frontend_image
 
 jobs:
-  build:
+  checkout:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build backend Docker image
-        run: docker build -t backend-test ./backend
+  backend-tests:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Install dependencies & run tests
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+          pytest --cov=.
 
-      - name: Build frontend Docker image
-        run: docker build -t frontend-test ./frontend
+  frontend-tests:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+      - name: Run unit tests
+        run: |
+          cd frontend
+          npm run test:unit
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push backend
+        run: |
+          cd backend
+          docker build -t $BACKEND_IMAGE_NAME:latest .
+          docker push $BACKEND_IMAGE_NAME:latest
+      - name: Build & push frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+          docker build -t $FRONTEND_IMAGE_NAME:latest .
+          docker push $FRONTEND_IMAGE_NAME:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to server (example)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /chemin/vers/ton/projet && git pull
+            cd /chemin/vers/ton/projet/essaidocker && docker-compose pull && docker-compose up -d
+
+  cleanup:
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Cleanup workspace
+        run: |
+          echo 'Cleaning workspace...'
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build-and-push, deploy]
+    if: failure()
+    steps:
+      - name: Send failure notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.yourserver.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: "Failed Pipeline: ${{ github.run_id }}"
+          to: team@mspr-platform.com
+          body: "Something is wrong with ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

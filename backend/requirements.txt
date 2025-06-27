@@ -1,4 +1,4 @@
-fastapi==0.104.1
+fastapi==0.115.1
 uvicorn==0.24.0
 sqlalchemy==2.0.23
 psycopg[binary]==3.2.5
@@ -12,6 +12,9 @@ passlib==1.7.4
 python-jose[cryptography]
 bcrypt==4.3.0
 python-multipart
+pytest
+pytest-asyncio
+httpx
 
 # cd API
 #uvicorn main:app --reload --port 8084
