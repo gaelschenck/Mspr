@@ -767,7 +767,6 @@ async def get_transmission_mere_en_enfant_paginated(
             "id": t.id,
             "id_pays": t.id_pays,
             "nom_pays": t.pays.nom_pays if t.pays else None,
-            "annee": t.annee,
             "valeur": t.valeur
         }
         for t in data
