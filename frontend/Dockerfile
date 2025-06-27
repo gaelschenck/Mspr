@@ -27,11 +27,9 @@ FROM nginx:alpine
 
 # Copie le build dans le dossier public de nginx
 COPY --from=build /app/dist /usr/share/nginx/html
-# Exposition du port
-# EXPOSE 3000
 
-# Commande de lancement du frontend
-# CMD ["npm", "run", "dev"]
+# Copie la configuration nginx pour SPA
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exposition du port 80 (standard web)
 EXPOSE 80

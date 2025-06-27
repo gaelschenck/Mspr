@@ -197,7 +197,7 @@ if errorlevel 1 (
     goto MENU
 )
 
-for /f "skip=1 tokens=1" %%i in ('kubectl get pods --no-headers -o custom-columns=":metadata.name"') do (
+for /f "skip=1 tokens=1" %%i in ('kubectl get pods --no-headers -o custom-columns="NAME:metadata.name"') do (
     echo Sauvegarde des logs de %%i
     kubectl logs %%i > "%LOG_DIR%\%%i.log"
 )

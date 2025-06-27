@@ -9,14 +9,14 @@ set BACKUP_DIR=%~dp0dumps
 if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%"
 
 REM Sauvegarde de la base FR
-for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns=":metadata.name" ^| findstr database') do (
+for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns="NAME:metadata.name" ^| findstr database') do (
     kubectl exec %%i -- pg_dump -U postgres bdd_mspr > "%BACKUP_DIR%\bdd_mspr_fr_%DATE%.sql"
 )
 REM Sauvegarde de la base US
-for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns=":metadata.name" ^| findstr db-us') do (
+for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns="NAME:metadata.name" ^| findstr db-us') do (
     kubectl exec %%i -- pg_dump -U postgres bdd_us > "%BACKUP_DIR%\bdd_us_%DATE%.sql"
 )
 REM Sauvegarde de la base CH
-for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns=":metadata.name" ^| findstr db-ch') do (
+for /f "skip=1 tokens=1" %%i in ('kubectl get pods -o custom-columns="NAME:metadata.name" ^| findstr db-ch') do (
     kubectl exec %%i -- pg_dump -U postgres bdd_ch > "%BACKUP_DIR%\bdd_ch_%DATE%.sql"
 )

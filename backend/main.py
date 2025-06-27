@@ -5,7 +5,7 @@ from sqlalchemy import select, update, delete
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import models, schemas
-from database import engine, get_db
+from database import engine, get_db, initialize_engine
 import sys
 import os
 import numpy as np
@@ -24,6 +24,33 @@ from sqlalchemy.future import select
 
 # Déclare `app`
 app = FastAPI(title="MSPR API", version="1.0.0")
+
+# ========================
+# Event handlers pour l'initialisation
+# ========================
+
+@app.on_event("startup")
+async def startup_event():
+    """
+    Initialise la connexion à la base de données au démarrage de l'application
+    """
+    try:
+        await initialize_engine()
+        print("Application démarrée avec succès - Base de données connectée")
+    except Exception as e:
+        print(f"Erreur lors de l'initialisation de la base de données: {e}")
+        # On laisse l'application démarrer même si la DB n'est pas accessible immédiatement
+        # Les retry se feront automatiquement lors des requêtes
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """
+    Nettoie les connexions à la base de données à l'arrêt
+    """
+    global engine
+    if engine:
+        await engine.dispose()
+        print("Connexions à la base de données fermées")
 
 # ========================
 # Configuration de la securité/authentification
@@ -443,6 +470,33 @@ async def create_statistique(
 @app.get("/")
 async def read_root():
     return {"message": tr("root_message"), "langue": LANG}
+
+@app.get("/health")
+async def health_check():
+    """
+    Endpoint de vérification de santé de l'application et de la base de données
+    """
+    from database import health_check_db, engine
+    
+    status = {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "database": "disconnected",
+        "engine_initialized": engine is not None
+    }
+    
+    # Vérification de la base de données
+    if engine:
+        try:
+            db_healthy = await health_check_db(engine)
+            status["database"] = "connected" if db_healthy else "error"
+        except Exception as e:
+            status["database"] = f"error: {str(e)}"
+            status["status"] = "degraded"
+    else:
+        status["status"] = "degraded"
+    
+    return status
 
 
 # ========================
