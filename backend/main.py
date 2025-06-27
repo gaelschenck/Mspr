@@ -459,7 +459,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     table = payload.get("table")
     target_column = payload.get("target_column")
 
-    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
+    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_en_enfant", "type_statistique", "type_traitement", "unite"]:
         raise HTTPException(status_code=400, detail=tr("invalid_table"))
     if not region and not pays:
         raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
@@ -480,7 +480,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
         "population_hiv": models.PopulationHIV,
         "statistique": models.Statistique,
         "traitement": models.Traitement,
-        "transmission_mere_enfant": models.TransmissionMereEnfant,
+        "transmission_mere_en_enfant": models.TransmissionMereEnfant,
         "type_statistique": models.TypeStatistique,
         "type_traitement": models.TypeTraitement,
         "unite": models.Unite,
@@ -522,7 +522,7 @@ async def get_available_tables():
         "population_hiv": [],
         "statistique": [],
         "traitement": [],
-        "transmission_mere_enfant": [],
+        "transmission_mere_en_enfant": [],
     }
     return {"tables": tables}
 
@@ -536,7 +536,7 @@ async def get_columns(table_name: str):
         "population_hiv": models.PopulationHIV,
         "statistique": models.Statistique,
         "traitement": models.Traitement,
-        "transmission_mere_enfant": models.TransmissionMereEnfant
+        "transmission_mere_en_enfant": models.TransmissionMereEnfant
         # Ajoute ici d'autres tables et leurs modèles
     }
 
@@ -686,19 +686,20 @@ async def get_traitement_paginated(
     query = query.offset(offset).limit(limit)
     result = await db.execute(query)
     data = result.scalars().all()
-    return [
-        {
+    output = []
+    for t in data:
+        if not t.pays:
+            print(f"[WARN] Traitement id={t.id} id_pays={t.id_pays} sans pays associé")
+        output.append({
             "id": t.id,
             "id_pays": t.id_pays,
-            "nom_pays": t.pays.nom_pays if t.pays else None,
-            "annee": t.annee,
+            "nom_pays": t.pays.nom_pays if t.pays and t.pays.nom_pays else None,
             "valeur": t.valeur
-        }
-        for t in data
-    ]
+        })
+    return output
 
-@app.get("/transmission_mere_enfant/paginated/")
-async def get_transmission_mere_enfant_paginated(
+@app.get("/transmission_mere_en_enfant/paginated/")
+async def get_transmission_mere_en_enfant_paginated(
     offset: int = Query(0, ge=0),
     limit: int = Query(25, ge=1, le=1000),
     db: AsyncSession = Depends(get_db)

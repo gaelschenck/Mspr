@@ -48,7 +48,7 @@ goto MENU
 :BACKUP
 echo.
 echo === SAUVEGARDE DES BASES ===
-call sauvegardes_bdd\backup_postgres.bat
+call sauvegardes_bdd\back_up_postgres.bat
 if errorlevel 1 (
     echo [ERREUR] La sauvegarde a echoue.
     pause
@@ -71,53 +71,7 @@ goto MENU
 
 :DEPLOY
 echo.
-REM ============================
-REM [0/6] Sauvegarde des bases PostgreSQL (si existantes)
-REM ============================
-echo Sauvegarde des bases PostgreSQL...
 
-set "BACKUP_DIR=sauvegardes_bdd\%DATE:~6,4%-%DATE:~3,2%-%DATE:~0,2%"
-if exist "%BACKUP_DIR%" rmdir /s /q "%BACKUP_DIR%"
-mkdir "%BACKUP_DIR%"
-if errorlevel 1 (
-    echo [ERREUR] Impossible de creer le dossier de sauvegarde %BACKUP_DIR%.
-    pause
-    goto MENU
-)
-
-REM Sauvegarde conditionnelle pour chaque base
-kubectl get deploy database >nul 2>&1
-if errorlevel 1 (
-    echo [INFO] Pas de base FR existante, sauvegarde sautee.
-) else (
-    kubectl exec deploy/database -- pg_dump -U postgres bdd_mspr > "%BACKUP_DIR%\bdd_mspr_fr.sql"
-    if errorlevel 1 (
-        echo [ERREUR] Echec de la sauvegarde de bdd_mspr_fr.
-    )
-)
-
-kubectl get deploy db-us >nul 2>&1
-if errorlevel 1 (
-    echo [INFO] Pas de base US existante, sauvegarde sautee.
-) else (
-    kubectl exec deploy/db-us -- pg_dump -U postgres bdd_us > "%BACKUP_DIR%\bdd_us.sql"
-    if errorlevel 1 (
-        echo [ERREUR] Echec de la sauvegarde de bdd_us.
-    )
-)
-
-kubectl get deploy db-ch >nul 2>&1
-if errorlevel 1 (
-    echo [INFO] Pas de base CH existante, sauvegarde sautee.
-) else (
-    kubectl exec deploy/db-ch -- pg_dump -U postgres bdd_ch > "%BACKUP_DIR%\bdd_ch.sql"
-    if errorlevel 1 (
-        echo [ERREUR] Echec de la sauvegarde de bdd_ch.
-    )
-)
-
-echo Sauvegardes terminees dans %BACKUP_DIR%
-echo ============================
 
 echo ============================
 echo [1/6] Creation des ConfigMap SQL
@@ -199,6 +153,19 @@ start "" cmd /k "kubectl port-forward svc/reverse-proxy-service 8080:80"
 
 echo.
 echo Deploiement termine !
+
+REM ============================
+REM [8/7] Sauvegarde des bases PostgreSQL après déploiement
+REM ============================
+echo Sauvegarde des bases PostgreSQL après déploiement...
+call sauvegardes_bdd\back_up_postgres.bat
+if errorlevel 1 (
+    echo [ERREUR] La sauvegarde post-déploiement a échoué.
+    pause
+    goto MENU
+)
+echo Sauvegardes post-déploiement terminées.
+echo ============================
 
 REM ============================
 REM [7/7] Sauvegarde des logs de tous les pods

@@ -26,6 +26,7 @@
 
 <script>
 import apiClient from "/services/api";
+import { useUserStore } from '../stores/userStore';
 
 export default {
   name: "Login",
@@ -53,7 +54,9 @@ export default {
           },
         });
 
-        localStorage.setItem("access_token", response.data.access_token);
+        // Utilisation du store Pinia pour mettre à jour l'utilisateur
+        const userStore = useUserStore();
+        userStore.setToken(response.data.access_token);
         localStorage.setItem("selectedCountry", this.country);
         this.$router.push("/");
       } catch (err) {

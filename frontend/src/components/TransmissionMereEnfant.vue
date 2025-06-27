@@ -3,7 +3,7 @@
     <h1>{{ $t('transmission_mere_enfant_title') }}</h1>
     <ul>
       <li v-for="item in data" :key="item.id">
-        {{ $t('pays') }} : {{ item.nom_pays || item.id_pays }} |
+        {{ $t('pays') }} : {{ item.nom_pays ? item.nom_pays : (item.id_pays ? item.id_pays : 'N/A') }} |
         {{ $t('annee') }} : {{ item.annee }} |
         {{ $t('valeur') }} : {{ item.valeur }}
       </li>

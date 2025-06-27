@@ -34,8 +34,16 @@
 </template>
 
 <script>
+import { useUserStore } from '../stores/userStore';
+import { storeToRefs } from 'pinia';
+
 export default {
   name: "Header",
+  setup() {
+    const userStore = useUserStore();
+    const { username } = storeToRefs(userStore);
+    return { userStore, username };
+  },
   data() {
     return {
       showSwissLang: false,
@@ -51,23 +59,17 @@ export default {
       return this.currentCountry;
     },
     currentUser() {
-      const token = localStorage.getItem("access_token");
-      if (!token) return null;
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        return payload.sub;
-      } catch {
-        return null;
-      }
+      // Remplacé par le store Pinia
+      return this.username;
     }
   },
   methods: {
     setCountry(country) {
       const oldCountry = localStorage.getItem("selectedCountry");
-      if (oldCountry && oldCountry !== country.toLowerCase()) {
-        // Déconnexion automatique si changement de cluster
-        localStorage.removeItem("access_token");
-        this.$router.push("/login");
+      // Si déjà connecté et cluster différent (hors suisse), redirige vers la page d'avertissement
+      if (oldCountry && !oldCountry.startsWith("ch") && oldCountry !== country.toLowerCase() && this.currentUser) {
+        this.$router.push('/cluster-switch-not-allowed');
+        return;
       }
       localStorage.setItem("selectedCountry", country.toLowerCase());
       if (country === "fr") this.$i18n.locale = "fr";
@@ -77,16 +79,18 @@ export default {
     setSwissLang(lang) {
       const oldCountry = localStorage.getItem("selectedCountry");
       const newCountry = `ch_${lang}`;
-      if (oldCountry && oldCountry !== newCountry) {
-        localStorage.removeItem("access_token");
-        this.$router.push("/login");
+      // Si déjà sur un cluster suisse, autorise le changement de langue suisse
+      if (oldCountry && oldCountry.startsWith("ch")) {
+        localStorage.setItem("selectedCountry", newCountry);
+        this.$i18n.locale = lang;
+        window.location.reload();
+        return;
       }
-      localStorage.setItem("selectedCountry", newCountry);
-      this.$i18n.locale = lang;
-      window.location.reload();
+      // Sinon, redirige vers la page d'avertissement
+      this.$router.push('/cluster-switch-not-allowed');
     },
     logout() {
-      localStorage.removeItem('access_token');
+      this.userStore.clearUser();
       localStorage.removeItem('selectedCountry');
       this.$router.push('/login');
     }

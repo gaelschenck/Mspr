@@ -10,6 +10,7 @@ import Login from '../views/Login.vue';
 import PopulationHiv from '../components/PopulationHiv.vue';
 import Traitement from '../components/Traitement.vue';
 import TransmissionMereEnfant from '../components/TransmissionMereEnfant.vue';
+import ClusterSwitchNotAllowed from '../components/ClusterSwitchNotAllowed.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -21,9 +22,14 @@ const routes = [
   { path: '/us-mortalite', component: USMortalite },
   { path: '/population-hiv', component: PopulationHiv },
   { path: '/traitement', component: Traitement },
-  { path: '/transmission-mere-enfant', component: TransmissionMereEnfant },
+  { path: '/transmission-mere-en-enfant', component: TransmissionMereEnfant },
   { path: '/confidentialite', name: 'Confidentialite', component: Confidentialite },
   { path: '/login', component: Login },
+  {
+    path: '/cluster-switch-not-allowed',
+    name: 'ClusterSwitchNotAllowed',
+    component: ClusterSwitchNotAllowed
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),

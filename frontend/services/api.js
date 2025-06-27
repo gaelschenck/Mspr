@@ -41,11 +41,8 @@ apiClient.interceptors.request.use(config => {
  * @param {number|null} year - Année à filtrer (optionnel)
  * @returns {Promise<Array>} - Tableau de résultats
  */
-export async function fetchUSMortalite(page = 1, pageSize = 25, year = null) {
-  const offset = (page - 1) * pageSize;
-  let url = `mortalite/?offset=${offset}&limit=${pageSize}`;
-  if (year) url += `&year=${year}`;
-  const response = await apiClient.get(url);
+export async function fetchUSMortalite(offset, limit) {
+  const response = await apiClient.get('/us/mortalite/', { params: { offset, limit } });
   return response.data;
 }
 export async function fetchPopulationHiv(offset = 0, limit = 25) {
@@ -56,8 +53,8 @@ export async function fetchTraitement(offset = 0, limit = 25) {
   const res = await apiClient.get(`/traitement/paginated/?offset=${offset}&limit=${limit}`);
   return res.data;
 }
-export async function fetchTransmissionMereEnfant(offset = 0, limit = 25) {
-  const res = await apiClient.get(`/transmission_mere_enfant/paginated/?offset=${offset}&limit=${limit}`);
+export async function fetchTransmissionMereEnfant(offset, limit) {
+  const res = await apiClient.get('/transmission_mere_en_enfant/paginated/', { params: { offset, limit } });
   return res.data;
 }
 

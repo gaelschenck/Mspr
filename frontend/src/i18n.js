@@ -61,7 +61,12 @@ const messages = {
     data_transmission_mere_enfant: "Transmission mère-enfant",
     prediction_next_year: "Prédiction pour l'année prochaine",
     prediction_no_future: "Aucune prédiction future disponible.",
-
+    cluster_switch_title: "Changement de cluster non autorisé",
+    cluster_switch_message: "Vous êtes déjà connecté. Pour changer de cluster, veuillez vous déconnecter d'abord.",
+    logout: "Déconnexion",
+    back: "Retour",
+    cookies: "Gérer mes cookies",
+    privacy_policy: "Politique de confidentialité"
   },
   en: {
     welcome: "Welcome to the MSPR application",
@@ -114,7 +119,12 @@ const messages = {
     data_transmission_mere_enfant: "Mother-to-child transmission",
     prediction_next_year: "Prediction for next year",
     prediction_no_future: "No future prediction available.",
-
+    cluster_switch_title: "Cluster switch not allowed",
+    cluster_switch_message: "You are already logged in. To change cluster, please log out first.",
+    logout: "Logout",
+    back: "Back",
+    cookies: "Manage my cookies",
+    privacy_policy: "Privacy Policy"
   },
   de: {
     welcome: "Willkommen bei der MSPR-Anwendung",
@@ -167,6 +177,12 @@ const messages = {
     data_transmission_mere_enfant: "Mutter-Kind-Übertragung",
     prediction_next_year: "Vorhersage für das nächste Jahr",
     prediction_no_future: "Keine zukünftige Vorhersage verfügbar.",
+    cluster_switch_title: "Cluster-Wechsel nicht erlaubt",
+    cluster_switch_message: "Sie sind bereits angemeldet. Um den Cluster zu wechseln, melden Sie sich bitte zuerst ab.",
+    logout: "Abmelden",
+    back: "Zurück",
+    cookies: "Meine Cookies verwalten",
+    privacy_policy: "Datenschutzrichtlinie"
   },
   it: {
     welcome: "Benvenuto nell'applicazione MSPR",
@@ -212,6 +228,12 @@ const messages = {
     data_transmission_mere_enfant: "Trasmissione madre-bambino",
     prediction_next_year: "Previsione per il prossimo anno",
     prediction_no_future: "Nessuna previsione futura disponibile.",
+    cluster_switch_title: "Cambio cluster non consentito",
+    cluster_switch_message: "Sei già connesso. Per cambiare cluster, disconnettiti prima.",
+    logout: "Disconnetti",
+    back: "Indietro",
+    cookies: "Gestisci i miei cookie",
+    privacy_policy: "Politica sulla privacy"
   }
 }
 
