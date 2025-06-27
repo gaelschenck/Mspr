@@ -92,28 +92,44 @@ if errorlevel 1 (
 cd ..
 
 echo ============================
-echo [2/6] Build des images Docker backend et frontend
+echo [2/7] Pull des images depuis Docker Hub
 echo ============================
 cd backend
-docker build -t my_backend_image:latest .
+docker pull gaelschenck/mspr-backend:latest
 if errorlevel 1 (
-    echo [ERREUR] Echec du build de l'image backend.
+    echo [ERREUR] Echec du pull de l'image backend.
     pause
     goto MENU
 )
 cd ..
 
 cd frontend
-docker build -t my_frontend_image:latest .
+docker pull gaelschenck/mspr-frontend:latest
 if errorlevel 1 (
-    echo [ERREUR] Echec du build de l'image frontend.
+    echo [ERREUR] Echec du pull de l'image frontend.
     pause
     goto MENU
 )
 cd ..
 
 echo ============================
-echo [3/6] Chargement des images dans Kind
+echo [3/7] Tag des images pour Kind
+echo ============================
+docker tag gaelschenck/mspr-backend:latest my_backend_image:latest
+if errorlevel 1 (
+    echo [ERREUR] Echec du tag de l'image backend.
+    pause
+    goto MENU
+)
+docker tag gaelschenck/mspr-frontend:latest my_frontend_image:latest
+if errorlevel 1 (
+    echo [ERREUR] Echec du tag de l'image frontend.
+    pause
+    goto MENU
+)
+
+echo ============================
+echo [4/7] Chargement des images dans Kind
 echo ============================
 kind load docker-image my_backend_image:latest --name mspr
 if errorlevel 1 (
@@ -129,7 +145,7 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [4/6] Deploiement des manifests Kubernetes
+echo [5/7] Deploiement des manifests Kubernetes
 echo ============================
 kubectl apply -f k8s_manifests/
 if errorlevel 1 (
@@ -139,14 +155,14 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [5/6] Redemarrage des pods de base de donnees
+echo [6/7] Redemarrage des pods de base de donnees
 echo ============================
 for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "database db-ch db-us"') do (
     kubectl delete %%i
 )
 
 echo ============================
-echo [6/6] Statut final des pods et lancement du service
+echo [7/7] Statut final des pods et lancement du service
 echo ============================
 kubectl get pods
 start "" cmd /k "kubectl port-forward svc/reverse-proxy-service 8080:80"
