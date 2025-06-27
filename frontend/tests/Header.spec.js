@@ -59,7 +59,7 @@ describe('Header.vue', () => {
     // Clear localStorage before each test
     localStorage.clear()
     
-    // Clear mocks
+    // Clear all mocks including localStorage mocks
     vi.clearAllMocks()
     
     // Create testing pinia
@@ -113,38 +113,58 @@ describe('Header.vue', () => {
     it('n\'affiche pas les langues suisses par défaut', () => {
       expect(wrapper.find('.swiss-lang').exists()).toBe(false)
     })
-  })
 
-  describe('Sélection de pays', () => {
-    it('définit le pays France et recharge la page', async () => {
-      const frButton = wrapper.findAll('.lang-select button')[0]
-      await frButton.trigger('click')
-      
-      expect(localStorage.getItem('selectedCountry')).toBe('fr')
-      expect(mockReload).toHaveBeenCalled()
-    })
-
-    it('définit le pays USA et recharge la page', async () => {
-      const usButton = wrapper.findAll('.lang-select button')[1]
-      await usButton.trigger('click')
-      
-      expect(localStorage.getItem('selectedCountry')).toBe('us')
-      expect(mockReload).toHaveBeenCalled()
-    })
-
-    it('affiche les options suisses quand CH est cliqué', async () => {
-      const chButton = wrapper.findAll('.lang-select button')[2]
-      await chButton.trigger('click')
-      
-      expect(wrapper.vm.showSwissLang).toBe(true)
+    it('affiche les langues suisses quand utilisateur connecté sur cluster suisse', async () => {
+      // Simuler un utilisateur connecté sur cluster suisse
+      userStore.username = 'testuser'
+      await wrapper.setData({ currentCountry: 'ch_fr' })
       await wrapper.vm.$nextTick()
       
+      expect(wrapper.find('.swiss-lang').exists()).toBe(true)
       const swissButtons = wrapper.findAll('.swiss-lang button')
       expect(swissButtons).toHaveLength(4)
       expect(swissButtons[0].text()).toBe('FR-CH')
       expect(swissButtons[1].text()).toBe('EN-CH')
       expect(swissButtons[2].text()).toBe('DE-CH')
       expect(swissButtons[3].text()).toBe('IT-CH')
+    })
+
+    it('n\'affiche pas les langues suisses si pas d\'utilisateur connecté', async () => {
+      // Simuler cluster suisse sans utilisateur connecté
+      userStore.username = null
+      await wrapper.setData({ currentCountry: 'ch_fr' })
+      await wrapper.vm.$nextTick()
+      
+      expect(wrapper.find('.swiss-lang').exists()).toBe(false)
+    })
+  })
+
+  describe('Sélection de pays', () => {
+    it('définit le pays France et recharge la page', async () => {
+      const frButton = wrapper.findAll('.lang-select button')[0]
+      
+      await frButton.trigger('click')
+      
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'fr')
+      expect(mockReload).toHaveBeenCalled()
+    })
+
+    it('définit le pays USA et recharge la page', async () => {
+      const usButton = wrapper.findAll('.lang-select button')[1]
+      
+      await usButton.trigger('click')
+      
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'us')
+      expect(mockReload).toHaveBeenCalled()
+    })
+
+    it('définit le cluster Suisse (ch_fr) quand CH est cliqué', async () => {
+      const chButton = wrapper.findAll('.lang-select button')[2]
+      
+      await chButton.trigger('click')
+      
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'ch_fr')
+      expect(mockReload).toHaveBeenCalled()
     })
 
     it('redirige vers la page d\'avertissement quand on change de cluster avec utilisateur connecté', async () => {
@@ -164,9 +184,9 @@ describe('Header.vue', () => {
 
   describe('Langues suisses', () => {
     beforeEach(async () => {
-      // Afficher les options suisses
-      const chButton = wrapper.findAll('.lang-select button')[2]
-      await chButton.trigger('click')
+      // Simuler un utilisateur connecté sur cluster suisse pour afficher les options
+      userStore.username = 'testuser'
+      await wrapper.setData({ currentCountry: 'ch_fr' })
       await wrapper.vm.$nextTick()
     })
 
@@ -176,7 +196,7 @@ describe('Header.vue', () => {
       const deButton = wrapper.findAll('.swiss-lang button')[2]
       await deButton.trigger('click')
       
-      expect(localStorage.getItem('selectedCountry')).toBe('ch_de')
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'ch_de')
       expect(mockReload).toHaveBeenCalled()
     })
 
@@ -195,11 +215,11 @@ describe('Header.vue', () => {
       const buttons = wrapper.findAll('.swiss-lang button')
       
       await buttons[1].trigger('click') // EN-CH
-      expect(localStorage.getItem('selectedCountry')).toBe('ch_en')
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'ch_en')
       
       localStorage.setItem('selectedCountry', 'ch_fr')
       await buttons[3].trigger('click') // IT-CH
-      expect(localStorage.getItem('selectedCountry')).toBe('ch_it')
+      expect(localStorage.setItem).toHaveBeenCalledWith('selectedCountry', 'ch_it')
     })
   })
 
@@ -264,7 +284,7 @@ describe('Header.vue', () => {
       await logoutButton.trigger('click')
       
       expect(userStore.clearUser).toHaveBeenCalled()
-      expect(localStorage.getItem('selectedCountry')).toBe(null)
+      expect(localStorage.removeItem).toHaveBeenCalledWith('selectedCountry')
       expect(mockRouter.push).toHaveBeenCalledWith('/login')
     })
   })

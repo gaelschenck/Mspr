@@ -4,8 +4,8 @@
       <div class="lang-select">
         <button @click="setCountry('fr')">FR</button>
         <button @click="setCountry('us')">US</button>
-        <button @click="showSwissLang = !showSwissLang">CH</button>
-        <span v-if="showSwissLang" class="swiss-lang">
+        <button @click="setCountry('ch')">CH</button>
+        <span v-if="showSwissLanguages" class="swiss-lang">
           <button @click="setSwissLang('fr')">FR-CH</button>
           <button @click="setSwissLang('en')">EN-CH</button>
           <button @click="setSwissLang('de')">DE-CH</button>
@@ -46,7 +46,6 @@ export default {
   },
   data() {
     return {
-      showSwissLang: false,
       currentCountry: localStorage.getItem("selectedCountry") || null,
     };
   },
@@ -61,19 +60,32 @@ export default {
     currentUser() {
       // Remplacé par le store Pinia
       return this.username;
+    },
+    showSwissLanguages() {
+      // Affiche les langues suisses seulement si on est sur un cluster suisse ET qu'un utilisateur est connecté
+      return this.currentCountry && this.currentCountry.startsWith("ch") && this.currentUser;
     }
   },
   methods: {
     setCountry(country) {
       const oldCountry = localStorage.getItem("selectedCountry");
+      
+      // Gestion spéciale pour la Suisse - se connecte automatiquement à ch_fr
+      if (country === "ch") {
+        country = "ch_fr";
+      }
+      
       // Si déjà connecté et cluster différent (hors suisse), redirige vers la page d'avertissement
       if (oldCountry && !oldCountry.startsWith("ch") && oldCountry !== country.toLowerCase() && this.currentUser) {
         this.$router.push('/cluster-switch-not-allowed');
         return;
       }
+      
       localStorage.setItem("selectedCountry", country.toLowerCase());
       if (country === "fr") this.$i18n.locale = "fr";
       if (country === "us") this.$i18n.locale = "en";
+      if (country === "ch_fr") this.$i18n.locale = "fr";
+      
       window.location.reload();
     },
     setSwissLang(lang) {
