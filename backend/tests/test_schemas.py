@@ -35,7 +35,7 @@ class TestSchemas:
         """Test du schéma TransmissionMereEnfant"""
         # Test données valides
         data = {
-            "id": 1,
+            "id_transmission": 1,
             "id_pays": 42,
             "besoin_arv_min": 100,
             "besoin_arv_median": 150,
@@ -46,7 +46,7 @@ class TestSchemas:
         }
         
         transmission = TransmissionMereEnfant(**data)
-        assert transmission.id == 1
+        assert transmission.id_transmission == 1
         assert transmission.id_pays == 42
         assert transmission.besoin_arv_min == 100
         assert transmission.besoin_arv_median == 150
@@ -58,7 +58,7 @@ class TestSchemas:
     def test_transmission_mere_enfant_schema_optional_fields(self):
         """Test du schéma avec champs optionnels"""
         data = {
-            "id": 1,
+            "id_transmission": 1,
             "id_pays": 42,
             "besoin_arv_min": 100,
             "besoin_arv_median": 150,
@@ -70,7 +70,7 @@ class TestSchemas:
         
         transmission = TransmissionMereEnfant(**data)
         # Vérifier que le schéma fonctionne sans champs optionnels
-        assert transmission.id == 1
+        assert transmission.id_transmission == 1
     
     def test_mortalite_schema(self):
         """Test du schéma Mortalite"""
@@ -110,34 +110,32 @@ class TestSchemas:
         """Test du schéma Pays"""
         data = {
             "id_pays": 1,
-            "nom_pays": "France",
-            "region": "Europe",
-            "sous_region": "Western Europe"
+            "pays": "France",
+            "region_who": "European Region"
         }
         
         pays = Pays(**data)
         assert pays.id_pays == 1
-        assert pays.nom_pays == "France"
-        assert pays.region == "Europe"
-        assert pays.sous_region == "Western Europe"
+        assert pays.pays == "France"
+        assert pays.region_who == "European Region"
     
     def test_unite_schema(self):
         """Test du schéma Unite"""
         data = {
             "id_unite": 1,
-            "nom_unite": "Nombre de personnes"
+            "unite": "Number"
         }
         
         unite = Unite(**data)
         assert unite.id_unite == 1
-        assert unite.nom_unite == "Nombre de personnes"
+        assert unite.unite == "Number"
     
     def test_invalid_data_raises_validation_error(self):
         """Test que des données invalides lèvent une ValidationError"""
         with pytest.raises(ValidationError):
             # Pourcentage > 100 non autorisé
             TransmissionMereEnfant(
-                id=1,
+                id_transmission=1,
                 id_pays=42,
                 besoin_arv_min=100,
                 besoin_arv_median=150,
@@ -154,7 +152,7 @@ class TestDataValidation:
         """Test que la structure des données transmission est cohérente"""
         # Les valeurs médianes doivent être entre min et max
         data = {
-            "id": 1,
+            "id_transmission": 1,
             "id_pays": 42,
             "besoin_arv_min": 100,
             "besoin_arv_median": 150,  # Entre 100 et 200
@@ -173,7 +171,7 @@ class TestDataValidation:
     def test_percentage_bounds(self):
         """Test que les pourcentages sont dans des limites raisonnables"""
         data = {
-            "id": 1,
+            "id_transmission": 1,
             "id_pays": 42,
             "besoin_arv_min": 100,
             "besoin_arv_median": 150,

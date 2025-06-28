@@ -5,9 +5,8 @@ from typing import Optional, List
 
 ### SCHEMAS POUR PAYS
 class PaysBase(BaseModel):
-    nom_pays: str = Field(..., min_length=2, max_length=100)
-    region: Optional[str] = Field(None, max_length=100)
-    sous_region: Optional[str] = Field(None, max_length=100)
+    pays: str = Field(..., min_length=2, max_length=100)
+    region_who: Optional[str] = Field(None, max_length=100)
 
 
 class PaysCreate(PaysBase):
@@ -23,7 +22,7 @@ class Pays(PaysBase):
 
 ### SCHEMAS POUR UNITE
 class UniteBase(BaseModel):
-    nom_unite: str = Field(..., min_length=1, max_length=50)
+    unite: str = Field(..., min_length=1, max_length=50)
 
 
 class UniteCreate(UniteBase):
@@ -91,7 +90,7 @@ class TransmissionMereEnfantCreate(TransmissionMereEnfantBase):
 
 
 class TransmissionMereEnfant(TransmissionMereEnfantBase):
-    id: int
+    id_transmission: int
 
     class Config:
         from_attributes = True

@@ -63,7 +63,7 @@ class TestAPIEndpoints:
                         if len(data["data"]) > 0:
                             first_item = data["data"][0]
                             required_fields = [
-                                "id", "id_pays", "besoin_arv_min", "besoin_arv_median", "besoin_arv_max",
+                                "id_transmission", "id_pays", "besoin_arv_min", "besoin_arv_median", "besoin_arv_max",
                                 "pourcentage_recu_min", "pourcentage_recu_median", "pourcentage_recu_max"
                             ]
                             for field in required_fields:

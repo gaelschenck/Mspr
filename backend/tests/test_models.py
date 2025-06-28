@@ -48,7 +48,7 @@ class TestModels:
             pytest.skip("Modèles non disponibles")
             
         transmission = TransmissionMereEnfant(
-            id=1,
+            id_transmission=1,
             id_pays=42,
             besoin_arv_min=100,
             besoin_arv_median=150,
@@ -58,7 +58,7 @@ class TestModels:
             pourcentage_recu_max=90
         )
         
-        assert transmission.id == 1
+        assert transmission.id_transmission == 1
         assert transmission.id_pays == 42
         assert transmission.besoin_arv_min == 100
         assert transmission.besoin_arv_median == 150
@@ -74,15 +74,13 @@ class TestModels:
             
         pays = Pays(
             id_pays=1,
-            nom_pays="France",
-            region="Europe",
-            sous_region="Western Europe"
+            pays="France",
+            region_who="European Region"
         )
         
         assert pays.id_pays == 1
-        assert pays.nom_pays == "France"
-        assert pays.region == "Europe"
-        assert pays.sous_region == "Western Europe"
+        assert pays.pays == "France"
+        assert pays.region_who == "European Region"
     
     def test_unite_model(self):
         """Test du modèle Unite"""
@@ -91,11 +89,11 @@ class TestModels:
             
         unite = Unite(
             id_unite=1,
-            nom_unite="Nombre de personnes"
+            unite="Number"
         )
         
         assert unite.id_unite == 1
-        assert unite.nom_unite == "Nombre de personnes"
+        assert unite.unite == "Number"
     
     def test_mortalite_model(self):
         """Test du modèle Mortalite"""
@@ -189,7 +187,7 @@ class TestModelProperties:
             pytest.skip("Modèles non disponibles")
             
         try:
-            pays = Pays(id_pays=1, nom_pays="France", region="Europe")
+            pays = Pays(id_pays=1, pays="France", region_who="European Region")
             
             # Le modèle devrait avoir une représentation string
             repr_str = repr(pays)
@@ -208,7 +206,7 @@ class TestModelProperties:
             
             # Vérifier que tous les attributs existent
             required_attrs = [
-                'id', 'id_pays', 'besoin_arv_min', 'besoin_arv_median', 'besoin_arv_max',
+                'id_transmission', 'id_pays', 'besoin_arv_min', 'besoin_arv_median', 'besoin_arv_max',
                 'pourcentage_recu_min', 'pourcentage_recu_median', 'pourcentage_recu_max'
             ]
             
