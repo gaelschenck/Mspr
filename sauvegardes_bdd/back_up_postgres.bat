@@ -9,7 +9,7 @@ set BACKUP_DIR=%~dp0dumps
 if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%"
 
 REM Sauvegarde de la base FR
-for /f "tokens=1" %%i in ('kubectl get pods --no-headers ^| findstr database') do (
+for /f "tokens=1" %%i in ('kubectl get pods --no-headers ^| findstr db-fr') do (
     echo Sauvegarde de la base FR via pod %%i...
     kubectl exec %%i -- env PGPASSWORD=admin pg_dump -U postgres bdd_mspr > "%BACKUP_DIR%\bdd_mspr_fr_%DATE%.sql"
     echo Sauvegarde FR terminee: bdd_mspr_fr_%DATE%.sql

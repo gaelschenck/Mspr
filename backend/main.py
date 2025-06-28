@@ -5,7 +5,7 @@ from sqlalchemy import select, update, delete
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import models, schemas
-from database import engine, get_db, initialize_engine
+from database import get_db, initialize_engine
 import sys
 import os
 import numpy as np
@@ -35,21 +35,27 @@ async def startup_event():
     Initialise la connexion à la base de données au démarrage de l'application
     """
     try:
+        print("Démarrage de l'application...")
         await initialize_engine()
         print("Application démarrée avec succès - Base de données connectée")
+        # Créer les tables après l'initialisation de l'engine
+        await init_db()
+        print("Initialisation terminée avec succès")
     except Exception as e:
         print(f"Erreur lors de l'initialisation de la base de données: {e}")
         # On laisse l'application démarrer même si la DB n'est pas accessible immédiatement
         # Les retry se feront automatiquement lors des requêtes
+        import traceback
+        traceback.print_exc()
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """
     Nettoie les connexions à la base de données à l'arrêt
     """
-    global engine
-    if engine:
-        await engine.dispose()
+    import database
+    if database.engine:
+        await database.engine.dispose()
         print("Connexions à la base de données fermées")
 
 # ========================
@@ -135,24 +141,23 @@ async def login(
         raise HTTPException(status_code=400, detail="Cluster non spécifié")
 
     # Sélectionne la bonne base selon le cluster
-    if cluster == "fr":
-        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_FR')}"
-    elif cluster == "us":
-        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_US')}"
-    elif cluster == "ch":
-        db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB_CH')}"
-    else:
-        raise HTTPException(status_code=400, detail="Cluster inconnu")
-
+    # Utilise directement POSTGRES_DB car chaque pod a sa propre base configurée
+    db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
+    
+    if not all([os.getenv('POSTGRES_USER'), os.getenv('POSTGRES_PASSWORD'), os.getenv('POSTGRES_HOST'), os.getenv('POSTGRES_PORT'), os.getenv('POSTGRES_DB')]):
+        raise HTTPException(status_code=500, detail="Configuration de base de données incomplète")
 
     # Crée une session temporaire sur la bonne base
-    local_engine = create_async_engine(db_url, echo=False, future=True)
-    async with AsyncSession(local_engine) as db:
-        user = await authenticate_user(db, form_data.username, form_data.password)
-        if not user:
-            raise HTTPException(status_code=401, detail="Incorrect username or password")
-        access_token = create_access_token(data={"sub": user.username, "role": user.role, "cluster": cluster})
-        return {"access_token": access_token, "token_type": "bearer"}
+    local_engine = create_async_engine(db_url, echo=False, future=True, pool_size=1, max_overflow=0)
+    try:
+        async with AsyncSession(local_engine) as db:
+            user = await authenticate_user(db, form_data.username, form_data.password)
+            if not user:
+                raise HTTPException(status_code=401, detail="Incorrect username or password")
+            access_token = create_access_token(data={"sub": user.username, "role": user.role, "cluster": cluster})
+            return {"access_token": access_token, "token_type": "bearer"}
+    finally:
+        await local_engine.dispose()
     
 def safe(val):
     # Convertit les types numpy en natif, gère les nan
@@ -189,13 +194,32 @@ async def user_only(current_user=Depends(require_role("user"))):
 async def route_protegee(current_user=Depends(require_role("admin"))):
     return {"message": "Ceci est une route protégée pour les admins"}
 
-@app.on_event("startup")
-async def startup():
-    await init_db()
-
 async def init_db():
-    async with engine.begin() as conn:
-        await conn.run_sync(models.Base.metadata.create_all)
+    """
+    Initialise les tables de la base de données
+    """
+    try:
+        # Importer database au lieu d'engine directement
+        import database
+        
+        # S'assurer que l'engine est initialisé
+        if database.engine is None:
+            print("ERREUR: Engine non initialisé! Tentative d'initialisation...")
+            await database.initialize_engine()
+            
+        if database.engine is None:
+            print("ERREUR: Impossible d'initialiser l'engine!")
+            return
+            
+        print(f"engine in main.py: {database.engine}")
+        async with database.engine.begin() as conn:
+            await conn.run_sync(models.Base.metadata.create_all)
+            print("Tables créées avec succès")
+    except Exception as e:
+        print(f"Erreur lors de la création des tables: {e}")
+        import traceback
+        traceback.print_exc()
+        # Ne pas faire échouer le démarrage, les tables pourraient déjà exister
 # ========================
 # Configuration de la langue
 # ========================
@@ -302,18 +326,6 @@ app.add_middleware(
 @app.options("/{path:path}")
 async def options_handler():
     return {"message": tr("preflight_ok")}
-
-
-# Initialisation de la base de données
-async def init_db():
-    print(f"engine in main.py: {engine}")
-    async with engine.begin() as conn:
-        await conn.run_sync(models.Base.metadata.create_all)
-
-
-@app.on_event("startup")
-async def startup():
-    await init_db()
 
 
 # ========================
@@ -476,19 +488,20 @@ async def health_check():
     """
     Endpoint de vérification de santé de l'application et de la base de données
     """
-    from database import health_check_db, engine
+    import database
+    from database import health_check_db
     
     status = {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "database": "disconnected",
-        "engine_initialized": engine is not None
+        "engine_initialized": database.engine is not None
     }
     
     # Vérification de la base de données
-    if engine:
+    if database.engine:
         try:
-            db_healthy = await health_check_db(engine)
+            db_healthy = await health_check_db(database.engine)
             status["database"] = "connected" if db_healthy else "error"
         except Exception as e:
             status["database"] = f"error: {str(e)}"

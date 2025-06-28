@@ -29,21 +29,28 @@ goto end
 :restore_all
 echo.
 echo === RESTAURATION DE TOUTES LES BASES ===
-call :restore_database database-8469446dc7-ssdqz bdd_mspr "%BACKUP_DIR%\bdd_mspr_fr_corrigee_2025-06-28.sql" FR
-call :restore_database db-ch-6c564cc4b9-2bdmk bdd_ch "%BACKUP_DIR%\bdd_ch_corrigee_2025-06-28.sql" CH
-call :restore_database db-us-b76946d5b-b84xw bdd_us "%BACKUP_DIR%\bdd_us_corrigee_2025-06-28.sql" US
+REM Récupération dynamique des noms de pods
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr" ^| sed "s/pod\///"') do set DB_FR_POD=%%i
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-ch" ^| sed "s/pod\///"') do set DB_CH_POD=%%i
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-us" ^| sed "s/pod\///"') do set DB_US_POD=%%i
+call :restore_database %DB_FR_POD% bdd_mspr "%BACKUP_DIR%\bdd_mspr_fr_corrigee_2025-06-28.sql" FR
+call :restore_database %DB_CH_POD% bdd_ch "%BACKUP_DIR%\bdd_ch_corrigee_2025-06-28.sql" CH
+call :restore_database %DB_US_POD% bdd_us "%BACKUP_DIR%\bdd_us_corrigee_2025-06-28.sql" US
 goto verify_all
 
 :restore_fr
-call :restore_database database-8469446dc7-ssdqz bdd_mspr "%BACKUP_DIR%\bdd_mspr_fr_corrigee_2025-06-28.sql" FR
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr" ^| sed "s/pod\///"') do set DB_FR_POD=%%i
+call :restore_database %DB_FR_POD% bdd_mspr "%BACKUP_DIR%\bdd_mspr_fr_corrigee_2025-06-28.sql" FR
 goto end
 
 :restore_ch
-call :restore_database db-ch-6c564cc4b9-2bdmk bdd_ch "%BACKUP_DIR%\bdd_ch_corrigee_2025-06-28.sql" CH
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-ch" ^| sed "s/pod\///"') do set DB_CH_POD=%%i
+call :restore_database %DB_CH_POD% bdd_ch "%BACKUP_DIR%\bdd_ch_corrigee_2025-06-28.sql" CH
 goto end
 
 :restore_us
-call :restore_database db-us-b76946d5b-b84xw bdd_us "%BACKUP_DIR%\bdd_us_corrigee_2025-06-28.sql" US
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-us" ^| sed "s/pod\///"') do set DB_US_POD=%%i
+call :restore_database %DB_US_POD% bdd_us "%BACKUP_DIR%\bdd_us_corrigee_2025-06-28.sql" US
 goto end
 
 :restore_database
@@ -75,11 +82,11 @@ echo.
 echo === VERIFICATION DES RESTAURATIONS ===
 echo.
 echo Base FR:
-kubectl exec database-8469446dc7-ssdqz -- env PGPASSWORD=admin psql -U postgres -d bdd_mspr -c "SELECT 'FR' as base, COUNT(*) as transmission FROM transmission_mere_enfant;"
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr" ^| sed "s/pod\///"') do kubectl exec %%i -- env PGPASSWORD=admin psql -U postgres -d bdd_mspr -c "SELECT 'FR' as base, COUNT(*) as transmission FROM transmission_mere_enfant;"
 
 echo.
 echo Base CH:
-kubectl exec db-ch-6c564cc4b9-2bdmk -- env PGPASSWORD=admin psql -U postgres -d bdd_ch -c "SELECT 'CH' as base, COUNT(*) as transmission FROM transmission_mere_enfant;"
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-ch" ^| sed "s/pod\///"') do kubectl exec %%i -- env PGPASSWORD=admin psql -U postgres -d bdd_ch -c "SELECT 'CH' as base, COUNT(*) as transmission FROM transmission_mere_enfant;"
 
 echo.
 echo Base US:

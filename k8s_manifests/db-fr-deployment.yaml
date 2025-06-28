@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: database
+  name: db-fr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: database
+      app: db-fr
   template:
     metadata:
       labels:
-        app: database
+        app: db-fr
     spec:
       containers:
-        - name: database
+        - name: db-fr
           image: postgres:latest
           imagePullPolicy: IfNotPresent #cette ligne empêche Kind de télécharger l'image depuis internet, il prends uniquement la locale
           ports:
             - containerPort: 5432
           env:
             - name: POSTGRES_HOST
-              value: database
+              value: db-fr
             - name: POSTGRES_USER
               value: "postgres"
             - name: POSTGRES_PASSWORD

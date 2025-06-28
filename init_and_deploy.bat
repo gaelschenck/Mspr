@@ -60,7 +60,7 @@ goto MENU
 :RESTORE
 echo.
 echo === RESTAURATION DES BASES ===
-call sauvegardes_bdd\restore_postgres.bat
+call sauvegardes_bdd\restore_bases.bat
 if errorlevel 1 (
     echo [ERREUR] La restauration a echoue.
     pause
@@ -157,7 +157,7 @@ if errorlevel 1 (
 echo ============================
 echo [6/7] Redemarrage des pods de base de donnees
 echo ============================
-for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "database db-ch db-us"') do (
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr db-ch db-us"') do (
     kubectl delete %%i
 )
 
