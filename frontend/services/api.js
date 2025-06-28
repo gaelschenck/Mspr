@@ -40,6 +40,33 @@ apiClient.interceptors.request.use(config => {
  * @param {number} limit - Nombre d'éléments par page
  * @returns {Promise<Array>} - Tableau de résultats
  */
+/**
+ * Fonction générique pour faire des appels API.
+ * @param {string} endpoint - L'endpoint de l'API (ex: "/tables/")
+ * @param {Object} options - Options pour la requête (method, data, etc.)
+ * @returns {Promise<any>} - Réponse de l'API
+ */
+export async function fetchFromAPI(endpoint, options = {}) {
+  try {
+    const method = options.method || 'GET';
+    const config = {
+      method,
+      url: endpoint,
+      ...options
+    };
+    
+    if (method.toLowerCase() === 'post' && options.data) {
+      config.data = options.data;
+    }
+    
+    const response = await apiClient(config);
+    return response.data;
+  } catch (error) {
+    console.error(`Erreur lors de l'appel API vers ${endpoint}:`, error);
+    throw error;
+  }
+}
+
 export async function fetchMortalite(offset = 0, limit = 25) {
   try {
     const response = await apiClient.get('/mortalite/paginated/', { params: { offset, limit } });
