@@ -74,21 +74,56 @@ echo.
 
 
 echo ============================
-echo [1/6] Creation des ConfigMap SQL
+echo [1/6] Build des images PostgreSQL personnalisees par base
 echo ============================
 cd /d "%~dp0essaidocker"
-kubectl create configmap initdb-sql --from-file=initdb/dump.sql --dry-run=client -o yaml | kubectl apply -f -
+
+REM Build de l'image PostgreSQL pour la base FR
+echo [INFO] Construction de l'image PostgreSQL FR...
+docker build -f Dockerfile.postgres-fr -t mspr-postgres-fr:latest .
 if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap initdb-sql.
+    echo [ERREUR] Echec du build de l'image PostgreSQL FR.
+    pause
+    goto MENU
 )
-kubectl create configmap init-us-sql --from-file=init_us/dumpus.sql --dry-run=client -o yaml | kubectl apply -f -
+
+REM Build de l'image PostgreSQL pour la base US
+echo [INFO] Construction de l'image PostgreSQL US...
+docker build -f Dockerfile.postgres-us -t mspr-postgres-us:latest .
 if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap init-us-sql.
+    echo [ERREUR] Echec du build de l'image PostgreSQL US.
+    pause
+    goto MENU
 )
-kubectl create configmap init-ch-sql --from-file=init_ch/dumpch.sql --dry-run=client -o yaml | kubectl apply -f -
+
+REM Build de l'image PostgreSQL pour la base CH
+echo [INFO] Construction de l'image PostgreSQL CH...
+docker build -f Dockerfile.postgres-ch -t mspr-postgres-ch:latest .
 if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap init-ch-sql.
+    echo [ERREUR] Echec du build de l'image PostgreSQL CH.
+    pause
+    goto MENU
 )
+
+REM Chargement des images dans Kind
+echo [INFO] Chargement des images PostgreSQL dans Kind...
+kind load docker-image mspr-postgres-fr:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL FR dans Kind.
+    goto MENU
+)
+kind load docker-image mspr-postgres-us:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL US dans Kind.
+    goto MENU
+)
+kind load docker-image mspr-postgres-ch:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL CH dans Kind.
+    goto MENU
+)
+
+echo [INFO] Images PostgreSQL construites et chargees avec succes
 cd ..
 
 echo ============================
@@ -145,8 +180,23 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [5/7] Deploiement des manifests Kubernetes
+echo [5/7] Nettoyage et deploiement des manifests Kubernetes
 echo ============================
+
+REM Supprimer les anciens déploiements de bases de données pour forcer la re-création avec les nouvelles images
+echo [INFO] Suppression des anciens deployments de bases de donnees...
+kubectl delete deployment db-fr db-us db-ch --ignore-not-found=true
+
+REM Supprimer les anciens ConfigMaps qui ne sont plus utilisés
+echo [INFO] Suppression des anciens ConfigMaps...
+kubectl delete configmap initdb-sql init-us-sql init-ch-sql --ignore-not-found=true
+
+REM Attendre que les suppressions soient effectives
+echo [INFO] Attente de la suppression des ressources...
+timeout /t 10 /nobreak
+
+REM Deployer tous les manifests
+echo [INFO] Deploiement des manifests Kubernetes...
 kubectl apply -f k8s_manifests/
 if errorlevel 1 (
     echo [ERREUR] Echec du deploiement des manifests.

@@ -45,7 +45,20 @@ async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    data.value = await fetchTraitement(page.value * limit, limit);
+    const response = await fetchTraitement(page.value * limit, limit);
+    console.log('Réponse API Traitement:', response); // Debug temporaire
+    
+    // Gérer les différents formats de réponse
+    if (Array.isArray(response)) {
+      data.value = response;
+    } else if (response && Array.isArray(response.items)) {
+      data.value = response.items;
+    } else if (response && Array.isArray(response.data)) {
+      data.value = response.data;
+    } else {
+      console.error('Format de réponse inattendu:', response);
+      data.value = [];
+    }
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de traitement:', err);

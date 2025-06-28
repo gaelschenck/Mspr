@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: db-ch
-          image: postgres:latest
+          image: mspr-postgres-ch:latest
           imagePullPolicy: IfNotPresent #cette ligne empêche Kind de télécharger l'image depuis internet, il prends uniquement la locale
           ports:
             - containerPort: 5432
@@ -26,12 +26,4 @@ spec:
             - name: POSTGRES_PASSWORD
               value: "admin"
             - name: POSTGRES_DB
-              value: "bdd_ch"
-              
-          volumeMounts:
-            - name: init-sql
-              mountPath: /docker-entrypoint-initdb.d
-      volumes:
-        - name: init-sql
-          configMap:
-            name: init-ch-sql   
+              value: "bdd_ch"   

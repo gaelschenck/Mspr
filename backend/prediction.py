@@ -144,25 +144,84 @@ def prepare_data_generic(df, target_column=None):
     print(tr("df_shape", shape=df.shape))
     print(tr("df_columns", columns=df.columns.tolist()))
 
+    # Créer une copie pour éviter les modifications du DataFrame original
+    df_work = df.copy()
     
-    if target_column and target_column in df.columns:
+    if target_column and target_column in df_work.columns:
+        # Colonnes à exclure des features (métadonnées qui ne sont pas prédictives)
+        columns_to_exclude = [
+            target_column, 
+            "region_who", 
+            "pays", 
+            "sous_region", 
+            "_sa_instance_state"  # SQLAlchemy internal
+        ]
+        
         # Séparer la cible et les caractéristiques
-        X = df.drop(columns=[target_column, "region_who", "pays", "sous_region","id_unite"], errors="ignore")
-        y = df[target_column]
+        X = df_work.drop(columns=columns_to_exclude, errors="ignore")
+        y = df_work[target_column]
         print(tr("target_found", target=target_column))
-        print(tr("current_index", index=df.index))
-        df.set_index('annee', inplace=True)
-        print(tr("current_index", index=df.index))
+        print(tr("current_index", index=df_work.index))
+        
+        # Créer des features additionnelles basées sur les données disponibles
+        if 'annee' in X.columns:
+            # Garder l'année comme feature au lieu de l'utiliser comme index
+            X['annee_normalized'] = (X['annee'] - X['annee'].min()) / (X['annee'].max() - X['annee'].min() + 1e-8)
+            X['annee_squared'] = X['annee'] ** 2
+            print(f"Features temporelles ajoutées: annee_normalized, annee_squared")
+        
+        # Ajouter des features dérivées pour les IDs si présents
+        if 'id_pays' in X.columns:
+            X['id_pays_log'] = np.log1p(X['id_pays'])  # Log transform des IDs
+        
+        if 'id_transmission' in X.columns:
+            X['id_transmission_norm'] = X['id_transmission'] / X['id_transmission'].max()
+        
+        if 'id' in X.columns:
+            X['id_norm'] = X['id'] / X['id'].max()
+        
+        # Si on a encore peu de features, créer des interactions
+        numeric_cols = X.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) >= 2:
+            # Créer quelques interactions entre les premières colonnes numériques
+            col1, col2 = numeric_cols[0], numeric_cols[1]
+            X[f'{col1}_x_{col2}'] = X[col1] * X[col2]
+            X[f'{col1}_plus_{col2}'] = X[col1] + X[col2]
+            print(f"Features d'interaction ajoutées: {col1}_x_{col2}, {col1}_plus_{col2}")
+        
+        print(tr("current_index", index=X.index))
 
     else:
         # Si la colonne cible n'est pas spécifiée ou introuvable, on ne retourne que les features
         print(tr("target_missing"))
-        X = df
+        # Exclure les colonnes non prédictives même sans target
+        columns_to_exclude = [
+            "region_who", 
+            "pays", 
+            "sous_region", 
+            "_sa_instance_state"
+        ]
+        X = df_work.drop(columns=columns_to_exclude, errors="ignore")
         y = None
+        
+        # Ajouter des features même sans target
+        if 'annee' in X.columns:
+            X['annee_normalized'] = (X['annee'] - X['annee'].min()) / (X['annee'].max() - X['annee'].min() + 1e-8)
+            X['annee_squared'] = X['annee'] ** 2
+        
+        if 'id_pays' in X.columns:
+            X['id_pays_log'] = np.log1p(X['id_pays'])
+        
+        if 'id_transmission' in X.columns:
+            X['id_transmission_norm'] = X['id_transmission'] / X['id_transmission'].max()
+        
+        if 'id' in X.columns:
+            X['id_norm'] = X['id'] / X['id'].max()
 
     print(tr("features_shape", shape=X.shape))
     if y is not None:
         print(tr("target_count", count=len(y)))
+    
     return X, y
 
 def create_voting_regressor():
@@ -243,38 +302,127 @@ def train_voting_regressor(model, X, y):
     print(tr("rmse", rmse=rmse))
     print(tr("r2", r2=r2))
 
-    
+    # Essayer d'afficher le graphique uniquement si possible
+    try:
+        plt.figure(figsize=(10, 6))
+        plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
+        plt.plot(y_pred, label="Prédictions", color="orange", linestyle="--", marker="x")
+        plt.xlabel("Index")
+        plt.ylabel("Valeurs")
+        plt.title(tr("plot_title"))
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+    except Exception as e:
+        print(f"Impossible d'afficher le graphique: {e}")
 
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
-    plt.plot(y_pred, label="Prédictions", color="orange", linestyle="--", marker="x")
-    plt.xlabel("Index")
-    plt.ylabel("Valeurs")
-    plt.title(tr("plot_title"))
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
-
-# Prédiction sur l'année suivante (si 'annee' est une feature)
+    # Prédiction sur l'année suivante (si 'annee' est une feature)
     future_pred_value = None
     future_year = None
-    if 'annee' in X.columns:
-        last_year = X['annee'].max()
-        future_year = last_year + 1
-        future_features = X.mean(numeric_only=True).to_dict()
-        future_features['annee'] = future_year
-        future_df = pd.DataFrame([future_features])
-        future_df = preprocess_features(future_df)
-        future_pred = model.predict(future_df)
-        future_pred_value = float(future_pred[0])
-        print(tr("results"))
-        print(f"Prédiction pour l'année {future_year} : {future_pred_value}")
+    
+    # Vérifier si 'annee' est dans les colonnes de X (pas dans l'index)
+    has_annee_column = 'annee' in X.columns
+    has_annee_index = isinstance(X.index, pd.DatetimeIndex) or (hasattr(X.index, 'name') and X.index.name == 'annee')
+    
+    if has_annee_column or has_annee_index:
+        try:
+            if has_annee_column:
+                last_year = X['annee'].max()
+            else:
+                last_year = X.index.max()
+                
+            future_year = last_year + 1
+            
+            # Créer les features pour l'année future
+            future_features = X.mean(numeric_only=True).to_dict()
+            if has_annee_column:
+                future_features['annee'] = future_year
+                
+            future_df = pd.DataFrame([future_features])
+            
+            # Préprocesser les features futures
+            future_df = preprocess_features(future_df)
+            
+            # Assurer que les colonnes correspondent
+            future_df = future_df.reindex(columns=X_train.columns, fill_value=0)
+            
+            future_pred = model.predict(future_df)
+            future_pred_value = float(future_pred[0])
+            print(tr("results"))
+            print(f"Prédiction pour l'année {future_year} : {future_pred_value}")
+        except Exception as e:
+            print(f"Erreur lors de la prédiction future: {e}")
+            future_pred_value = None
+            future_year = None
     else:
         print("Impossible de prédire l'année suivante (pas de colonne 'annee').")
 
-    return model, rmse, r2, future_pred_value, future_year if 'annee' in X.columns else None
+    return model, rmse, r2, future_pred_value, future_year
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+
+    print(tr("results"))
+    print(tr("rmse", rmse=rmse))
+    print(tr("r2", r2=r2))
+
+    # Affichage graphique (optionnel en environnement serveur)
+    try:
+        plt.figure(figsize=(10, 6))
+        plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
+        plt.plot(y_pred, label="Prédictions", color="orange", linestyle="--", marker="x")
+        plt.xlabel("Index")
+        plt.ylabel("Valeurs")
+        plt.title(tr("plot_title"))
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+        plt.show()
+    except Exception as e:
+        print(f"Impossible d'afficher le graphique: {e}")
+
+    # Prédiction sur l'année suivante (si 'annee' est une feature)
+    future_pred_value = None
+    future_year = None
+    
+    # Vérifier si 'annee' est dans les colonnes de X (pas dans l'index)
+    has_annee_column = 'annee' in X.columns
+    has_annee_index = isinstance(X.index, pd.DatetimeIndex) or (hasattr(X.index, 'name') and X.index.name == 'annee')
+    
+    if has_annee_column or has_annee_index:
+        try:
+            if has_annee_column:
+                last_year = X['annee'].max()
+            else:
+                last_year = X.index.max()
+                
+            future_year = last_year + 1
+            
+            # Créer les features pour l'année future
+            future_features = X.mean(numeric_only=True).to_dict()
+            if has_annee_column:
+                future_features['annee'] = future_year
+                
+            future_df = pd.DataFrame([future_features])
+            
+            # Préprocesser les features futures
+            future_df = preprocess_features(future_df)
+            
+            # Assurer que les colonnes correspondent
+            future_df = future_df.reindex(columns=X_train.columns, fill_value=0)
+            
+            future_pred = model.predict(future_df)
+            future_pred_value = float(future_pred[0])
+            print(tr("results"))
+            print(f"Prédiction pour l'année {future_year} : {future_pred_value}")
+        except Exception as e:
+            print(f"Erreur lors de la prédiction future: {e}")
+            future_pred_value = None
+            future_year = None
+    else:
+        print("Impossible de prédire l'année suivante (pas de colonne 'annee').")
+
+    return model, rmse, r2, future_pred_value, future_year
 
 
 def save_training_data(new_data, file_path="training_data.csv"):

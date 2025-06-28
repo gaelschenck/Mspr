@@ -139,7 +139,7 @@ button:disabled {
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1em 0;
+  margin: 1em 0 3em 0; /* Marge en bas plus importante pour éviter le footer */
 }
 
 .data-table th,
@@ -165,6 +165,18 @@ button:disabled {
 
 .data-table td {
   color: #495057;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 2em 0;
+  padding: 1em 0;
+  background-color: white;
+  position: relative;
+  z-index: 1;
 }
 
 .pagination button {

@@ -1,0 +1,11 @@
+# FICHIER OBSOLETE - Utiliser les Dockerfiles spécialisés :
+# - Dockerfile.postgres-fr pour la base française
+# - Dockerfile.postgres-us pour la base américaine  
+# - Dockerfile.postgres-ch pour la base suisse
+
+FROM postgres:latest
+
+# Ce fichier n'est plus utilisé
+# Voir les fichiers Dockerfile.postgres-{fr,us,ch} pour les configurations spécialisées
+
+EXPOSE 5432

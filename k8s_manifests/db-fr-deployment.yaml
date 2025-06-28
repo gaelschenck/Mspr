@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: db-fr
-          image: postgres:latest
+          image: mspr-postgres-fr:latest
           imagePullPolicy: IfNotPresent #cette ligne empêche Kind de télécharger l'image depuis internet, il prends uniquement la locale
           ports:
             - containerPort: 5432
@@ -26,11 +26,4 @@ spec:
             - name: POSTGRES_PASSWORD
               value: "admin"
             - name: POSTGRES_DB
-              value: "bdd_mspr"
-          volumeMounts:
-            - name: init-sql
-              mountPath: /docker-entrypoint-initdb.d
-      volumes:
-        - name: init-sql
-          configMap:
-            name: initdb-sql  
+              value: "bdd_mspr"  

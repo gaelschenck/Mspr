@@ -517,21 +517,24 @@ async def health_check():
 # ========================
 
 @app.post("/dataframe/")
-async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
+async def create_dataframe(payload: schemas.PredictionRequest, db: AsyncSession = Depends(get_db)):
     """
     Endpoint pour générer un DataFrame croisé basé sur les choix de l'utilisateur.
     """
-    region = payload.get("region")
-    pays = payload.get("pays")
-    table = payload.get("table")
-    target_column = payload.get("target_column")
+    region = payload.region
+    pays = payload.pays
+    table = payload.table
+    target_column = payload.target_column
 
-    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
-        raise HTTPException(status_code=400, detail=tr("invalid_table"))
+    # Validation des tables supportées
+    valid_tables = ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "pays"]
+    if table not in valid_tables:
+        raise HTTPException(status_code=400, detail=f"Table invalide. Tables supportées: {valid_tables}")
+    
     if not region and not pays:
         raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
 
-
+    # Récupérer les pays selon les critères
     query_pays = select(models.Pays)
     if region:
         query_pays = query_pays.filter(models.Pays.region_who == region)
@@ -540,41 +543,59 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
 
     result_pays = await db.execute(query_pays)
     data_pays = result_pays.scalars().all()
+    
+    if not data_pays:
+        raise HTTPException(status_code=404, detail="Aucun pays trouvé avec ces critères")
 
-# Mapping précis entre nom de table (frontend) et classe modèle Python
+    # Mapping précis entre nom de table (frontend) et classe modèle Python
     MODEL_MAPPING = {
         "mortalite": models.Mortalite,
         "population_hiv": models.PopulationHIV,
         "statistique": models.Statistique,
         "traitement": models.Traitement,
         "transmission_mere_enfant": models.TransmissionMereEnfant,
-        "type_statistique": models.TypeStatistique,
-        "type_traitement": models.TypeTraitement,
-        "unite": models.Unite,
         "pays": models.Pays,
     }
+    
     model = MODEL_MAPPING.get(table)
     if not model:
         raise HTTPException(status_code=400, detail=tr("unknown_table"))
+    
+    # Requête pour la table sélectionnée
     query_table = select(model)
     result_table = await db.execute(query_table)
     data_table = result_table.scalars().all()
 
     # Conversion des données en DataFrames
-    df_pays = pd.DataFrame([item.__dict__ for item in data_pays])
-    df_table = pd.DataFrame([item.__dict__ for item in data_table])
+    df_pays = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_pays])
+    df_table = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_table])
 
-    # Nettoyage des colonnes inutiles
-    df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
-    df_table = df_table.drop("_sa_instance_state", axis=1, errors="ignore")
-    print(f"df_pays : { df_pays }")
-    print(f"df_table { df_table }")  
+    print(f"df_pays shape: {df_pays.shape}, colonnes: {df_pays.columns.tolist()}")
+    print(f"df_table shape: {df_table.shape}, colonnes: {df_table.columns.tolist()}")
+
     # Fusion des deux DataFrames pour créer un DataFrame croisé
     try:
-        dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
-        return {"dataframe": dataframe_croise.to_dict()}
-    except KeyError:
-        raise HTTPException(status_code=400, detail=tr("merge_key_error"))
+        # Si on travaille sur la table pays directement, pas besoin de fusion
+        if table == "pays":
+            dataframe_croise = df_pays
+        else:
+            # Fusionner sur id_pays
+            if "id_pays" in df_pays.columns and "id_pays" in df_table.columns:
+                dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
+            else:
+                raise HTTPException(status_code=400, detail="Impossible de fusionner: colonne id_pays manquante")
+        
+        # Nettoyer les colonnes nulles si nécessaire
+        dataframe_croise = dataframe_croise.dropna(subset=[target_column] if target_column and target_column in dataframe_croise.columns else [])
+        
+        print(f"DataFrame final shape: {dataframe_croise.shape}")
+        print(f"Colonnes finales: {dataframe_croise.columns.tolist()}")
+        
+        return {"dataframe": dataframe_croise.to_dict(orient='records')}
+        
+    except Exception as e:
+        print(f"Erreur lors de la fusion: {e}")
+        raise HTTPException(status_code=400, detail=f"Erreur lors de la fusion des données: {str(e)}")
 
 
 
@@ -616,69 +637,139 @@ async def get_columns(table_name: str):
     columns = [column.key for column in model.__table__.columns]
     return {"columns": columns}
 
-@app.post("/train_model/")
-async def train_model_endpoint(payload: dict):
+@app.post("/train_model/", response_model=schemas.PredictionResponse)
+async def train_model_endpoint(payload: schemas.TrainingRequest):
     try:
         """
         Endpoint pour entraîner le modèle avec les données fournies.
         """
-        dataframe_dict = payload.get("dataframe")
-        target_column = payload.get("target_column")
+        dataframe_dict = payload.dataframe
+        target_column = payload.target_column
+        
         if not dataframe_dict:
             raise HTTPException(status_code=400, detail=tr("missing_dataframe"))
+        
+        if not target_column:
+            raise HTTPException(status_code=400, detail=tr("target_required"))
 
         # Convertir le dictionnaire en DataFrame
         df = pd.DataFrame.from_dict(dataframe_dict)
         print(tr("avant_separation", shape=df.shape))
         print("DataFrame reçu :", df.head())
-        print("Colonnes :", df.columns)
+        print("Colonnes :", df.columns.tolist())
         print("Target column :", target_column)
 
-        # Préparer X et y
-        X = df.drop(columns=[target_column, "region_who", "pays", "sous_region", "id_unite"], errors="ignore")
-        y = df[target_column]
+        # Vérifier que la colonne cible existe
+        if target_column not in df.columns:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Colonne cible '{target_column}' non trouvée dans les données. Colonnes disponibles: {df.columns.tolist()}"
+            )
 
-        X = preprocess_features(X)
+        # Préparer les données avec la fonction de prediction.py
         X, y = prepare_data_generic(df, target_column=target_column)
-
-        if y is None:
+        
+        if y is None or len(y) == 0:
             raise HTTPException(status_code=400, detail=tr("target_required"))
+        
+        if len(X) == 0:
+            raise HTTPException(status_code=400, detail="Aucune caractéristique disponible pour l'entraînement")
 
+        # Préprocesser les caractéristiques
+        X = preprocess_features(X)
+        
+        # Créer et entraîner le modèle
         model = create_voting_regressor()
         trained_model, rmse, r2, future_pred_value, future_year = train_voting_regressor(model, X, y)
+        
+        # Sauvegarder le modèle
         joblib.dump(trained_model, "voting_regressor.pkl")
 
+        # Faire des prédictions sur toutes les données pour visualisation
         predictions = trained_model.predict(X)
         labels = list(df["annee"]) if "annee" in df.columns else list(range(len(predictions)))
 
         return {
-        "prediction": [safe(x) for x in predictions],
-        "labels": [safe(x) for x in labels],
-        "message": tr("model_trained"),
-        "rmse": safe(rmse),
-        "r2": safe(r2),
-        "future_prediction": safe(future_pred_value),
-        "future_year": safe(future_year)
-    }
+            "prediction": [safe(x) for x in predictions],
+            "labels": [safe(x) for x in labels],
+            "message": tr("model_trained"),
+            "rmse": safe(rmse),
+            "r2": safe(r2),
+            "future_prediction": safe(future_pred_value),
+            "future_year": safe(future_year)
+        }
     except Exception as e:
-            import traceback
-            print("Erreur dans /train_model/:", e)
-            traceback.print_exc()
-            raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        print("Erreur dans /train_model/:", e)
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
-# RUN SERVER
+# ENDPOINT TEST PRÉDICTION
 # ========================
 
-if __name__ == "__main__":
-    import uvicorn
+@app.get("/test_prediction/")
+async def test_prediction_endpoint(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint de test pour vérifier que la prédiction fonctionne avec des données réelles.
+    """
+    try:
+        # Récupérer des données de mortalité pour test
+        query = select(models.Mortalite).limit(50)
+        result = await db.execute(query)
+        data_mortalite = result.scalars().all()
+        
+        if not data_mortalite:
+            return {"error": "Aucune donnée de mortalité disponible pour le test"}
+        
+        # Convertir en DataFrame
+        df_test = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_mortalite])
+        
+        # Ajouter quelques features synthétiques pour le test
+        df_test['feature1'] = df_test['valeur'] * 1.2
+        df_test['feature2'] = df_test['annee'] / 100
+        
+        print(f"DataFrame de test: {df_test.shape}")
+        print(f"Colonnes: {df_test.columns.tolist()}")
+        
+        # Préparer les données
+        X, y = prepare_data_generic(df_test, target_column='valeur')
+        
+        if y is None or len(y) < 5:
+            return {"error": "Pas assez de données pour l'entraînement"}
+        
+        # Préprocesser
+        X = preprocess_features(X)
+        
+        # Entraîner le modèle
+        model = create_voting_regressor()
+        trained_model, rmse, r2, future_pred_value, future_year = train_voting_regressor(model, X, y)
+        
+        # Prédictions
+        predictions = trained_model.predict(X)
+        
+        return {
+            "status": "success",
+            "data_shape": df_test.shape,
+            "features_shape": X.shape,
+            "target_size": len(y),
+            "rmse": float(rmse),
+            "r2": float(r2),
+            "sample_predictions": [float(p) for p in predictions[:5]],
+            "sample_actual": [float(v) for v in y.head(5)],
+            "future_prediction": float(future_pred_value) if future_pred_value else None,
+            "future_year": int(future_year) if future_year else None
+        }
+        
+    except Exception as e:
+        import traceback
+        print("Erreur dans test_prediction:", e)
+        traceback.print_exc()
+        return {"error": str(e), "traceback": traceback.format_exc()}
 
-    uvicorn.run(app, host="0.0.0.0", port=8084, reload=True)
-
-
-#========================= 
+# ========================
 # END POINTS US - GESTION SCALABILITE
-#=========================
+#========================
 
 from fastapi import Query
 from sqlalchemy.orm import selectinload

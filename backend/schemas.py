@@ -166,6 +166,29 @@ class TypeTraitement(TypeTraitementBase):
         from_attributes = True
 
 
+### SCHEMAS POUR PRÉDICTION
+class PredictionRequest(BaseModel):
+    region: Optional[str] = None
+    pays: Optional[str] = None
+    table: str = Field(..., description="Table source (mortalite, population_hiv, etc.)")
+    target_column: str = Field(..., description="Colonne cible à prédire")
+
+
+class TrainingRequest(BaseModel):
+    dataframe: dict = Field(..., description="DataFrame au format dictionnaire")
+    target_column: str = Field(..., description="Colonne cible à prédire")
+
+
+class PredictionResponse(BaseModel):
+    prediction: List[float]
+    labels: List[float]
+    message: str
+    rmse: float
+    r2: float
+    future_prediction: Optional[float] = None
+    future_year: Optional[int] = None
+
+
 ###Authentification
 
 class UtilisateurBase(BaseModel):

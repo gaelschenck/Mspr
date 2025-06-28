@@ -1,0 +1,9 @@
+FROM postgres:latest
+
+# Copier uniquement le dump CH
+COPY init_ch/dumpch.sql /docker-entrypoint-initdb.d/01-dumpch.sql
+
+# Donner les bonnes permissions
+RUN chmod +x /docker-entrypoint-initdb.d/*.sql
+
+EXPOSE 5432
