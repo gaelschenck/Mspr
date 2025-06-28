@@ -513,7 +513,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     table = payload.get("table")
     target_column = payload.get("target_column")
 
-    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_en_enfant", "type_statistique", "type_traitement", "unite"]:
+    if table not in ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "type_statistique", "type_traitement", "unite"]:
         raise HTTPException(status_code=400, detail=tr("invalid_table"))
     if not region and not pays:
         raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
@@ -534,7 +534,7 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
         "population_hiv": models.PopulationHIV,
         "statistique": models.Statistique,
         "traitement": models.Traitement,
-        "transmission_mere_en_enfant": models.TransmissionMereEnfant,
+        "transmission_mere_enfant": models.TransmissionMereEnfant,
         "type_statistique": models.TypeStatistique,
         "type_traitement": models.TypeTraitement,
         "unite": models.Unite,
@@ -576,7 +576,7 @@ async def get_available_tables():
         "population_hiv": [],
         "statistique": [],
         "traitement": [],
-        "transmission_mere_en_enfant": [],
+        "transmission_mere_enfant": [],
     }
     return {"tables": tables}
 
@@ -590,7 +590,7 @@ async def get_columns(table_name: str):
         "population_hiv": models.PopulationHIV,
         "statistique": models.Statistique,
         "traitement": models.Traitement,
-        "transmission_mere_en_enfant": models.TransmissionMereEnfant
+        "transmission_mere_enfant": models.TransmissionMereEnfant
         # Ajoute ici d'autres tables et leurs modèles
     }
 
@@ -698,14 +698,8 @@ async def get_us_mortalite(
 from sqlalchemy import func
 
 @app.get("/us/mortalite/count/")
-async def count_us_mortalite(
-    year: int = Query(None),
-    db: AsyncSession = Depends(get_db)
-):
-    query = select(func.count(models.Mortalite.id))
-    if year:
-        query = query.where(models.Mortalite.annee == year)
-    result = await db.execute(query)
+async def get_us_mortalite_count(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(func.count(models.Mortalite.id)))
     count = result.scalar()
     return {"count": count}
 
@@ -752,8 +746,8 @@ async def get_traitement_paginated(
         })
     return output
 
-@app.get("/transmission_mere_en_enfant/paginated/")
-async def get_transmission_mere_en_enfant_paginated(
+@app.get("/transmission_mere_enfant/paginated/")
+async def get_transmission_mere_enfant_paginated(
     offset: int = Query(0, ge=0),
     limit: int = Query(25, ge=1, le=1000),
     db: AsyncSession = Depends(get_db)
@@ -767,8 +761,35 @@ async def get_transmission_mere_en_enfant_paginated(
             "id": t.id,
             "id_pays": t.id_pays,
             "nom_pays": t.pays.nom_pays if t.pays else None,
-            "valeur": t.valeur
+            "besoin_arv_min": float(t.besoin_arv_min),
+            "besoin_arv_median": float(t.besoin_arv_median),
+            "besoin_arv_max": float(t.besoin_arv_max),
+            "pourcentage_recu_min": float(t.pourcentage_recu_min),
+            "pourcentage_recu_median": float(t.pourcentage_recu_median),
+            "pourcentage_recu_max": float(t.pourcentage_recu_max)
         }
         for t in data
+    ]
+
+@app.get("/mortalite/paginated/")
+async def get_mortalite_paginated(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(25, ge=1, le=1000),
+    db: AsyncSession = Depends(get_db)
+):
+    query = select(models.Mortalite).options(selectinload(models.Mortalite.pays))
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    return [
+        {
+            "id": m.id,
+            "id_pays": m.id_pays,
+            "nom_pays": m.pays.nom_pays if m.pays else None,
+            "annee": m.annee,
+            "valeur": m.valeur,
+            "id_unite": m.id_unite
+        }
+        for m in data
     ]
 

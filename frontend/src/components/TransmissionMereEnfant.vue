@@ -1,17 +1,42 @@
 <template>
   <div>
     <h1>{{ $t('transmission_mere_enfant_title') }}</h1>
-    <ul>
-      <li v-for="item in data" :key="item.id">
-        {{ $t('pays') }} : {{ item.nom_pays ? item.nom_pays : (item.id_pays ? item.id_pays : 'N/A') }} |
-        {{ $t('annee') }} : {{ item.annee }} |
-        {{ $t('valeur') }} : {{ item.valeur }}
-      </li>
-    </ul>
-    <div class="pagination">
-      <button @click="prevPage" :disabled="page === 0">Précédent</button>
-      <span>Page {{ page + 1 }}</span>
-      <button @click="nextPage" :disabled="data.length < limit">Suivant</button>
+    <div v-if="loading" class="loading">Chargement en cours...</div>
+    <div v-else-if="error" class="error">
+      Erreur lors du chargement des données : {{ error.message }}
+      <button @click="loadData" class="retry-btn">Réessayer</button>
+    </div>
+    <div v-else>
+      <table v-if="data.length > 0" class="data-table">
+        <thead>
+          <tr>
+            <th>{{ $t('pays') }}</th>
+            <th>Besoin ARV Min</th>
+            <th>Besoin ARV Médian</th>
+            <th>Besoin ARV Max</th>
+            <th>% Reçu Min</th>
+            <th>% Reçu Médian</th>
+            <th>% Reçu Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in data" :key="item.id">
+            <td>{{ item.nom_pays || item.id_pays || 'N/A' }}</td>
+            <td>{{ formatNumber(item.besoin_arv_min) }}</td>
+            <td>{{ formatNumber(item.besoin_arv_median) }}</td>
+            <td>{{ formatNumber(item.besoin_arv_max) }}</td>
+            <td>{{ formatNumber(item.pourcentage_recu_min) }}%</td>
+            <td>{{ formatNumber(item.pourcentage_recu_median) }}%</td>
+            <td>{{ formatNumber(item.pourcentage_recu_max) }}%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-else class="no-data">Aucune donnée disponible</div>
+      <div class="pagination">
+        <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
+        <span>Page {{ page + 1 }}</span>
+        <button @click="nextPage" :disabled="data.length < limit || loading">Suivant</button>
+      </div>
     </div>
   </div>
 </template>
@@ -23,17 +48,37 @@ import { fetchTransmissionMereEnfant } from "../../services/api.js";
 const data = ref([]);
 const page = ref(0);
 const limit = 25;
+const loading = ref(false);
+const error = ref(null);
 
 async function loadData() {
-  data.value = await fetchTransmissionMereEnfant(page.value * limit, limit);
+  loading.value = true;
+  error.value = null;
+  try {
+    data.value = await fetchTransmissionMereEnfant(page.value * limit, limit);
+  } catch (err) {
+    error.value = err;
+    console.error('Erreur lors du chargement des données de transmission mère-enfant:', err);
+  } finally {
+    loading.value = false;
+  }
 }
 
 function nextPage() {
-  page.value++;
+  if (!loading.value && data.value.length === limit) {
+    page.value++;
+  }
 }
 
 function prevPage() {
-  if (page.value > 0) page.value--;
+  if (page.value > 0 && !loading.value) {
+    page.value--;
+  }
+}
+
+function formatNumber(value) {
+  if (value === null || value === undefined) return 'N/A';
+  return Number(value).toLocaleString('fr-FR', { maximumFractionDigits: 2 });
 }
 
 onMounted(loadData);
@@ -46,5 +91,97 @@ watch(page, loadData);
   display: flex;
   align-items: center;
   gap: 1em;
-  }
+  justify-content: center;
+}
+
+.loading {
+  padding: 1em;
+  text-align: center;
+  color: #666;
+}
+
+.error {
+  padding: 1em;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c66;
+  margin: 1em 0;
+}
+
+.retry-btn {
+  margin-left: 1em;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+}
+
+.no-data {
+  padding: 1em;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 0.75em;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #495057;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.data-table tr:hover {
+  background-color: #e9ecef;
+}
+
+.data-table td {
+  color: #495057;
+}
+
+.pagination button {
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
 </style>

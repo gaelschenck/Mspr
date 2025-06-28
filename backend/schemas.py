@@ -78,8 +78,12 @@ class Mortalite(MortaliteBase):
 ### SCHEMAS POUR TRANSMISSION MERE-ENFANT
 class TransmissionMereEnfantBase(BaseModel):
     id_pays: int
-    valeur: float = Field(..., ge=0, le=100)
-    id_unite: Optional[int] = None
+    besoin_arv_min: float = Field(..., ge=0)
+    besoin_arv_median: float = Field(..., ge=0)
+    besoin_arv_max: float = Field(..., ge=0)
+    pourcentage_recu_min: float = Field(..., ge=0, le=100)
+    pourcentage_recu_median: float = Field(..., ge=0, le=100)
+    pourcentage_recu_max: float = Field(..., ge=0, le=100)
 
 
 class TransmissionMereEnfantCreate(TransmissionMereEnfantBase):

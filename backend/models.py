@@ -69,11 +69,14 @@ class TransmissionMereEnfant(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
+    besoin_arv_min: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
+    besoin_arv_median: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
+    besoin_arv_max: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
+    pourcentage_recu_min: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
+    pourcentage_recu_median: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
+    pourcentage_recu_max: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
 
     pays: Mapped["Pays"] = relationship("Pays", back_populates="transmission")
-    unite: Mapped["Unite"] = relationship("Unite")
 
 
 class Traitement(Base):
