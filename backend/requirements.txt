@@ -15,6 +15,7 @@ python-multipart
 pytest
 pytest-asyncio
 httpx
+aiohttp
 
 # cd API
 #uvicorn main:app --reload --port 8084

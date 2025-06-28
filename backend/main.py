@@ -554,8 +554,8 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
     # Nettoyage des colonnes inutiles
     df_pays = df_pays.drop("_sa_instance_state", axis=1, errors="ignore")
     df_table = df_table.drop("_sa_instance_state", axis=1, errors="ignore")
-    print(f"✅ df_pays : { df_pays }")
-    print(f"✅ df_table { df_table }")  
+    print(f"df_pays : { df_pays }")
+    print(f"df_table { df_table }")  
     # Fusion des deux DataFrames pour créer un DataFrame croisé
     try:
         dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
