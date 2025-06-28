@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import apiClient from "/services/api";
+import apiClient from "../../services/api.js";
 import { useUserStore } from '../stores/userStore';
 
 export default {

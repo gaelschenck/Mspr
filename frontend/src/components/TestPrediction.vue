@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import apiClient from "/services/api";
+import apiClient from "../../services/api.js";
 import { usePredictionStore } from '@/stores/predictionStore';
 
 export default {

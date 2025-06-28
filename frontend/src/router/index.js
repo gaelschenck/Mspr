@@ -22,7 +22,7 @@ const routes = [
   { path: '/us-mortalite', component: USMortalite },
   { path: '/population-hiv', component: PopulationHiv },
   { path: '/traitement', component: Traitement },
-  { path: '/transmission-mere-en-enfant', component: TransmissionMereEnfant },
+  { path: '/transmission-mere-enfant', component: TransmissionMereEnfant },
   { path: '/confidentialite', name: 'Confidentialite', component: Confidentialite },
   { path: '/login', component: Login },
   {

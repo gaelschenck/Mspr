@@ -53,17 +53,14 @@ class TestAPIEndpoints:
                 async with session.get(url, timeout=5) as response:
                     if response.status == 200:
                         data = await response.json()
-                        # Vérifier la structure de la réponse
-                        assert "data" in data
-                        assert "total" in data
-                        assert isinstance(data["data"], list)
-                        assert isinstance(data["total"], int)
+                        # Vérifier que c'est une liste
+                        assert isinstance(data, list)
                         
                         # Si des données existent, vérifier la structure
-                        if len(data["data"]) > 0:
-                            first_item = data["data"][0]
+                        if len(data) > 0:
+                            first_item = data[0]
                             required_fields = [
-                                "id_transmission", "id_pays", "besoin_arv_min", "besoin_arv_median", "besoin_arv_max",
+                                "id", "id_pays", "nom_pays", "besoin_arv_min", "besoin_arv_median", "besoin_arv_max",
                                 "pourcentage_recu_min", "pourcentage_recu_median", "pourcentage_recu_max"
                             ]
                             for field in required_fields:

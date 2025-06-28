@@ -147,7 +147,7 @@ def prepare_data_generic(df, target_column=None):
     
     if target_column and target_column in df.columns:
         # Séparer la cible et les caractéristiques
-        X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region","id_unite"])
+        X = df.drop(columns=[target_column, "region_who", "pays", "sous_region","id_unite"], errors="ignore")
         y = df[target_column]
         print(tr("target_found", target=target_column))
         print(tr("current_index", index=df.index))

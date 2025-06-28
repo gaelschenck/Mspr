@@ -338,7 +338,7 @@ async def get_pays(db: AsyncSession = Depends(get_db)):
     """
     result = await db.execute(select(models.Pays))
     pays_list = result.scalars().all()
-    return [{"id": pays.id_pays, "nom": pays.nom_pays, "region": pays.region} for pays in pays_list]
+    return [{"id": pays.id_pays, "nom": pays.pays, "region": pays.region_who} for pays in pays_list]
 
 
 @app.get("/pays/", response_model=List[schemas.Pays])
@@ -534,9 +534,9 @@ async def create_dataframe(payload: dict, db: AsyncSession = Depends(get_db)):
 
     query_pays = select(models.Pays)
     if region:
-        query_pays = query_pays.filter(models.Pays.region == region)
+        query_pays = query_pays.filter(models.Pays.region_who == region)
     if pays:
-        query_pays = query_pays.filter(models.Pays.nom_pays == pays)
+        query_pays = query_pays.filter(models.Pays.pays == pays)
 
     result_pays = await db.execute(query_pays)
     data_pays = result_pays.scalars().all()
@@ -635,7 +635,7 @@ async def train_model_endpoint(payload: dict):
         print("Target column :", target_column)
 
         # Préparer X et y
-        X = df.drop(columns=[target_column, "region", "nom_pays", "sous_region", "id_unite"], errors="ignore")
+        X = df.drop(columns=[target_column, "region_who", "pays", "sous_region", "id_unite"], errors="ignore")
         y = df[target_column]
 
         X = preprocess_features(X)
@@ -683,38 +683,7 @@ if __name__ == "__main__":
 from fastapi import Query
 from sqlalchemy.orm import selectinload
 
-@app.get("/us/mortalite/")
-async def get_us_mortalite(
-    offset: int = Query(0, ge=0),
-    limit: int = Query(25, ge=1, le=1000),
-    year: int = Query(None),
-    db: AsyncSession = Depends(get_db)
-):
-    query = select(models.Mortalite).options(selectinload(models.Mortalite.pays))
-    if year:
-        query = query.where(models.Mortalite.annee == year)
-    query = query.offset(offset).limit(limit)
-    result = await db.execute(query)
-    data = result.scalars().all()
-    return [
-        {
-            "id": m.id,
-            "id_pays": m.id_pays,
-            "nom_pays": m.pays.nom_pays if m.pays else None,  # <-- Ajout ici
-            "annee": m.annee,
-            "valeur": m.valeur,
-            "id_unite": m.id_unite
-        }
-        for m in data
-    ]
-
 from sqlalchemy import func
-
-@app.get("/us/mortalite/count/")
-async def get_us_mortalite_count(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(func.count(models.Mortalite.id)))
-    count = result.scalar()
-    return {"count": count}
 
 @app.get("/population_hiv/paginated/")
 async def get_population_hiv_paginated(
@@ -730,7 +699,7 @@ async def get_population_hiv_paginated(
         {
             "id": m.id,
             "id_pays": m.id_pays,
-            "nom_pays": m.pays.nom_pays if m.pays else None,
+            "nom_pays": m.pays.pays if m.pays else None,
             "annee": m.annee,
             "valeur": m.valeur
         }
@@ -754,7 +723,7 @@ async def get_traitement_paginated(
         output.append({
             "id": t.id,
             "id_pays": t.id_pays,
-            "nom_pays": t.pays.nom_pays if t.pays and t.pays.nom_pays else None,
+            "nom_pays": t.pays.pays if t.pays and t.pays.pays else None,
             "valeur": t.valeur
         })
     return output
@@ -771,9 +740,9 @@ async def get_transmission_mere_enfant_paginated(
     data = result.scalars().all()
     return [
         {
-            "id": t.id,
+            "id": t.id_transmission,
             "id_pays": t.id_pays,
-            "nom_pays": t.pays.nom_pays if t.pays else None,
+            "nom_pays": t.pays.pays if t.pays else None,
             "besoin_arv_min": float(t.besoin_arv_min),
             "besoin_arv_median": float(t.besoin_arv_median),
             "besoin_arv_max": float(t.besoin_arv_max),
@@ -798,7 +767,7 @@ async def get_mortalite_paginated(
         {
             "id": m.id,
             "id_pays": m.id_pays,
-            "nom_pays": m.pays.nom_pays if m.pays else None,
+            "nom_pays": m.pays.pays if m.pays else None,
             "annee": m.annee,
             "valeur": m.valeur,
             "id_unite": m.id_unite

@@ -55,7 +55,8 @@ async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    data.value = await fetchTransmissionMereEnfant(page.value * limit, limit);
+    const result = await fetchTransmissionMereEnfant(page.value * limit, limit);
+    data.value = result;
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de transmission mère-enfant:', err);

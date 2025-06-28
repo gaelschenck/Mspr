@@ -8,7 +8,7 @@
 
 <script setup>
 import { ref } from "vue";
-import apiClient from "/services/api";
+import apiClient from "../../services/api.js";
 
 const show = ref(false);
 

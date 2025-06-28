@@ -7,13 +7,22 @@
       <button @click="loadData" class="retry-btn">Réessayer</button>
     </div>
     <div v-else>
-      <ul v-if="data.length > 0">
-        <li v-for="item in data" :key="item.id">
-          {{ $t('pays') }} : {{ item.nom_pays ? item.nom_pays : (item.id_pays ? item.id_pays : 'N/A') }} | 
-          {{ $t('annee') }} : {{ item.annee }} | 
-          {{ $t('valeur') }} : {{ item.valeur }}
-        </li>
-      </ul>
+      <table v-if="data.length > 0" class="data-table">
+        <thead>
+          <tr>
+            <th>{{ $t('pays') }}</th>
+            <th>{{ $t('annee') }}</th>
+            <th>{{ $t('valeur') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in data" :key="item.id">
+            <td>{{ item.nom_pays || item.id_pays || 'N/A' }}</td>
+            <td>{{ item.annee }}</td>
+            <td>{{ formatNumber(item.valeur) }}</td>
+          </tr>
+        </tbody>
+      </table>
       <div v-else class="no-data">Aucune donnée disponible</div>
       <div class="pagination">
         <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
@@ -59,6 +68,11 @@ function prevPage() {
   }
 }
 
+function formatNumber(value) {
+  if (value === null || value === undefined) return 'N/A';
+  return Number(value).toLocaleString('fr-FR', { maximumFractionDigits: 2 });
+}
+
 onMounted(loadData);
 watch(page, loadData);
 </script>
@@ -69,6 +83,7 @@ watch(page, loadData);
   display: flex;
   align-items: center;
   gap: 1em;
+  justify-content: center;
 }
 
 .loading {
@@ -103,12 +118,62 @@ watch(page, loadData);
 .no-data {
   padding: 1em;
   text-align: center;
-  color: #666;
+  color: #999;
   font-style: italic;
 }
 
 button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 0.75em;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #495057;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.data-table tr:hover {
+  background-color: #e9ecef;
+}
+
+.data-table td {
+  color: #495057;
+}
+
+.pagination button {
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination button:disabled {
+  background-color: #6c757d;
   cursor: not-allowed;
 }
 </style>

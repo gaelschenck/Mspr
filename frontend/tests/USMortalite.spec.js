@@ -56,10 +56,19 @@ describe('USMortalite.vue', () => {
       global: { plugins: [i18n] }
     })
     await flushPromises()
-    expect(wrapper.text()).toContain('USA')
-    expect(wrapper.text()).toContain('2020')
-    expect(wrapper.text()).toContain('100')
-    // On ne teste plus la présence de 2021 ici, car elle n'est pas sur la première page
+    
+    // Vérifier que le tableau est présent
+    expect(wrapper.find('.data-table').exists()).toBe(true)
+    
+    // Vérifier les données dans le tableau
+    const tableRows = wrapper.findAll('.data-table tbody tr')
+    expect(tableRows.length).toBe(25) // 25 éléments sur la première page
+    
+    // Vérifier le contenu de la première ligne
+    const firstRow = tableRows[0]
+    expect(firstRow.text()).toContain('USA')
+    expect(firstRow.text()).toContain('2020')
+    expect(firstRow.text()).toContain('100')
   })
 
   it('passe à la page suivante au clic sur Suivant', async () => {
@@ -67,12 +76,22 @@ describe('USMortalite.vue', () => {
       global: { plugins: [i18n] }
     })
     await flushPromises()
+    
+    // Cliquer sur le bouton Suivant
     await wrapper.find('button:last-of-type').trigger('click')
     await flushPromises()
+    
+    // Vérifier que la page a changé
     expect(wrapper.find('span').text()).toContain('Page 2')
-    expect(wrapper.text()).toContain('2021')
-    expect(wrapper.text()).toContain('456')
-    expect(wrapper.text()).toContain('2022')
-    expect(wrapper.text()).toContain('789')
+    
+    // Vérifier les nouvelles données dans le tableau
+    const tableRows = wrapper.findAll('.data-table tbody tr')
+    expect(tableRows.length).toBe(2) // 2 éléments sur la deuxième page
+    
+    const tableText = wrapper.find('.data-table').text()
+    expect(tableText).toContain('2021')
+    expect(tableText).toContain('456')
+    expect(tableText).toContain('2022')
+    expect(tableText).toContain('789')
   })
 })
