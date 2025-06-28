@@ -12,6 +12,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
 
 
 LANG = os.getenv("LANG", "fr")
@@ -302,7 +303,7 @@ def train_voting_regressor(model, X, y):
     print(tr("rmse", rmse=rmse))
     print(tr("r2", r2=r2))
 
-    # Essayer d'afficher le graphique uniquement si possible
+    # Essayer d'afficher le graphique uniquement si possible et si pas en mode test
     try:
         plt.figure(figsize=(10, 6))
         plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
@@ -313,71 +314,12 @@ def train_voting_regressor(model, X, y):
         plt.legend()
         plt.grid(True)
         plt.tight_layout()
-        plt.show()
-    except Exception as e:
-        print(f"Impossible d'afficher le graphique: {e}")
-
-    # Prédiction sur l'année suivante (si 'annee' est une feature)
-    future_pred_value = None
-    future_year = None
-    
-    # Vérifier si 'annee' est dans les colonnes de X (pas dans l'index)
-    has_annee_column = 'annee' in X.columns
-    has_annee_index = isinstance(X.index, pd.DatetimeIndex) or (hasattr(X.index, 'name') and X.index.name == 'annee')
-    
-    if has_annee_column or has_annee_index:
-        try:
-            if has_annee_column:
-                last_year = X['annee'].max()
-            else:
-                last_year = X.index.max()
-                
-            future_year = last_year + 1
-            
-            # Créer les features pour l'année future
-            future_features = X.mean(numeric_only=True).to_dict()
-            if has_annee_column:
-                future_features['annee'] = future_year
-                
-            future_df = pd.DataFrame([future_features])
-            
-            # Préprocesser les features futures
-            future_df = preprocess_features(future_df)
-            
-            # Assurer que les colonnes correspondent
-            future_df = future_df.reindex(columns=X_train.columns, fill_value=0)
-            
-            future_pred = model.predict(future_df)
-            future_pred_value = float(future_pred[0])
-            print(tr("results"))
-            print(f"Prédiction pour l'année {future_year} : {future_pred_value}")
-        except Exception as e:
-            print(f"Erreur lors de la prédiction future: {e}")
-            future_pred_value = None
-            future_year = None
-    else:
-        print("Impossible de prédire l'année suivante (pas de colonne 'annee').")
-
-    return model, rmse, r2, future_pred_value, future_year
-    rmse = np.sqrt(mse)
-    r2 = r2_score(y_test, y_pred)
-
-    print(tr("results"))
-    print(tr("rmse", rmse=rmse))
-    print(tr("r2", r2=r2))
-
-    # Affichage graphique (optionnel en environnement serveur)
-    try:
-        plt.figure(figsize=(10, 6))
-        plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
-        plt.plot(y_pred, label="Prédictions", color="orange", linestyle="--", marker="x")
-        plt.xlabel("Index")
-        plt.ylabel("Valeurs")
-        plt.title(tr("plot_title"))
-        plt.legend()
-        plt.grid(True)
-        plt.tight_layout()
-        plt.show()
+        
+        # Ne pas afficher le graphique en mode test
+        if os.getenv('MPLBACKEND') != 'Agg' and 'pytest' not in sys.modules:
+            plt.show()
+        else:
+            plt.savefig('prediction_plot.png')  # Sauvegarder au lieu d'afficher
     except Exception as e:
         print(f"Impossible d'afficher le graphique: {e}")
 

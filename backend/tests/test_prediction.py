@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import pandas as pd
+import sys
+import os
+import matplotlib
+matplotlib.use('Agg')  # Utiliser un backend sans interface graphique
+
+# Désactiver l'affichage des graphiques pendant les tests
+os.environ['MPLBACKEND'] = 'Agg'
+os.environ['DISPLAY'] = ''
+
+# Ajouter le répertoire courant au PYTHONPATH
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from prediction import prepare_data_generic, preprocess_features, create_voting_regressor, train_voting_regressor
 
 def test_prediction():

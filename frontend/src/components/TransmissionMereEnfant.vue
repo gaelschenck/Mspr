@@ -56,7 +56,16 @@ async function loadData() {
   error.value = null;
   try {
     const result = await fetchTransmissionMereEnfant(page.value * limit, limit);
-    data.value = result;
+    // Gérer les différents formats de réponse
+    if (Array.isArray(result)) {
+      data.value = result;
+    } else if (result && Array.isArray(result.items)) {
+      data.value = result.items;
+    } else if (result && Array.isArray(result.data)) {
+      data.value = result.data;
+    } else {
+      data.value = [];
+    }
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de transmission mère-enfant:', err);

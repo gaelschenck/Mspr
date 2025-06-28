@@ -3,11 +3,19 @@
 
 import requests
 import json
+import pytest
 
 def test_prediction_api():
     """Test de l'API de prédiction avec un serveur local"""
     
     BASE_URL = "http://localhost:8084"  # Ajustez le port selon votre config
+    
+    # Vérifier si le serveur est disponible
+    try:
+        response = requests.get(f"{BASE_URL}/", timeout=2)
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+        pytest.skip("Serveur API non disponible - test ignoré")
+        return
     
     print("=== Test de l'API de prédiction ===")
     

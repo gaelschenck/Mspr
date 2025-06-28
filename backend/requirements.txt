@@ -16,6 +16,7 @@ pytest
 pytest-asyncio
 httpx
 aiohttp
+requests
 
 # cd API
 #uvicorn main:app --reload --port 8084

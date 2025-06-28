@@ -161,12 +161,18 @@ async def login(
     
 def safe(val):
     # Convertit les types numpy en natif, gère les nan
+    if val is None:
+        return None
     if isinstance(val, (np.integer,)):
         return int(val)
     if isinstance(val, (np.floating,)):
         if math.isnan(val) or math.isinf(val):
             return None
         return float(val)
+    if isinstance(val, (list, tuple)):
+        return [safe(x) for x in val]
+    if isinstance(val, dict):
+        return {k: safe(v) for k, v in val.items()}
     return val
 
 from fastapi import Body
