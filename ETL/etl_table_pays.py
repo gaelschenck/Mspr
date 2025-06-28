@@ -39,7 +39,7 @@ logging.basicConfig(
     ]
 )
 
-# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+# ----------------------  EXTRACTION (Extract) ----------------------
 def extract_data():
     """
     EXTRACTION : Lecture des fichiers sources
@@ -47,7 +47,7 @@ def extract_data():
         list: Liste des DataFrames extraits ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de l'extraction...")
+        logging.info("[PROCESSING] Début de l'extraction...")
         
         files = [
             "../SourceData/art_coverage_by_country_clean.csv",
@@ -66,7 +66,7 @@ def extract_data():
                 
             df = pd.read_csv(file_path)
             if df.empty:
-                logging.warning(f"⚠️ Le fichier {file_path} est vide")
+                logging.warning(f"[WARNING] Le fichier {file_path} est vide")
                 continue
                 
             # Vérification des colonnes nécessaires
@@ -82,26 +82,26 @@ def extract_data():
                     df = df[["pays"]].drop_duplicates()
                 dataframes.append(df)
             else:
-                logging.warning(f"⚠️ Aucune colonne 'Country' trouvée dans {file_path}")
+                logging.warning(f"[WARNING] Aucune colonne 'Country' trouvée dans {file_path}")
                 continue
         
         if not dataframes:
             raise ValueError("Aucune donnée valide extraite des fichiers sources")
             
-        logging.info("✅ Extraction réussie")
+        logging.info("[SUCCESS] Extraction réussie")
         return dataframes
         
     except FileNotFoundError as e:
-        logging.error(f"❌ Erreur d'accès fichier : {str(e)}")
+        logging.error(f"[ERROR] Erreur d'accès fichier : {str(e)}")
         return None
     except ValueError as e:
-        logging.error(f"❌ Erreur de données : {str(e)}")
+        logging.error(f"[ERROR] Erreur de données : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de l'extraction : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de l'extraction : {str(e)}")
         return None
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
+# ----------------------  TRANSFORMATION (Transform) ----------------------
 def transform_data(dataframes):
     """
     TRANSFORMATION : Nettoyage et structuration des données
@@ -111,7 +111,7 @@ def transform_data(dataframes):
         DataFrame: Données transformées ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de la transformation...")
+        logging.info("[PROCESSING] Début de la transformation...")
         
         # 1. Concaténation des DataFrames
         try:
@@ -139,20 +139,29 @@ def transform_data(dataframes):
         except Exception as e:
             raise ValueError(f"Erreur lors du nettoyage : {str(e)}")
             
-        # 3. Ajout des identifiants
+        # 3. Ajout des identifiants et nommage selon le modèle SQLAlchemy
         pays_df.insert(0, "id_pays", range(1, len(pays_df) + 1))
         
-        logging.info("✅ Transformation réussie")
+        # Renommage des colonnes pour correspondre au modèle SQLAlchemy
+        pays_df = pays_df.rename(columns={
+            'pays': 'nom_pays',
+            'region_who': 'region'
+        })
+        
+        # Ajout de la colonne sous_region (vide pour l'instant)
+        pays_df['sous_region'] = None
+        
+        logging.info("[SUCCESS] Transformation réussie")
         return pays_df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur de transformation : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de la transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de la transformation : {str(e)}")
         return None
 
-# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
+# ----------------------  CHARGEMENT (Load) ----------------------
 def load_data(df):
     """
     CHARGEMENT : Sauvegarde des données transformées
@@ -162,7 +171,7 @@ def load_data(df):
         bool: True si succès, False sinon
     """
     try:
-        logging.info("🔄 Début du chargement...")
+        logging.info("[PROCESSING] Début du chargement...")
         
         output_file = Path('../DatasetClean/pays_clean.csv')
         
@@ -190,23 +199,23 @@ def load_data(df):
         except Exception as e:
             raise ValueError(f"Erreur lors de la vérification : {str(e)}")
             
-        logging.info(f"✅ Chargement réussi - {len(df)} pays enregistrés")
+        logging.info(f"[SUCCESS] Chargement réussi - {len(df)} pays enregistrés")
         return True
         
     except (IOError, FileNotFoundError, ValueError) as e:
-        logging.error(f"❌ Erreur de chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur de chargement : {str(e)}")
         return False
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors du chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors du chargement : {str(e)}")
         return False
 
-# ---------------------- 🚀 EXECUTION ----------------------
+# ---------------------- [START] EXECUTION ----------------------
 def main():
     """
     Fonction principale : Orchestration du processus ETL
     """
     try:
-        logging.info("🚀 Début du processus ETL pour pays")
+        logging.info("[START] Début du processus ETL pour pays")
         
         # EXTRACTION
         dataframes = extract_data()
@@ -222,10 +231,10 @@ def main():
         if not load_data(transformed_df):
             raise Exception("Échec du chargement des données")
             
-        logging.info("✅ Processus ETL terminé avec succès")
+        logging.info("[SUCCESS] Processus ETL terminé avec succès")
         
     except Exception as e:
-        logging.error(f"❌ Erreur dans le processus ETL : {str(e)}")
+        logging.error(f"[ERROR] Erreur dans le processus ETL : {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

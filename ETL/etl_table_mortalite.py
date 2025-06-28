@@ -35,7 +35,7 @@ logging.basicConfig(
     ]
 )
 
-# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+# ---------------------- EXTRACTION (Extract) ----------------------
 def extract_data():
     """
     EXTRACTION : Lecture des fichiers sources
@@ -43,7 +43,7 @@ def extract_data():
         tuple: (DataFrame pays, DataFrame mortalite) ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de l'extraction...")
+        logging.info("[PROCESSING] Début de l'extraction...")
         
         # Vérification des fichiers sources
         files_to_check = {
@@ -65,20 +65,20 @@ def extract_data():
         if mortalite_df.empty:
             raise ValueError("Le fichier mortalité est vide")
             
-        logging.info("✅ Extraction réussie")
+        logging.info("[SUCCESS] Extraction réussie")
         return pays_df, mortalite_df
         
     except FileNotFoundError as e:
-        logging.error(f"❌ Erreur d'accès fichier : {str(e)}")
+        logging.error(f"[ERROR] Erreur d'accès fichier : {str(e)}")
         return None, None
     except ValueError as e:
-        logging.error(f"❌ Erreur de données : {str(e)}")
+        logging.error(f"[ERROR] Erreur de données : {str(e)}")
         return None, None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de l'extraction : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de l'extraction : {str(e)}")
         return None, None
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
+# ---------------------- TRANSFORMATION (Transform) ----------------------
 def transform_data(pays_df, mortalite_df):
     """
     TRANSFORMATION : Nettoyage et structuration des données
@@ -89,7 +89,7 @@ def transform_data(pays_df, mortalite_df):
         DataFrame: Données transformées ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de la transformation...")
+        logging.info("[PROCESSING] Début de la transformation...")
         
         # 1. Nettoyage des colonnes
         try:
@@ -110,7 +110,7 @@ def transform_data(pays_df, mortalite_df):
         try:
             merged_df = pd.merge(mortalite_df, pays_df, 
                                left_on='Country', 
-                               right_on='pays', 
+                               right_on='nom_pays',  # Changé de 'pays' vers 'nom_pays'
                                how='inner')
             if merged_df.empty:
                 raise ValueError("Aucune correspondance trouvée après la fusion")
@@ -135,31 +135,32 @@ def transform_data(pays_df, mortalite_df):
                         'id': len(mortalite_data) + 1,
                         'id_pays': int(row['id_pays']),
                         'annee': int(row['Year']),
-                        'valeur': int(round(float(row['Count_median'])))
+                        'valeur': int(round(float(row['Count_median']))),
+                        'id_unite': 1  # 1 = "nombre de personnes" selon table unite
                     })
             except ValueError as e:
                 error_count += 1
-                logging.warning(f"⚠️ Ligne ignorée - Pays: {row['Country']}, Année: {row['Year']}")
+                logging.warning(f"[WARNING] Ligne ignorée - Pays: {row['Country']}, Année: {row['Year']}")
                 continue
                 
         if error_count > 0:
-            logging.warning(f"⚠️ {error_count} lignes ignorées pendant la transformation")
+            logging.warning(f"[WARNING] {error_count} lignes ignorées pendant la transformation")
             
         result_df = pd.DataFrame(mortalite_data)
         if result_df.empty:
             raise ValueError("Aucune donnée valide après transformation")
             
-        logging.info("✅ Transformation réussie")
+        logging.info("[SUCCESS] Transformation réussie")
         return result_df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur de transformation : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de la transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de la transformation : {str(e)}")
         return None
 
-# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
+# ---------------------- CHARGEMENT (Load) ----------------------
 def load_data(df):
     """
     CHARGEMENT : Sauvegarde des données transformées
@@ -169,7 +170,7 @@ def load_data(df):
         bool: True si succès, False sinon
     """
     try:
-        logging.info("🔄 Début du chargement...")
+        logging.info("[PROCESSING] Début du chargement...")
         
         output_file = Path('../DatasetClean/table_mortalite.csv')
         
@@ -197,23 +198,23 @@ def load_data(df):
         except Exception as e:
             raise ValueError(f"Erreur lors de la vérification : {str(e)}")
             
-        logging.info(f"✅ Chargement réussi - {len(df)} lignes sauvegardées")
+        logging.info(f"[SUCCESS] Chargement réussi - {len(df)} lignes sauvegardées")
         return True
         
     except (IOError, FileNotFoundError, ValueError) as e:
-        logging.error(f"❌ Erreur de chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur de chargement : {str(e)}")
         return False
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors du chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors du chargement : {str(e)}")
         return False
 
-# ---------------------- 🚀 EXECUTION ----------------------
+# ---------------------- EXECUTION ----------------------
 def main():
     """
     Fonction principale : Orchestration du processus ETL
     """
     try:
-        logging.info("🚀 Début du processus ETL pour mortalite")
+        logging.info("[START] Début du processus ETL pour mortalite")
         
         # EXTRACTION
         pays_df, mortalite_df = extract_data()
@@ -229,10 +230,10 @@ def main():
         if not load_data(transformed_df):
             raise Exception("Échec du chargement des données")
             
-        logging.info("✅ Processus ETL terminé avec succès")
+        logging.info("[SUCCESS] Processus ETL terminé avec succès")
         
     except Exception as e:
-        logging.error(f"❌ Erreur dans le processus ETL : {str(e)}")
+        logging.error(f"[ERROR] Erreur dans le processus ETL : {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

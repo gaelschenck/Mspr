@@ -31,7 +31,7 @@ logging.basicConfig(
     ]
 )
 
-# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+# ----------------------  EXTRACTION (Extract) ----------------------
 def extract_data():
     """
     EXTRACTION : Création des données des unités
@@ -39,14 +39,14 @@ def extract_data():
         DataFrame: DataFrame des unités ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de l'extraction...")
+        logging.info("[PROCESSING] Début de l'extraction...")
         
-        # Définition des unités de mesure
+        # Définition des unités de mesure selon le modèle SQLAlchemy
         unites = [
-            {'id_unite': 1, 'unite': 'nombre de personnes'},
-            {'id_unite': 2, 'unite': 'pourcentage'},
-            {'id_unite': 3, 'unite': 'ratio'},
-            {'id_unite': 4, 'unite': 'année'}
+            {'id_unite': 1, 'nom_unite': 'nombre de personnes'},
+            {'id_unite': 2, 'nom_unite': 'pourcentage'},
+            {'id_unite': 3, 'nom_unite': 'ratio'},
+            {'id_unite': 4, 'nom_unite': 'année'}
         ]
         
         # Création du DataFrame
@@ -55,17 +55,17 @@ def extract_data():
         if unite_df.empty:
             raise ValueError("Erreur lors de la création du DataFrame des unités")
             
-        logging.info("✅ Extraction réussie")
+        logging.info("[SUCCESS] Extraction réussie")
         return unite_df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de données : {str(e)}")
+        logging.error(f"[ERROR] Erreur de données : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de l'extraction : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de l'extraction : {str(e)}")
         return None
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
+# ----------------------  TRANSFORMATION (Transform) ----------------------
 def transform_data(df):
     """
     TRANSFORMATION : Vérification et nettoyage des données
@@ -75,34 +75,34 @@ def transform_data(df):
         DataFrame: Données transformées ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de la transformation...")
+        logging.info("[PROCESSING] Début de la transformation...")
         
-        # Vérification des colonnes requises
-        required_columns = ['id_unite', 'unite']
+        # Vérification des colonnes requises selon le modèle SQLAlchemy
+        required_columns = ['id_unite', 'nom_unite']
         if not all(col in df.columns for col in required_columns):
             raise ValueError("Colonnes manquantes dans le DataFrame")
             
         # Vérification des types de données
         if not df['id_unite'].dtype.kind in 'ui':  # unsigned integer
             df['id_unite'] = df['id_unite'].astype(int)
-        if not df['unite'].dtype == 'object':  # string
-            df['unite'] = df['unite'].astype(str)
+        if not df['nom_unite'].dtype == 'object':  # string
+            df['nom_unite'] = df['nom_unite'].astype(str)
             
         # Vérification des doublons
         if df.duplicated().any():
             raise ValueError("Des doublons ont été détectés")
             
-        logging.info("✅ Transformation réussie")
+        logging.info("[SUCCESS] Transformation réussie")
         return df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur de transformation : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de la transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de la transformation : {str(e)}")
         return None
 
-# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
+# ----------------------  CHARGEMENT (Load) ----------------------
 def load_data(df):
     """
     CHARGEMENT : Sauvegarde des données transformées
@@ -112,7 +112,7 @@ def load_data(df):
         bool: True si succès, False sinon
     """
     try:
-        logging.info("🔄 Début du chargement...")
+        logging.info("[PROCESSING] Début du chargement...")
         
         output_file = Path('../DatasetClean/unite_clean.csv')
         
@@ -140,23 +140,23 @@ def load_data(df):
         except Exception as e:
             raise ValueError(f"Erreur lors de la vérification : {str(e)}")
             
-        logging.info(f"✅ Chargement réussi - {len(df)} unités enregistrées")
+        logging.info(f"[SUCCESS] Chargement réussi - {len(df)} unités enregistrées")
         return True
         
     except (IOError, FileNotFoundError, ValueError) as e:
-        logging.error(f"❌ Erreur de chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur de chargement : {str(e)}")
         return False
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors du chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors du chargement : {str(e)}")
         return False
 
-# ---------------------- 🚀 EXECUTION ----------------------
+# ---------------------- [START] EXECUTION ----------------------
 def main():
     """
     Fonction principale : Orchestration du processus ETL
     """
     try:
-        logging.info("🚀 Début du processus ETL pour unite")
+        logging.info("[START] Début du processus ETL pour unite")
         
         # EXTRACTION
         unite_df = extract_data()
@@ -172,10 +172,10 @@ def main():
         if not load_data(transformed_df):
             raise Exception("Échec du chargement des données")
             
-        logging.info("✅ Processus ETL terminé avec succès")
+        logging.info("[SUCCESS] Processus ETL terminé avec succès")
         
     except Exception as e:
-        logging.error(f"❌ Erreur dans le processus ETL : {str(e)}")
+        logging.error(f"[ERROR] Erreur dans le processus ETL : {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -1,1120 +1,2679 @@
---
--- PostgreSQL database dump
---
+-- Dump PostgreSQL pour la base CH
+-- Genere automatiquement a partir de db-ch.db
 
--- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
--- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Schema PostgreSQL genere automatiquement a partir des modeles SQLAlchemy
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+-- Suppression des tables existantes (avec CASCADE pour gerer les dependances)
+DROP TABLE IF EXISTS statistique CASCADE;
+DROP TABLE IF EXISTS traitement CASCADE;
+DROP TABLE IF EXISTS transmission_mere_enfant CASCADE;
+DROP TABLE IF EXISTS mortalite CASCADE;
+DROP TABLE IF EXISTS population_hiv CASCADE;
+DROP TABLE IF EXISTS pays CASCADE;
+DROP TABLE IF EXISTS unite CASCADE;
+DROP TABLE IF EXISTS type_statistique CASCADE;
+DROP TABLE IF EXISTS type_traitement CASCADE;
+DROP TABLE IF EXISTS utilisateur CASCADE;
 
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: mortalite; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.mortalite (
-    id integer NOT NULL,
-    id_pays integer,
-    annee integer,
-    valeur integer,
-    id_unite integer
+-- Table pays
+CREATE TABLE pays (
+    id_pays SERIAL PRIMARY KEY,
+    pays VARCHAR(100) NOT NULL,
+    region_who VARCHAR(100)
 );
 
-
-ALTER TABLE public.mortalite OWNER TO postgres;
-
---
--- Name: mortalite_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.mortalite_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.mortalite_id_seq OWNER TO postgres;
-
---
--- Name: mortalite_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.mortalite_id_seq OWNED BY public.mortalite.id;
-
-
---
--- Name: pays; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.pays (
-    id_pays integer NOT NULL,
-    nom_pays character varying(100) NOT NULL,
-    region character varying(100),
-    sous_region character varying(100)
+-- Table unite
+CREATE TABLE unite (
+    id_unite SERIAL PRIMARY KEY,
+    unite VARCHAR(50) NOT NULL
 );
 
-
-ALTER TABLE public.pays OWNER TO postgres;
-
---
--- Name: pays_id_pays_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.pays_id_pays_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.pays_id_pays_seq OWNER TO postgres;
-
---
--- Name: pays_id_pays_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.pays_id_pays_seq OWNED BY public.pays.id_pays;
-
-
---
--- Name: population_hiv; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.population_hiv (
-    id integer NOT NULL,
-    id_pays integer,
-    annee integer,
-    valeur integer,
-    id_unite integer
+-- Table type_statistique
+CREATE TABLE type_statistique (
+    id_type_statistique SERIAL PRIMARY KEY,
+    nom_type_statistique VARCHAR(100) NOT NULL
 );
 
-
-ALTER TABLE public.population_hiv OWNER TO postgres;
-
---
--- Name: population_hiv_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.population_hiv_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.population_hiv_id_seq OWNER TO postgres;
-
---
--- Name: population_hiv_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.population_hiv_id_seq OWNED BY public.population_hiv.id;
-
-
---
--- Name: statistique; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.statistique (
-    id integer NOT NULL,
-    id_pays integer,
-    annee integer,
-    valeur integer,
-    id_unite integer,
-    id_type_statistique integer
+-- Table type_traitement
+CREATE TABLE type_traitement (
+    id_type_traitement SERIAL PRIMARY KEY,
+    nom_type_traitement VARCHAR(100) NOT NULL
 );
 
-
-ALTER TABLE public.statistique OWNER TO postgres;
-
---
--- Name: statistique_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.statistique_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.statistique_id_seq OWNER TO postgres;
-
---
--- Name: statistique_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.statistique_id_seq OWNED BY public.statistique.id;
-
-
---
--- Name: traitement; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.traitement (
-    id integer NOT NULL,
-    id_pays integer,
-    valeur integer,
-    id_unite integer,
-    id_type_traitement integer
+-- Table population_hiv
+CREATE TABLE population_hiv (
+    id SERIAL PRIMARY KEY,
+    id_pays INTEGER NOT NULL,
+    annee INTEGER NOT NULL,
+    valeur DECIMAL(10,2) NOT NULL,
+    id_unite INTEGER,
+    FOREIGN KEY (id_pays) REFERENCES pays(id_pays),
+    FOREIGN KEY (id_unite) REFERENCES unite(id_unite)
 );
 
-
-ALTER TABLE public.traitement OWNER TO postgres;
-
---
--- Name: traitement_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.traitement_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.traitement_id_seq OWNER TO postgres;
-
---
--- Name: traitement_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.traitement_id_seq OWNED BY public.traitement.id;
-
-
---
--- Name: transmission_mere_enfant; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.transmission_mere_enfant (
-    id integer NOT NULL,
-    id_pays integer,
-    besoin_arv_min integer,
-    besoin_arv_median integer,
-    besoin_arv_max integer,
-    pourcentage_recu_min integer,
-    pourcentage_recu_median integer,
-    pourcentage_recu_max integer,
-    id_unite integer
+-- Table mortalite
+CREATE TABLE mortalite (
+    id SERIAL PRIMARY KEY,
+    id_pays INTEGER NOT NULL,
+    annee INTEGER NOT NULL,
+    valeur DECIMAL(10,2) NOT NULL,
+    id_unite INTEGER,
+    FOREIGN KEY (id_pays) REFERENCES pays(id_pays),
+    FOREIGN KEY (id_unite) REFERENCES unite(id_unite)
 );
 
-
-ALTER TABLE public.transmission_mere_enfant OWNER TO postgres;
-
---
--- Name: transmission_mere_enfant_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.transmission_mere_enfant_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.transmission_mere_enfant_id_seq OWNER TO postgres;
-
---
--- Name: transmission_mere_enfant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.transmission_mere_enfant_id_seq OWNED BY public.transmission_mere_enfant.id;
-
-
---
--- Name: type_statistique; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.type_statistique (
-    id_type_statistique integer NOT NULL,
-    nom_type_statistique character varying(100) NOT NULL
+-- Table transmission_mere_enfant
+CREATE TABLE transmission_mere_enfant (
+    id_transmission SERIAL PRIMARY KEY,
+    id_pays INTEGER NOT NULL,
+    besoin_arv_min DECIMAL(10,2) NOT NULL,
+    besoin_arv_median DECIMAL(10,2) NOT NULL,
+    besoin_arv_max DECIMAL(10,2) NOT NULL,
+    pourcentage_recu_min DECIMAL(5,2) NOT NULL,
+    pourcentage_recu_median DECIMAL(5,2) NOT NULL,
+    pourcentage_recu_max DECIMAL(5,2) NOT NULL,
+    FOREIGN KEY (id_pays) REFERENCES pays(id_pays)
 );
 
-
-ALTER TABLE public.type_statistique OWNER TO postgres;
-
---
--- Name: type_statistique_id_type_statistique_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.type_statistique_id_type_statistique_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.type_statistique_id_type_statistique_seq OWNER TO postgres;
-
---
--- Name: type_statistique_id_type_statistique_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.type_statistique_id_type_statistique_seq OWNED BY public.type_statistique.id_type_statistique;
-
-
---
--- Name: type_traitement; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.type_traitement (
-    id_type_traitement integer NOT NULL,
-    nom_type_traitement character varying(100) NOT NULL
+-- Table traitement
+CREATE TABLE traitement (
+    id SERIAL PRIMARY KEY,
+    id_pays INTEGER NOT NULL,
+    valeur DECIMAL(10,2) NOT NULL,
+    id_unite INTEGER,
+    id_type_traitement INTEGER NOT NULL,
+    FOREIGN KEY (id_pays) REFERENCES pays(id_pays),
+    FOREIGN KEY (id_unite) REFERENCES unite(id_unite),
+    FOREIGN KEY (id_type_traitement) REFERENCES type_traitement(id_type_traitement)
 );
 
-
-ALTER TABLE public.type_traitement OWNER TO postgres;
-
---
--- Name: type_traitement_id_type_traitement_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.type_traitement_id_type_traitement_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.type_traitement_id_type_traitement_seq OWNER TO postgres;
-
---
--- Name: type_traitement_id_type_traitement_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.type_traitement_id_type_traitement_seq OWNED BY public.type_traitement.id_type_traitement;
-
-
---
--- Name: unite; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.unite (
-    id_unite integer NOT NULL,
-    nom_unite character varying(50) NOT NULL
+-- Table statistique
+CREATE TABLE statistique (
+    id SERIAL PRIMARY KEY,
+    id_pays INTEGER NOT NULL,
+    annee INTEGER NOT NULL,
+    valeur DECIMAL(10,2) NOT NULL,
+    id_unite INTEGER,
+    id_type_statistique INTEGER NOT NULL,
+    FOREIGN KEY (id_pays) REFERENCES pays(id_pays),
+    FOREIGN KEY (id_unite) REFERENCES unite(id_unite),
+    FOREIGN KEY (id_type_statistique) REFERENCES type_statistique(id_type_statistique)
 );
 
-
-ALTER TABLE public.unite OWNER TO postgres;
-
---
--- Name: unite_id_unite_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.unite_id_unite_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.unite_id_unite_seq OWNER TO postgres;
-
---
--- Name: unite_id_unite_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.unite_id_unite_seq OWNED BY public.unite.id_unite;
-
-
---
--- Name: utilisateur; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.utilisateur (
-    id integer NOT NULL,
-    username character varying NOT NULL,
-    hashed_password character varying NOT NULL,
-    role character varying NOT NULL,
-    rgpd_accept integer DEFAULT 0 NOT NULL
+-- Table utilisateur
+CREATE TABLE utilisateur (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR UNIQUE NOT NULL,
+    hashed_password VARCHAR NOT NULL,
+    role VARCHAR NOT NULL,
+    rgpd_accept INTEGER NOT NULL DEFAULT 0
 );
 
-
-ALTER TABLE public.utilisateur OWNER TO postgres;
-
---
--- Name: utilisateur_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.utilisateur_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.utilisateur_id_seq OWNER TO postgres;
-
---
--- Name: utilisateur_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.utilisateur_id_seq OWNED BY public.utilisateur.id;
-
-
---
--- Name: mortalite id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.mortalite ALTER COLUMN id SET DEFAULT nextval('public.mortalite_id_seq'::regclass);
-
-
---
--- Name: pays id_pays; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pays ALTER COLUMN id_pays SET DEFAULT nextval('public.pays_id_pays_seq'::regclass);
-
-
---
--- Name: population_hiv id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.population_hiv ALTER COLUMN id SET DEFAULT nextval('public.population_hiv_id_seq'::regclass);
-
-
---
--- Name: statistique id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique ALTER COLUMN id SET DEFAULT nextval('public.statistique_id_seq'::regclass);
-
-
---
--- Name: traitement id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement ALTER COLUMN id SET DEFAULT nextval('public.traitement_id_seq'::regclass);
-
-
---
--- Name: transmission_mere_enfant id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transmission_mere_enfant ALTER COLUMN id SET DEFAULT nextval('public.transmission_mere_enfant_id_seq'::regclass);
-
-
---
--- Name: type_statistique id_type_statistique; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type_statistique ALTER COLUMN id_type_statistique SET DEFAULT nextval('public.type_statistique_id_type_statistique_seq'::regclass);
-
-
---
--- Name: type_traitement id_type_traitement; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type_traitement ALTER COLUMN id_type_traitement SET DEFAULT nextval('public.type_traitement_id_type_traitement_seq'::regclass);
-
-
---
--- Name: unite id_unite; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.unite ALTER COLUMN id_unite SET DEFAULT nextval('public.unite_id_unite_seq'::regclass);
-
-
---
--- Name: utilisateur id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.utilisateur ALTER COLUMN id SET DEFAULT nextval('public.utilisateur_id_seq'::regclass);
-
-
---
--- Data for Name: mortalite; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.mortalite (id, id_pays, annee, valeur, id_unite) FROM stdin;
-\.
-
-
---
--- Data for Name: pays; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.pays (id_pays, nom_pays, region, sous_region) FROM stdin;
-1	afghanistan	eastern mediterranean	\N
-2	albania	europe	\N
-3	algeria	africa	\N
-4	angola	africa	\N
-5	argentina	americas	\N
-6	armenia	europe	\N
-7	australia	western pacific	\N
-8	austria	europe	\N
-9	azerbaijan	europe	\N
-10	bahamas	americas	\N
-11	bahrain	eastern mediterranean	\N
-12	bangladesh	south-east asia	\N
-13	barbados	americas	\N
-14	belarus	europe	\N
-15	belgium	europe	\N
-16	belize	americas	\N
-17	benin	africa	\N
-18	bhutan	south-east asia	\N
-19	bolivia (plurinational state of)	americas	\N
-20	bosnia and herzegovina	europe	\N
-21	botswana	africa	\N
-22	brazil	americas	\N
-23	brunei darussalam	western pacific	\N
-24	bulgaria	europe	\N
-25	burkina faso	africa	\N
-26	burundi	africa	\N
-27	cabo verde	africa	\N
-28	cambodia	western pacific	\N
-29	cameroon	africa	\N
-30	canada	americas	\N
-31	central african republic	africa	\N
-32	chad	africa	\N
-33	chile	americas	\N
-34	china	western pacific	\N
-35	colombia	americas	\N
-36	comoros	africa	\N
-37	congo	americas	\N
-38	costa rica	americas	\N
-39	côte d'ivoire	africa	\N
-40	croatia	europe	\N
-41	cuba	americas	\N
-42	cyprus	europe	\N
-43	czechia	europe	\N
-44	democratic people's republic of korea	western pacific	\N
-45	democratic republic of the congo	africa	\N
-46	denmark	europe	\N
-47	djibouti	eastern mediterranean	\N
-48	dominican republic	americas	\N
-49	ecuador	americas	\N
-50	egypt	eastern mediterranean	\N
-51	el salvador	americas	\N
-52	equatorial guinea	africa	\N
-53	eritrea	africa	\N
-54	estonia	europe	\N
-55	eswatini	africa	\N
-56	ethiopia	africa	\N
-57	fiji	western pacific	\N
-58	finland	europe	\N
-59	france	europe	\N
-60	gabon	africa	\N
-61	gambia	africa	\N
-62	georgia	europe	\N
-63	germany	europe	\N
-64	ghana	africa	\N
-65	greece	europe	\N
-66	guatemala	americas	\N
-67	guinea	africa	\N
-68	guinea-bissau	africa	\N
-69	guyana	americas	\N
-70	haiti	americas	\N
-71	honduras	americas	\N
-72	hungary	europe	\N
-73	iceland	europe	\N
-74	india	south-east asia	\N
-75	indonesia	south-east asia	\N
-76	iran (islamic republic of)	eastern mediterranean	\N
-77	ireland	europe	\N
-78	israel	europe	\N
-79	italy	europe	\N
-80	jamaica	americas	\N
-81	japan	western pacific	\N
-82	jordan	eastern mediterranean	\N
-83	kazakhstan	europe	\N
-84	kenya	africa	\N
-85	kuwait	eastern mediterranean	\N
-86	kyrgyzstan	europe	\N
-87	lao people's democratic republic	western pacific	\N
-88	latvia	europe	\N
-89	lebanon	eastern mediterranean	\N
-90	lesotho	africa	\N
-91	liberia	africa	\N
-92	libya	eastern mediterranean	\N
-93	lithuania	europe	\N
-94	luxembourg	europe	\N
-95	madagascar	africa	\N
-96	malawi	africa	\N
-97	malaysia	western pacific	\N
-98	maldives	south-east asia	\N
-99	mali	africa	\N
-100	malta	europe	\N
-101	mauritania	africa	\N
-102	mauritius	africa	\N
-103	mexico	americas	\N
-104	mongolia	western pacific	\N
-105	montenegro	europe	\N
-106	morocco	eastern mediterranean	\N
-107	mozambique	africa	\N
-108	myanmar	south-east asia	\N
-109	namibia	africa	\N
-110	nepal	south-east asia	\N
-111	netherlands	europe	\N
-112	new zealand	western pacific	\N
-113	nicaragua	americas	\N
-114	niger	africa	\N
-115	nigeria	africa	\N
-116	norway	europe	\N
-117	oman	eastern mediterranean	\N
-118	pakistan	eastern mediterranean	\N
-119	panama	americas	\N
-120	papua new guinea	western pacific	\N
-121	paraguay	americas	\N
-122	peru	americas	\N
-123	philippines	western pacific	\N
-124	poland	europe	\N
-125	portugal	europe	\N
-126	qatar	eastern mediterranean	\N
-127	republic of korea	western pacific	\N
-128	republic of moldova	europe	\N
-129	republic of north macedonia	europe	\N
-130	romania	europe	\N
-131	russian federation	europe	\N
-132	rwanda	africa	\N
-133	saudi arabia	eastern mediterranean	\N
-134	senegal	africa	\N
-135	serbia	europe	\N
-136	sierra leone	africa	\N
-137	singapore	western pacific	\N
-138	slovakia	europe	\N
-139	slovenia	europe	\N
-140	somalia	eastern mediterranean	\N
-141	south africa	africa	\N
-142	south sudan	africa	\N
-143	spain	europe	\N
-144	sri lanka	south-east asia	\N
-145	sudan	eastern mediterranean	\N
-146	suriname	americas	\N
-147	sweden	europe	\N
-148	switzerland	europe	\N
-149	syrian arab republic	eastern mediterranean	\N
-150	tajikistan	europe	\N
-151	thailand	south-east asia	\N
-152	timor-leste	south-east asia	\N
-153	togo	africa	\N
-154	trinidad and tobago	americas	\N
-155	tunisia	eastern mediterranean	\N
-156	turkey	europe	\N
-157	turkmenistan	europe	\N
-158	uganda	africa	\N
-159	ukraine	europe	\N
-160	united arab emirates	eastern mediterranean	\N
-161	united kingdom of great britain and northern ireland	europe	\N
-162	united republic of tanzania	africa	\N
-163	united states of america	americas	\N
-164	uruguay	americas	\N
-165	uzbekistan	europe	\N
-166	venezuela (bolivarian republic of)	americas	\N
-167	viet nam	western pacific	\N
-168	yemen	eastern mediterranean	\N
-169	zambia	africa	\N
-170	zimbabwe	africa	\N
-\.
-
-
---
--- Data for Name: population_hiv; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.population_hiv (id, id_pays, annee, valeur, id_unite) FROM stdin;
-\.
-
-
---
--- Data for Name: statistique; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) FROM stdin;
-\.
-
-
---
--- Data for Name: traitement; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.traitement (id, id_pays, valeur, id_unite, id_type_traitement) FROM stdin;
-\.
-
-
---
--- Data for Name: transmission_mere_enfant; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.transmission_mere_enfant (id, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max, id_unite) FROM stdin;
-1	1	100	200	500	7	11	18	\N
-2	3	500	500	500	69	74	78	\N
-3	4	19000	25000	32000	29	38	48	\N
-4	5	1600	1800	2000	85	95	95	\N
-5	7	100	100	100	0	0	0	\N
-6	10	100	100	200	51	58	65	\N
-7	12	200	200	200	24	28	33	\N
-8	14	200	500	500	67	90	95	\N
-9	16	100	100	200	39	44	49	\N
-10	17	1600	2600	4300	95	95	95	\N
-11	19	500	500	500	95	95	95	\N
-12	21	10000	13000	14000	77	95	95	\N
-13	25	3600	4900	6100	71	95	95	\N
-14	26	3800	5000	6000	61	80	95	\N
-15	28	600	730	850	71	85	95	\N
-16	29	21000	27000	32000	61	80	94	\N
-17	31	3300	4500	5800	52	71	91	\N
-18	32	7200	10000	13000	40	56	72	\N
-19	33	500	500	500	95	95	95	\N
-20	35	1900	2300	2700	17	21	25	\N
-21	37	2800	4100	5800	17	25	36	\N
-22	39	13000	18000	24000	65	90	95	\N
-23	41	200	200	200	86	95	95	\N
-24	45	20000	26000	31000	33	44	52	\N
-25	47	200	500	500	22	30	39	\N
-26	48	690	910	1200	64	84	95	\N
-27	49	500	500	620	68	95	95	\N
-28	50	500	500	500	15	16	18	\N
-29	51	500	500	500	33	40	46	\N
-30	52	1800	2600	3500	35	50	68	\N
-31	53	500	500	690	34	48	69	\N
-32	55	9000	11000	12000	66	79	89	\N
-33	56	14000	20000	28000	63	92	95	\N
-34	59	1100	1200	1300	0	0	0	\N
-35	60	1900	2700	3600	52	72	95	\N
-36	61	820	1000	1300	54	68	86	\N
-37	63	500	500	500	0	0	0	\N
-38	64	12000	16000	21000	58	79	95	\N
-39	66	720	790	870	31	34	38	\N
-40	67	3800	5100	6600	48	65	84	\N
-41	68	1700	2100	2500	38	48	58	\N
-42	69	200	200	500	67	89	95	\N
-43	70	4700	5900	6800	67	83	95	\N
-44	71	500	500	500	48	59	72	\N
-45	75	10000	12000	14000	13	15	18	\N
-46	76	200	500	840	41	81	95	\N
-47	77	100	100	100	0	0	0	\N
-48	78	100	100	100	0	0	0	\N
-49	79	500	500	500	0	0	0	\N
-50	80	500	500	500	95	95	95	\N
-51	83	550	610	660	54	59	65	\N
-52	84	49000	63000	80000	70	91	95	\N
-53	86	200	200	500	69	88	95	\N
-54	87	500	500	500	31	35	41	\N
-55	90	8200	11000	12000	59	77	89	\N
-56	91	1500	2000	2300	70	93	95	\N
-57	92	100	200	200	56	63	69	\N
-58	95	820	1100	1600	19	25	36	\N
-59	96	34000	45000	53000	80	95	95	\N
-60	97	500	500	500	86	95	95	\N
-61	99	8300	10000	13000	19	24	31	\N
-62	101	200	200	200	31	38	47	\N
-63	102	100	100	100	95	95	95	\N
-64	106	500	500	500	50	61	78	\N
-65	107	78000	110000	140000	73	95	95	\N
-66	108	4700	5400	6100	69	80	89	\N
-67	109	8200	10000	12000	92	95	95	\N
-68	110	500	500	500	43	51	60	\N
-69	113	200	200	200	73	90	95	\N
-70	114	1400	1600	2000	48	58	70	\N
-71	115	65000	100000	140000	28	44	62	\N
-72	118	2700	3200	3800	8	10	12	\N
-73	119	200	500	500	83	92	95	\N
-74	120	910	1200	1500	59	79	95	\N
-75	121	200	500	500	60	88	95	\N
-76	122	880	1100	1500	67	85	95	\N
-77	123	500	500	500	15	18	22	\N
-78	125	100	200	200	0	0	0	\N
-79	128	200	500	500	54	73	95	\N
-80	130	200	200	200	95	95	95	\N
-81	132	6000	8100	9400	79	95	95	\N
-82	134	1800	2200	2500	56	65	75	\N
-83	140	500	500	730	14	19	31	\N
-84	141	210000	290000	350000	63	87	95	\N
-85	142	7200	9900	13000	41	56	74	\N
-86	143	200	500	500	0	0	0	\N
-87	145	760	2000	3700	2	5	9	\N
-88	146	100	100	100	84	95	95	\N
-89	150	500	500	560	39	46	56	\N
-90	151	3200	3900	4500	81	95	95	\N
-91	153	4200	5400	6200	62	80	92	\N
-92	158	81000	100000	120000	73	93	95	\N
-93	159	1900	2200	2500	89	95	95	\N
-94	162	62000	83000	98000	70	93	95	\N
-95	164	100	200	200	71	95	95	\N
-96	165	1400	1500	1600	33	35	38	\N
-97	167	2000	2400	2800	69	81	95	\N
-98	168	200	500	500	8	13	20	\N
-99	169	38000	48000	57000	94	95	95	\N
-100	170	48000	63000	76000	71	94	95	\N
-\.
-
-
---
--- Data for Name: type_statistique; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.type_statistique (id_type_statistique, nom_type_statistique) FROM stdin;
-1	taux de prévalence
-2	taux de mortalité
-3	taux de transmission mère-enfant
-4	taux de couverture traitement
-5	taux de nouvelles infections
-\.
-
-
---
--- Data for Name: type_traitement; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.type_traitement (id_type_traitement, nom_type_traitement) FROM stdin;
-1	traitement adulte
-2	traitement pédiatrique
-3	traitement prévention transmission
-\.
-
-
---
--- Data for Name: unite; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.unite (id_unite, nom_unite) FROM stdin;
-1	nombre de personnes
-2	pourcentage
-3	ratio
-4	année
-\.
-
-
---
--- Data for Name: utilisateur; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.utilisateur (id, username, hashed_password, role, rgpd_accept) FROM stdin;
-1	adminch	$2b$12$EC8rxBgzFjf1Em04gFoCVOSy0MPJX11jUcoIKXPpx/HKdKoPTLSUm	admin	0
-2	userch	$2b$12$lHod2GqAM3DpxVFXm1R1BOOFk1ggwqq9uOoibyL38Qmb.FX9t6.r2	user	0
-\.
-
-
---
--- Name: mortalite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.mortalite_id_seq', 1, false);
-
-
---
--- Name: pays_id_pays_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.pays_id_pays_seq', 1, false);
-
-
---
--- Name: population_hiv_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.population_hiv_id_seq', 1, false);
-
-
---
--- Name: statistique_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.statistique_id_seq', 1, false);
-
-
---
--- Name: traitement_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.traitement_id_seq', 1, false);
-
-
---
--- Name: transmission_mere_enfant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.transmission_mere_enfant_id_seq', 1, false);
-
-
---
--- Name: type_statistique_id_type_statistique_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.type_statistique_id_type_statistique_seq', 1, false);
-
-
---
--- Name: type_traitement_id_type_traitement_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.type_traitement_id_type_traitement_seq', 1, false);
-
-
---
--- Name: unite_id_unite_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.unite_id_unite_seq', 1, false);
-
-
---
--- Name: utilisateur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.utilisateur_id_seq', 2, true);
-
-
---
--- Name: mortalite mortalite_id_pays_annee_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.mortalite
-    ADD CONSTRAINT mortalite_id_pays_annee_key UNIQUE (id_pays, annee);
-
-
---
--- Name: mortalite mortalite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.mortalite
-    ADD CONSTRAINT mortalite_pkey PRIMARY KEY (id);
-
-
---
--- Name: pays pays_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pays
-    ADD CONSTRAINT pays_pkey PRIMARY KEY (id_pays);
-
-
---
--- Name: population_hiv population_hiv_id_pays_annee_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.population_hiv
-    ADD CONSTRAINT population_hiv_id_pays_annee_key UNIQUE (id_pays, annee);
-
-
---
--- Name: population_hiv population_hiv_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.population_hiv
-    ADD CONSTRAINT population_hiv_pkey PRIMARY KEY (id);
-
-
---
--- Name: statistique statistique_id_pays_annee_id_type_statistique_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique
-    ADD CONSTRAINT statistique_id_pays_annee_id_type_statistique_key UNIQUE (id_pays, annee, id_type_statistique);
-
-
---
--- Name: statistique statistique_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique
-    ADD CONSTRAINT statistique_pkey PRIMARY KEY (id);
-
-
---
--- Name: traitement traitement_id_pays_id_type_traitement_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement
-    ADD CONSTRAINT traitement_id_pays_id_type_traitement_key UNIQUE (id_pays, id_type_traitement);
-
-
---
--- Name: traitement traitement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement
-    ADD CONSTRAINT traitement_pkey PRIMARY KEY (id);
-
-
---
--- Name: transmission_mere_enfant transmission_mere_enfant_id_pays_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transmission_mere_enfant
-    ADD CONSTRAINT transmission_mere_enfant_id_pays_key UNIQUE (id_pays);
-
-
---
--- Name: transmission_mere_enfant transmission_mere_enfant_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transmission_mere_enfant
-    ADD CONSTRAINT transmission_mere_enfant_pkey PRIMARY KEY (id);
-
-
---
--- Name: type_statistique type_statistique_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type_statistique
-    ADD CONSTRAINT type_statistique_pkey PRIMARY KEY (id_type_statistique);
-
-
---
--- Name: type_traitement type_traitement_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.type_traitement
-    ADD CONSTRAINT type_traitement_pkey PRIMARY KEY (id_type_traitement);
-
-
---
--- Name: unite unite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.unite
-    ADD CONSTRAINT unite_pkey PRIMARY KEY (id_unite);
-
-
---
--- Name: utilisateur utilisateur_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.utilisateur
-    ADD CONSTRAINT utilisateur_pkey PRIMARY KEY (id);
-
-
---
--- Name: utilisateur utilisateur_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.utilisateur
-    ADD CONSTRAINT utilisateur_username_key UNIQUE (username);
-
-
---
--- Name: mortalite mortalite_id_pays_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.mortalite
-    ADD CONSTRAINT mortalite_id_pays_fkey FOREIGN KEY (id_pays) REFERENCES public.pays(id_pays);
-
-
---
--- Name: mortalite mortalite_id_unite_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.mortalite
-    ADD CONSTRAINT mortalite_id_unite_fkey FOREIGN KEY (id_unite) REFERENCES public.unite(id_unite);
-
-
---
--- Name: population_hiv population_hiv_id_pays_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.population_hiv
-    ADD CONSTRAINT population_hiv_id_pays_fkey FOREIGN KEY (id_pays) REFERENCES public.pays(id_pays);
-
-
---
--- Name: population_hiv population_hiv_id_unite_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.population_hiv
-    ADD CONSTRAINT population_hiv_id_unite_fkey FOREIGN KEY (id_unite) REFERENCES public.unite(id_unite);
-
-
---
--- Name: statistique statistique_id_pays_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique
-    ADD CONSTRAINT statistique_id_pays_fkey FOREIGN KEY (id_pays) REFERENCES public.pays(id_pays);
-
-
---
--- Name: statistique statistique_id_type_statistique_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique
-    ADD CONSTRAINT statistique_id_type_statistique_fkey FOREIGN KEY (id_type_statistique) REFERENCES public.type_statistique(id_type_statistique);
-
-
---
--- Name: statistique statistique_id_unite_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.statistique
-    ADD CONSTRAINT statistique_id_unite_fkey FOREIGN KEY (id_unite) REFERENCES public.unite(id_unite);
-
-
---
--- Name: traitement traitement_id_pays_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement
-    ADD CONSTRAINT traitement_id_pays_fkey FOREIGN KEY (id_pays) REFERENCES public.pays(id_pays);
-
-
---
--- Name: traitement traitement_id_type_traitement_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement
-    ADD CONSTRAINT traitement_id_type_traitement_fkey FOREIGN KEY (id_type_traitement) REFERENCES public.type_traitement(id_type_traitement);
-
-
---
--- Name: traitement traitement_id_unite_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.traitement
-    ADD CONSTRAINT traitement_id_unite_fkey FOREIGN KEY (id_unite) REFERENCES public.unite(id_unite);
-
-
---
--- Name: transmission_mere_enfant transmission_mere_enfant_id_pays_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transmission_mere_enfant
-    ADD CONSTRAINT transmission_mere_enfant_id_pays_fkey FOREIGN KEY (id_pays) REFERENCES public.pays(id_pays);
-
-
---
--- Name: transmission_mere_enfant transmission_mere_enfant_id_unite_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.transmission_mere_enfant
-    ADD CONSTRAINT transmission_mere_enfant_id_unite_fkey FOREIGN KEY (id_unite) REFERENCES public.unite(id_unite);
-
-
---
--- PostgreSQL database dump complete
---
-
+-- Index pour optimiser les performances
+CREATE INDEX idx_pays_pays ON pays(pays);
+CREATE INDEX idx_population_hiv_pays ON population_hiv(id_pays);
+CREATE INDEX idx_population_hiv_annee ON population_hiv(annee);
+CREATE INDEX idx_mortalite_pays ON mortalite(id_pays);
+CREATE INDEX idx_mortalite_annee ON mortalite(annee);
+CREATE INDEX idx_transmission_pays ON transmission_mere_enfant(id_pays);
+CREATE INDEX idx_traitement_pays ON traitement(id_pays);
+CREATE INDEX idx_statistique_pays ON statistique(id_pays);
+CREATE INDEX idx_statistique_annee ON statistique(annee);
+CREATE INDEX idx_utilisateur_username ON utilisateur(username);
+
+
+
+-- Donnees pour la table pays
+INSERT INTO pays (id_pays, pays, region_who) VALUES (1, 'afghanistan', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (2, 'albania', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (3, 'algeria', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (4, 'angola', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (5, 'argentina', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (6, 'armenia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (7, 'australia', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (8, 'austria', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (9, 'azerbaijan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (10, 'bahamas', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (11, 'bahrain', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (12, 'bangladesh', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (13, 'barbados', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (14, 'belarus', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (15, 'belgium', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (16, 'belize', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (17, 'benin', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (18, 'bhutan', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (19, 'bolivia (plurinational state of)', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (20, 'bosnia and herzegovina', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (21, 'botswana', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (22, 'brazil', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (23, 'brunei darussalam', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (24, 'bulgaria', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (25, 'burkina faso', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (26, 'burundi', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (27, 'cabo verde', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (28, 'cambodia', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (29, 'cameroon', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (30, 'canada', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (31, 'central african republic', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (32, 'chad', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (33, 'chile', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (34, 'china', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (35, 'colombia', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (36, 'comoros', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (37, 'congo', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (38, 'costa rica', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (39, 'côte d''ivoire', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (40, 'croatia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (41, 'cuba', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (42, 'cyprus', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (43, 'czechia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (44, 'democratic people''s republic of korea', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (45, 'democratic republic of the congo', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (46, 'denmark', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (47, 'djibouti', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (48, 'dominican republic', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (49, 'ecuador', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (50, 'egypt', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (51, 'el salvador', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (52, 'equatorial guinea', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (53, 'eritrea', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (54, 'estonia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (55, 'eswatini', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (56, 'ethiopia', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (57, 'fiji', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (58, 'finland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (59, 'france', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (60, 'gabon', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (61, 'gambia', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (62, 'georgia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (63, 'germany', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (64, 'ghana', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (65, 'greece', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (66, 'guatemala', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (67, 'guinea', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (68, 'guinea-bissau', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (69, 'guyana', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (70, 'haiti', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (71, 'honduras', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (72, 'hungary', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (73, 'iceland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (74, 'india', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (75, 'indonesia', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (76, 'iran (islamic republic of)', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (77, 'ireland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (78, 'israel', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (79, 'italy', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (80, 'jamaica', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (81, 'japan', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (82, 'jordan', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (83, 'kazakhstan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (84, 'kenya', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (85, 'kuwait', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (86, 'kyrgyzstan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (87, 'lao people''s democratic republic', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (88, 'latvia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (89, 'lebanon', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (90, 'lesotho', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (91, 'liberia', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (92, 'libya', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (93, 'lithuania', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (94, 'luxembourg', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (95, 'madagascar', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (96, 'malawi', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (97, 'malaysia', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (98, 'maldives', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (99, 'mali', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (100, 'malta', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (101, 'mauritania', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (102, 'mauritius', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (103, 'mexico', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (104, 'mongolia', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (105, 'montenegro', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (106, 'morocco', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (107, 'mozambique', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (108, 'myanmar', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (109, 'namibia', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (110, 'nepal', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (111, 'netherlands', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (112, 'new zealand', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (113, 'nicaragua', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (114, 'niger', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (115, 'nigeria', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (116, 'norway', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (117, 'oman', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (118, 'pakistan', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (119, 'panama', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (120, 'papua new guinea', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (121, 'paraguay', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (122, 'peru', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (123, 'philippines', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (124, 'poland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (125, 'portugal', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (126, 'qatar', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (127, 'republic of korea', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (128, 'republic of moldova', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (129, 'republic of north macedonia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (130, 'romania', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (131, 'russian federation', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (132, 'rwanda', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (133, 'saudi arabia', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (134, 'senegal', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (135, 'serbia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (136, 'sierra leone', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (137, 'singapore', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (138, 'slovakia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (139, 'slovenia', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (140, 'somalia', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (141, 'south africa', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (142, 'south sudan', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (143, 'spain', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (144, 'sri lanka', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (145, 'sudan', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (146, 'suriname', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (147, 'sweden', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (148, 'switzerland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (149, 'syrian arab republic', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (150, 'tajikistan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (151, 'thailand', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (152, 'timor-leste', 'south-east asia');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (153, 'togo', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (154, 'trinidad and tobago', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (155, 'tunisia', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (156, 'turkey', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (157, 'turkmenistan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (158, 'uganda', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (159, 'ukraine', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (160, 'united arab emirates', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (161, 'united kingdom of great britain and northern ireland', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (162, 'united republic of tanzania', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (163, 'united states of america', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (164, 'uruguay', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (165, 'uzbekistan', 'europe');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (166, 'venezuela (bolivarian republic of)', 'americas');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (167, 'viet nam', 'western pacific');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (168, 'yemen', 'eastern mediterranean');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (169, 'zambia', 'africa');
+INSERT INTO pays (id_pays, pays, region_who) VALUES (170, 'zimbabwe', 'africa');
+
+
+-- Donnees pour la table unite
+INSERT INTO unite (id_unite, unite) VALUES (1, 'nombre de personnes');
+INSERT INTO unite (id_unite, unite) VALUES (2, 'pourcentage');
+INSERT INTO unite (id_unite, unite) VALUES (3, 'ratio');
+INSERT INTO unite (id_unite, unite) VALUES (4, 'année');
+
+
+-- Donnees pour la table type_statistique
+INSERT INTO type_statistique (id_type_statistique, nom_type_statistique) VALUES (1, 'taux de prévalence');
+INSERT INTO type_statistique (id_type_statistique, nom_type_statistique) VALUES (2, 'taux de mortalité');
+INSERT INTO type_statistique (id_type_statistique, nom_type_statistique) VALUES (3, 'taux de transmission mère-enfant');
+INSERT INTO type_statistique (id_type_statistique, nom_type_statistique) VALUES (4, 'taux de couverture traitement');
+INSERT INTO type_statistique (id_type_statistique, nom_type_statistique) VALUES (5, 'taux de nouvelles infections');
+
+
+-- Donnees pour la table type_traitement
+INSERT INTO type_traitement (id_type_traitement, nom_type_traitement) VALUES (1, 'traitement adulte');
+INSERT INTO type_traitement (id_type_traitement, nom_type_traitement) VALUES (2, 'traitement pédiatrique');
+INSERT INTO type_traitement (id_type_traitement, nom_type_traitement) VALUES (3, 'traitement prévention transmission');
+
+
+-- Donnees pour la table population_hiv
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (1, 1, 2018, 7200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (2, 3, 2018, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (3, 4, 2018, 330000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (4, 5, 2018, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (5, 6, 2018, 3500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (6, 7, 2018, 28000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (7, 10, 2018, 6000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (8, 12, 2018, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (9, 13, 2018, 3000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (10, 14, 2018, 27000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (11, 16, 2018, 4900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (12, 17, 2018, 73000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (13, 18, 2018, 1300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (14, 19, 2018, 22000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (15, 20, 2018, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (16, 21, 2018, 370000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (17, 22, 2018, 900000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (18, 24, 2018, 3500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (19, 25, 2018, 96000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (20, 26, 2018, 82000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (21, 27, 2018, 2400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (22, 28, 2018, 73000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (23, 29, 2018, 540000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (24, 31, 2018, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (25, 32, 2018, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (26, 33, 2018, 71000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (27, 35, 2018, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (28, 36, 2018, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (29, 37, 2018, 89000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (30, 38, 2018, 15000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (31, 39, 2018, 460000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (32, 40, 2018, 1600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (33, 41, 2018, 31000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (34, 43, 2018, 4400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (35, 45, 2018, 450000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (36, 46, 2018, 6200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (37, 47, 2018, 8800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (38, 48, 2018, 70000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (39, 49, 2018, 44000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (40, 50, 2018, 22000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (41, 51, 2018, 25000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (42, 52, 2018, 62000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (43, 53, 2018, 18000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (44, 54, 2018, 7400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (45, 55, 2018, 210000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (46, 56, 2018, 690000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (47, 58, 2018, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (48, 59, 2018, 180000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (49, 60, 2018, 53000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (50, 61, 2018, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (51, 62, 2018, 9400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (52, 63, 2018, 87000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (53, 64, 2018, 330000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (54, 66, 2018, 47000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (55, 67, 2018, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (56, 68, 2018, 44000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (57, 69, 2018, 8200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (58, 70, 2018, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (59, 71, 2018, 23000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (60, 72, 2018, 3700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (61, 73, 2018, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (62, 75, 2018, 640000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (63, 76, 2018, 61000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (64, 77, 2018, 7200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (65, 78, 2018, 9000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (66, 79, 2018, 130000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (67, 80, 2018, 40000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (68, 81, 2018, 30000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (69, 82, 2018, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (70, 83, 2018, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (71, 84, 2018, 1600000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (72, 85, 2018, 640, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (73, 86, 2018, 8500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (74, 87, 2018, 12000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (75, 88, 2018, 5300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (76, 89, 2018, 2500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (77, 90, 2018, 340000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (78, 91, 2018, 39000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (79, 92, 2018, 9200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (80, 94, 2018, 1200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (81, 95, 2018, 39000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (82, 96, 2018, 1000000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (83, 97, 2018, 87000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (84, 99, 2018, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (85, 101, 2018, 5600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (86, 102, 2018, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (87, 103, 2018, 230000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (88, 104, 2018, 600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (89, 105, 2018, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (90, 106, 2018, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (91, 107, 2018, 2200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (92, 108, 2018, 240000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (93, 109, 2018, 200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (94, 110, 2018, 30000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (95, 112, 2018, 3600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (96, 113, 2018, 9400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (97, 114, 2018, 36000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (98, 115, 2018, 1900000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (99, 116, 2018, 5800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (100, 117, 2018, 3200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (101, 118, 2018, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (102, 119, 2018, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (103, 120, 2018, 45000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (104, 121, 2018, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (105, 122, 2018, 79000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (106, 123, 2018, 77000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (107, 125, 2018, 41000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (108, 128, 2018, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (109, 129, 2018, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (110, 130, 2018, 18000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (111, 132, 2018, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (112, 134, 2018, 42000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (113, 135, 2018, 3000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (114, 136, 2018, 70000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (115, 137, 2018, 7900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (116, 138, 2018, 1200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (117, 140, 2018, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (118, 141, 2018, 7700000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (119, 142, 2018, 190000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (120, 143, 2018, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (121, 144, 2018, 3500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (122, 145, 2018, 59000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (123, 146, 2018, 5600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (124, 149, 2018, 660, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (125, 150, 2018, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (126, 151, 2018, 480000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (127, 153, 2018, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (128, 155, 2018, 2800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (129, 158, 2018, 1400000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (130, 159, 2018, 240000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (131, 162, 2018, 1600000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (132, 164, 2018, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (133, 165, 2018, 52000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (134, 166, 2018, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (135, 167, 2018, 230000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (136, 168, 2018, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (137, 169, 2018, 1200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (138, 170, 2018, 1300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (139, 1, 2010, 4200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (140, 3, 2010, 7100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (141, 4, 2010, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (142, 5, 2010, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (143, 6, 2010, 3300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (144, 7, 2010, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (145, 10, 2010, 5800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (146, 12, 2010, 7700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (147, 13, 2010, 2300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (148, 14, 2010, 12000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (149, 16, 2010, 3700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (150, 17, 2010, 61000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (151, 18, 2010, 1300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (152, 19, 2010, 23000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (153, 20, 2010, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (154, 21, 2010, 340000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (155, 22, 2010, 670000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (156, 24, 2010, 1700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (157, 25, 2010, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (158, 26, 2010, 93000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (159, 27, 2010, 2100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (160, 28, 2010, 79000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (161, 29, 2010, 520000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (162, 31, 2010, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (163, 32, 2010, 99000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (164, 33, 2010, 39000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (165, 35, 2010, 130000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (166, 36, 2010, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (167, 37, 2010, 82000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (168, 38, 2010, 9300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (169, 39, 2010, 480000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (170, 40, 2010, 1000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (171, 41, 2010, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (172, 43, 2010, 1800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (173, 45, 2010, 480000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (174, 46, 2010, 5500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (175, 47, 2010, 9400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (176, 48, 2010, 72000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (177, 49, 2010, 34000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (178, 50, 2010, 6800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (179, 51, 2010, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (180, 52, 2010, 35000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (181, 53, 2010, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (182, 54, 2010, 6000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (183, 55, 2010, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (184, 56, 2010, 630000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (185, 58, 2010, 2700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (186, 59, 2010, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (187, 60, 2010, 43000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (188, 61, 2010, 18000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (189, 62, 2010, 5600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (190, 63, 2010, 69000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (191, 64, 2010, 300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (192, 66, 2010, 49000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (193, 67, 2010, 100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (194, 68, 2010, 38000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (195, 69, 2010, 6700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (196, 70, 2010, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (197, 71, 2010, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (198, 72, 2010, 2000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (199, 73, 2010, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (200, 75, 2010, 510000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (201, 76, 2010, 50000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (202, 77, 2010, 4800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (203, 78, 2010, 6000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (204, 79, 2010, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (205, 80, 2010, 37000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (206, 81, 2010, 19000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (207, 82, 2010, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (208, 83, 2010, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (209, 84, 2010, 1500000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (210, 85, 2010, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (211, 86, 2010, 4100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (212, 87, 2010, 9900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (213, 88, 2010, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (214, 89, 2010, 1600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (215, 90, 2010, 300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (216, 91, 2010, 41000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (217, 92, 2010, 6100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (218, 94, 2010, 700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (219, 95, 2010, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (220, 96, 2010, 870000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (221, 97, 2010, 74000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (222, 99, 2010, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (223, 101, 2010, 7100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (224, 102, 2010, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (225, 103, 2010, 180000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (226, 104, 2010, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (227, 105, 2010, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (228, 106, 2010, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (229, 107, 2010, 1600000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (230, 108, 2010, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (231, 109, 2010, 170000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (232, 110, 2010, 31000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (233, 111, 2010, 20000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (234, 112, 2010, 2500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (235, 113, 2010, 7900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (236, 114, 2010, 37000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (237, 115, 2010, 1500000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (238, 116, 2010, 4200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (239, 117, 2010, 2200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (240, 118, 2010, 67000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (241, 119, 2010, 20000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (242, 120, 2010, 38000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (243, 121, 2010, 20000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (244, 122, 2010, 65000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (245, 123, 2010, 15000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (246, 125, 2010, 40000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (247, 128, 2010, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (248, 129, 2010, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (249, 130, 2010, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (250, 132, 2010, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (251, 134, 2010, 44000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (252, 135, 2010, 1800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (253, 136, 2010, 58000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (254, 137, 2010, 6500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (255, 138, 2010, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (256, 140, 2010, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (257, 141, 2010, 6100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (258, 142, 2010, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (259, 143, 2010, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (260, 144, 2010, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (261, 145, 2010, 43000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (262, 146, 2010, 4600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (263, 149, 2010, 570, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (264, 150, 2010, 9200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (265, 151, 2010, 580000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (266, 153, 2010, 100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (267, 155, 2010, 1400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (268, 158, 2010, 1200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (269, 159, 2010, 230000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (270, 162, 2010, 1300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (271, 163, 2010, 990000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (272, 164, 2010, 9600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (273, 165, 2010, 30000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (274, 167, 2010, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (275, 168, 2010, 5100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (276, 169, 2010, 1000000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (277, 170, 2010, 1200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (278, 1, 2005, 2900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (279, 3, 2005, 3700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (280, 4, 2005, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (281, 5, 2005, 85000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (282, 6, 2005, 2700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (283, 7, 2005, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (284, 10, 2005, 5100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (285, 12, 2005, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (286, 13, 2005, 1700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (287, 14, 2005, 5400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (288, 16, 2005, 2800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (289, 17, 2005, 56000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (290, 18, 2005, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (291, 19, 2005, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (292, 20, 2005, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (293, 21, 2005, 310000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (294, 22, 2005, 550000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (295, 24, 2005, 980, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (296, 25, 2005, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (297, 26, 2005, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (298, 27, 2005, 1800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (299, 28, 2005, 82000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (300, 29, 2005, 470000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (301, 31, 2005, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (302, 32, 2005, 88000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (303, 33, 2005, 25000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (304, 35, 2005, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (305, 36, 2005, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (306, 37, 2005, 77000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (307, 38, 2005, 6500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (308, 39, 2005, 510000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (309, 40, 2005, 710, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (310, 41, 2005, 9000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (311, 43, 2005, 970, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (312, 45, 2005, 510000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (313, 46, 2005, 4900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (314, 47, 2005, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (315, 48, 2005, 79000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (316, 49, 2005, 29000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (317, 50, 2005, 3200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (318, 51, 2005, 23000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (319, 52, 2005, 22000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (320, 53, 2005, 17000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (321, 54, 2005, 5400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (322, 55, 2005, 130000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (323, 56, 2005, 640000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (324, 58, 2005, 1900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (325, 59, 2005, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (326, 60, 2005, 35000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (327, 61, 2005, 15000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (328, 62, 2005, 2800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (329, 63, 2005, 56000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (330, 64, 2005, 280000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (331, 66, 2005, 48000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (332, 67, 2005, 93000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (333, 68, 2005, 31000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (334, 69, 2005, 5000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (335, 70, 2005, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (336, 71, 2005, 31000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (337, 72, 2005, 1200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (338, 73, 2005, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (339, 75, 2005, 290000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (340, 76, 2005, 37000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (341, 77, 2005, 3200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (342, 78, 2005, 4100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (343, 79, 2005, 89000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (344, 80, 2005, 38000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (345, 81, 2005, 12000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (346, 82, 2005, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (347, 83, 2005, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (348, 84, 2005, 1500000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (349, 85, 2005, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (350, 86, 2005, 1500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (351, 87, 2005, 6700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (352, 88, 2005, 3200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (353, 89, 2005, 1300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (354, 90, 2005, 280000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (355, 91, 2005, 41000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (356, 92, 2005, 2900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (357, 94, 2005, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (358, 95, 2005, 19000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (359, 96, 2005, 820000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (360, 97, 2005, 66000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (361, 99, 2005, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (362, 101, 2005, 7500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (363, 102, 2005, 8000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (364, 103, 2005, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (365, 104, 2005, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (366, 105, 2005, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (367, 106, 2005, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (368, 107, 2005, 1200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (369, 108, 2005, 210000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (370, 109, 2005, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (371, 110, 2005, 29000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (372, 111, 2005, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (373, 112, 2005, 1800, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (374, 113, 2005, 6100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (375, 114, 2005, 40000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (376, 115, 2005, 1400000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (377, 116, 2005, 3000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (378, 117, 2005, 1700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (379, 118, 2005, 12000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (380, 119, 2005, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (381, 120, 2005, 38000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (382, 121, 2005, 19000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (383, 122, 2005, 65000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (384, 123, 2005, 3700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (385, 125, 2005, 37000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (386, 128, 2005, 12000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (387, 129, 2005, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (388, 130, 2005, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (389, 132, 2005, 220000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (390, 134, 2005, 42000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (391, 135, 2005, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (392, 136, 2005, 51000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (393, 137, 2005, 4100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (394, 138, 2005, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (395, 140, 2005, 20000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (396, 141, 2005, 5000000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (397, 142, 2005, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (398, 143, 2005, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (399, 144, 2005, 3600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (400, 145, 2005, 29000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (401, 146, 2005, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (402, 149, 2005, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (403, 150, 2005, 5200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (404, 151, 2005, 630000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (405, 153, 2005, 100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (406, 155, 2005, 640, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (407, 158, 2005, 1100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (408, 159, 2005, 230000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (409, 162, 2005, 1200000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (410, 164, 2005, 7600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (411, 165, 2005, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (412, 167, 2005, 180000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (413, 168, 2005, 2400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (414, 169, 2005, 920000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (415, 170, 2005, 1400000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (416, 1, 2000, 1600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (417, 3, 2000, 1900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (418, 4, 2000, 87000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (419, 5, 2000, 64000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (420, 6, 2000, 950, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (421, 7, 2000, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (422, 10, 2000, 5100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (423, 12, 2000, 940, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (424, 13, 2000, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (425, 14, 2000, 1400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (426, 16, 2000, 1700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (427, 17, 2000, 47000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (428, 18, 2000, 530, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (429, 19, 2000, 21000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (430, 20, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (431, 21, 2000, 280000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (432, 22, 2000, 410000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (433, 24, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (434, 25, 2000, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (435, 26, 2000, 130000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (436, 27, 2000, 1600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (437, 28, 2000, 81000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (438, 29, 2000, 370000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (439, 31, 2000, 160000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (440, 32, 2000, 80000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (441, 33, 2000, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (442, 35, 2000, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (443, 36, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (444, 37, 2000, 80000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (445, 38, 2000, 4300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (446, 39, 2000, 590000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (447, 40, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (448, 41, 2000, 4100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (449, 43, 2000, 510, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (450, 45, 2000, 540000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (451, 46, 2000, 4000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (452, 47, 2000, 9400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (453, 48, 2000, 85000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (454, 49, 2000, 26000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (455, 50, 2000, 1500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (456, 51, 2000, 18000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (457, 52, 2000, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (458, 53, 2000, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (459, 54, 2000, 3400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (460, 55, 2000, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (461, 56, 2000, 750000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (462, 58, 2000, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (463, 59, 2000, 82000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (464, 60, 2000, 28000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (465, 61, 2000, 9900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (466, 62, 2000, 980, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (467, 63, 2000, 45000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (468, 64, 2000, 270000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (469, 66, 2000, 44000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (470, 67, 2000, 83000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (471, 68, 2000, 22000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (472, 69, 2000, 2300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (473, 70, 2000, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (474, 71, 2000, 40000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (475, 72, 2000, 830, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (476, 73, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (477, 75, 2000, 80000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (478, 76, 2000, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (479, 77, 2000, 1900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (480, 78, 2000, 2700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (481, 79, 2000, 68000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (482, 80, 2000, 41000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (483, 81, 2000, 6200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (484, 82, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (485, 83, 2000, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (486, 84, 2000, 1700000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (487, 85, 2000, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (488, 86, 2000, 710, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (489, 87, 2000, 2200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (490, 88, 2000, 2300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (491, 89, 2000, 910, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (492, 90, 2000, 260000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (493, 91, 2000, 43000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (494, 92, 2000, 950, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (495, 94, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (496, 95, 2000, 13000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (497, 96, 2000, 810000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (498, 97, 2000, 55000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (499, 99, 2000, 110000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (500, 101, 2000, 5500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (501, 102, 2000, 3200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (502, 103, 2000, 130000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (503, 104, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (504, 105, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (505, 106, 2000, 9700, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (506, 107, 2000, 840000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (507, 108, 2000, 150000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (508, 109, 2000, 140000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (509, 110, 2000, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (510, 111, 2000, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (511, 112, 2000, 1300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (512, 113, 2000, 3600, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (513, 114, 2000, 37000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (514, 115, 2000, 1300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (515, 116, 2000, 1900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (516, 117, 2000, 1300, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (517, 118, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (518, 119, 2000, 11000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (519, 120, 2000, 20000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (520, 121, 2000, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (521, 122, 2000, 71000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (522, 123, 2000, 1000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (523, 125, 2000, 32000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (524, 128, 2000, 10000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (525, 129, 2000, 100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (526, 130, 2000, 7500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (527, 132, 2000, 240000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (528, 134, 2000, 33000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (529, 135, 2000, 1000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (530, 136, 2000, 40000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (531, 137, 2000, 2900, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (532, 138, 2000, 200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (533, 140, 2000, 16000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (534, 141, 2000, 3300000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (535, 142, 2000, 90000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (536, 143, 2000, 92000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (537, 144, 2000, 2200, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (538, 145, 2000, 15000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (539, 146, 2000, 3100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (540, 149, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (541, 150, 2000, 1400, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (542, 151, 2000, 740000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (543, 153, 2000, 94000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (544, 155, 2000, 500, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (545, 158, 2000, 1000000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (546, 159, 2000, 170000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (547, 162, 2000, 1100000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (548, 164, 2000, 6000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (549, 165, 2000, 14000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (550, 167, 2000, 120000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (551, 168, 2000, 1100, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (552, 169, 2000, 890000, 1);
+INSERT INTO population_hiv (id, id_pays, annee, valeur, id_unite) VALUES (553, 170, 2000, 1600000, 1);
+
+
+-- Donnees pour la table mortalite
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (1, 1, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (2, 3, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (3, 4, 2018, 14000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (4, 5, 2018, 1700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (5, 6, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (6, 7, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (7, 10, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (8, 12, 2018, 580, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (9, 13, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (10, 14, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (11, 16, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (12, 17, 2018, 2200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (13, 18, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (14, 19, 2018, 670, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (15, 20, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (16, 21, 2018, 4800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (17, 22, 2018, 15000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (18, 24, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (19, 25, 2018, 3300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (20, 26, 2018, 1900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (21, 27, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (22, 28, 2018, 1300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (23, 29, 2018, 18000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (24, 31, 2018, 4800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (25, 32, 2018, 3100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (26, 33, 2018, 590, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (27, 36, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (28, 37, 2018, 4000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (29, 38, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (30, 39, 2018, 16000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (31, 40, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (32, 41, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (33, 43, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (34, 45, 2018, 13000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (35, 46, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (36, 47, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (37, 48, 2018, 1200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (38, 49, 2018, 620, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (39, 50, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (40, 51, 2018, 700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (41, 52, 2018, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (42, 53, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (43, 54, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (44, 55, 2018, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (45, 56, 2018, 11000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (46, 58, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (47, 59, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (48, 60, 2018, 1200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (49, 61, 2018, 980, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (50, 62, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (51, 63, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (52, 64, 2018, 14000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (53, 66, 2018, 2200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (54, 67, 2018, 4300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (55, 68, 2018, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (56, 69, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (57, 70, 2018, 2700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (58, 71, 2018, 780, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (59, 72, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (60, 73, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (61, 75, 2018, 38000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (62, 76, 2018, 2600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (63, 77, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (64, 78, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (65, 79, 2018, 710, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (66, 80, 2018, 1500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (67, 82, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (68, 83, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (69, 84, 2018, 25000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (70, 85, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (71, 86, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (72, 87, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (73, 88, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (74, 89, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (75, 90, 2018, 6100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (76, 91, 2018, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (77, 92, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (78, 94, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (79, 95, 2018, 1700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (80, 96, 2018, 13000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (81, 97, 2018, 2600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (82, 99, 2018, 6500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (83, 101, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (84, 102, 2018, 610, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (85, 104, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (86, 105, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (87, 106, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (88, 107, 2018, 54000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (89, 108, 2018, 7800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (90, 109, 2018, 2700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (91, 110, 2018, 910, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (92, 112, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (93, 113, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (94, 114, 2018, 1200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (95, 115, 2018, 53000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (96, 116, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (97, 117, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (98, 118, 2018, 6400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (99, 119, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (100, 121, 2018, 720, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (101, 122, 2018, 1000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (102, 123, 2018, 1200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (103, 125, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (104, 128, 2018, 570, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (105, 129, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (106, 130, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (107, 132, 2018, 2900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (108, 134, 2018, 1300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (109, 135, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (110, 136, 2018, 2100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (111, 137, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (112, 138, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (113, 139, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (114, 140, 2018, 710, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (115, 141, 2018, 71000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (116, 142, 2018, 9900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (117, 144, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (118, 145, 2018, 2900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (119, 146, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (120, 149, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (121, 150, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (122, 151, 2018, 18000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (123, 153, 2018, 3800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (124, 155, 2018, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (125, 158, 2018, 23000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (126, 159, 2018, 6100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (127, 162, 2018, 24000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (128, 164, 2018, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (129, 165, 2018, 1300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (130, 167, 2018, 4700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (131, 168, 2018, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (132, 169, 2018, 17000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (133, 170, 2018, 22000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (134, 1, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (135, 3, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (136, 4, 2010, 10000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (137, 5, 2010, 1600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (138, 6, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (139, 7, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (140, 10, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (141, 12, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (142, 13, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (143, 14, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (144, 16, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (145, 17, 2010, 2000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (146, 18, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (147, 19, 2010, 1600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (148, 20, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (149, 21, 2010, 7300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (150, 22, 2010, 15000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (151, 24, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (152, 25, 2010, 4800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (153, 26, 2010, 5200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (154, 27, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (155, 28, 2010, 2500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (156, 29, 2010, 22000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (157, 31, 2010, 7800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (158, 32, 2010, 3500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (159, 36, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (160, 37, 2010, 3900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (161, 38, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (162, 39, 2010, 24000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (163, 40, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (164, 41, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (165, 43, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (166, 45, 2010, 34000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (167, 46, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (168, 47, 2010, 630, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (169, 48, 2010, 3000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (170, 49, 2010, 1100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (171, 50, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (172, 51, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (173, 52, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (174, 53, 2010, 620, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (175, 54, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (176, 55, 2010, 3800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (177, 56, 2010, 20000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (178, 58, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (179, 59, 2010, 600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (180, 60, 2010, 1600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (181, 61, 2010, 970, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (182, 62, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (183, 63, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (184, 64, 2010, 17000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (185, 66, 2010, 1700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (186, 67, 2010, 4100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (187, 68, 2010, 1900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (188, 69, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (189, 70, 2010, 4900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (190, 71, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (191, 72, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (192, 73, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (193, 75, 2010, 24000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (194, 76, 2010, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (195, 77, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (196, 78, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (197, 79, 2010, 830, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (198, 80, 2010, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (199, 82, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (200, 83, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (201, 84, 2010, 56000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (202, 85, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (203, 86, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (204, 87, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (205, 88, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (206, 89, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (207, 90, 2010, 7200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (208, 91, 2010, 2700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (209, 92, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (210, 94, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (211, 95, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (212, 96, 2010, 29000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (213, 97, 2010, 2900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (214, 99, 2010, 5300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (215, 101, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (216, 102, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (217, 104, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (218, 105, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (219, 106, 2010, 550, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (220, 107, 2010, 64000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (221, 108, 2010, 11000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (222, 109, 2010, 3500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (223, 110, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (224, 111, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (225, 112, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (226, 113, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (227, 114, 2010, 1700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (228, 115, 2010, 72000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (229, 116, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (230, 117, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (231, 118, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (232, 119, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (233, 121, 2010, 790, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (234, 122, 2010, 2100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (235, 123, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (236, 125, 2010, 930, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (237, 128, 2010, 740, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (238, 129, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (239, 130, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (240, 132, 2010, 5700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (241, 134, 2010, 1300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (242, 135, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (243, 136, 2010, 2900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (244, 137, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (245, 138, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (246, 139, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (247, 140, 2010, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (248, 141, 2010, 140000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (249, 142, 2010, 9800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (250, 143, 2010, 1300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (251, 144, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (252, 145, 2010, 1900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (253, 146, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (254, 149, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (255, 150, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (256, 151, 2010, 27000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (257, 153, 2010, 5700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (258, 155, 2010, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (259, 158, 2010, 56000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (260, 159, 2010, 12000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (261, 162, 2010, 48000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (262, 164, 2010, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (263, 165, 2010, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (264, 167, 2010, 8500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (265, 168, 2010, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (266, 169, 2010, 26000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (267, 170, 2010, 54000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (268, 1, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (269, 3, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (270, 4, 2000, 4800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (271, 5, 2000, 1400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (272, 6, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (273, 7, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (274, 10, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (275, 12, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (276, 13, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (277, 14, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (278, 16, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (279, 17, 2000, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (280, 18, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (281, 19, 2000, 670, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (282, 20, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (283, 21, 2000, 15000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (284, 22, 2000, 15000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (285, 24, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (286, 25, 2000, 12000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (287, 26, 2000, 11000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (288, 27, 2000, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (289, 28, 2000, 4500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (290, 29, 2000, 19000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (291, 31, 2000, 11000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (292, 32, 2000, 5600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (293, 36, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (294, 37, 2000, 6100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (295, 38, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (296, 39, 2000, 44000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (297, 40, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (298, 41, 2000, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (299, 43, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (300, 45, 2000, 43000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (301, 46, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (302, 47, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (303, 48, 2000, 4800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (304, 49, 2000, 1500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (305, 50, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (306, 51, 2000, 810, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (307, 52, 2000, 680, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (308, 53, 2000, 1100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (309, 54, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (310, 55, 2000, 5000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (311, 56, 2000, 58000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (312, 58, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (313, 59, 2000, 880, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (314, 60, 2000, 1600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (315, 61, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (316, 62, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (317, 63, 2000, 880, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (318, 64, 2000, 18000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (319, 66, 2000, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (320, 67, 2000, 5000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (321, 68, 2000, 1100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (322, 69, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (323, 70, 2000, 12000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (324, 71, 2000, 3200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (325, 72, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (326, 73, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (327, 75, 2000, 1900, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (328, 76, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (329, 77, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (330, 78, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (331, 79, 2000, 1200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (332, 80, 2000, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (333, 82, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (334, 83, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (335, 84, 2000, 120000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (336, 85, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (337, 86, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (338, 87, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (339, 88, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (340, 89, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (341, 90, 2000, 12000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (342, 91, 2000, 3000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (343, 92, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (344, 94, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (345, 95, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (346, 96, 2000, 57000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (347, 97, 2000, 2700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (348, 99, 2000, 7700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (349, 101, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (350, 102, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (351, 104, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (352, 105, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (353, 106, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (354, 107, 2000, 40000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (355, 108, 2000, 5800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (356, 109, 2000, 7300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (357, 110, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (358, 111, 2000, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (359, 112, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (360, 113, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (361, 114, 2000, 2300, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (362, 115, 2000, 78000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (363, 116, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (364, 117, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (365, 118, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (366, 119, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (367, 121, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (368, 122, 2000, 5100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (369, 123, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (370, 125, 2000, 1100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (371, 128, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (372, 129, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (373, 130, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (374, 132, 2000, 18000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (375, 134, 2000, 1700, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (376, 135, 2000, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (377, 136, 2000, 2400, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (378, 138, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (379, 139, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (380, 140, 2000, 810, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (381, 141, 2000, 100000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (382, 142, 2000, 5100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (383, 143, 2000, 1800, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (384, 144, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (385, 145, 2000, 650, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (386, 146, 2000, 200, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (387, 149, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (388, 150, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (389, 151, 2000, 54000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (390, 153, 2000, 5600, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (391, 155, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (392, 158, 2000, 85000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (393, 159, 2000, 4500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (394, 162, 2000, 80000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (395, 164, 2000, 500, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (396, 165, 2000, 840, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (397, 167, 2000, 6100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (398, 168, 2000, 100, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (399, 169, 2000, 62000, 1);
+INSERT INTO mortalite (id, id_pays, annee, valeur, id_unite) VALUES (400, 170, 2000, 120000, 1);
+
+
+-- Donnees pour la table transmission_mere_enfant
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (1, 1, 100, 200, 500, 7, 11, 18);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (2, 3, 500, 500, 500, 69, 74, 78);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (3, 4, 19000, 25000, 32000, 29, 38, 48);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (4, 5, 1600, 1800, 2000, 85, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (5, 7, 100, 100, 100, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (6, 10, 100, 100, 200, 51, 58, 65);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (7, 12, 200, 200, 200, 24, 28, 33);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (8, 14, 200, 500, 500, 67, 90, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (9, 16, 100, 100, 200, 39, 44, 49);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (10, 17, 1600, 2600, 4300, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (11, 19, 500, 500, 500, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (12, 21, 10000, 13000, 14000, 77, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (13, 25, 3600, 4900, 6100, 71, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (14, 26, 3800, 5000, 6000, 61, 80, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (15, 28, 600, 730, 850, 71, 85, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (16, 29, 21000, 27000, 32000, 61, 80, 94);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (17, 31, 3300, 4500, 5800, 52, 71, 91);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (18, 32, 7200, 10000, 13000, 40, 56, 72);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (19, 33, 500, 500, 500, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (20, 35, 1900, 2300, 2700, 17, 21, 25);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (21, 37, 2800, 4100, 5800, 17, 25, 36);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (22, 39, 13000, 18000, 24000, 65, 90, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (23, 41, 200, 200, 200, 86, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (24, 45, 20000, 26000, 31000, 33, 44, 52);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (25, 47, 200, 500, 500, 22, 30, 39);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (26, 48, 690, 910, 1200, 64, 84, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (27, 49, 500, 500, 620, 68, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (28, 50, 500, 500, 500, 15, 16, 18);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (29, 51, 500, 500, 500, 33, 40, 46);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (30, 52, 1800, 2600, 3500, 35, 50, 68);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (31, 53, 500, 500, 690, 34, 48, 69);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (32, 55, 9000, 11000, 12000, 66, 79, 89);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (33, 56, 14000, 20000, 28000, 63, 92, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (34, 59, 1100, 1200, 1300, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (35, 60, 1900, 2700, 3600, 52, 72, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (36, 61, 820, 1000, 1300, 54, 68, 86);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (37, 63, 500, 500, 500, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (38, 64, 12000, 16000, 21000, 58, 79, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (39, 66, 720, 790, 870, 31, 34, 38);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (40, 67, 3800, 5100, 6600, 48, 65, 84);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (41, 68, 1700, 2100, 2500, 38, 48, 58);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (42, 69, 200, 200, 500, 67, 89, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (43, 70, 4700, 5900, 6800, 67, 83, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (44, 71, 500, 500, 500, 48, 59, 72);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (45, 75, 10000, 12000, 14000, 13, 15, 18);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (46, 76, 200, 500, 840, 41, 81, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (47, 77, 100, 100, 100, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (48, 78, 100, 100, 100, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (49, 79, 500, 500, 500, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (50, 80, 500, 500, 500, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (51, 83, 550, 610, 660, 54, 59, 65);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (52, 84, 49000, 63000, 80000, 70, 91, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (53, 86, 200, 200, 500, 69, 88, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (54, 87, 500, 500, 500, 31, 35, 41);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (55, 90, 8200, 11000, 12000, 59, 77, 89);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (56, 91, 1500, 2000, 2300, 70, 93, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (57, 92, 100, 200, 200, 56, 63, 69);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (58, 95, 820, 1100, 1600, 19, 25, 36);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (59, 96, 34000, 45000, 53000, 80, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (60, 97, 500, 500, 500, 86, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (61, 99, 8300, 10000, 13000, 19, 24, 31);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (62, 101, 200, 200, 200, 31, 38, 47);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (63, 102, 100, 100, 100, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (64, 106, 500, 500, 500, 50, 61, 78);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (65, 107, 78000, 110000, 140000, 73, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (66, 108, 4700, 5400, 6100, 69, 80, 89);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (67, 109, 8200, 10000, 12000, 92, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (68, 110, 500, 500, 500, 43, 51, 60);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (69, 113, 200, 200, 200, 73, 90, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (70, 114, 1400, 1600, 2000, 48, 58, 70);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (71, 115, 65000, 100000, 140000, 28, 44, 62);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (72, 118, 2700, 3200, 3800, 8, 10, 12);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (73, 119, 200, 500, 500, 83, 92, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (74, 120, 910, 1200, 1500, 59, 79, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (75, 121, 200, 500, 500, 60, 88, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (76, 122, 880, 1100, 1500, 67, 85, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (77, 123, 500, 500, 500, 15, 18, 22);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (78, 125, 100, 200, 200, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (79, 128, 200, 500, 500, 54, 73, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (80, 130, 200, 200, 200, 95, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (81, 132, 6000, 8100, 9400, 79, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (82, 134, 1800, 2200, 2500, 56, 65, 75);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (83, 140, 500, 500, 730, 14, 19, 31);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (84, 141, 210000, 290000, 350000, 63, 87, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (85, 142, 7200, 9900, 13000, 41, 56, 74);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (86, 143, 200, 500, 500, 0, 0, 0);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (87, 145, 760, 2000, 3700, 2, 5, 9);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (88, 146, 100, 100, 100, 84, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (89, 150, 500, 500, 560, 39, 46, 56);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (90, 151, 3200, 3900, 4500, 81, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (91, 153, 4200, 5400, 6200, 62, 80, 92);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (92, 158, 81000, 100000, 120000, 73, 93, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (93, 159, 1900, 2200, 2500, 89, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (94, 162, 62000, 83000, 98000, 70, 93, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (95, 164, 100, 200, 200, 71, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (96, 165, 1400, 1500, 1600, 33, 35, 38);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (97, 167, 2000, 2400, 2800, 69, 81, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (98, 168, 200, 500, 500, 8, 13, 20);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (99, 169, 38000, 48000, 57000, 94, 95, 95);
+INSERT INTO transmission_mere_enfant (id_transmission, id_pays, besoin_arv_min, besoin_arv_median, besoin_arv_max, pourcentage_recu_min, pourcentage_recu_median, pourcentage_recu_max) VALUES (100, 170, 48000, 63000, 76000, 71, 94, 95);
+
+
+-- Donnees pour la table traitement
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (1, 1, 13, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (2, 3, 81, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (3, 4, 27, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (4, 5, 61, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (5, 6, 53, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (6, 7, 83, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (7, 10, 52, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (8, 12, 22, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (9, 13, 50, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (10, 14, 59, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (11, 16, 28, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (12, 17, 61, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (13, 18, 37, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (14, 19, 44, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (15, 20, 67, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (16, 21, 83, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (17, 22, 66, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (18, 24, 41, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (19, 25, 62, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (20, 26, 80, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (21, 27, 89, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (22, 28, 81, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (23, 29, 52, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (24, 31, 36, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (25, 32, 51, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (26, 33, 63, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (27, 35, 73, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (28, 36, 79, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (29, 37, 35, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (30, 38, 49, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (31, 39, 55, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (32, 40, 75, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (33, 41, 72, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (34, 43, 60, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (35, 45, 57, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (36, 46, 89, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (37, 47, 30, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (38, 48, 56, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (39, 49, 57, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (40, 50, 31, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (41, 51, 47, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (42, 52, 34, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (43, 53, 51, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (44, 54, 59, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (45, 55, 86, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (46, 56, 65, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (47, 58, 76, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (48, 59, 83, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (49, 60, 67, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (50, 61, 29, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (51, 62, 49, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (52, 63, 80, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (53, 64, 34, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (54, 66, 43, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (55, 67, 40, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (56, 68, 33, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (57, 69, 68, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (58, 70, 58, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (59, 71, 50, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (60, 72, 56, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (61, 73, 79, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (62, 75, 17, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (63, 76, 20, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (64, 77, 80, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (65, 79, 91, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (66, 80, 31, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (67, 81, 80, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (68, 82, 84, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (69, 83, 58, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (70, 84, 68, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (71, 85, 62, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (72, 86, 43, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (73, 87, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (74, 88, 45, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (75, 89, 60, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (76, 90, 61, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (77, 91, 35, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (78, 92, 44, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (79, 94, 77, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (80, 95, 9, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (81, 96, 78, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (82, 97, 48, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (83, 99, 31, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (84, 101, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (85, 102, 22, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (86, 103, 70, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (87, 104, 32, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (88, 105, 40, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (89, 106, 65, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (90, 107, 56, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (91, 108, 70, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (92, 109, 92, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (93, 110, 56, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (94, 112, 73, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (95, 113, 53, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (96, 114, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (97, 115, 53, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (98, 116, 82, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (99, 117, 41, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (100, 118, 10, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (101, 119, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (102, 120, 65, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (103, 121, 40, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (104, 122, 73, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (105, 123, 44, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (106, 125, 90, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (107, 128, 34, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (108, 129, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (109, 130, 67, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (110, 132, 87, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (111, 134, 63, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (112, 135, 65, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (113, 136, 41, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (114, 137, 78, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (115, 138, 54, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (116, 140, 30, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (117, 141, 62, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (118, 142, 16, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (119, 143, 84, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (120, 144, 45, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (121, 145, 15, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (122, 146, 52, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (123, 149, 20, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (124, 150, 46, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (125, 151, 75, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (126, 153, 60, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (127, 155, 39, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (128, 158, 72, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (129, 159, 52, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (130, 162, 71, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (131, 164, 58, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (132, 165, 51, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (133, 167, 65, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (134, 168, 21, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (135, 169, 78, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (136, 170, 88, 2, 1);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (137, 1, 17, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (138, 3, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (139, 4, 13, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (140, 5, 92, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (141, 10, 21, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (142, 12, 33, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (143, 14, 88, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (144, 16, 34, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (145, 17, 44, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (146, 19, 40, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (147, 21, 38, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (148, 25, 21, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (149, 26, 30, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (150, 28, 92, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (151, 29, 24, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (152, 31, 23, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (153, 32, 16, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (154, 33, 56, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (155, 35, 41, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (156, 37, 25, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (157, 39, 40, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (158, 41, 34, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (159, 45, 25, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (160, 47, 10, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (161, 48, 55, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (162, 49, 82, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (163, 50, 39, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (164, 51, 24, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (165, 52, 14, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (166, 53, 37, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (167, 55, 76, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (168, 56, 59, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (169, 60, 57, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (170, 61, 30, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (171, 64, 20, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (172, 66, 36, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (173, 67, 20, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (174, 68, 6, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (175, 69, 38, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (176, 70, 40, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (177, 71, 41, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (178, 75, 22, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (179, 76, 58, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (180, 80, 51, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (181, 83, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (182, 84, 61, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (183, 86, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (184, 87, 40, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (185, 90, 70, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (186, 91, 18, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (187, 92, 33, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (188, 95, 5, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (189, 96, 61, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (190, 97, 94, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (191, 99, 18, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (192, 101, 54, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (193, 102, 45, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (194, 106, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (195, 107, 60, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (196, 108, 80, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (197, 109, 78, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (198, 110, 91, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (199, 113, 55, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (200, 114, 52, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (201, 115, 35, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (202, 118, 11, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (203, 119, 76, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (204, 120, 49, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (205, 121, 43, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (206, 122, 48, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (207, 123, 20, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (208, 128, 40, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (209, 130, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (210, 132, 63, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (211, 134, 31, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (212, 136, 17, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (213, 140, 14, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (214, 141, 63, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (215, 142, 9, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (216, 145, 15, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (217, 146, 72, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (218, 150, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (219, 151, 83, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (220, 153, 34, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (221, 158, 66, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (222, 159, 95, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (223, 162, 65, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (224, 164, 64, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (225, 165, 93, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (226, 167, 92, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (227, 168, 33, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (228, 169, 79, 2, 2);
+INSERT INTO traitement (id, id_pays, valeur, id_unite, id_type_traitement) VALUES (229, 170, 76, 2, 2);
+
+
+-- Donnees pour la table statistique
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1, 1, 2018, 7200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (2, 3, 2018, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (3, 4, 2018, 330000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (4, 5, 2018, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (5, 6, 2018, 3500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (6, 7, 2018, 28000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (7, 10, 2018, 6000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (8, 12, 2018, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (9, 13, 2018, 3000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (10, 14, 2018, 27000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (11, 16, 2018, 4900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (12, 17, 2018, 73000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (13, 18, 2018, 1300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (14, 19, 2018, 22000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (15, 20, 2018, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (16, 21, 2018, 370000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (17, 22, 2018, 900000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (18, 24, 2018, 3500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (19, 25, 2018, 96000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (20, 26, 2018, 82000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (21, 27, 2018, 2400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (22, 28, 2018, 73000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (23, 29, 2018, 540000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (24, 31, 2018, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (25, 32, 2018, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (26, 33, 2018, 71000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (27, 35, 2018, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (28, 36, 2018, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (29, 37, 2018, 89000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (30, 38, 2018, 15000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (31, 39, 2018, 460000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (32, 40, 2018, 1600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (33, 41, 2018, 31000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (34, 43, 2018, 4400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (35, 45, 2018, 450000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (36, 46, 2018, 6200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (37, 47, 2018, 8800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (38, 48, 2018, 70000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (39, 49, 2018, 44000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (40, 50, 2018, 22000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (41, 51, 2018, 25000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (42, 52, 2018, 62000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (43, 53, 2018, 18000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (44, 54, 2018, 7400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (45, 55, 2018, 210000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (46, 56, 2018, 690000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (47, 58, 2018, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (48, 59, 2018, 180000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (49, 60, 2018, 53000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (50, 61, 2018, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (51, 62, 2018, 9400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (52, 63, 2018, 87000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (53, 64, 2018, 330000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (54, 66, 2018, 47000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (55, 67, 2018, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (56, 68, 2018, 44000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (57, 69, 2018, 8200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (58, 70, 2018, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (59, 71, 2018, 23000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (60, 72, 2018, 3700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (61, 73, 2018, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (62, 75, 2018, 640000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (63, 76, 2018, 61000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (64, 77, 2018, 7200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (65, 78, 2018, 9000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (66, 79, 2018, 130000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (67, 80, 2018, 40000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (68, 81, 2018, 30000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (69, 82, 2018, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (70, 83, 2018, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (71, 84, 2018, 1600000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (72, 85, 2018, 640, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (73, 86, 2018, 8500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (74, 87, 2018, 12000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (75, 88, 2018, 5300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (76, 89, 2018, 2500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (77, 90, 2018, 340000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (78, 91, 2018, 39000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (79, 92, 2018, 9200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (80, 94, 2018, 1200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (81, 95, 2018, 39000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (82, 96, 2018, 1000000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (83, 97, 2018, 87000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (84, 99, 2018, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (85, 101, 2018, 5600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (86, 102, 2018, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (87, 103, 2018, 230000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (88, 104, 2018, 600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (89, 105, 2018, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (90, 106, 2018, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (91, 107, 2018, 2200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (92, 108, 2018, 240000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (93, 109, 2018, 200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (94, 110, 2018, 30000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (95, 112, 2018, 3600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (96, 113, 2018, 9400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (97, 114, 2018, 36000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (98, 115, 2018, 1900000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (99, 116, 2018, 5800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (100, 117, 2018, 3200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (101, 118, 2018, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (102, 119, 2018, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (103, 120, 2018, 45000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (104, 121, 2018, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (105, 122, 2018, 79000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (106, 123, 2018, 77000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (107, 125, 2018, 41000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (108, 128, 2018, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (109, 129, 2018, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (110, 130, 2018, 18000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (111, 132, 2018, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (112, 134, 2018, 42000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (113, 135, 2018, 3000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (114, 136, 2018, 70000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (115, 137, 2018, 7900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (116, 138, 2018, 1200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (117, 140, 2018, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (118, 141, 2018, 7700000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (119, 142, 2018, 190000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (120, 143, 2018, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (121, 144, 2018, 3500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (122, 145, 2018, 59000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (123, 146, 2018, 5600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (124, 149, 2018, 660, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (125, 150, 2018, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (126, 151, 2018, 480000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (127, 153, 2018, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (128, 155, 2018, 2800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (129, 158, 2018, 1400000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (130, 159, 2018, 240000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (131, 162, 2018, 1600000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (132, 164, 2018, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (133, 165, 2018, 52000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (134, 166, 2018, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (135, 167, 2018, 230000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (136, 168, 2018, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (137, 169, 2018, 1200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (138, 170, 2018, 1300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (139, 1, 2010, 4200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (140, 3, 2010, 7100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (141, 4, 2010, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (142, 5, 2010, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (143, 6, 2010, 3300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (144, 7, 2010, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (145, 10, 2010, 5800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (146, 12, 2010, 7700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (147, 13, 2010, 2300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (148, 14, 2010, 12000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (149, 16, 2010, 3700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (150, 17, 2010, 61000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (151, 18, 2010, 1300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (152, 19, 2010, 23000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (153, 20, 2010, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (154, 21, 2010, 340000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (155, 22, 2010, 670000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (156, 24, 2010, 1700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (157, 25, 2010, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (158, 26, 2010, 93000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (159, 27, 2010, 2100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (160, 28, 2010, 79000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (161, 29, 2010, 520000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (162, 31, 2010, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (163, 32, 2010, 99000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (164, 33, 2010, 39000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (165, 35, 2010, 130000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (166, 36, 2010, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (167, 37, 2010, 82000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (168, 38, 2010, 9300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (169, 39, 2010, 480000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (170, 40, 2010, 1000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (171, 41, 2010, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (172, 43, 2010, 1800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (173, 45, 2010, 480000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (174, 46, 2010, 5500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (175, 47, 2010, 9400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (176, 48, 2010, 72000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (177, 49, 2010, 34000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (178, 50, 2010, 6800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (179, 51, 2010, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (180, 52, 2010, 35000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (181, 53, 2010, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (182, 54, 2010, 6000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (183, 55, 2010, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (184, 56, 2010, 630000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (185, 58, 2010, 2700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (186, 59, 2010, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (187, 60, 2010, 43000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (188, 61, 2010, 18000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (189, 62, 2010, 5600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (190, 63, 2010, 69000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (191, 64, 2010, 300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (192, 66, 2010, 49000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (193, 67, 2010, 100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (194, 68, 2010, 38000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (195, 69, 2010, 6700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (196, 70, 2010, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (197, 71, 2010, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (198, 72, 2010, 2000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (199, 73, 2010, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (200, 75, 2010, 510000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (201, 76, 2010, 50000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (202, 77, 2010, 4800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (203, 78, 2010, 6000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (204, 79, 2010, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (205, 80, 2010, 37000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (206, 81, 2010, 19000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (207, 82, 2010, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (208, 83, 2010, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (209, 84, 2010, 1500000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (210, 85, 2010, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (211, 86, 2010, 4100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (212, 87, 2010, 9900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (213, 88, 2010, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (214, 89, 2010, 1600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (215, 90, 2010, 300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (216, 91, 2010, 41000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (217, 92, 2010, 6100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (218, 94, 2010, 700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (219, 95, 2010, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (220, 96, 2010, 870000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (221, 97, 2010, 74000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (222, 99, 2010, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (223, 101, 2010, 7100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (224, 102, 2010, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (225, 103, 2010, 180000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (226, 104, 2010, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (227, 105, 2010, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (228, 106, 2010, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (229, 107, 2010, 1600000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (230, 108, 2010, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (231, 109, 2010, 170000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (232, 110, 2010, 31000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (233, 111, 2010, 20000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (234, 112, 2010, 2500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (235, 113, 2010, 7900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (236, 114, 2010, 37000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (237, 115, 2010, 1500000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (238, 116, 2010, 4200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (239, 117, 2010, 2200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (240, 118, 2010, 67000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (241, 119, 2010, 20000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (242, 120, 2010, 38000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (243, 121, 2010, 20000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (244, 122, 2010, 65000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (245, 123, 2010, 15000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (246, 125, 2010, 40000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (247, 128, 2010, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (248, 129, 2010, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (249, 130, 2010, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (250, 132, 2010, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (251, 134, 2010, 44000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (252, 135, 2010, 1800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (253, 136, 2010, 58000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (254, 137, 2010, 6500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (255, 138, 2010, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (256, 140, 2010, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (257, 141, 2010, 6100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (258, 142, 2010, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (259, 143, 2010, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (260, 144, 2010, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (261, 145, 2010, 43000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (262, 146, 2010, 4600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (263, 149, 2010, 570, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (264, 150, 2010, 9200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (265, 151, 2010, 580000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (266, 153, 2010, 100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (267, 155, 2010, 1400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (268, 158, 2010, 1200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (269, 159, 2010, 230000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (270, 162, 2010, 1300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (271, 163, 2010, 990000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (272, 164, 2010, 9600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (273, 165, 2010, 30000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (274, 167, 2010, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (275, 168, 2010, 5100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (276, 169, 2010, 1000000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (277, 170, 2010, 1200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (278, 1, 2005, 2900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (279, 3, 2005, 3700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (280, 4, 2005, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (281, 5, 2005, 85000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (282, 6, 2005, 2700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (283, 7, 2005, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (284, 10, 2005, 5100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (285, 12, 2005, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (286, 13, 2005, 1700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (287, 14, 2005, 5400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (288, 16, 2005, 2800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (289, 17, 2005, 56000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (290, 18, 2005, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (291, 19, 2005, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (292, 20, 2005, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (293, 21, 2005, 310000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (294, 22, 2005, 550000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (295, 24, 2005, 980, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (296, 25, 2005, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (297, 26, 2005, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (298, 27, 2005, 1800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (299, 28, 2005, 82000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (300, 29, 2005, 470000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (301, 31, 2005, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (302, 32, 2005, 88000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (303, 33, 2005, 25000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (304, 35, 2005, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (305, 36, 2005, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (306, 37, 2005, 77000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (307, 38, 2005, 6500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (308, 39, 2005, 510000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (309, 40, 2005, 710, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (310, 41, 2005, 9000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (311, 43, 2005, 970, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (312, 45, 2005, 510000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (313, 46, 2005, 4900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (314, 47, 2005, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (315, 48, 2005, 79000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (316, 49, 2005, 29000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (317, 50, 2005, 3200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (318, 51, 2005, 23000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (319, 52, 2005, 22000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (320, 53, 2005, 17000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (321, 54, 2005, 5400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (322, 55, 2005, 130000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (323, 56, 2005, 640000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (324, 58, 2005, 1900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (325, 59, 2005, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (326, 60, 2005, 35000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (327, 61, 2005, 15000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (328, 62, 2005, 2800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (329, 63, 2005, 56000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (330, 64, 2005, 280000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (331, 66, 2005, 48000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (332, 67, 2005, 93000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (333, 68, 2005, 31000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (334, 69, 2005, 5000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (335, 70, 2005, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (336, 71, 2005, 31000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (337, 72, 2005, 1200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (338, 73, 2005, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (339, 75, 2005, 290000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (340, 76, 2005, 37000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (341, 77, 2005, 3200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (342, 78, 2005, 4100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (343, 79, 2005, 89000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (344, 80, 2005, 38000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (345, 81, 2005, 12000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (346, 82, 2005, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (347, 83, 2005, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (348, 84, 2005, 1500000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (349, 85, 2005, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (350, 86, 2005, 1500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (351, 87, 2005, 6700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (352, 88, 2005, 3200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (353, 89, 2005, 1300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (354, 90, 2005, 280000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (355, 91, 2005, 41000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (356, 92, 2005, 2900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (357, 94, 2005, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (358, 95, 2005, 19000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (359, 96, 2005, 820000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (360, 97, 2005, 66000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (361, 99, 2005, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (362, 101, 2005, 7500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (363, 102, 2005, 8000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (364, 103, 2005, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (365, 104, 2005, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (366, 105, 2005, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (367, 106, 2005, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (368, 107, 2005, 1200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (369, 108, 2005, 210000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (370, 109, 2005, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (371, 110, 2005, 29000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (372, 111, 2005, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (373, 112, 2005, 1800, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (374, 113, 2005, 6100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (375, 114, 2005, 40000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (376, 115, 2005, 1400000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (377, 116, 2005, 3000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (378, 117, 2005, 1700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (379, 118, 2005, 12000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (380, 119, 2005, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (381, 120, 2005, 38000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (382, 121, 2005, 19000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (383, 122, 2005, 65000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (384, 123, 2005, 3700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (385, 125, 2005, 37000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (386, 128, 2005, 12000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (387, 129, 2005, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (388, 130, 2005, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (389, 132, 2005, 220000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (390, 134, 2005, 42000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (391, 135, 2005, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (392, 136, 2005, 51000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (393, 137, 2005, 4100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (394, 138, 2005, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (395, 140, 2005, 20000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (396, 141, 2005, 5000000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (397, 142, 2005, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (398, 143, 2005, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (399, 144, 2005, 3600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (400, 145, 2005, 29000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (401, 146, 2005, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (402, 149, 2005, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (403, 150, 2005, 5200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (404, 151, 2005, 630000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (405, 153, 2005, 100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (406, 155, 2005, 640, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (407, 158, 2005, 1100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (408, 159, 2005, 230000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (409, 162, 2005, 1200000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (410, 164, 2005, 7600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (411, 165, 2005, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (412, 167, 2005, 180000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (413, 168, 2005, 2400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (414, 169, 2005, 920000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (415, 170, 2005, 1400000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (416, 1, 2000, 1600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (417, 3, 2000, 1900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (418, 4, 2000, 87000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (419, 5, 2000, 64000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (420, 6, 2000, 950, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (421, 7, 2000, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (422, 10, 2000, 5100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (423, 12, 2000, 940, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (424, 13, 2000, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (425, 14, 2000, 1400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (426, 16, 2000, 1700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (427, 17, 2000, 47000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (428, 18, 2000, 530, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (429, 19, 2000, 21000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (430, 20, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (431, 21, 2000, 280000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (432, 22, 2000, 410000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (433, 24, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (434, 25, 2000, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (435, 26, 2000, 130000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (436, 27, 2000, 1600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (437, 28, 2000, 81000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (438, 29, 2000, 370000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (439, 31, 2000, 160000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (440, 32, 2000, 80000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (441, 33, 2000, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (442, 35, 2000, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (443, 36, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (444, 37, 2000, 80000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (445, 38, 2000, 4300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (446, 39, 2000, 590000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (447, 40, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (448, 41, 2000, 4100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (449, 43, 2000, 510, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (450, 45, 2000, 540000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (451, 46, 2000, 4000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (452, 47, 2000, 9400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (453, 48, 2000, 85000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (454, 49, 2000, 26000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (455, 50, 2000, 1500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (456, 51, 2000, 18000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (457, 52, 2000, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (458, 53, 2000, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (459, 54, 2000, 3400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (460, 55, 2000, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (461, 56, 2000, 750000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (462, 58, 2000, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (463, 59, 2000, 82000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (464, 60, 2000, 28000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (465, 61, 2000, 9900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (466, 62, 2000, 980, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (467, 63, 2000, 45000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (468, 64, 2000, 270000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (469, 66, 2000, 44000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (470, 67, 2000, 83000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (471, 68, 2000, 22000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (472, 69, 2000, 2300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (473, 70, 2000, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (474, 71, 2000, 40000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (475, 72, 2000, 830, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (476, 73, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (477, 75, 2000, 80000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (478, 76, 2000, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (479, 77, 2000, 1900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (480, 78, 2000, 2700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (481, 79, 2000, 68000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (482, 80, 2000, 41000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (483, 81, 2000, 6200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (484, 82, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (485, 83, 2000, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (486, 84, 2000, 1700000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (487, 85, 2000, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (488, 86, 2000, 710, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (489, 87, 2000, 2200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (490, 88, 2000, 2300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (491, 89, 2000, 910, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (492, 90, 2000, 260000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (493, 91, 2000, 43000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (494, 92, 2000, 950, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (495, 94, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (496, 95, 2000, 13000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (497, 96, 2000, 810000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (498, 97, 2000, 55000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (499, 99, 2000, 110000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (500, 101, 2000, 5500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (501, 102, 2000, 3200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (502, 103, 2000, 130000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (503, 104, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (504, 105, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (505, 106, 2000, 9700, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (506, 107, 2000, 840000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (507, 108, 2000, 150000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (508, 109, 2000, 140000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (509, 110, 2000, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (510, 111, 2000, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (511, 112, 2000, 1300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (512, 113, 2000, 3600, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (513, 114, 2000, 37000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (514, 115, 2000, 1300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (515, 116, 2000, 1900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (516, 117, 2000, 1300, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (517, 118, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (518, 119, 2000, 11000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (519, 120, 2000, 20000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (520, 121, 2000, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (521, 122, 2000, 71000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (522, 123, 2000, 1000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (523, 125, 2000, 32000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (524, 128, 2000, 10000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (525, 129, 2000, 100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (526, 130, 2000, 7500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (527, 132, 2000, 240000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (528, 134, 2000, 33000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (529, 135, 2000, 1000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (530, 136, 2000, 40000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (531, 137, 2000, 2900, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (532, 138, 2000, 200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (533, 140, 2000, 16000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (534, 141, 2000, 3300000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (535, 142, 2000, 90000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (536, 143, 2000, 92000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (537, 144, 2000, 2200, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (538, 145, 2000, 15000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (539, 146, 2000, 3100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (540, 149, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (541, 150, 2000, 1400, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (542, 151, 2000, 740000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (543, 153, 2000, 94000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (544, 155, 2000, 500, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (545, 158, 2000, 1000000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (546, 159, 2000, 170000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (547, 162, 2000, 1100000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (548, 164, 2000, 6000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (549, 165, 2000, 14000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (550, 167, 2000, 120000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (551, 168, 2000, 1100, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (552, 169, 2000, 890000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (553, 170, 2000, 1600000, 2, 1);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (554, 1, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (555, 3, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (556, 4, 2018, 14000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (557, 5, 2018, 1700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (558, 6, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (559, 7, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (560, 10, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (561, 12, 2018, 580, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (562, 13, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (563, 14, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (564, 16, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (565, 17, 2018, 2200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (566, 18, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (567, 19, 2018, 670, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (568, 20, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (569, 21, 2018, 4800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (570, 22, 2018, 15000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (571, 24, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (572, 25, 2018, 3300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (573, 26, 2018, 1900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (574, 27, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (575, 28, 2018, 1300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (576, 29, 2018, 18000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (577, 31, 2018, 4800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (578, 32, 2018, 3100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (579, 33, 2018, 590, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (580, 36, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (581, 37, 2018, 4000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (582, 38, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (583, 39, 2018, 16000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (584, 40, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (585, 41, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (586, 43, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (587, 45, 2018, 13000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (588, 46, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (589, 47, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (590, 48, 2018, 1200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (591, 49, 2018, 620, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (592, 50, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (593, 51, 2018, 700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (594, 52, 2018, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (595, 53, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (596, 54, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (597, 55, 2018, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (598, 56, 2018, 11000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (599, 58, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (600, 59, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (601, 60, 2018, 1200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (602, 61, 2018, 980, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (603, 62, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (604, 63, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (605, 64, 2018, 14000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (606, 66, 2018, 2200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (607, 67, 2018, 4300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (608, 68, 2018, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (609, 69, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (610, 70, 2018, 2700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (611, 71, 2018, 780, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (612, 72, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (613, 73, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (614, 75, 2018, 38000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (615, 76, 2018, 2600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (616, 77, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (617, 78, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (618, 79, 2018, 710, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (619, 80, 2018, 1500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (620, 82, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (621, 83, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (622, 84, 2018, 25000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (623, 85, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (624, 86, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (625, 87, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (626, 88, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (627, 89, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (628, 90, 2018, 6100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (629, 91, 2018, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (630, 92, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (631, 94, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (632, 95, 2018, 1700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (633, 96, 2018, 13000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (634, 97, 2018, 2600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (635, 99, 2018, 6500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (636, 101, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (637, 102, 2018, 610, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (638, 104, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (639, 105, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (640, 106, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (641, 107, 2018, 54000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (642, 108, 2018, 7800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (643, 109, 2018, 2700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (644, 110, 2018, 910, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (645, 112, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (646, 113, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (647, 114, 2018, 1200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (648, 115, 2018, 53000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (649, 116, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (650, 117, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (651, 118, 2018, 6400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (652, 119, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (653, 121, 2018, 720, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (654, 122, 2018, 1000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (655, 123, 2018, 1200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (656, 125, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (657, 128, 2018, 570, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (658, 129, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (659, 130, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (660, 132, 2018, 2900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (661, 134, 2018, 1300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (662, 135, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (663, 136, 2018, 2100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (664, 137, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (665, 138, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (666, 139, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (667, 140, 2018, 710, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (668, 141, 2018, 71000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (669, 142, 2018, 9900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (670, 144, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (671, 145, 2018, 2900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (672, 146, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (673, 149, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (674, 150, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (675, 151, 2018, 18000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (676, 153, 2018, 3800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (677, 155, 2018, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (678, 158, 2018, 23000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (679, 159, 2018, 6100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (680, 162, 2018, 24000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (681, 164, 2018, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (682, 165, 2018, 1300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (683, 167, 2018, 4700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (684, 168, 2018, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (685, 169, 2018, 17000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (686, 170, 2018, 22000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (687, 1, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (688, 3, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (689, 4, 2010, 10000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (690, 5, 2010, 1600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (691, 6, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (692, 7, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (693, 10, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (694, 12, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (695, 13, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (696, 14, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (697, 16, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (698, 17, 2010, 2000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (699, 18, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (700, 19, 2010, 1600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (701, 20, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (702, 21, 2010, 7300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (703, 22, 2010, 15000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (704, 24, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (705, 25, 2010, 4800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (706, 26, 2010, 5200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (707, 27, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (708, 28, 2010, 2500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (709, 29, 2010, 22000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (710, 31, 2010, 7800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (711, 32, 2010, 3500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (712, 36, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (713, 37, 2010, 3900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (714, 38, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (715, 39, 2010, 24000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (716, 40, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (717, 41, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (718, 43, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (719, 45, 2010, 34000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (720, 46, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (721, 47, 2010, 630, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (722, 48, 2010, 3000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (723, 49, 2010, 1100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (724, 50, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (725, 51, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (726, 52, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (727, 53, 2010, 620, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (728, 54, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (729, 55, 2010, 3800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (730, 56, 2010, 20000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (731, 58, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (732, 59, 2010, 600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (733, 60, 2010, 1600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (734, 61, 2010, 970, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (735, 62, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (736, 63, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (737, 64, 2010, 17000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (738, 66, 2010, 1700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (739, 67, 2010, 4100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (740, 68, 2010, 1900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (741, 69, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (742, 70, 2010, 4900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (743, 71, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (744, 72, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (745, 73, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (746, 75, 2010, 24000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (747, 76, 2010, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (748, 77, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (749, 78, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (750, 79, 2010, 830, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (751, 80, 2010, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (752, 82, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (753, 83, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (754, 84, 2010, 56000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (755, 85, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (756, 86, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (757, 87, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (758, 88, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (759, 89, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (760, 90, 2010, 7200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (761, 91, 2010, 2700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (762, 92, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (763, 94, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (764, 95, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (765, 96, 2010, 29000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (766, 97, 2010, 2900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (767, 99, 2010, 5300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (768, 101, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (769, 102, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (770, 104, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (771, 105, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (772, 106, 2010, 550, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (773, 107, 2010, 64000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (774, 108, 2010, 11000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (775, 109, 2010, 3500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (776, 110, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (777, 111, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (778, 112, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (779, 113, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (780, 114, 2010, 1700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (781, 115, 2010, 72000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (782, 116, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (783, 117, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (784, 118, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (785, 119, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (786, 121, 2010, 790, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (787, 122, 2010, 2100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (788, 123, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (789, 125, 2010, 930, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (790, 128, 2010, 740, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (791, 129, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (792, 130, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (793, 132, 2010, 5700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (794, 134, 2010, 1300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (795, 135, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (796, 136, 2010, 2900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (797, 137, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (798, 138, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (799, 139, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (800, 140, 2010, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (801, 141, 2010, 140000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (802, 142, 2010, 9800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (803, 143, 2010, 1300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (804, 144, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (805, 145, 2010, 1900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (806, 146, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (807, 149, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (808, 150, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (809, 151, 2010, 27000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (810, 153, 2010, 5700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (811, 155, 2010, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (812, 158, 2010, 56000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (813, 159, 2010, 12000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (814, 162, 2010, 48000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (815, 164, 2010, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (816, 165, 2010, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (817, 167, 2010, 8500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (818, 168, 2010, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (819, 169, 2010, 26000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (820, 170, 2010, 54000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (821, 1, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (822, 3, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (823, 4, 2000, 4800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (824, 5, 2000, 1400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (825, 6, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (826, 7, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (827, 10, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (828, 12, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (829, 13, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (830, 14, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (831, 16, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (832, 17, 2000, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (833, 18, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (834, 19, 2000, 670, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (835, 20, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (836, 21, 2000, 15000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (837, 22, 2000, 15000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (838, 24, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (839, 25, 2000, 12000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (840, 26, 2000, 11000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (841, 27, 2000, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (842, 28, 2000, 4500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (843, 29, 2000, 19000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (844, 31, 2000, 11000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (845, 32, 2000, 5600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (846, 36, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (847, 37, 2000, 6100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (848, 38, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (849, 39, 2000, 44000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (850, 40, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (851, 41, 2000, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (852, 43, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (853, 45, 2000, 43000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (854, 46, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (855, 47, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (856, 48, 2000, 4800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (857, 49, 2000, 1500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (858, 50, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (859, 51, 2000, 810, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (860, 52, 2000, 680, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (861, 53, 2000, 1100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (862, 54, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (863, 55, 2000, 5000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (864, 56, 2000, 58000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (865, 58, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (866, 59, 2000, 880, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (867, 60, 2000, 1600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (868, 61, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (869, 62, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (870, 63, 2000, 880, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (871, 64, 2000, 18000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (872, 66, 2000, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (873, 67, 2000, 5000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (874, 68, 2000, 1100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (875, 69, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (876, 70, 2000, 12000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (877, 71, 2000, 3200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (878, 72, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (879, 73, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (880, 75, 2000, 1900, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (881, 76, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (882, 77, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (883, 78, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (884, 79, 2000, 1200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (885, 80, 2000, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (886, 82, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (887, 83, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (888, 84, 2000, 120000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (889, 85, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (890, 86, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (891, 87, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (892, 88, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (893, 89, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (894, 90, 2000, 12000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (895, 91, 2000, 3000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (896, 92, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (897, 94, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (898, 95, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (899, 96, 2000, 57000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (900, 97, 2000, 2700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (901, 99, 2000, 7700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (902, 101, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (903, 102, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (904, 104, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (905, 105, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (906, 106, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (907, 107, 2000, 40000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (908, 108, 2000, 5800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (909, 109, 2000, 7300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (910, 110, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (911, 111, 2000, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (912, 112, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (913, 113, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (914, 114, 2000, 2300, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (915, 115, 2000, 78000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (916, 116, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (917, 117, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (918, 118, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (919, 119, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (920, 121, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (921, 122, 2000, 5100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (922, 123, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (923, 125, 2000, 1100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (924, 128, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (925, 129, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (926, 130, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (927, 132, 2000, 18000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (928, 134, 2000, 1700, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (929, 135, 2000, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (930, 136, 2000, 2400, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (931, 138, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (932, 139, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (933, 140, 2000, 810, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (934, 141, 2000, 100000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (935, 142, 2000, 5100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (936, 143, 2000, 1800, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (937, 144, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (938, 145, 2000, 650, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (939, 146, 2000, 200, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (940, 149, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (941, 150, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (942, 151, 2000, 54000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (943, 153, 2000, 5600, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (944, 155, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (945, 158, 2000, 85000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (946, 159, 2000, 4500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (947, 162, 2000, 80000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (948, 164, 2000, 500, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (949, 165, 2000, 840, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (950, 167, 2000, 6100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (951, 168, 2000, 100, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (952, 169, 2000, 62000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (953, 170, 2000, 120000, 2, 2);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (954, 1, 2018, 11, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (955, 3, 2018, 74, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (956, 4, 2018, 38, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (957, 5, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (958, 10, 2018, 58, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (959, 12, 2018, 28, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (960, 14, 2018, 90, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (961, 16, 2018, 44, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (962, 17, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (963, 19, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (964, 21, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (965, 25, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (966, 26, 2018, 80, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (967, 28, 2018, 85, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (968, 29, 2018, 80, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (969, 31, 2018, 71, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (970, 32, 2018, 56, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (971, 33, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (972, 35, 2018, 21, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (973, 37, 2018, 25, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (974, 39, 2018, 90, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (975, 41, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (976, 45, 2018, 44, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (977, 47, 2018, 30, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (978, 48, 2018, 84, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (979, 49, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (980, 50, 2018, 16, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (981, 51, 2018, 40, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (982, 52, 2018, 50, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (983, 53, 2018, 48, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (984, 55, 2018, 79, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (985, 56, 2018, 92, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (986, 60, 2018, 72, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (987, 61, 2018, 68, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (988, 64, 2018, 79, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (989, 66, 2018, 34, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (990, 67, 2018, 65, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (991, 68, 2018, 48, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (992, 69, 2018, 89, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (993, 70, 2018, 83, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (994, 71, 2018, 59, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (995, 75, 2018, 15, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (996, 76, 2018, 81, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (997, 80, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (998, 83, 2018, 59, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (999, 84, 2018, 91, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1000, 86, 2018, 88, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1001, 87, 2018, 35, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1002, 90, 2018, 77, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1003, 91, 2018, 93, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1004, 92, 2018, 63, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1005, 95, 2018, 25, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1006, 96, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1007, 97, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1008, 99, 2018, 24, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1009, 101, 2018, 38, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1010, 102, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1011, 106, 2018, 61, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1012, 107, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1013, 108, 2018, 80, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1014, 109, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1015, 110, 2018, 51, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1016, 113, 2018, 90, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1017, 114, 2018, 58, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1018, 115, 2018, 44, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1019, 118, 2018, 10, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1020, 119, 2018, 92, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1021, 120, 2018, 79, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1022, 121, 2018, 88, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1023, 122, 2018, 85, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1024, 123, 2018, 18, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1025, 128, 2018, 73, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1026, 130, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1027, 132, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1028, 134, 2018, 65, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1029, 140, 2018, 19, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1030, 141, 2018, 87, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1031, 142, 2018, 56, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1032, 145, 2018, 5, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1033, 146, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1034, 150, 2018, 46, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1035, 151, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1036, 153, 2018, 80, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1037, 158, 2018, 93, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1038, 159, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1039, 162, 2018, 93, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1040, 164, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1041, 165, 2018, 35, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1042, 167, 2018, 81, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1043, 168, 2018, 13, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1044, 169, 2018, 95, 2, 3);
+INSERT INTO statistique (id, id_pays, annee, valeur, id_unite, id_type_statistique) VALUES (1045, 170, 2018, 94, 2, 3);
+
+
+-- Donnees pour la table utilisateur
+INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (1, 'adminch', '$2b$12$c4vPjcMlJOqQZ34wOKnDke8TtqMDLu.eTzH8JR9NeZlzjpTCxTr3G', 'admin', 0);
+INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (2, 'userch', '$2b$12$joU1oJbGL9MMduJGEVWp4.Jt/Gd3s6PjAyrcc6a1USN7EvGx5kM8q', 'user', 0);
+
+
+-- Reinitialisation des sequences PostgreSQL
+SELECT setval('pays_id_pays_seq', (SELECT COALESCE(MAX(id_pays), 1) FROM pays));
+SELECT setval('unite_id_unite_seq', (SELECT COALESCE(MAX(id_unite), 1) FROM unite));
+SELECT setval('type_statistique_id_type_statistique_seq', (SELECT COALESCE(MAX(id_type_statistique), 1) FROM type_statistique));
+SELECT setval('type_traitement_id_type_traitement_seq', (SELECT COALESCE(MAX(id_type_traitement), 1) FROM type_traitement));
+SELECT setval('population_hiv_id_seq', (SELECT COALESCE(MAX(id), 1) FROM population_hiv));
+SELECT setval('mortalite_id_seq', (SELECT COALESCE(MAX(id), 1) FROM mortalite));
+SELECT setval('transmission_mere_enfant_id_transmission_seq', (SELECT COALESCE(MAX(id_transmission), 1) FROM transmission_mere_enfant));
+SELECT setval('traitement_id_seq', (SELECT COALESCE(MAX(id), 1) FROM traitement));
+SELECT setval('statistique_id_seq', (SELECT COALESCE(MAX(id), 1) FROM statistique));
+SELECT setval('utilisateur_id_seq', (SELECT COALESCE(MAX(id), 1) FROM utilisateur));
+
+-- Fin du dump

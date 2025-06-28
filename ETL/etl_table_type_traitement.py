@@ -9,7 +9,7 @@
 # 
 # TRANSFORMATION :
 # - Attribution d'identifiants uniques
-# - Structure : id_type_traitement, type_traitement
+# - Structure : id_type_traitement, nom_type_traitement
 # 
 # CHARGEMENT :
 # - Fichier : type_traitement_clean.csv
@@ -31,7 +31,7 @@ logging.basicConfig(
     ]
 )
 
-# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+# ----------------------  EXTRACTION (Extract) ----------------------
 def extract_data():
     """
     EXTRACTION : Création des données des types de traitements
@@ -39,13 +39,13 @@ def extract_data():
         DataFrame: DataFrame des types de traitements ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de l'extraction...")
+        logging.info("[PROCESSING] Début de l'extraction...")
         
         # Définition des types de traitements
         types_traitements = [
-            {'id_type_traitement': 1, 'type_traitement': 'traitement adulte'},
-            {'id_type_traitement': 2, 'type_traitement': 'traitement pédiatrique'},
-            {'id_type_traitement': 3, 'type_traitement': 'traitement prévention transmission'}
+            {'id_type_traitement': 1, 'nom_type_traitement': 'traitement adulte'},
+            {'id_type_traitement': 2, 'nom_type_traitement': 'traitement pédiatrique'},
+            {'id_type_traitement': 3, 'nom_type_traitement': 'traitement prévention transmission'}
         ]
         
         # Création du DataFrame
@@ -54,17 +54,17 @@ def extract_data():
         if type_traitement_df.empty:
             raise ValueError("Erreur lors de la création du DataFrame des types de traitements")
             
-        logging.info("✅ Extraction réussie")
+        logging.info("[SUCCESS] Extraction réussie")
         return type_traitement_df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de données : {str(e)}")
+        logging.error(f"[ERROR] Erreur de données : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de l'extraction : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de l'extraction : {str(e)}")
         return None
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
+# ----------------------  TRANSFORMATION (Transform) ----------------------
 def transform_data(df):
     """
     TRANSFORMATION : Vérification et nettoyage des données
@@ -74,34 +74,34 @@ def transform_data(df):
         DataFrame: Données transformées ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de la transformation...")
+        logging.info("[PROCESSING] Début de la transformation...")
         
         # Vérification des colonnes requises
-        required_columns = ['id_type_traitement', 'type_traitement']
+        required_columns = ['id_type_traitement', 'nom_type_traitement']
         if not all(col in df.columns for col in required_columns):
             raise ValueError("Colonnes manquantes dans le DataFrame")
             
         # Vérification des types de données
         if not df['id_type_traitement'].dtype.kind in 'ui':  # unsigned integer
             df['id_type_traitement'] = df['id_type_traitement'].astype(int)
-        if not df['type_traitement'].dtype == 'object':  # string
-            df['type_traitement'] = df['type_traitement'].astype(str)
+        if not df['nom_type_traitement'].dtype == 'object':  # string
+            df['nom_type_traitement'] = df['nom_type_traitement'].astype(str)
             
         # Vérification des doublons
         if df.duplicated().any():
             raise ValueError("Des doublons ont été détectés")
             
-        logging.info("✅ Transformation réussie")
+        logging.info("[SUCCESS] Transformation réussie")
         return df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur de transformation : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de la transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de la transformation : {str(e)}")
         return None
 
-# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
+# ----------------------  CHARGEMENT (Load) ----------------------
 def load_data(df):
     """
     CHARGEMENT : Sauvegarde des données transformées
@@ -111,7 +111,7 @@ def load_data(df):
         bool: True si succès, False sinon
     """
     try:
-        logging.info("🔄 Début du chargement...")
+        logging.info("[PROCESSING] Début du chargement...")
         
         output_file = Path('../DatasetClean/type_traitement_clean.csv')
         
@@ -139,23 +139,23 @@ def load_data(df):
         except Exception as e:
             raise ValueError(f"Erreur lors de la vérification : {str(e)}")
             
-        logging.info(f"✅ Chargement réussi - {len(df)} types de traitements enregistrés")
+        logging.info(f"[SUCCESS] Chargement réussi - {len(df)} types de traitements enregistrés")
         return True
         
     except (IOError, FileNotFoundError, ValueError) as e:
-        logging.error(f"❌ Erreur de chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur de chargement : {str(e)}")
         return False
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors du chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors du chargement : {str(e)}")
         return False
 
-# ---------------------- 🚀 EXECUTION ----------------------
+# ---------------------- [START] EXECUTION ----------------------
 def main():
     """
     Fonction principale : Orchestration du processus ETL
     """
     try:
-        logging.info("🚀 Début du processus ETL pour type_traitement")
+        logging.info("[START] Début du processus ETL pour type_traitement")
         
         # EXTRACTION
         type_traitement_df = extract_data()
@@ -171,10 +171,10 @@ def main():
         if not load_data(transformed_df):
             raise Exception("Échec du chargement des données")
             
-        logging.info("✅ Processus ETL terminé avec succès")
+        logging.info("[SUCCESS] Processus ETL terminé avec succès")
         
     except Exception as e:
-        logging.error(f"❌ Erreur dans le processus ETL : {str(e)}")
+        logging.error(f"[ERROR] Erreur dans le processus ETL : {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

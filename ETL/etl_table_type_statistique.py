@@ -9,7 +9,7 @@
 # 
 # TRANSFORMATION :
 # - Attribution d'identifiants uniques
-# - Structure : id_type_statistique, type_statistique
+# - Structure : id_type_statistique, nom_type_statistique
 # 
 # CHARGEMENT :
 # - Fichier : type_statistique_clean.csv
@@ -31,7 +31,7 @@ logging.basicConfig(
     ]
 )
 
-# ---------------------- 🟢 EXTRACTION (Extract) ----------------------
+# ----------------------  EXTRACTION (Extract) ----------------------
 def extract_data():
     """
     EXTRACTION : Création des données des types de statistiques
@@ -39,15 +39,15 @@ def extract_data():
         DataFrame: DataFrame des types de statistiques ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de l'extraction...")
+        logging.info("[PROCESSING] Début de l'extraction...")
         
         # Définition des types de statistiques
         types_statistiques = [
-            {'id_type_statistique': 1, 'type_statistique': 'taux de prévalence'},
-            {'id_type_statistique': 2, 'type_statistique': 'taux de mortalité'},
-            {'id_type_statistique': 3, 'type_statistique': 'taux de transmission mère-enfant'},
-            {'id_type_statistique': 4, 'type_statistique': 'taux de couverture traitement'},
-            {'id_type_statistique': 5, 'type_statistique': 'taux de nouvelles infections'}
+            {'id_type_statistique': 1, 'nom_type_statistique': 'taux de prévalence'},
+            {'id_type_statistique': 2, 'nom_type_statistique': 'taux de mortalité'},
+            {'id_type_statistique': 3, 'nom_type_statistique': 'taux de transmission mère-enfant'},
+            {'id_type_statistique': 4, 'nom_type_statistique': 'taux de couverture traitement'},
+            {'id_type_statistique': 5, 'nom_type_statistique': 'taux de nouvelles infections'}
         ]
         
         # Création du DataFrame
@@ -56,17 +56,17 @@ def extract_data():
         if type_statistique_df.empty:
             raise ValueError("Erreur lors de la création du DataFrame des types de statistiques")
             
-        logging.info("✅ Extraction réussie")
+        logging.info("[SUCCESS] Extraction réussie")
         return type_statistique_df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de données : {str(e)}")
+        logging.error(f"[ERROR] Erreur de données : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de l'extraction : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de l'extraction : {str(e)}")
         return None
 
-# ---------------------- 🟡 TRANSFORMATION (Transform) ----------------------
+# ----------------------  TRANSFORMATION (Transform) ----------------------
 def transform_data(df):
     """
     TRANSFORMATION : Vérification et nettoyage des données
@@ -76,34 +76,34 @@ def transform_data(df):
         DataFrame: Données transformées ou None en cas d'erreur
     """
     try:
-        logging.info("🔄 Début de la transformation...")
+        logging.info("[PROCESSING] Début de la transformation...")
         
         # Vérification des colonnes requises
-        required_columns = ['id_type_statistique', 'type_statistique']
+        required_columns = ['id_type_statistique', 'nom_type_statistique']
         if not all(col in df.columns for col in required_columns):
             raise ValueError("Colonnes manquantes dans le DataFrame")
             
         # Vérification des types de données
         if not df['id_type_statistique'].dtype.kind in 'ui':  # unsigned integer
             df['id_type_statistique'] = df['id_type_statistique'].astype(int)
-        if not df['type_statistique'].dtype == 'object':  # string
-            df['type_statistique'] = df['type_statistique'].astype(str)
+        if not df['nom_type_statistique'].dtype == 'object':  # string
+            df['nom_type_statistique'] = df['nom_type_statistique'].astype(str)
             
         # Vérification des doublons
         if df.duplicated().any():
             raise ValueError("Des doublons ont été détectés")
             
-        logging.info("✅ Transformation réussie")
+        logging.info("[SUCCESS] Transformation réussie")
         return df
         
     except ValueError as e:
-        logging.error(f"❌ Erreur de transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur de transformation : {str(e)}")
         return None
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors de la transformation : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors de la transformation : {str(e)}")
         return None
 
-# ---------------------- 🔵 CHARGEMENT (Load) ----------------------
+# ----------------------  CHARGEMENT (Load) ----------------------
 def load_data(df):
     """
     CHARGEMENT : Sauvegarde des données transformées
@@ -113,7 +113,7 @@ def load_data(df):
         bool: True si succès, False sinon
     """
     try:
-        logging.info("🔄 Début du chargement...")
+        logging.info("[PROCESSING] Début du chargement...")
         
         output_file = Path('../DatasetClean/type_statistique_clean.csv')
         
@@ -141,23 +141,23 @@ def load_data(df):
         except Exception as e:
             raise ValueError(f"Erreur lors de la vérification : {str(e)}")
             
-        logging.info(f"✅ Chargement réussi - {len(df)} types de statistiques enregistrés")
+        logging.info(f"[SUCCESS] Chargement réussi - {len(df)} types de statistiques enregistrés")
         return True
         
     except (IOError, FileNotFoundError, ValueError) as e:
-        logging.error(f"❌ Erreur de chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur de chargement : {str(e)}")
         return False
     except Exception as e:
-        logging.error(f"❌ Erreur inattendue lors du chargement : {str(e)}")
+        logging.error(f"[ERROR] Erreur inattendue lors du chargement : {str(e)}")
         return False
 
-# ---------------------- 🚀 EXECUTION ----------------------
+# ---------------------- [START] EXECUTION ----------------------
 def main():
     """
     Fonction principale : Orchestration du processus ETL
     """
     try:
-        logging.info("🚀 Début du processus ETL pour type_statistique")
+        logging.info("[START] Début du processus ETL pour type_statistique")
         
         # EXTRACTION
         type_statistique_df = extract_data()
@@ -173,10 +173,10 @@ def main():
         if not load_data(transformed_df):
             raise Exception("Échec du chargement des données")
             
-        logging.info("✅ Processus ETL terminé avec succès")
+        logging.info("[SUCCESS] Processus ETL terminé avec succès")
         
     except Exception as e:
-        logging.error(f"❌ Erreur dans le processus ETL : {str(e)}")
+        logging.error(f"[ERROR] Erreur dans le processus ETL : {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

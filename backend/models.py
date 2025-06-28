@@ -9,9 +9,9 @@ class Pays(Base):
     __tablename__ = "pays"
 
     id_pays: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    nom_pays: Mapped[str] = mapped_column(String(100), nullable=False)
-    region: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    sous_region: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    pays: Mapped[str] = mapped_column(String(100), nullable=False)  # Renommé de nom_pays
+    region_who: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)  # Renommé de region
+    # sous_region supprimé car absent des ETL
 
     # Relations
     population_hiv: Mapped[List["PopulationHIV"]] = relationship(
@@ -35,7 +35,7 @@ class Unite(Base):
     __tablename__ = "unite"
 
     id_unite: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    nom_unite: Mapped[str] = mapped_column(String(50), nullable=False)
+    unite: Mapped[str] = mapped_column(String(50), nullable=False)  # Renommé de nom_unite
 
 
 class PopulationHIV(Base):
@@ -67,7 +67,7 @@ class Mortalite(Base):
 class TransmissionMereEnfant(Base):
     __tablename__ = "transmission_mere_enfant"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    id_transmission: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)  # Renommé de id
     id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
     besoin_arv_min: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
     besoin_arv_median: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
