@@ -14,7 +14,6 @@ import TransmissionMereEnfant from '../components/TransmissionMereEnfant.vue';
 import ClusterSwitchNotAllowed from '../components/ClusterSwitchNotAllowed.vue';
 import ETLDashboard from '../components/ETLDashboard.vue';
 import AccessDenied from '../components/AccessDenied.vue';
-import AccessDenied from '../components/AccessDenied.vue';
 
 const routes = [
   { path: '/', component: Home },
