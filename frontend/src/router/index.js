@@ -5,6 +5,7 @@ import Graphiques from '../components/predictionGraphs.vue';
 import Prediction from '../components/TestPrediction.vue';
 import USMortalite from '../components/USMortalite.vue';
 import Data from '../components/Data.vue';
+import HealthData from '../components/HealthData.vue';
 import Confidentialite from '../components/Confidentialite.vue';
 import Login from '../views/Login.vue';
 import PopulationHiv from '../components/PopulationHiv.vue';
@@ -19,6 +20,7 @@ const routes = [
   { path: '/prediction-graphs',name: 'PredictionGraphs', component: PredictionGraphs},
   // route pour faciliter la scalabilité
   { path: '/data', component: Data },
+  { path: '/health-data', name: 'HealthData', component: HealthData }, // Nouvelle route unifiée
   { path: '/us-mortalite', component: USMortalite },
   { path: '/population-hiv', component: PopulationHiv },
   { path: '/traitement', component: Traitement },

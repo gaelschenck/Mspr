@@ -67,44 +67,50 @@ export async function fetchFromAPI(endpoint, options = {}) {
   }
 }
 
-export async function fetchMortalite(offset = 0, limit = 25) {
+// === NOUVEAUX ENDPOINTS - Structure unifiée ===
+
+export async function fetchCountries(offset = 0, limit = 25) {
   try {
-    const response = await apiClient.get('/mortalite/paginated/', { params: { offset, limit } });
+    const response = await apiClient.get('/countries/paginated/', { params: { offset, limit } });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors du chargement des données de mortalité:', error);
+    console.error('Erreur lors du chargement des pays:', error);
     throw error;
   }
 }
 
-export async function fetchPopulationHiv(offset = 0, limit = 25) {
+export async function fetchIndicatorTypes() {
   try {
-    const response = await apiClient.get('/population_hiv/paginated/', { params: { offset, limit } });
+    const response = await apiClient.get('/indicator-types/');
     return response.data;
   } catch (error) {
-    console.error('Erreur lors du chargement des données de population HIV:', error);
+    console.error('Erreur lors du chargement des types d\'indicateurs:', error);
     throw error;
   }
 }
 
-export async function fetchTraitement(offset = 0, limit = 25) {
+export async function fetchHealthIndicators(offset = 0, limit = 25, filters = {}) {
   try {
-    const response = await apiClient.get('/traitement/paginated/', { params: { offset, limit } });
+    const params = { offset, limit, ...filters };
+    const response = await apiClient.get('/health-indicators/paginated/', { params });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors du chargement des données de traitement:', error);
+    console.error('Erreur lors du chargement des indicateurs de santé:', error);
     throw error;
   }
 }
 
-export async function fetchTransmissionMereEnfant(offset = 0, limit = 25) {
+export async function fetchHealthIndicatorsDetailed(filters = {}) {
   try {
-    const response = await apiClient.get('/transmission_mere_enfant/paginated/', { params: { offset, limit } });
+    const response = await apiClient.get('/health-indicators/detailed/', { params: filters });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors du chargement des données de transmission mère-enfant:', error);
+    console.error('Erreur lors du chargement des indicateurs détaillés:', error);
     throw error;
   }
 }
+
+// === ANCIENS ENDPOINTS (compatibilité) - SUPPRIMÉS AU PROFIT DE L'UTILISATION DIRECTE ===
+// Les composants utilisent maintenant directement fetchHealthIndicatorsDetailed avec les bons filtres
 
 export default apiClient;

@@ -17,9 +17,9 @@
         </thead>
         <tbody>
           <tr v-for="item in data" :key="item.id">
-            <td>{{ item.nom_pays || item.id_pays || 'N/A' }}</td>
-            <td>{{ item.annee }}</td>
-            <td>{{ formatNumber(item.valeur) }}</td>
+            <td>{{ item.country_name || item.id_pays || 'N/A' }}</td>
+            <td>{{ item.year }}</td>
+            <td>{{ formatNumber(item.value) }}</td>
           </tr>
         </tbody>
       </table>
@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { fetchPopulationHiv } from "../../services/api.js";
+import { fetchHealthIndicatorsDetailed } from "../../services/api.js";
 
 const data = ref([]);
 const page = ref(0);
@@ -50,7 +50,11 @@ async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    const result = await fetchPopulationHiv(page.value * limit, limit + 1); // +1 pour détecter s'il y a une page suivante
+    const result = await fetchHealthIndicatorsDetailed({
+      offset: page.value * limit,
+      limit: limit + 1, // +1 pour détecter s'il y a une page suivante
+      indicator_type_name: 'People Living with HIV'
+    });
     
     if (result.length > limit) {
       // Il y a plus de données disponibles

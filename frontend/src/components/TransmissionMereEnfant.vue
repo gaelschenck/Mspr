@@ -11,23 +11,21 @@
         <thead>
           <tr>
             <th>{{ $t('pays') }}</th>
-            <th>Besoin ARV Min</th>
-            <th>Besoin ARV Médian</th>
-            <th>Besoin ARV Max</th>
-            <th>% Reçu Min</th>
-            <th>% Reçu Médian</th>
-            <th>% Reçu Max</th>
+            <th>{{ $t('valeur') }}</th>
+            <th>Confiance Min</th>
+            <th>Confiance Médian</th>
+            <th>Confiance Max</th>
+            <th>Type de valeur</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in data" :key="item.id">
-            <td>{{ item.nom_pays || item.id_pays || 'N/A' }}</td>
-            <td>{{ formatNumber(item.besoin_arv_min) }}</td>
-            <td>{{ formatNumber(item.besoin_arv_median) }}</td>
-            <td>{{ formatNumber(item.besoin_arv_max) }}</td>
-            <td>{{ formatNumber(item.pourcentage_recu_min) }}%</td>
-            <td>{{ formatNumber(item.pourcentage_recu_median) }}%</td>
-            <td>{{ formatNumber(item.pourcentage_recu_max) }}%</td>
+            <td>{{ item.country_name || item.id_pays || 'N/A' }}</td>
+            <td>{{ formatNumber(item.value) }}</td>
+            <td>{{ formatNumber(item.confidence_min) }}</td>
+            <td>{{ formatNumber(item.confidence_median) }}</td>
+            <td>{{ formatNumber(item.confidence_max) }}</td>
+            <td>{{ item.value_type || 'N/A' }}</td>
           </tr>
         </tbody>
       </table>
@@ -45,7 +43,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { fetchTransmissionMereEnfant } from "../../services/api.js";
+import { fetchHealthIndicatorsDetailed } from "../../services/api.js";
 
 const data = ref([]);
 const page = ref(0);
@@ -59,7 +57,11 @@ async function loadData() {
   error.value = null;
   try {
     // Demander une donnée de plus pour savoir s'il y a une page suivante
-    const result = await fetchTransmissionMereEnfant(page.value * limit, limit + 1);
+    const result = await fetchHealthIndicatorsDetailed({
+      offset: page.value * limit,
+      limit: limit + 1,
+      indicator_type_name: 'Prevention of Mother-to-Child Transmission'
+    });
     
     let rawData = [];
     // Gérer les différents formats de réponse

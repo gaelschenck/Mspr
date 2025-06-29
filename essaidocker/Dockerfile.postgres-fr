@@ -1,7 +1,7 @@
 FROM postgres:latest
 
-# Copier uniquement le dump FR
-COPY initdb/dump.sql /docker-entrypoint-initdb.d/01-dump.sql
+# Copier uniquement le schema FR
+COPY initdb/schema_fr.sql /docker-entrypoint-initdb.d/01-schema.sql
 
 # Donner les bonnes permissions
 RUN chmod +x /docker-entrypoint-initdb.d/*.sql

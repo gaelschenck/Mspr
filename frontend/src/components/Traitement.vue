@@ -16,8 +16,8 @@
         </thead>
         <tbody>
           <tr v-for="item in data" :key="item.id">
-            <td>{{ item.nom_pays || item.id_pays || 'N/A' }}</td>
-            <td>{{ formatNumber(item.valeur) }}</td>
+            <td>{{ item.country_name || item.id_pays || 'N/A' }}</td>
+            <td>{{ formatNumber(item.value) }}</td>
           </tr>
         </tbody>
       </table>
@@ -35,7 +35,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { fetchTraitement } from "../../services/api.js";
+import { fetchHealthIndicatorsDetailed } from "../../services/api.js";
 
 const data = ref([]);
 const page = ref(0);
@@ -49,7 +49,11 @@ async function loadData() {
   error.value = null;
   try {
     // Demander une donnée de plus pour savoir s'il y a une page suivante
-    const response = await fetchTraitement(page.value * limit, limit + 1);
+    const response = await fetchHealthIndicatorsDetailed({
+      offset: page.value * limit,
+      limit: limit + 1,
+      indicator_type_name: 'ART Coverage'
+    });
     console.log('Réponse API Traitement:', response); // Debug temporaire
     
     let rawData = [];

@@ -12,13 +12,20 @@ vi.mock('axios', () => ({
       get: vi.fn().mockImplementation(() => {
         pageCall++;
         if (pageCall === 1) {
-          // Première page : 25 éléments
-          return Promise.resolve({ data: Array.from({length: 25}, (_, i) => ({ id: i+1, nom_pays: 'USA', annee: 2020, valeur: 100+i })) });
+          // Première page : 26 éléments (25 + 1 pour détecter la page suivante)
+          return Promise.resolve({ data: Array.from({length: 26}, (_, i) => ({ 
+            id: i+1, 
+            country_name: 'USA', 
+            year: 2020, 
+            value: 100+i,
+            value_type: 'deaths',
+            who_region: 'Americas'
+          })) });
         } else {
           // Page suivante : 2 éléments
           return Promise.resolve({ data: [
-            { id: 26, nom_pays: 'USA', annee: 2021, valeur: 456 },
-            { id: 27, nom_pays: 'USA', annee: 2022, valeur: 789 }
+            { id: 26, country_name: 'USA', year: 2021, value: 456, value_type: 'deaths', who_region: 'Americas' },
+            { id: 27, country_name: 'USA', year: 2022, value: 789, value_type: 'deaths', who_region: 'Americas' }
           ] });
         }
       }),
@@ -77,8 +84,13 @@ describe('USMortalite.vue', () => {
     })
     await flushPromises()
     
+    // Vérifier que le bouton Suivant est présent et actif
+    const nextButton = wrapper.findAll('button').find(btn => btn.text().includes('Suivant'))
+    expect(nextButton.exists()).toBe(true)
+    expect(nextButton.attributes('disabled')).toBeFalsy()
+    
     // Cliquer sur le bouton Suivant
-    await wrapper.find('button:last-of-type').trigger('click')
+    await nextButton.trigger('click')
     await flushPromises()
     
     // Vérifier que la page a changé

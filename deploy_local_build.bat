@@ -11,6 +11,30 @@ if errorlevel 1 (
     exit /b
 )
 
+REM Vérifier si le cluster Kind existe, sinon le créer
+echo Verification du cluster Kind...
+kind get clusters | findstr /i "mspr" >nul
+if errorlevel 1 (
+    echo Cluster Kind absent, creation en cours...
+    kind create cluster --name mspr
+    if errorlevel 1 (
+        echo [ERREUR] Echec de la creation du cluster mspr.
+        pause
+        exit /b
+    )
+    echo Cluster Kind cree avec succes !
+) else (
+    echo Cluster Kind deja present.
+)
+
+REM Vérifier que le cluster est bien accessible
+kubectl cluster-info >nul 2>&1
+if errorlevel 1 (
+    echo [ERREUR] Impossible de contacter le cluster Kubernetes. Verifie Docker Desktop et Kind.
+    pause
+    exit /b
+)
+
 echo ============================
 echo [1/6] Build des images PostgreSQL par pays
 echo ============================
@@ -103,8 +127,15 @@ echo ============================
 echo Suppression des anciens deployments et services...
 kubectl delete deployment db-fr-deployment db-us-deployment db-ch-deployment --ignore-not-found=true
 kubectl delete deployment backend-fr-deployment backend-us-deployment backend-ch-deployment --ignore-not-found=true
+kubectl delete deployment backend-ch-fr-deployment backend-ch-en-deployment backend-ch-de-deployment backend-ch-it-deployment --ignore-not-found=true
 kubectl delete deployment frontend-deployment --ignore-not-found=true
 kubectl delete deployment reverse-proxy-deployment --ignore-not-found=true
+
+echo Suppression des anciens services...
+kubectl delete service db-fr-service db-us-service db-ch-service --ignore-not-found=true
+kubectl delete service backend-fr-service backend-us-service backend-ch-service --ignore-not-found=true
+kubectl delete service backend-ch-fr-service backend-ch-en-service backend-ch-de-service backend-ch-it-service --ignore-not-found=true
+kubectl delete service frontend-service reverse-proxy-service --ignore-not-found=true
 
 echo Suppression des anciens ConfigMaps (obsoletes)...
 kubectl delete configmap initdb-sql init-us-sql init-ch-sql --ignore-not-found=true
