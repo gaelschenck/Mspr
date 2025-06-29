@@ -10,6 +10,11 @@ const mockRouter = {
   push: vi.fn()
 }
 
+// Mock de $route
+const mockRoute = {
+  path: '/'
+}
+
 // Mock de window.location.reload
 const mockReload = vi.fn()
 Object.defineProperty(window, 'location', {
@@ -27,25 +32,41 @@ const i18n = createI18n({
       nav_home: 'Accueil',
       nav_data: 'Données',
       nav_charts: 'Graphiques',
-      nav_prediction: 'Prédiction'
+      nav_prediction: 'Prédiction',
+      nav_etl: 'ETL',
+      cluster: 'Cluster',
+      connected_as: 'Connecté en tant que',
+      logout: 'Déconnexion'
     },
     en: {
       nav_home: 'Home',
       nav_data: 'Data',
       nav_charts: 'Charts',
-      nav_prediction: 'Prediction'
+      nav_prediction: 'Prediction',
+      nav_etl: 'ETL',
+      cluster: 'Cluster',
+      connected_as: 'Connected as',
+      logout: 'Logout'
     },
     de: {
       nav_home: 'Startseite',
       nav_data: 'Daten',
       nav_charts: 'Diagramme',
-      nav_prediction: 'Vorhersage'
+      nav_prediction: 'Vorhersage',
+      nav_etl: 'ETL',
+      cluster: 'Cluster',
+      connected_as: 'Angemeldet als',
+      logout: 'Abmelden'
     },
     it: {
       nav_home: 'Casa',
       nav_data: 'Dati',
       nav_charts: 'Grafici',
-      nav_prediction: 'Predizione'
+      nav_prediction: 'Predizione',
+      nav_etl: 'ETL',
+      cluster: 'Cluster',
+      connected_as: 'Connesso come',
+      logout: 'Disconnetti'
     }
   }
 })
@@ -67,12 +88,16 @@ describe('Header.vue', () => {
       createSpy: vi.fn
     })
     
+    // S'assurer que la locale est toujours en français
+    i18n.global.locale = 'fr'
+    
     // Mount component with required plugins
     wrapper = mount(Header, {
       global: {
         plugins: [pinia, i18n],
         mocks: {
-          $router: mockRouter
+          $router: mockRouter,
+          $route: mockRoute
         },
         stubs: {
           'router-link': true
@@ -84,29 +109,29 @@ describe('Header.vue', () => {
   })
 
   describe('Rendu initial', () => {
-    it('affiche tous les éléments de navigation', () => {
+    it('affiche la navigation selon le pays par défaut (tous les liens)', () => {
       expect(wrapper.find('nav ul').exists()).toBe(true)
-      expect(wrapper.findAll('nav li')).toHaveLength(4)
+      expect(wrapper.findAll('nav li')).toHaveLength(5) // Home, Data, Charts, Prediction, ETL
       
       const links = wrapper.findAll('router-link-stub')
       expect(links[0].attributes('to')).toBe('/')
       expect(links[1].attributes('to')).toBe('/data')
       expect(links[2].attributes('to')).toBe('/graphiques')
       expect(links[3].attributes('to')).toBe('/prediction')
+      expect(links[4].attributes('to')).toBe('/etl')
     })
 
     it('affiche les boutons de sélection de pays', () => {
-      const langButtons = wrapper.findAll('.lang-select button')
-      expect(langButtons).toHaveLength(3)
-      expect(langButtons[0].text()).toBe('FR')
-      expect(langButtons[1].text()).toBe('US')
-      expect(langButtons[2].text()).toBe('CH')
+      const countryButtons = wrapper.findAll('.country-select button')
+      expect(countryButtons).toHaveLength(3)
+      expect(countryButtons[0].text()).toBe('FR')
+      expect(countryButtons[1].text()).toBe('US')
+      expect(countryButtons[2].text()).toBe('CH')
     })
 
     it('affiche le bouton de déconnexion', () => {
-      const allButtons = wrapper.findAll('button')
-      const logoutButton = allButtons.find(button => button.text() === 'Déconnexion')
-      expect(logoutButton).toBeDefined()
+      const logoutButton = wrapper.find('.logout-btn')
+      expect(logoutButton.exists()).toBe(true)
       expect(logoutButton.text()).toBe('Déconnexion')
     })
 
@@ -141,7 +166,7 @@ describe('Header.vue', () => {
 
   describe('Sélection de pays', () => {
     it('définit le pays France et recharge la page', async () => {
-      const frButton = wrapper.findAll('.lang-select button')[0]
+      const frButton = wrapper.findAll('.country-select button')[0]
       
       await frButton.trigger('click')
       
@@ -150,7 +175,7 @@ describe('Header.vue', () => {
     })
 
     it('définit le pays USA et recharge la page', async () => {
-      const usButton = wrapper.findAll('.lang-select button')[1]
+      const usButton = wrapper.findAll('.country-select button')[1]
       
       await usButton.trigger('click')
       
@@ -159,7 +184,7 @@ describe('Header.vue', () => {
     })
 
     it('définit le cluster Suisse (ch_fr) quand CH est cliqué', async () => {
-      const chButton = wrapper.findAll('.lang-select button')[2]
+      const chButton = wrapper.findAll('.country-select button')[2]
       
       await chButton.trigger('click')
       
@@ -175,7 +200,7 @@ describe('Header.vue', () => {
       // Recréer le wrapper pour prendre en compte le changement d'état
       await wrapper.vm.$nextTick()
       
-      const usButton = wrapper.findAll('.lang-select button')[1]
+      const usButton = wrapper.findAll('.country-select button')[1]
       await usButton.trigger('click')
       
       expect(mockRouter.push).toHaveBeenCalledWith('/cluster-switch-not-allowed')
@@ -225,6 +250,8 @@ describe('Header.vue', () => {
 
   describe('Affichage des informations utilisateur', () => {
     it('affiche le nom d\'utilisateur quand connecté', async () => {
+      // S'assurer que la locale est bien en français
+      wrapper.vm.$i18n.locale = 'fr'
       userStore.username = 'johndoe'
       await wrapper.vm.$nextTick()
       
@@ -277,15 +304,64 @@ describe('Header.vue', () => {
       localStorage.setItem('selectedCountry', 'fr')
       userStore.username = 'testuser'
       
-      const allButtons = wrapper.findAll('button')
-      const logoutButton = allButtons.find(button => button.text() === 'Déconnexion')
-      expect(logoutButton).toBeDefined()
+      const logoutButton = wrapper.find('.logout-btn')
+      expect(logoutButton.exists()).toBe(true)
       
       await logoutButton.trigger('click')
       
       expect(userStore.clearUser).toHaveBeenCalled()
       expect(localStorage.removeItem).toHaveBeenCalledWith('selectedCountry')
       expect(mockRouter.push).toHaveBeenCalledWith('/login')
+    })
+  })
+
+  describe('Navigation conditionnelle par pays', () => {
+    it('affiche toute la navigation pour la France', async () => {
+      await wrapper.setData({ currentCountry: 'fr' })
+      await wrapper.vm.$nextTick()
+      
+      const allowedNav = wrapper.vm.allowedNavigation
+      expect(allowedNav).toHaveLength(5)
+      expect(allowedNav.map(nav => nav.route)).toEqual(['/', '/data', '/graphiques', '/prediction', '/etl'])
+    })
+
+    it('affiche seulement Data et ETL pour les USA', async () => {
+      await wrapper.setData({ currentCountry: 'us' })
+      await wrapper.vm.$nextTick()
+      
+      const allowedNav = wrapper.vm.allowedNavigation
+      expect(allowedNav).toHaveLength(2)
+      expect(allowedNav.map(nav => nav.route)).toEqual(['/data', '/etl'])
+    })
+
+    it('affiche seulement ETL pour la Suisse', async () => {
+      await wrapper.setData({ currentCountry: 'ch_fr' })
+      await wrapper.vm.$nextTick()
+      
+      const allowedNav = wrapper.vm.allowedNavigation
+      expect(allowedNav).toHaveLength(1)
+      expect(allowedNav.map(nav => nav.route)).toEqual(['/etl'])
+    })
+
+    it('affiche seulement ETL pour toutes les langues suisses', async () => {
+      const swissCountries = ['ch_fr', 'ch_en', 'ch_de', 'ch_it']
+      
+      for (const country of swissCountries) {
+        await wrapper.setData({ currentCountry: country })
+        await wrapper.vm.$nextTick()
+        
+        const allowedNav = wrapper.vm.allowedNavigation
+        expect(allowedNav).toHaveLength(1)
+        expect(allowedNav[0].route).toBe('/etl')
+      }
+    })
+
+    it('affiche toute la navigation quand aucun pays sélectionné', async () => {
+      await wrapper.setData({ currentCountry: null })
+      await wrapper.vm.$nextTick()
+      
+      const allowedNav = wrapper.vm.allowedNavigation
+      expect(allowedNav).toHaveLength(5)
     })
   })
 
@@ -320,7 +396,9 @@ describe('Header.vue', () => {
     it('applique les bonnes classes CSS', () => {
       expect(wrapper.find('.header').exists()).toBe(true)
       expect(wrapper.find('.header-content').exists()).toBe(true)
-      expect(wrapper.find('.lang-select').exists()).toBe(true)
+      expect(wrapper.find('.left-section').exists()).toBe(true)
+      expect(wrapper.find('.country-select').exists()).toBe(true)
+      expect(wrapper.find('.right-nav').exists()).toBe(true)
     })
 
     it('affiche les informations de cluster avec la bonne classe', async () => {
@@ -335,6 +413,11 @@ describe('Header.vue', () => {
       await wrapper.vm.$nextTick()
       
       expect(wrapper.find('.user-info').exists()).toBe(true)
+    })
+
+    it('gère le menu burger mobile', () => {
+      expect(wrapper.find('.burger-menu').exists()).toBe(true)
+      expect(wrapper.find('.nav-list').exists()).toBe(true)
     })
   })
 
