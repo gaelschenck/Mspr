@@ -1,33 +1,51 @@
 <template>
   <div>
     <h1>{{ $t('traitement_title') }}</h1>
-    <div v-if="loading" class="loading">Chargement en cours...</div>
+    <div v-if="loading" class="loading">{{ $t('chargement') }}</div>
     <div v-else-if="error" class="error">
-      Erreur lors du chargement des données : {{ error.message }}
-      <button @click="loadData" class="retry-btn">Réessayer</button>
+      {{ $t('erreur_chargement') }} : {{ error.message }}
+      <button @click="loadData" class="retry-btn">{{ $t('reessayer') }}</button>
     </div>
     <div v-else>
+      <div v-if="data.length > 0" class="data-info">
+        <p>{{ data.length }} {{ $t('resultats_par_page') }} - Couverture du traitement antirétroviral (ART)</p>
+        <p v-if="hasNextPage">{{ $t('page_courante') }} {{ page + 1 }} - {{ $t('plus_resultats') }}</p>
+        <p v-else-if="page > 0">{{ $t('page_courante') }} {{ page + 1 }} - {{ $t('derniere_page') }}</p>
+      </div>
+      
       <table v-if="data.length > 0" class="data-table">
         <thead>
           <tr>
             <th>{{ $t('pays') }}</th>
+            <th>{{ $t('region_oms') }}</th>
+            <th>{{ $t('annee') }}</th>
+            <th>{{ $t('type_valeur') }}</th>
             <th>{{ $t('valeur') }}</th>
+            <th>{{ $t('intervalle_confiance') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in data" :key="item.id">
             <td>{{ item.country_name || item.id_pays || 'N/A' }}</td>
+            <td>{{ item.who_region || 'N/A' }}</td>
+            <td>{{ item.year || item.annee || 'N/A' }}</td>
+            <td>{{ formatValueType(item.value_type) }}</td>
             <td>{{ formatNumber(item.value) }}</td>
+            <td>{{ formatConfidenceInterval(item.confidence_min, item.confidence_max) }}</td>
           </tr>
         </tbody>
       </table>
-      <div v-else class="no-data">Aucune donnée disponible</div>
+      <div v-else class="no-data">Aucune donnée disponible pour la couverture ART</div>
     </div>
     
     <!-- Pagination toujours visible sauf en cas d'erreur -->
     <div v-if="!error" class="pagination">
       <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-      <span>Page {{ page + 1 }}</span>
+      <span class="page-info">
+        {{ $t('page_courante') }} {{ page + 1 }}
+        <span v-if="hasNextPage"> - {{ $t('plus_resultats') }}</span>
+        <span v-else-if="page > 0"> - {{ $t('derniere_page') }}</span>
+      </span>
       <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
     </div>
   </div>
@@ -96,8 +114,45 @@ function prevPage() {
 }
 
 function formatNumber(value) {
-  if (value === null || value === undefined) return 'N/A';
-  return Number(value).toLocaleString('fr-FR', { maximumFractionDigits: 2 });
+  if (value === null || value === undefined || value === '') return 'N/A';
+  
+  // Si c'est déjà une chaîne (ex: "No data"), la retourner telle quelle
+  if (typeof value === 'string') return value;
+  
+  const num = Number(value);
+  if (isNaN(num)) return 'N/A';
+  
+  // Formatage différent selon la taille du nombre
+  if (num >= 1000000) {
+    return (num / 1000000).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + 'K';
+  } else {
+    return num.toLocaleString('fr-FR', { maximumFractionDigits: 2 });
+  }
+}
+
+function formatValueType(valueType) {
+  if (!valueType) return 'N/A';
+  
+  // Traductions des types de valeurs les plus courants pour ART Coverage
+  const translations = {
+    'reported_receiving_art': 'Personnes sous traitement ART',
+    'estimated_living_with_hiv': 'Personnes vivant avec le VIH (estimé)',
+    'estimated_art_coverage_percent': 'Couverture ART (pourcentage)',
+    'count': 'Nombre',
+    'percent': 'Pourcentage'
+  };
+  
+  return translations[valueType] || valueType;
+}
+
+function formatConfidenceInterval(min, max) {
+  if (!min && !max) return 'N/A';
+  if (min && max) return `[${Number(min).toFixed(0)} - ${Number(max).toFixed(0)}]`;
+  if (min) return `≥ ${Number(min).toFixed(0)}`;
+  if (max) return `≤ ${Number(max).toFixed(0)}`;
+  return 'N/A';
 }
 
 onMounted(loadData);
@@ -118,6 +173,23 @@ watch(page, loadData);
   padding: 1em;
   text-align: center;
   color: #666;
+}
+
+.data-info {
+  background: #e9ecef;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.data-info p {
+  margin: 0.25rem 0;
+  color: #495057;
+}
+
+.page-info {
+  font-weight: 500;
+  color: #495057;
 }
 
 .error {

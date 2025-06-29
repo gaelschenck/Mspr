@@ -102,7 +102,8 @@ export async function fetchHealthIndicators(offset = 0, limit = 25, filters = {}
 
 export async function fetchHealthIndicatorsDetailed(filters = {}) {
   try {
-    const response = await apiClient.get('/health-indicators/detailed/', { params: filters });
+    // Utilise l'endpoint paginé au lieu de detailed pour avoir une vraie pagination
+    const response = await apiClient.get('/health-indicators/paginated/', { params: filters });
     return response.data;
   } catch (error) {
     console.error('Erreur lors du chargement des indicateurs détaillés:', error);

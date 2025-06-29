@@ -1,15 +1,15 @@
 <template>
   <div class="health-data-container">
-    <h1>{{ $t('health_data_title', 'Indicateurs de Santé') }}</h1>
+    <h1>{{ $t('health_data_title') }}</h1>
     
     <!-- Filtres -->
     <div class="filters-section">
-      <h3>{{ $t('filters', 'Filtres') }}</h3>
+      <h3>{{ $t('filters') }}</h3>
       <div class="filters-grid">
         <div class="filter-group">
-          <label>{{ $t('country', 'Pays') }}:</label>
+          <label>{{ $t('country') }}:</label>
           <select v-model="filters.country_name" @change="applyFilters">
-            <option value="">{{ $t('all_countries', 'Tous les pays') }}</option>
+            <option value="">{{ $t('all_countries') }}</option>
             <option v-for="country in countries" :key="country.id" :value="country.name">
               {{ country.name }}
             </option>
@@ -17,9 +17,9 @@
         </div>
         
         <div class="filter-group">
-          <label>{{ $t('indicator_type', 'Type d\'indicateur') }}:</label>
-          <select v-model="filters.indicator_name" @change="applyFilters">
-            <option value="">{{ $t('all_indicators', 'Tous les indicateurs') }}</option>
+          <label>{{ $t('indicator_type') }}:</label>
+          <select v-model="filters.indicator_type_name" @change="applyFilters">
+            <option value="">{{ $t('all_indicators') }}</option>
             <option v-for="indicator in indicatorTypes" :key="indicator.id" :value="indicator.name">
               {{ indicator.name }}
             </option>
@@ -27,9 +27,9 @@
         </div>
         
         <div class="filter-group">
-          <label>{{ $t('year', 'Année') }}:</label>
+          <label>{{ $t('year') }}:</label>
           <select v-model="filters.year" @change="applyFilters">
-            <option value="">{{ $t('all_years', 'Toutes les années') }}</option>
+            <option value="">{{ $t('all_years') }}</option>
             <option v-for="year in availableYears" :key="year" :value="year">
               {{ year }}
             </option>
@@ -37,9 +37,9 @@
         </div>
         
         <div class="filter-group">
-          <label>{{ $t('who_region', 'Région OMS') }}:</label>
+          <label>{{ $t('who_region') }}:</label>
           <select v-model="filters.who_region" @change="applyFilters">
-            <option value="">{{ $t('all_regions', 'Toutes les régions') }}</option>
+            <option value="">{{ $t('all_regions') }}</option>
             <option v-for="region in availableRegions" :key="region" :value="region">
               {{ region }}
             </option>
@@ -48,41 +48,41 @@
       </div>
       
       <div class="filter-actions">
-        <button @click="clearFilters" class="clear-btn">{{ $t('clear_filters', 'Effacer les filtres') }}</button>
-        <button @click="applyFilters" class="apply-btn">{{ $t('apply_filters', 'Appliquer') }}</button>
+        <button @click="clearFilters" class="clear-btn">{{ $t('clear_filters') }}</button>
+        <button @click="applyFilters" class="apply-btn">{{ $t('apply_filters') }}</button>
       </div>
     </div>
     
     <!-- État de chargement et erreurs -->
-    <div v-if="loading" class="loading">{{ $t('loading', 'Chargement en cours...') }}</div>
+    <div v-if="loading" class="loading">{{ $t('loading') }}</div>
     <div v-else-if="error" class="error">
-      {{ $t('error_loading', 'Erreur lors du chargement des données') }} : {{ error.message }}
-      <button @click="loadData" class="retry-btn">{{ $t('retry', 'Réessayer') }}</button>
+      {{ $t('error_loading') }} : {{ error.message }}
+      <button @click="loadData" class="retry-btn">{{ $t('retry') }}</button>
     </div>
     
     <!-- Tableau de données -->
     <div v-else class="data-section">
       <div v-if="healthData.length === 0" class="no-data">
-        {{ $t('no_data', 'Aucune donnée disponible pour les filtres sélectionnés') }}
+        {{ $t('no_data') }}
       </div>
       
       <table v-else class="data-table">
         <thead>
           <tr>
-            <th>{{ $t('country', 'Pays') }}</th>
-            <th>{{ $t('who_region', 'Région OMS') }}</th>
-            <th>{{ $t('indicator_type', 'Type d\'indicateur') }}</th>
-            <th>{{ $t('year', 'Année') }}</th>
-            <th>{{ $t('value_type', 'Type de valeur') }}</th>
-            <th>{{ $t('value', 'Valeur') }}</th>
-            <th>{{ $t('confidence_interval', 'Intervalle de confiance') }}</th>
+            <th>{{ $t('country') }}</th>
+            <th>{{ $t('who_region') }}</th>
+            <th>{{ $t('indicator_type') }}</th>
+            <th>{{ $t('year') }}</th>
+            <th>{{ $t('value_type') }}</th>
+            <th>{{ $t('value') }}</th>
+            <th>{{ $t('confidence_interval') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in healthData" :key="`${item.id}-${item.country?.id}-${item.indicator_type?.id}`">
-            <td>{{ item.country?.name || 'N/A' }}</td>
-            <td>{{ item.country?.who_region || 'N/A' }}</td>
-            <td>{{ item.indicator_type?.name || 'N/A' }}</td>
+          <tr v-for="item in healthData" :key="`${item.id}-${item.country_id}-${item.indicator_type_id}`">
+            <td>{{ item.country_name || 'N/A' }}</td>
+            <td>{{ item.who_region || 'N/A' }}</td>
+            <td>{{ item.indicator_type_name || 'N/A' }}</td>
             <td>{{ item.year || 'N/A' }}</td>
             <td>{{ item.value_type || 'N/A' }}</td>
             <td>{{ formatValue(item.value, item.value_text) }}</td>
@@ -95,15 +95,15 @@
     <!-- Pagination -->
     <div v-if="!error && !loading" class="pagination">
       <button @click="prevPage" :disabled="page === 0" class="page-btn">
-        {{ $t('previous', 'Précédent') }}
+        {{ $t('previous') }}
       </button>
       <span class="page-info">
-        {{ $t('page', 'Page') }} {{ page + 1 }}
+        {{ $t('page') }} {{ page + 1 }}
         <span v-if="totalPages > 0">/ {{ totalPages }}</span>
-        ({{ healthData.length }} {{ $t('results', 'résultats') }})
+        ({{ healthData.length }} {{ $t('results') }})
       </span>
       <button @click="nextPage" :disabled="!hasNextPage" class="page-btn">
-        {{ $t('next', 'Suivant') }}
+        {{ $t('next') }}
       </button>
     </div>
   </div>
@@ -136,7 +136,7 @@ const error = ref(null);
 // Filtres
 const filters = ref({
   country_name: '',
-  indicator_name: '',
+  indicator_type_name: '',
   year: '',
   who_region: ''
 });
@@ -160,19 +160,40 @@ function formatConfidenceInterval(min, max) {
 async function loadInitialData() {
   try {
     // Charger les pays
-    const countriesData = await fetchCountries(0, 1000); // Charger tous les pays
-    countries.value = countriesData;
+    const countriesData = await fetchFromAPI('/countries/list/');
+    countries.value = Array.isArray(countriesData) ? countriesData : [];
     
     // Charger les types d'indicateurs
     const indicatorsData = await fetchIndicatorTypes();
-    indicatorTypes.value = indicatorsData;
+    indicatorTypes.value = Array.isArray(indicatorsData) ? indicatorsData : [];
     
-    // Charger les années et régions disponibles
-    const yearsData = await fetchFromAPI('/health-indicators/years/');
-    availableYears.value = yearsData.sort((a, b) => b - a); // Tri décroissant
+    // Charger les années disponibles
+    try {
+      const yearsData = await fetchFromAPI('/health-indicators/years/');
+      console.log('Données années reçues:', yearsData);
+      const years = yearsData?.years || [];
+      console.log('Années extraites:', years);
+      availableYears.value = Array.isArray(years) ? years.sort((a, b) => b - a) : [];
+      console.log('Années finales:', availableYears.value);
+    } catch (err) {
+      console.warn('Erreur lors du chargement des années:', err);
+      // Fallback: années par défaut
+      availableYears.value = [2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015];
+    }
     
-    const regionsData = await fetchFromAPI('/countries/regions/');
-    availableRegions.value = regionsData;
+    // Charger les régions disponibles
+    try {
+      const regionsData = await fetchFromAPI('/countries/regions/');
+      console.log('Données régions reçues:', regionsData);
+      const regions = regionsData?.who_regions || [];
+      console.log('Régions extraites:', regions);
+      availableRegions.value = Array.isArray(regions) ? regions : [];
+      console.log('Régions finales:', availableRegions.value);
+    } catch (err) {
+      console.warn('Erreur lors du chargement des régions:', err);
+      // Fallback: régions OMS par défaut
+      availableRegions.value = ['AFRO', 'AMRO', 'SEARO', 'EURO', 'EMRO', 'WPRO'];
+    }
     
   } catch (err) {
     console.error('Erreur lors du chargement des données initiales:', err);
@@ -202,6 +223,22 @@ async function loadData() {
       healthData.value = result;
     }
     
+    // Si c'est la première page et qu'on n'a pas encore d'années/régions, les extraire des données
+    if (page.value === 0 && availableYears.value.length === 0 && result.length > 0) {
+      console.log('Extraction des années et régions depuis les données...');
+      const years = [...new Set(result.map(item => item.year).filter(year => year))].sort((a, b) => b - a);
+      const regions = [...new Set(result.map(item => item.who_region).filter(region => region))];
+      
+      if (years.length > 0) {
+        availableYears.value = years;
+        console.log('Années extraites des données:', years);
+      }
+      if (regions.length > 0) {
+        availableRegions.value = regions;
+        console.log('Régions extraites des données:', regions);
+      }
+    }
+    
     // Estimation du nombre total de pages (approximative)
     if (hasNextPage.value) {
       totalPages.value = page.value + 2; // Au moins 2 pages
@@ -226,7 +263,7 @@ function applyFilters() {
 function clearFilters() {
   filters.value = {
     country_name: '',
-    indicator_name: '',
+    indicator_type_name: '',
     year: '',
     who_region: ''
   };

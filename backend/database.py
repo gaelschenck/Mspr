@@ -97,9 +97,9 @@ else:
     TEST_MODE = os.getenv("TEST_MODE", "false").lower() == "true"
     
     if TEST_MODE:
-        # En mode test, utiliser SQLite en mémoire
-        DATABASE_URL = "sqlite+aiosqlite:///:memory:"
-        logger.info("Mode TEST activé - Utilisation de SQLite en mémoire")
+        # En mode test, utiliser la vraie base SQLite locale
+        DATABASE_URL = "sqlite+aiosqlite:///./normalized_health_data.db"
+        logger.info("Mode TEST activé - Utilisation de SQLite locale")
         engine = None
     else:
         # Pas de base principale, on laisse le script d'init gérer ses propres connexions

@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, Request, Query
 import joblib
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy import select, update, delete
+from sqlalchemy.orm import selectinload
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import models, schemas
@@ -532,101 +533,221 @@ async def health_check():
 # ========================
 
 @app.post("/dataframe/")
-async def create_dataframe(payload: schemas.PredictionRequest, db: AsyncSession = Depends(get_db)):
+async def create_dataframe(payload: schemas.DataframeRequest, db: AsyncSession = Depends(get_db)):
     """
-    Endpoint pour générer un DataFrame basé sur les choix de l'utilisateur.
-    Utilise le nouveau schéma normalisé.
+    Endpoint ultra-flexible pour générer des DataFrames avec filtres multiples.
+    Version intégrée - pas de dépendance externe.
     """
-    region = payload.region
-    country = payload.country
-    indicator_type = payload.indicator_type
-    value_type = payload.value_type
+    
+    print(f"Requête DataFrame flexible reçue:")
+    print(f"   - Géographie: région={payload.who_region}, pays={payload.pays}, countries={payload.countries}")
+    print(f"   - Temporel: années={payload.years}, période={payload.year_min}-{payload.year_max}")
+    print(f"   - Indicateurs: table={payload.table}, types={payload.indicator_types}")
+    print(f"   - Valeurs: min={payload.value_min}, max={payload.value_max}, qualité={payload.data_quality}")
+    print(f"   - Config: target={payload.target_column}, max_records={payload.max_records}")
 
-    # Validation des paramètres
-    if not region and not country:
-        raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
-
-    # Construire la requête pour récupérer les indicateurs de santé
+    # Construction dynamique de la requête de base
     query = select(models.HealthIndicator).options(
         selectinload(models.HealthIndicator.country),
         selectinload(models.HealthIndicator.indicator_type)
     )
-
-    # Filtres par région ou pays
-    if region:
-        query = query.join(models.Country).filter(models.Country.who_region == region)
-    if country:
-        query = query.join(models.Country).filter(models.Country.name == country)
-
-    # Filtre par type d'indicateur
-    if indicator_type:
-        query = query.join(models.IndicatorType).filter(models.IndicatorType.name == indicator_type)
-
-    # Filtre par type de valeur
-    if value_type:
-        query = query.filter(models.HealthIndicator.value_type == value_type)
-
+    
+    # Jointures nécessaires (optimisées)
+    joins_applied = set()
+    
+    # === FILTRES GÉOGRAPHIQUES ===
+    geographic_filters = []
+    
+    if payload.who_region:
+        if 'country' not in joins_applied:
+            query = query.join(models.Country)
+            joins_applied.add('country')
+        geographic_filters.append(models.Country.who_region.ilike(f"%{payload.who_region}%"))
+    
+    if payload.pays:
+        if 'country' not in joins_applied:
+            query = query.join(models.Country)
+            joins_applied.add('country')
+        geographic_filters.append(models.Country.name.ilike(f"%{payload.pays}%"))
+    
+    if payload.countries:
+        if 'country' not in joins_applied:
+            query = query.join(models.Country)
+            joins_applied.add('country')
+        from sqlalchemy import or_
+        country_filters = [models.Country.name.ilike(f"%{country}%") for country in payload.countries]
+        geographic_filters.append(or_(*country_filters))
+    
+    # Appliquer les filtres géographiques
+    if geographic_filters:
+        from sqlalchemy import or_
+        query = query.filter(or_(*geographic_filters))
+    
+    # === FILTRES TEMPORELS ===
+    if payload.year_min:
+        query = query.filter(models.HealthIndicator.year >= payload.year_min)
+    
+    if payload.year_max:
+        query = query.filter(models.HealthIndicator.year <= payload.year_max)
+    
+    if payload.years:
+        query = query.filter(models.HealthIndicator.year.in_(payload.years))
+    
+    # === FILTRES SUR LES INDICATEURS ===
+    if payload.table != "statistique":  # Mode spécifique
+        table_mapping = {
+            "population_hiv": "People Living with HIV",
+            "traitement": "ART Coverage", 
+            "transmission_mere_enfant": "Prevention of Mother-to-Child Transmission",
+            "mortalite": "HIV-related Deaths",
+            "art_coverage": "ART Coverage",
+            "hiv_deaths": "HIV-related Deaths"
+        }
+        
+        indicator_type = table_mapping.get(payload.table, payload.table)
+        
+        if 'indicator_type' not in joins_applied:
+            query = query.join(models.IndicatorType)
+            joins_applied.add('indicator_type')
+        
+        query = query.filter(models.IndicatorType.name.ilike(f"%{indicator_type}%"))
+    
+    if payload.indicator_types:
+        if 'indicator_type' not in joins_applied:
+            query = query.join(models.IndicatorType)
+            joins_applied.add('indicator_type')
+        
+        from sqlalchemy import or_
+        indicator_filters = [models.IndicatorType.name.ilike(f"%{ind_type}%") for ind_type in payload.indicator_types]
+        query = query.filter(or_(*indicator_filters))
+    
+    if payload.value_types:
+        query = query.filter(models.HealthIndicator.value_type.in_(payload.value_types))
+    
+    # === FILTRES SUR LES VALEURS ===
+    if payload.value_min is not None:
+        query = query.filter(models.HealthIndicator.value >= payload.value_min)
+    
+    if payload.value_max is not None:
+        query = query.filter(models.HealthIndicator.value <= payload.value_max)
+    
+    if payload.data_quality:
+        query = query.filter(models.HealthIndicator.data_quality.in_(payload.data_quality))
+    
+    # === OPTIMISATIONS ===
+    # Limiter le nombre d'enregistrements pour les performances
+    query = query.limit(payload.max_records)
+    
+    # Ordonner par année décroissante pour avoir les données les plus récentes
+    query = query.order_by(models.HealthIndicator.year.desc())
+    
+    print(f"Exécution de la requête optimisée...")
+    
     # Exécuter la requête
     result = await db.execute(query)
     health_indicators = result.scalars().all()
 
     if not health_indicators:
-        raise HTTPException(status_code=404, detail="Aucun indicateur trouvé avec ces critères")
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Aucune donnée trouvée avec les critères spécifiés. Essayez d'élargir les filtres."
+        )
 
-    # Conversion en DataFrame
+    # === CONSTRUCTION DU DATAFRAME OPTIMISÉE ===
+    print(f"Construction du DataFrame avec {len(health_indicators)} enregistrements...")
+    
     data = []
     for indicator in health_indicators:
-        data.append({
+        row = {
             "id": indicator.id,
             "country_id": indicator.country_id,
             "country_name": indicator.country.name if indicator.country else None,
             "who_region": indicator.country.who_region if indicator.country else None,
+            "iso_code": indicator.country.iso_code if indicator.country else None,
             "indicator_type_id": indicator.indicator_type_id,
             "indicator_type_name": indicator.indicator_type.name if indicator.indicator_type else None,
             "year": indicator.year,
             "value_type": indicator.value_type,
             "value": float(indicator.value) if indicator.value else None,
             "value_text": indicator.value_text,
-            "confidence_min": float(indicator.confidence_min) if indicator.confidence_min else None,
-            "confidence_max": float(indicator.confidence_max) if indicator.confidence_max else None,
-            "confidence_median": float(indicator.confidence_median) if indicator.confidence_median else None,
             "data_quality": indicator.data_quality,
             "source_file": indicator.source_file
-        })
+        }
+        
+        # Inclure les intervalles de confiance si demandé
+        if payload.include_confidence:
+            # Conversion sûre pour éviter les NaN
+            conf_min = indicator.confidence_min
+            conf_max = indicator.confidence_max
+            conf_med = indicator.confidence_median
+            
+            row.update({
+                "confidence_min": float(conf_min) if conf_min is not None and not pd.isna(conf_min) else None,
+                "confidence_max": float(conf_max) if conf_max is not None and not pd.isna(conf_max) else None,
+                "confidence_median": float(conf_med) if conf_med is not None and not pd.isna(conf_med) else None,
+            })
+        
+        data.append(row)
 
     df = pd.DataFrame(data)
     
-    # Filtrer les lignes avec des valeurs nulles pour la prédiction
-    df_clean = df.dropna(subset=['value'])
+    # Filtrer les lignes avec des valeurs nulles pour la colonne target
+    if payload.target_column in df.columns:
+        df_clean = df.dropna(subset=[payload.target_column])
+        print(f"Après nettoyage: {len(df_clean)} lignes avec {payload.target_column} non-null")
+    else:
+        df_clean = df.dropna(subset=['value'])  # Fallback sur 'value'
+        print(f"Après nettoyage: {len(df_clean)} lignes avec valeurs numériques")
+
+    if df_clean.empty:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Aucune donnée numérique trouvée pour la colonne '{payload.target_column}'. Vérifiez vos critères de filtrage."
+        )
+
+    # === STATISTIQUES ET MÉTADONNÉES ===
+    # Calculs sûrs pour éviter les NaN
+    target_col = payload.target_column if payload.target_column in df_clean.columns else 'value'
+    target_values = df_clean[target_col].dropna()
     
-    print(f"DataFrame original: {df.shape}, après nettoyage: {df_clean.shape}")
-    print(f"Colonnes: {df_clean.columns.tolist()}")
+    stats = {
+        "total_records": len(df_clean),
+        "countries_count": df_clean['country_name'].nunique(),
+        "regions_count": df_clean['who_region'].nunique(),
+        "indicators_count": df_clean['indicator_type_name'].nunique(),
+        "year_range": f"{int(df_clean['year'].min())}-{int(df_clean['year'].max())}" if not df_clean['year'].empty else "N/A",
+        "value_range": f"{target_values.min():.2f}-{target_values.max():.2f}" if not target_values.empty else "N/A"
+    }
+    
+    print(f"DataFrame créé: {stats}")
 
-    # Vérifications pour éviter les erreurs 422
-    if len(df_clean) == 0:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Aucune donnée numérique trouvée pour région='{region}', pays='{country}', type_indicateur='{indicator_type}'"
-        )
+    # Convertir en dictionnaire pour l'envoi
+    # IMPORTANT: Remplacer TOUS les NaN par None pour compatibilité JSON
+    df_clean = df_clean.replace([np.nan, np.inf, -np.inf], None)
+    
+    df_dict = df_clean.to_dict(orient='records')
 
-    if len(df_clean) < 5:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Pas assez de données pour l'entraînement (seulement {len(df_clean)} lignes, minimum 5 requis). Essayez avec d'autres critères."
-        )
-
-    # Vérifier la variance des valeurs
-    if df_clean['value'].nunique() == 1:
-        unique_val = df_clean['value'].iloc[0]
-        raise HTTPException(
-            status_code=422,
-            detail=f"Toutes les valeurs sont identiques ({unique_val}). Le modèle ne peut pas apprendre. Essayez avec d'autres critères."
-        )
-
-    print(f"✅ Validation réussie: {len(df_clean)} lignes, {df_clean['value'].nunique()} valeurs uniques")
-
-    return {"dataframe": df_clean.to_dict(orient='records')}
-
+    return {
+        "success": True,
+        "data": df_dict,
+        "shape": df_clean.shape,
+        "columns": df_clean.columns.tolist(),
+        "target_column": payload.target_column,
+        "statistics": stats,
+        "metadata": {
+            "filters_applied": {
+                "geographic": bool(payload.who_region or payload.pays or payload.countries),
+                "temporal": bool(payload.year_min or payload.year_max or payload.years),
+                "value_based": bool(payload.value_min is not None or payload.value_max is not None),
+                "quality_based": bool(payload.data_quality)
+            },
+            "optimization": {
+                "max_records_requested": payload.max_records,
+                "actual_records": len(df_clean),
+                "include_confidence": payload.include_confidence
+            }
+        }
+    }
 
 
 @app.get("/tables/")
@@ -700,8 +821,19 @@ async def train_model_endpoint(payload: schemas.TrainingRequest):
         if not target_column:
             raise HTTPException(status_code=400, detail=tr("target_required"))
 
-        # Convertir le dictionnaire en DataFrame
-        df = pd.DataFrame.from_dict(dataframe_dict)
+        # Convertir les données en DataFrame (gérer dict ou list)
+        if isinstance(dataframe_dict, list):
+            # Format liste de dictionnaires (nouveau format ultra-flexible)
+            df = pd.DataFrame(dataframe_dict)
+        elif isinstance(dataframe_dict, dict):
+            # Format dictionnaire traditionnel
+            df = pd.DataFrame.from_dict(dataframe_dict)
+        else:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Format de dataframe non supporté. Attendu: dict ou list, reçu: {type(dataframe_dict)}"
+            )
+            
         print(tr("avant_separation", shape=df.shape))
         print("DataFrame reçu :", df.head())
         print("Colonnes :", df.columns.tolist())
@@ -861,6 +993,8 @@ async def get_health_indicators_paginated(
     """
     Endpoint paginé pour récupérer les indicateurs de santé avec filtres
     """
+    print(f"Requête reçue - country_name: {country_name}, offset: {offset}, limit: {limit}")
+    
     query = select(models.HealthIndicator).options(
         selectinload(models.HealthIndicator.country),
         selectinload(models.HealthIndicator.indicator_type)
@@ -881,6 +1015,23 @@ async def get_health_indicators_paginated(
     query = query.offset(offset).limit(limit)
     result = await db.execute(query)
     data = result.scalars().all()
+    
+    print(f"Nombre d'indicateurs trouvés: {len(data)}")
+    if data:
+        first_item = data[0]
+        print(f"Premier élément - country_id: {first_item.country_id}, indicator_type_id: {first_item.indicator_type_id}")
+        print(f"Relations - country: {first_item.country}, indicator_type: {first_item.indicator_type}")
+        
+        # Debug: vérifier si les IDs existent dans les tables
+        if first_item.country_id:
+            country_check = await db.execute(select(models.Country).filter(models.Country.id == first_item.country_id))
+            country_exists = country_check.scalar_one_or_none()
+            print(f"Country ID {first_item.country_id} existe: {country_exists is not None}")
+        
+        if first_item.indicator_type_id:
+            indicator_check = await db.execute(select(models.IndicatorType).filter(models.IndicatorType.id == first_item.indicator_type_id))
+            indicator_exists = indicator_check.scalar_one_or_none()
+            print(f"IndicatorType ID {first_item.indicator_type_id} existe: {indicator_exists is not None}")
     
     return [
         {
@@ -1006,4 +1157,78 @@ async def get_pays_legacy_full(db: AsyncSession = Depends(get_db)):
     return await get_countries_list(db)
 
 # ========================
+# ENDPOINTS - MAPPING ET COLUMNS
+# ========================
+
+@app.get("/tables/columns/")
+async def get_table_columns(table: str = Query(...), db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer les colonnes disponibles pour une table donnée.
+    """
+    # Mapping des "tables" frontend vers les types d'indicateurs
+    table_mapping = {
+        "health_indicators": None,  # Tous les indicateurs
+        "population_hiv": "People living with HIV",
+        "traitement": "ART Coverage", 
+        "transmission_mere_enfant": "Prevention of Mother-to-Child Transmission",
+        "mortalite": "AIDS Deaths",
+        "indicator_types": None  # Table spéciale pour les types d'indicateurs
+    }
+    
+    if table == "indicator_types":
+        # Retourner les colonnes des types d'indicateurs
+        return {"columns": ["value", "year"]}
+    
+    # Colonnes numériques disponibles pour la prédiction
+    available_columns = [
+        "value",
+        "confidence_min", 
+        "confidence_max",
+        "confidence_median",
+        "year",
+        "country_id",
+        "indicator_type_id"
+    ]
+    
+    return {"columns": available_columns}
+
+@app.get("/tables/mapping/")
+async def get_table_mapping():
+    """
+    Endpoint pour récupérer le mapping entre les noms de tables frontend et les types d'indicateurs.
+    """
+    return {
+        "table_mapping": {
+            "health_indicators": {
+                "name": "Tous les indicateurs de santé",
+                "indicator_type": None,
+                "description": "Table principale contenant tous les indicateurs"
+            },
+            "population_hiv": {
+                "name": "Population vivant avec le VIH", 
+                "indicator_type": "People living with HIV",
+                "description": "Données sur la population vivant avec le VIH"
+            },
+            "traitement": {
+                "name": "Traitement antirétroviral",
+                "indicator_type": "ART Coverage",
+                "description": "Couverture du traitement antirétroviral"
+            },
+            "transmission_mere_enfant": {
+                "name": "Transmission mère-enfant",
+                "indicator_type": "Prevention of Mother-to-Child Transmission", 
+                "description": "Prévention de la transmission mère-enfant"
+            },
+            "mortalite": {
+                "name": "Mortalité liée au SIDA",
+                "indicator_type": "AIDS Deaths",
+                "description": "Données de mortalité liée au SIDA"
+            },
+            "indicator_types": {
+                "name": "Types d'indicateurs",
+                "indicator_type": None,
+                "description": "Métadonnées sur les types d'indicateurs"
+            }
+        }
+    }
 

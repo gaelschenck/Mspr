@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Union
 
 
 ### SCHEMAS POUR COUNTRIES (PAYS)
@@ -94,6 +94,69 @@ class ETLMetadata(ETLMetadataBase):
 
 
 ### SCHEMAS POUR PRÉDICTION
+class DataframeRequest(BaseModel):
+    # Filtres géographiques
+    who_region: Optional[str] = Field(None, description="Région WHO pour filtrer les données")
+    pays: Optional[str] = Field(None, description="Nom du pays pour filtrer les données")
+    countries: Optional[List[str]] = Field(None, description="Liste de pays spécifiques")
+    
+    # Filtres temporels
+    year_min: Optional[int] = Field(None, ge=1900, le=2100, description="Année minimum")
+    year_max: Optional[int] = Field(None, ge=1900, le=2100, description="Année maximum")
+    years: Optional[List[int]] = Field(None, description="Années spécifiques")
+    
+    # Filtres sur les indicateurs
+    table: str = Field(..., description="Type de table/indicateur")
+    indicator_types: Optional[List[str]] = Field(None, description="Types d'indicateurs spécifiques")
+    value_types: Optional[List[str]] = Field(None, description="Types de valeurs spécifiques")
+    
+    # Filtres sur les valeurs
+    value_min: Optional[float] = Field(None, description="Valeur minimum")
+    value_max: Optional[float] = Field(None, description="Valeur maximum")
+    data_quality: Optional[List[str]] = Field(None, description="Niveaux de qualité des données")
+    
+    # Configuration de sortie
+    target_column: str = Field(..., description="Colonne cible à prédire")
+    max_records: Optional[int] = Field(10000, ge=100, le=100000, description="Nombre maximum d'enregistrements")
+    include_confidence: Optional[bool] = Field(True, description="Inclure les intervalles de confiance")
+    
+    class Config:
+        json_schema_extra = {
+            "examples": [
+                {
+                    "description": "Analyse par pays",
+                    "pays": "France",
+                    "table": "statistique",
+                    "target_column": "value"
+                },
+                {
+                    "description": "Analyse régionale avec période",
+                    "who_region": "Europe",
+                    "year_min": 2015,
+                    "year_max": 2023,
+                    "table": "population_hiv",
+                    "target_column": "value"
+                },
+                {
+                    "description": "Analyse multi-pays avec filtres qualité",
+                    "countries": ["France", "Germany", "Italy"],
+                    "data_quality": ["good", "excellent"],
+                    "value_min": 0,
+                    "table": "traitement",
+                    "target_column": "value",
+                    "max_records": 5000
+                },
+                {
+                    "description": "Analyse globale maximale",
+                    "table": "statistique",
+                    "target_column": "value",
+                    "max_records": 50000,
+                    "include_confidence": True
+                }
+            ]
+        }
+
+
 class PredictionRequest(BaseModel):
     region: Optional[str] = None
     country: Optional[str] = None
@@ -102,7 +165,7 @@ class PredictionRequest(BaseModel):
 
 
 class TrainingRequest(BaseModel):
-    dataframe: dict = Field(..., description="DataFrame au format dictionnaire")
+    dataframe: Union[dict, List[dict]] = Field(..., description="DataFrame au format dictionnaire ou liste de dictionnaires")
     target_column: str = Field(..., description="Colonne cible à prédire")
 
 

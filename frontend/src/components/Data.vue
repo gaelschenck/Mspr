@@ -4,20 +4,20 @@
     
     <!-- Navigation vers les différentes vues de données -->
     <div class="data-navigation">
-      <h2>{{ $t('data_sources', 'Sources de données disponibles') }}</h2>
+      <h2>{{ $t('data_sources') }}</h2>
       
       <!-- Nouveau composant unifié -->
       <div class="nav-section modern">
-        <h3>{{ $t('unified_data', 'Vue unifiée des données') }}</h3>
-        <p>{{ $t('unified_description', 'Explorez toutes les données de santé avec filtres avancés') }}</p>
+        <h3>{{ $t('unified_data') }}</h3>
+        <p>{{ $t('unified_description') }}</p>
         <router-link to="/health-data" class="nav-link primary">
-          {{ $t('explore_health_data', 'Explorer les données de santé') }}
+          {{ $t('explore_health_data') }}
         </router-link>
       </div>
       
       <!-- Anciennes vues spécialisées (compatibilité) -->
       <div class="nav-section legacy">
-        <h3>{{ $t('specialized_views', 'Vues spécialisées') }}</h3>
+        <h3>{{ $t('specialized_views') }}</h3>
         <ul class="specialized-links">
           <li><router-link to="/us-mortalite">{{ $t('data_mortalite_us') }}</router-link></li>
           <li><router-link to="/population-hiv">{{ $t('data_population_hiv') }}</router-link></li>

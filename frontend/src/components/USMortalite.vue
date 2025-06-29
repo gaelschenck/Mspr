@@ -1,14 +1,16 @@
 <template>
   <div>
     <h1>{{ $t('mortalite_title') }}</h1>
-    <div v-if="loading" class="loading">Chargement en cours...</div>
+    <div v-if="loading" class="loading">{{ $t('chargement') }}</div>
     <div v-else-if="error" class="error">
-      Erreur lors du chargement des données : {{ error.message }}
-      <button @click="loadData" class="retry-btn">Réessayer</button>
+      {{ $t('erreur_chargement') }} : {{ error.message }}
+      <button @click="loadData" class="retry-btn">{{ $t('reessayer') }}</button>
     </div>
     <div v-else>
       <div v-if="usData.length > 0" class="data-info">
-        <p>{{ usData.length }} résultat(s) trouvé(s) pour les décès liés au VIH</p>
+        <p>{{ usData.length }} {{ $t('resultats_par_page') }}</p>
+        <p v-if="hasNextPage">{{ $t('page_courante') }} {{ page + 1 }} - {{ $t('plus_resultats') }}</p>
+        <p v-else-if="page > 0">{{ $t('page_courante') }} {{ page + 1 }} - {{ $t('derniere_page') }}</p>
       </div>
       <table v-if="usData.length > 0" class="data-table">
         <thead>
@@ -16,8 +18,8 @@
             <th>{{ $t('pays') }}</th>
             <th>{{ $t('annee') }}</th>
             <th>{{ $t('valeur') }}</th>
-            <th>Type</th>
-            <th>Région WHO</th>
+            <th>{{ $t('type_valeur') }}</th>
+            <th>{{ $t('region_oms') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -30,13 +32,17 @@
           </tr>
         </tbody>
       </table>
-      <div v-else class="no-data">Aucune donnée disponible</div>
+      <div v-else class="no-data">{{ $t('aucune_donnee') }}</div>
     </div>
     
     <!-- Pagination toujours visible sauf en cas d'erreur -->
     <div v-if="!error" class="pagination">
       <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-      <span>Page {{ page + 1 }}</span>
+      <span class="page-info">
+        {{ $t('page_courante') }} {{ page + 1 }}
+        <span v-if="hasNextPage"> - {{ $t('plus_resultats') }}</span>
+        <span v-else-if="page > 0"> - {{ $t('derniere_page') }}</span>
+      </span>
       <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
     </div>
   </div>
@@ -66,7 +72,7 @@ async function loadData() {
     if (result.length > limit) {
       // Il y a plus de données disponibles
       hasNextPage.value = true;
-      // Pour l'instant, on ne filtre pas pour voir toutes les données
+      // On affiche les 25 premiers (limit) et garde le 26e pour détecter s'il y a une suite
       usData.value = result.slice(0, limit);
     } else {
       // Pas de page suivante
@@ -124,6 +130,30 @@ watch(() => page.value, loadData);
   align-items: center;
   gap: 1em;
   justify-content: center;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #007bff;
+  background: white;
+  color: #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #007bff;
+  color: white;
+}
+
+.page-info {
+  font-weight: 500;
+  color: #495057;
 }
 
 .loading {

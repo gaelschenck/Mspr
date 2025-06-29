@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1>{{ $t('transmission_mere_enfant_title') }}</h1>
-    <div v-if="loading" class="loading">Chargement en cours...</div>
+    <div v-if="loading" class="loading">{{ $t('chargement') }}</div>
     <div v-else-if="error" class="error">
-      Erreur lors du chargement des données : {{ error.message }}
-      <button @click="loadData" class="retry-btn">Réessayer</button>
+      {{ $t('erreur_chargement') }} : {{ error.message }}
+      <button @click="loadData" class="retry-btn">{{ $t('reessayer') }}</button>
     </div>
     <div v-else>
       <table v-if="data.length > 0" class="data-table">
@@ -12,10 +12,10 @@
           <tr>
             <th>{{ $t('pays') }}</th>
             <th>{{ $t('valeur') }}</th>
-            <th>Confiance Min</th>
-            <th>Confiance Médian</th>
-            <th>Confiance Max</th>
-            <th>Type de valeur</th>
+            <th>{{ $t('confiance_min') }}</th>
+            <th>{{ $t('confiance_median') }}</th>
+            <th>{{ $t('confiance_max') }}</th>
+            <th>{{ $t('type_valeur') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -29,14 +29,14 @@
           </tr>
         </tbody>
       </table>
-      <div v-else class="no-data">Aucune donnée disponible</div>
+      <div v-else class="no-data">{{ $t('aucune_donnee') }}</div>
     </div>
     
     <!-- Pagination toujours visible sauf en cas d'erreur -->
     <div v-if="!error" class="pagination">
-      <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-      <span>Page {{ page + 1 }}</span>
-      <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
+      <button @click="prevPage" :disabled="page === 0 || loading">{{ $t('previous') }}</button>
+      <span>{{ $t('page') }} {{ page + 1 }}</span>
+      <button @click="nextPage" :disabled="!hasNextPage || loading">{{ $t('next') }}</button>
     </div>
   </div>
 </template>

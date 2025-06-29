@@ -65,6 +65,8 @@ const success = ref(null);
 
 // Chargement initial des données
 onMounted(async () => {
+  console.log("🚀 NOUVEAU TESTPREDICTION.VUE CHARGÉ - VERSION CORRIGÉE !");
+  
   try {
     loading.value = true;
     error.value = null;
@@ -99,8 +101,41 @@ const fetchColumns = async () => {
     loading.value = true;
     error.value = null;
     
-    const response = await fetchFromAPI(`/columns/${selectedTable.value}`);
-    columns.value = response.columns;
+    console.log("🔧 NOUVEAU CODE - fetchColumns appelé avec table:", selectedTable.value);
+    
+    // Définir les colonnes selon la table sélectionnée
+    const columnsByTable = {
+      'health_indicators': [
+        'value',           // Valeur numérique principale
+        'year',           // Année 
+        'confidence_min', // Confiance minimum
+        'confidence_max', // Confiance maximum
+        'confidence_median' // Confiance médiane
+      ],
+      'table_mortalite': [
+        'value',
+        'year'
+      ],
+      'table_population_hiv': [
+        'value',
+        'year'
+      ],
+      'table_statistique': [
+        'value',
+        'year'
+      ],
+      'table_traitement': [
+        'value',
+        'year'
+      ],
+      'table_transmission_mere_enfant': [
+        'value',
+        'year'
+      ]
+    };
+    
+    // Utiliser les colonnes prédéfinies ou des valeurs par défaut
+    columns.value = columnsByTable[selectedTable.value] || ['value', 'year'];
     console.log("Colonnes pour", selectedTable.value, ":", columns.value);
     
     // Réinitialiser la colonne sélectionnée

@@ -313,8 +313,25 @@ def preprocess_features(X):
     """
     Prépare les caractéristiques (features) pour l'entraînement du modèle.
     - Supprime ou encode les colonnes non numériques.
+    - Nettoie les valeurs NaN.
     """
     print(tr("before_preprocessing", dtypes=X.dtypes))
+
+    # IMPORTANT: Nettoyer les valeurs NaN avant traitement
+    print(f"Valeurs NaN détectées: {X.isnull().sum().sum()}")
+    if X.isnull().sum().sum() > 0:
+        # Remplacer les NaN par des valeurs appropriées
+        for col in X.columns:
+            if X[col].dtype in ['object', 'string']:
+                # Pour les colonnes texte: remplacer par 'unknown'
+                X[col] = X[col].fillna('unknown')
+            else:
+                # Pour les colonnes numériques: remplacer par la médiane ou 0
+                if X[col].nunique() > 1:
+                    X[col] = X[col].fillna(X[col].median())
+                else:
+                    X[col] = X[col].fillna(0)
+        print(f"Après nettoyage NaN: {X.isnull().sum().sum()}")
 
     # Identifier les colonnes catégoriques
     categorical_cols = X.select_dtypes(include=['object', 'string']).columns

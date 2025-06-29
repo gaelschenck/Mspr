@@ -66,7 +66,69 @@ const messages = {
     logout: "Déconnexion",
     back: "Retour",
     cookies: "Gérer mes cookies",
-    privacy_policy: "Politique de confidentialité"
+    privacy_policy: "Politique de confidentialité",
+
+    // Nouvelles traductions pour les tableaux de données
+    region_oms: "Région OMS",
+    type_valeur: "Type de valeur",
+    intervalle_confiance: "Intervalle de confiance",
+    unite: "Unité",
+    indicateur: "Indicateur",
+    estimation: "Estimation",
+    borne_inferieure: "Borne inférieure",
+    borne_superieure: "Borne supérieure",
+    mediane: "Médiane",
+    moyenne: "Moyenne",
+    
+    // Traductions pour HealthData.vue
+    health_data_title: "Indicateurs de Santé",
+    filters: "Filtres",
+    country: "Pays",
+    all_countries: "Tous les pays",
+    indicator_type: "Type d'indicateur",
+    all_indicators: "Tous les indicateurs",
+    year: "Année",
+    all_years: "Toutes les années",
+    who_region: "Région OMS",
+    all_regions: "Toutes les régions",
+    clear_filters: "Effacer les filtres",
+    apply_filters: "Appliquer",
+    loading: "Chargement en cours...",
+    error_loading: "Erreur lors du chargement des données",
+    retry: "Réessayer",
+    no_data: "Aucune donnée disponible pour les filtres sélectionnés",
+    value_type: "Type de valeur",
+    value: "Valeur",
+    confidence_interval: "Intervalle de confiance",
+    previous: "Précédent",
+    page: "Page",
+    results: "résultats",
+    next: "Suivant",
+    
+    // Messages de pagination
+    page_courante: "Page",
+    plus_resultats: "Plus de résultats disponibles",
+    derniere_page: "Dernière page",
+    resultats_par_page: "résultat(s) sur cette page",
+    affichage_resultats: "Affichage de {start} à {end} résultats ({limit} par page)",
+    
+    // Messages d'état
+    chargement: "Chargement en cours...",
+    aucune_donnee: "Aucune donnée disponible",
+    erreur_chargement: "Erreur lors du chargement des données",
+    reessayer: "Réessayer",
+    
+    // Traductions pour TransmissionMereEnfant.vue
+    confiance_min: "Confiance Min",
+    confiance_median: "Confiance Médian",
+    confiance_max: "Confiance Max",
+    
+    // Traductions pour Data.vue
+    data_sources: "Sources de données disponibles",
+    unified_data: "Vue unifiée des données",
+    unified_description: "Explorez toutes les données de santé avec filtres avancés",
+    explore_health_data: "Explorer les données de santé",
+    specialized_views: "Vues spécialisées",
   },
   en: {
     welcome: "Welcome to the MSPR application",
@@ -124,7 +186,69 @@ const messages = {
     logout: "Logout",
     back: "Back",
     cookies: "Manage my cookies",
-    privacy_policy: "Privacy Policy"
+    privacy_policy: "Privacy Policy",
+
+    // New translations for data tables
+    region_oms: "WHO Region",
+    type_valeur: "Value type",
+    intervalle_confiance: "Confidence interval",
+    unite: "Unit",
+    indicateur: "Indicator",
+    estimation: "Estimate",
+    borne_inferieure: "Lower bound",
+    borne_superieure: "Upper bound",
+    mediane: "Median",
+    moyenne: "Mean",
+    
+    // Translations for HealthData.vue
+    health_data_title: "Health Indicators",
+    filters: "Filters",
+    country: "Country",
+    all_countries: "All countries",
+    indicator_type: "Indicator type",
+    all_indicators: "All indicators",
+    year: "Year",
+    all_years: "All years",
+    who_region: "WHO Region",
+    all_regions: "All regions",
+    clear_filters: "Clear filters",
+    apply_filters: "Apply",
+    loading: "Loading...",
+    error_loading: "Error loading data",
+    retry: "Retry",
+    no_data: "No data available for selected filters",
+    value_type: "Value type",
+    value: "Value",
+    confidence_interval: "Confidence interval",
+    previous: "Previous",
+    page: "Page",
+    results: "results",
+    next: "Next",
+    
+    // Pagination messages
+    page_courante: "Page",
+    plus_resultats: "More results available",
+    derniere_page: "Last page",
+    resultats_par_page: "result(s) on this page",
+    affichage_resultats: "Showing {start} to {end} results ({limit} per page)",
+    
+    // Status messages
+    chargement: "Loading...",
+    aucune_donnee: "No data available",
+    erreur_chargement: "Error loading data",
+    reessayer: "Retry",
+    
+    // Translations for TransmissionMereEnfant.vue
+    confiance_min: "Confidence Min",
+    confiance_median: "Confidence Median",
+    confiance_max: "Confidence Max",
+    
+    // Translations for Data.vue
+    data_sources: "Available data sources",
+    unified_data: "Unified data view",
+    unified_description: "Explore all health data with advanced filters",
+    explore_health_data: "Explore health data",
+    specialized_views: "Specialized views",
   },
   de: {
     welcome: "Willkommen bei der MSPR-Anwendung",
@@ -182,7 +306,69 @@ const messages = {
     logout: "Abmelden",
     back: "Zurück",
     cookies: "Meine Cookies verwalten",
-    privacy_policy: "Datenschutzrichtlinie"
+    privacy_policy: "Datenschutzrichtlinie",
+
+    // Neue Übersetzungen für Datentabellen
+    region_oms: "WHO-Region",
+    type_valeur: "Werttyp",
+    intervalle_confiance: "Konfidenzintervall",
+    unite: "Einheit",
+    indicateur: "Indikator",
+    estimation: "Schätzung",
+    borne_inferieure: "Untere Grenze",
+    borne_superieure: "Obere Grenze",
+    mediane: "Median",
+    moyenne: "Mittelwert",
+    
+    // Übersetzungen für HealthData.vue
+    health_data_title: "Gesundheitsindikatoren",
+    filters: "Filter",
+    country: "Land",
+    all_countries: "Alle Länder",
+    indicator_type: "Indikatortyp",
+    all_indicators: "Alle Indikatoren",
+    year: "Jahr",
+    all_years: "Alle Jahre",
+    who_region: "WHO-Region",
+    all_regions: "Alle Regionen",
+    clear_filters: "Filter löschen",
+    apply_filters: "Anwenden",
+    loading: "Wird geladen...",
+    error_loading: "Fehler beim Laden der Daten",
+    retry: "Wiederholen",
+    no_data: "Keine Daten für die ausgewählten Filter verfügbar",
+    value_type: "Werttyp",
+    value: "Wert",
+    confidence_interval: "Konfidenzintervall",
+    previous: "Vorherige",
+    page: "Seite",
+    results: "Ergebnisse",
+    next: "Nächste",
+    
+    // Paginierungsnachrichten
+    page_courante: "Seite",
+    plus_resultats: "Weitere Ergebnisse verfügbar",
+    derniere_page: "Letzte Seite",
+    resultats_par_page: "Ergebnis(se) auf dieser Seite",
+    affichage_resultats: "Anzeige von {start} bis {end} Ergebnissen ({limit} pro Seite)",
+    
+    // Statusnachrichten
+    chargement: "Wird geladen...",
+    aucune_donnee: "Keine Daten verfügbar",
+    erreur_chargement: "Fehler beim Laden der Daten",
+    reessayer: "Wiederholen",
+    
+    // Übersetzungen für TransmissionMereEnfant.vue
+    confiance_min: "Konfidenz Min",
+    confiance_median: "Konfidenz Median",
+    confiance_max: "Konfidenz Max",
+    
+    // Übersetzungen für Data.vue
+    data_sources: "Verfügbare Datenquellen",
+    unified_data: "Einheitliche Datenansicht",
+    unified_description: "Erkunden Sie alle Gesundheitsdaten mit erweiterten Filtern",
+    explore_health_data: "Gesundheitsdaten erkunden",
+    specialized_views: "Spezialisierte Ansichten",
   },
   it: {
     welcome: "Benvenuto nell'applicazione MSPR",
@@ -194,6 +380,70 @@ const messages = {
     nav_prediction: "Previsione",
     prediction_graphs_title: "Grafici di previsione",
     prediction_graphs_label: "Previsioni",
+    
+    // Nuove traduzioni per le tabelle dati
+    region_oms: "Regione OMS",
+    type_valeur: "Tipo di valore",
+    intervalle_confiance: "Intervallo di confidenza",
+    unite: "Unità",
+    indicateur: "Indicatore",
+    estimation: "Stima",
+    borne_inferieure: "Limite inferiore",
+    borne_superieure: "Limite superiore",
+    mediane: "Mediana",
+    moyenne: "Media",
+    
+    // Traduzioni per HealthData.vue
+    health_data_title: "Indicatori di Salute",
+    filters: "Filtri",
+    country: "Paese",
+    all_countries: "Tutti i paesi",
+    indicator_type: "Tipo di indicatore",
+    all_indicators: "Tutti gli indicatori",
+    year: "Anno",
+    all_years: "Tutti gli anni",
+    who_region: "Regione OMS",
+    all_regions: "Tutte le regioni",
+    clear_filters: "Cancella filtri",
+    apply_filters: "Applica",
+    loading: "Caricamento in corso...",
+    error_loading: "Errore durante il caricamento dei dati",
+    retry: "Riprova",
+    no_data: "Nessun dato disponibile per i filtri selezionati",
+    value_type: "Tipo di valore",
+    value: "Valore",
+    confidence_interval: "Intervallo di confidenza",
+    previous: "Precedente",
+    page: "Pagina",
+    results: "risultati",
+    next: "Successivo",
+    
+    // Messaggi di paginazione
+    page_courante: "Pagina",
+    plus_resultats: "Altri risultati disponibili",
+    derniere_page: "Ultima pagina",
+    resultats_par_page: "risultato/i in questa pagina",
+    affichage_resultats: "Visualizzazione da {start} a {end} risultati ({limit} per pagina)",
+    
+    // Messaggi di stato
+    chargement: "Caricamento in corso...",
+    aucune_donnee: "Nessun dato disponibile",
+    erreur_chargement: "Errore durante il caricamento dei dati",
+    reessayer: "Riprova",
+    
+    // Traduzioni per TransmissionMereEnfant.vue
+    confiance_min: "Confidenza Min",
+    confiance_median: "Confidenza Mediana",
+    confiance_max: "Confidenza Max",
+    
+    // Traduzioni per Data.vue
+    data_sources: "Fonti dati disponibili",
+    unified_data: "Vista unificata dei dati",
+    unified_description: "Esplora tutti i dati sanitari con filtri avanzati",
+    explore_health_data: "Esplora dati sanitari",
+    specialized_views: "Visualizzazioni specializzate",
+    
+    // testprediction
     testprediction_title: "Scelta dei dati",
     testprediction_choose_region: "Scegli un paese o una regione:",
     testprediction_choose_country: "Scegli un paese:",
@@ -229,7 +479,7 @@ const messages = {
     prediction_next_year: "Previsione per il prossimo anno",
     prediction_no_future: "Nessuna previsione futura disponibile.",
     cluster_switch_title: "Cambio cluster non consentito",
-    cluster_switch_message: "Sei già connesso. Per cambiare cluster, disconnettiti prima.",
+    cluster_switch_message: "Sei già connesso. Per cambiare cluster, disconnetti prima.",
     logout: "Disconnetti",
     back: "Indietro",
     cookies: "Gestisci i miei cookie",
