@@ -13,6 +13,8 @@ import Traitement from '../components/Traitement.vue';
 import TransmissionMereEnfant from '../components/TransmissionMereEnfant.vue';
 import ClusterSwitchNotAllowed from '../components/ClusterSwitchNotAllowed.vue';
 import ETLDashboard from '../components/ETLDashboard.vue';
+import AccessDenied from '../components/AccessDenied.vue';
+import AccessDenied from '../components/AccessDenied.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -34,6 +36,11 @@ const routes = [
     name: 'ClusterSwitchNotAllowed',
     component: ClusterSwitchNotAllowed
   },
+  {
+    path: '/access-denied',
+    name: 'AccessDenied',
+    component: AccessDenied
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
@@ -47,6 +54,32 @@ router.beforeEach((to, from, next) => {
   if (authRequired && !token) {
     return next('/login');
   }
+
+  // Contrôle d'accès basé sur le pays
+  const selectedCountry = localStorage.getItem('selectedCountry');
+  if (selectedCountry && authRequired) {
+    // Détermine le pays de base
+    let baseCountry = selectedCountry;
+    if (selectedCountry.startsWith('ch_')) {
+      baseCountry = 'ch';
+    }
+
+    // Définir les pages autorisées par pays
+    const allowedPages = {
+      'fr': ['/', '/data', '/graphiques', '/prediction', '/etl', '/health-data', '/us-mortalite', '/population-hiv', '/traitement', '/transmission-mere-enfant', '/confidentialite', '/prediction-graphs'],
+      'us': ['/data', '/etl', '/health-data', '/us-mortalite', '/population-hiv', '/traitement', '/transmission-mere-enfant'],
+      'ch': ['/etl']
+    };
+
+    const allowed = allowedPages[baseCountry] || ['/'];
+    
+    // Vérifier si la route demandée est autorisée
+    if (!allowed.includes(to.path) && !publicPages.includes(to.path) && to.path !== '/cluster-switch-not-allowed' && to.path !== '/access-denied') {
+      // Rediriger vers la page access-denied avec info sur la première page autorisée
+      return next('/access-denied');
+    }
+  }
+
   next();
 });
 export default router;

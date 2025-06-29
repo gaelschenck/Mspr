@@ -4,6 +4,7 @@ import router from './router';
 import axios from 'axios';
 import i18n from './i18n'
 import './assets/main.css';
+import './styles/responsive.css';
 import { createPinia } from 'pinia';
 
 const app = createApp(App);

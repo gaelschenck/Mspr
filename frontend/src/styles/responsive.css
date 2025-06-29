@@ -1,0 +1,255 @@
+/* Global Responsive Styles for MSPR Healthcare Dashboard */
+
+/* Base Responsive Breakpoints */
+:root {
+  --mobile-small: 480px;
+  --mobile: 768px;
+  --tablet: 1024px;
+  --desktop: 1200px;
+}
+
+/* Global responsive utilities */
+.container-responsive {
+  width: 100%;
+  max-width: var(--desktop);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .container-responsive {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-responsive {
+    padding: 0 10px;
+  }
+}
+
+/* Responsive Typography */
+.responsive-title {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .responsive-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-title {
+    font-size: 1.3rem;
+  }
+}
+
+.responsive-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .responsive-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive Buttons */
+.btn-responsive {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-responsive {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive Cards */
+.card-responsive {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .card-responsive {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-responsive {
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Responsive Grid */
+.grid-responsive {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .grid-responsive {
+    gap: 15px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-responsive {
+    gap: 10px;
+  }
+}
+
+/* Responsive Tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-responsive table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+  .table-responsive table {
+    min-width: 500px;
+  }
+  
+  .table-responsive th,
+  .table-responsive td {
+    padding: 8px 4px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-responsive table {
+    min-width: 400px;
+  }
+  
+  .table-responsive th,
+  .table-responsive td {
+    padding: 6px 2px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive Forms */
+.form-responsive {
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-responsive input,
+.form-responsive select,
+.form-responsive textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-responsive input,
+  .form-responsive select,
+  .form-responsive textarea {
+    padding: 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Hide/Show elements based on screen size */
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+  
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* Responsive spacing */
+.spacing-responsive {
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .spacing-responsive {
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .spacing-responsive {
+    margin: 10px 0;
+  }
+}
+
+/* Loading and status indicators responsive */
+.status-responsive {
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .status-responsive {
+    padding: 12px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-responsive {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.8rem;
+  }
+}

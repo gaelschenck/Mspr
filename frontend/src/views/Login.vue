@@ -88,8 +88,102 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.error {
-  color: red;
+
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 1.5em;
+  color: #333;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.login-container div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container label {
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  color: #555;
+}
+
+.login-container input,
+.login-container select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.login-container input:focus,
+.login-container select:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.login-container button {
+  padding: 12px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
   margin-top: 1em;
+}
+
+.login-container button:hover {
+  background-color: #1565c0;
+}
+
+.error {
+  color: #d32f2f;
+  margin-top: 1em;
+  text-align: center;
+  padding: 10px;
+  background-color: #ffebee;
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-container {
+    margin: 40px auto;
+    padding: 1.5em;
+    max-width: 90%;
+  }
+  
+  .login-container h1 {
+    font-size: 1.5rem;
+  }
+  
+  .login-container input,
+  .login-container select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    margin: 20px auto;
+    padding: 1em;
+    max-width: 95%;
+  }
+  
+  .login-container h1 {
+    font-size: 1.3rem;
+    margin-bottom: 1em;
+  }
+  
+  .login-container form {
+    gap: 0.8em;
+  }
 }
 </style>

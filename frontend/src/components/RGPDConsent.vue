@@ -79,11 +79,81 @@ window.showRGPDConsent = () => {
   right: 0;
   background: #222;
   color: #fff;
-  padding: 1em;
+  padding: 15px 20px;
   text-align: center;
   z-index: 1000;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
+
+.rgpd-banner p {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
 .rgpd-banner button {
-  margin: 0 0.5em;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9em;
+}
+
+.rgpd-banner button:hover {
+  background-color: #1565c0;
+}
+
+.rgpd-banner button + button {
+  background-color: #666;
+}
+
+.rgpd-banner button + button:hover {
+  background-color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rgpd-banner {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 15px;
+    text-align: center;
+  }
+  
+  .rgpd-banner p {
+    font-size: 0.9em;
+    min-width: auto;
+    margin-bottom: 5px;
+  }
+  
+  .rgpd-banner button {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 16px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .rgpd-banner {
+    padding: 10px;
+  }
+  
+  .rgpd-banner p {
+    font-size: 0.8em;
+  }
+  
+  .rgpd-banner button {
+    font-size: 0.8em;
+    padding: 8px 12px;
+  }
 }
 </style>

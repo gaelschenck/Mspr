@@ -5,28 +5,28 @@
     <!-- Statut général -->
     <div class="status-overview">
       <div class="status-card">
-        <h3>Statut du Système</h3>
+        <h3>{{ $t('etl_system_status') }}</h3>
         <div v-if="systemStatus" class="status-grid">
           <div class="status-item">
-            <span class="label">Base de données:</span>
+            <span class="label">{{ $t('etl_database') }}:</span>
             <span :class="systemStatus.database_exists ? 'success' : 'error'">
-              {{ systemStatus.database_exists ? 'Connectée' : 'Non trouvée' }}
+              {{ systemStatus.database_exists ? $t('etl_connected') : $t('etl_not_found') }}
             </span>
           </div>
           <div class="status-item">
-            <span class="label">Fichiers sources:</span>
+            <span class="label">{{ $t('etl_source_files') }}:</span>
             <span class="value">{{ systemStatus.source_files_count }}</span>
           </div>
           <div class="status-item">
-            <span class="label">Fichiers traités:</span>
+            <span class="label">{{ $t('etl_processed_files') }}:</span>
             <span class="value">{{ systemStatus.processed_files_count }}</span>
           </div>
           <div class="status-item">
-            <span class="label">Indicateurs en BD:</span>
+            <span class="label">{{ $t('etl_indicators_db') }}:</span>
             <span class="value">{{ systemStatus.health_indicators_count }}</span>
           </div>
           <div class="status-item" v-if="systemStatus.last_etl_run">
-            <span class="label">Dernière exécution:</span>
+            <span class="label">{{ $t('etl_last_execution') }}:</span>
             <span class="value">{{ formatDate(systemStatus.last_etl_run) }}</span>
           </div>
         </div>
@@ -36,28 +36,28 @@
     <!-- Contrôles ETL -->
     <div class="etl-controls">
       <div class="control-card">
-        <h3>Contrôles ETL</h3>
+        <h3>{{ $t('etl_controls') }}</h3>
         <button 
           @click="runETL" 
           :disabled="isRunningETL"
           class="btn-primary"
         >
-          {{ isRunningETL ? 'ETL en cours...' : 'Lancer le processus ETL' }}
+          {{ isRunningETL ? $t('etl_running') : $t('etl_run_process') }}
         </button>
         
         <button @click="refreshLogs" class="btn-secondary">
-          Actualiser les logs
+          {{ $t('etl_refresh_logs') }}
         </button>
         
         <button @click="refreshData" class="btn-secondary">
-          Actualiser les données
+          {{ $t('etl_refresh_data') }}
         </button>
       </div>
     </div>
 
     <!-- Section des fichiers sources -->
     <div class="data-section">
-      <h2>📁 Données Sources</h2>
+      <h2>{{ $t('etl_source_data') }}</h2>
       <div class="files-grid">
         <div 
           v-for="file in sourceFiles" 
@@ -70,8 +70,8 @@
             <span class="file-size">{{ formatSize(file.size) }}</span>
           </div>
           <div class="file-info">
-            <p>Colonnes: {{ file.columns?.length || 0 }}</p>
-            <p>Aperçu: {{ file.rows_sample || 0 }} lignes</p>
+            <p>{{ $t('etl_columns') }}: {{ file.columns?.length || 0 }}</p>
+            <p>{{ $t('etl_preview') }}: {{ file.rows_sample || 0 }} {{ $t('etl_lines') }}</p>
           </div>
           <div v-if="file.error" class="file-error">
             ❌ {{ file.error }}
@@ -82,7 +82,7 @@
 
     <!-- Section des données transformées -->
     <div class="data-section">
-      <h2>🔄 Données Transformées</h2>
+      <h2>{{ $t('etl_transformed_data') }}</h2>
       <div class="files-grid">
         <div 
           v-for="file in processedFiles" 
@@ -95,8 +95,8 @@
             <span class="file-size">{{ formatSize(file.size) }}</span>
           </div>
           <div class="file-info">
-            <p>Colonnes: {{ file.columns?.length || 0 }}</p>
-            <p>Aperçu: {{ file.rows_sample || 0 }} lignes</p>
+            <p>{{ $t('etl_columns') }}: {{ file.columns?.length || 0 }}</p>
+            <p>{{ $t('etl_preview') }}: {{ file.rows_sample || 0 }} {{ $t('etl_lines') }}</p>
           </div>
           <div v-if="file.error" class="file-error">
             ❌ {{ file.error }}
@@ -107,10 +107,10 @@
 
     <!-- Logs ETL -->
     <div class="logs-section">
-      <h2>📋 Logs d'exécution</h2>
+      <h2>{{ $t('etl_execution_logs') }}</h2>
       <div class="logs-container">
         <div v-if="etlLogs.length === 0" class="no-logs">
-          Aucun log disponible
+          {{ $t('etl_no_logs') }}
         </div>
         <div v-else class="logs-content">
           <div 
@@ -130,13 +130,13 @@
       <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h3>{{ previewData?.file_name }}</h3>
-          <button @click="closeModal" class="btn-close">×</button>
+          <button @click="closeModal" class="btn-close">{{ $t('etl_close') }}</button>
         </div>
         
         <div v-if="previewData" class="modal-body">
           <div class="preview-info">
-            <p><strong>Lignes:</strong> {{ previewData.total_rows }}</p>
-            <p><strong>Colonnes:</strong> {{ previewData.columns.length }}</p>
+            <p><strong>{{ $t('etl_lines') }}:</strong> {{ previewData.total_rows }}</p>
+            <p><strong>{{ $t('etl_columns') }}:</strong> {{ previewData.columns.length }}</p>
           </div>
           
           <div class="table-container">
@@ -158,7 +158,7 @@
         </div>
         
         <div v-if="previewLoading" class="loading">
-          Chargement de l'aperçu...
+          {{ $t('etl_preview_loading') }}
         </div>
       </div>
     </div>
@@ -172,7 +172,10 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { fetchFromAPI } from '../../services/api.js'
+
+const { t } = useI18n()
 
 // État réactif
 const systemStatus = ref(null)
@@ -208,7 +211,7 @@ const loadSourceFiles = async () => {
     processedFiles.value = response.processed_files || []
   } catch (error) {
     console.error('Erreur lors du chargement des fichiers:', error)
-    showStatus('Erreur lors du chargement des fichiers', 'error')
+    showStatus(t('etl_file_error'), 'error')
   }
 }
 
@@ -224,7 +227,7 @@ const loadLogs = async () => {
 // Fonctions d'action
 const runETL = async () => {
   isRunningETL.value = true
-  showStatus('Lancement du processus ETL...', 'info')
+  showStatus(t('etl_launching'), 'info')
   
   try {
     const response = await fetchFromAPI('/etl/run/', {
@@ -232,10 +235,10 @@ const runETL = async () => {
     })
     
     if (response.success) {
-      showStatus('ETL exécuté avec succès!', 'success')
+      showStatus(t('etl_success_message'), 'success')
       await refreshData()
     } else {
-      showStatus(`Erreur ETL: ${response.error || response.stderr}`, 'error')
+      showStatus(`${t('etl_error_message')}: ${response.error || response.stderr}`, 'error')
     }
     
     // Actualiser les logs
@@ -243,7 +246,7 @@ const runETL = async () => {
     
   } catch (error) {
     console.error('Erreur lors de l\'exécution ETL:', error)
-    showStatus('Erreur lors de l\'exécution ETL', 'error')
+    showStatus(t('etl_error_message'), 'error')
   } finally {
     isRunningETL.value = false
   }
@@ -257,7 +260,7 @@ const showFilePreview = async (fileType, fileName) => {
     previewData.value = await fetchFromAPI(`/etl/file-preview/${fileType}/${fileName}`)
   } catch (error) {
     console.error('Erreur lors du chargement de l\'aperçu:', error)
-    showStatus('Erreur lors du chargement de l\'aperçu', 'error')
+    showStatus(t('etl_preview_error'), 'error')
     closeModal()
   } finally {
     previewLoading.value = false
