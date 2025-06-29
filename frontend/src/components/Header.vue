@@ -18,6 +18,7 @@
           <li><router-link to="/data">{{ $t('nav_data') }}</router-link></li>
           <li><router-link to="/graphiques">{{ $t('nav_charts') }}</router-link></li>
           <li><router-link to="/prediction">{{ $t('nav_prediction') }}</router-link></li>
+          <li><router-link to="/etl">{{ $t('nav_etl') || 'ETL' }}</router-link></li>
         </ul>
       </nav>
     </div>

@@ -11,6 +11,10 @@ import sys
 import os
 import numpy as np
 import math
+import subprocess
+import json
+from datetime import datetime
+from pathlib import Path
 
 from prediction import create_voting_regressor, prepare_data_generic, preprocess_features, train_voting_regressor
 import pandas as pd
@@ -23,6 +27,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from sqlalchemy.future import select
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -1169,7 +1174,7 @@ async def get_table_columns(table: str = Query(...), db: AsyncSession = Depends(
     table_mapping = {
         "health_indicators": None,  # Tous les indicateurs
         "population_hiv": "People living with HIV",
-        "traitement": "ART Coverage", 
+        "traitement": "ART Coverage",
         "transmission_mere_enfant": "Prevention of Mother-to-Child Transmission",
         "mortalite": "AIDS Deaths",
         "indicator_types": None  # Table spéciale pour les types d'indicateurs
@@ -1231,4 +1236,236 @@ async def get_table_mapping():
             }
         }
     }
+
+# ========================
+# ENDPOINTS ETL
+# ========================
+
+import subprocess
+import json
+from datetime import datetime
+
+@app.get("/etl/source-files/")
+async def get_source_files():
+    """Retourne la liste des fichiers CSV sources et transformés"""
+    source_dir = Path("../SourceData")
+    dataset_dir = Path("../DatasetClean")
+    
+    files = {
+        "source_files": [],
+        "processed_files": []
+    }
+    
+    # Fichiers sources
+    if source_dir.exists():
+        for csv_file in source_dir.glob("*.csv"):
+            try:
+                # Lire quelques lignes pour avoir un aperçu
+                df = pd.read_csv(csv_file, nrows=5)
+                files["source_files"].append({
+                    "name": csv_file.name,
+                    "path": str(csv_file),
+                    "size": csv_file.stat().st_size,
+                    "rows_sample": len(df),
+                    "columns": list(df.columns),
+                    "preview": df.to_dict('records'),
+                    "type": "source"
+                })
+            except Exception as e:
+                files["source_files"].append({
+                    "name": csv_file.name,
+                    "path": str(csv_file),
+                    "error": str(e),
+                    "type": "source"
+                })
+    
+    # Fichiers traités (nouveaux fichiers CSV générés par NewETL)
+    if dataset_dir.exists():
+        for csv_file in dataset_dir.glob("*.csv"):
+            try:
+                # Déterminer le séparateur (; pour les nouveaux, , pour les anciens)
+                separator = ';'
+                try:
+                    df = pd.read_csv(csv_file, nrows=5, sep=separator)
+                except:
+                    separator = ','
+                    df = pd.read_csv(csv_file, nrows=5, sep=separator)
+                
+                files["processed_files"].append({
+                    "name": csv_file.name,
+                    "path": str(csv_file),
+                    "size": csv_file.stat().st_size,
+                    "rows_sample": len(df),
+                    "columns": list(df.columns),
+                    "preview": df.to_dict('records'),
+                    "separator": separator,
+                    "type": "processed"
+                })
+            except Exception as e:
+                files["processed_files"].append({
+                    "name": csv_file.name,
+                    "path": str(csv_file),
+                    "error": str(e),
+                    "type": "processed"
+                })
+    
+    return files
+
+@app.get("/etl/file-preview/{file_type}/{file_name}")
+async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
+    """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur"""
+    if file_type == "source":
+        file_path = Path("../SourceData") / file_name
+    elif file_type == "processed":
+        file_path = Path("../DatasetClean") / file_name
+    else:
+        raise HTTPException(status_code=400, detail="Type de fichier invalide")
+    
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Fichier non trouvé")
+    
+    try:
+        # Détection automatique du séparateur
+        separator = ','
+        encoding = 'utf-8'
+        
+        # Pour les fichiers dans DatasetClean, essayer d'abord le point-virgule
+        if file_type == "processed":
+            try:
+                df = pd.read_csv(file_path, nrows=2, sep=';', encoding=encoding)
+                if len(df.columns) > 1:  # Si on a plusieurs colonnes, le séparateur est correct
+                    separator = ';'
+                else:
+                    raise ValueError("Essayer virgule")
+            except:
+                separator = ','
+        
+        df = pd.read_csv(file_path, nrows=limit, sep=separator, encoding=encoding)
+        
+        return {
+            "file_name": file_name,
+            "file_type": file_type,
+            "total_rows": len(df),
+            "columns": list(df.columns),
+            "data": df.to_dict('records'),
+            "separator_used": separator,
+            "info": {
+                "memory_usage": df.memory_usage(deep=True).sum(),
+                "dtypes": {col: str(dtype) for col, dtype in df.dtypes.items()}
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture: {str(e)}")
+
+@app.post("/etl/run/")
+async def run_etl_process():
+    """Lance le processus ETL"""
+    try:
+        # Chemin vers le script NewETL
+        script_path = Path("NewETL/NewETL.py")
+        
+        if not script_path.exists():
+            raise HTTPException(status_code=404, detail="Script ETL non trouvé")
+        
+        # Lancer le processus ETL
+        process = subprocess.run(
+            [sys.executable, str(script_path)],
+            cwd=script_path.parent,
+            capture_output=True,
+            text=True,
+            timeout=300  # 5 minutes de timeout
+        )
+        
+        # Lire les logs ETL
+        log_file = script_path.parent / "new_etl.log"
+        logs = []
+        if log_file.exists():
+            with open(log_file, 'r', encoding='utf-8') as f:
+                logs = f.readlines()[-50:]  # Dernières 50 lignes
+        
+        return {
+            "success": process.returncode == 0,
+            "return_code": process.returncode,
+            "stdout": process.stdout,
+            "stderr": process.stderr,
+            "logs": logs,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except subprocess.TimeoutExpired:
+        return {
+            "success": False,
+            "error": "Timeout: Le processus ETL a pris trop de temps",
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
+@app.get("/etl/logs/")
+async def get_etl_logs(lines: int = 100):
+    """Retourne les logs de l'ETL"""
+    log_file = Path("NewETL/new_etl.log")
+    
+    if not log_file.exists():
+        return {"logs": [], "message": "Aucun log disponible"}
+    
+    try:
+        with open(log_file, 'r', encoding='utf-8') as f:
+            all_lines = f.readlines()
+            recent_lines = all_lines[-lines:] if len(all_lines) > lines else all_lines
+        
+        return {
+            "logs": [line.strip() for line in recent_lines],
+            "total_lines": len(all_lines),
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/etl/status/")
+async def get_etl_status():
+    """Retourne le statut du système ETL"""
+    status = {
+        "database_exists": False,
+        "source_files_count": 0,
+        "processed_files_count": 0,
+        "last_etl_run": None,
+        "health_indicators_count": 0
+    }
+    
+    # Vérifier la base de données
+    db_path = Path("normalized_health_data.db")
+    if db_path.exists():
+        status["database_exists"] = True
+        status["database_size"] = db_path.stat().st_size
+        
+        # Compter les enregistrements
+        try:
+            async for db in get_db():
+                result = await db.execute(select(models.HealthIndicator).count())
+                status["health_indicators_count"] = result.scalar()
+                break
+        except Exception:
+            pass
+    
+    # Compter les fichiers sources
+    source_dir = Path("../SourceData")
+    if source_dir.exists():
+        status["source_files_count"] = len(list(source_dir.glob("*.csv")))
+    
+    # Compter les fichiers traités
+    dataset_dir = Path("../DatasetClean")
+    if dataset_dir.exists():
+        status["processed_files_count"] = len(list(dataset_dir.glob("*.csv")))
+    
+    # Dernière exécution ETL
+    log_file = Path("NewETL/new_etl.log")
+    if log_file.exists():
+        status["last_etl_run"] = datetime.fromtimestamp(log_file.stat().st_mtime).isoformat()
+    
+    return status
 

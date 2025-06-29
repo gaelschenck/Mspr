@@ -12,6 +12,7 @@ import PopulationHiv from '../components/PopulationHiv.vue';
 import Traitement from '../components/Traitement.vue';
 import TransmissionMereEnfant from '../components/TransmissionMereEnfant.vue';
 import ClusterSwitchNotAllowed from '../components/ClusterSwitchNotAllowed.vue';
+import ETLDashboard from '../components/ETLDashboard.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -21,6 +22,7 @@ const routes = [
   // route pour faciliter la scalabilité
   { path: '/data', component: Data },
   { path: '/health-data', name: 'HealthData', component: HealthData }, // Nouvelle route unifiée
+  { path: '/etl', name: 'ETL', component: ETLDashboard }, // Nouvel onglet ETL
   { path: '/us-mortalite', component: USMortalite },
   { path: '/population-hiv', component: PopulationHiv },
   { path: '/traitement', component: Traitement },

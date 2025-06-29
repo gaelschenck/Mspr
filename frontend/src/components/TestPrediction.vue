@@ -74,7 +74,16 @@ onMounted(async () => {
     // Charger les tables disponibles
     const responseTables = await fetchFromAPI("/tables/");
     console.log("Tables disponibles:", responseTables);
-    tables.value = Object.keys(responseTables.tables);
+    
+    // Tables mappées selon le backend  
+    tables.value = [
+      "statistique",        // Mode général (tous les indicateurs)
+      "population_hiv",     // People Living with HIV
+      "traitement",         // ART Coverage
+      "transmission_mere_enfant", // Prevention of Mother-to-Child Transmission
+      "mortalite",          // HIV-related Deaths
+      "health_indicators"   // Table principale normalisée
+    ];
 
     // Charger la liste des pays
     const responsePays = await fetchFromAPI("/payslist/");
@@ -112,23 +121,23 @@ const fetchColumns = async () => {
         'confidence_max', // Confiance maximum
         'confidence_median' // Confiance médiane
       ],
-      'table_mortalite': [
+      'mortalite': [
         'value',
         'year'
       ],
-      'table_population_hiv': [
+      'population_hiv': [
         'value',
         'year'
       ],
-      'table_statistique': [
+      'statistique': [
         'value',
         'year'
       ],
-      'table_traitement': [
+      'traitement': [
         'value',
         'year'
       ],
-      'table_transmission_mere_enfant': [
+      'transmission_mere_enfant': [
         'value',
         'year'
       ]
@@ -163,7 +172,7 @@ const submitChoices = async () => {
   }
 
   const payload = {
-    region: selectedRegion.value || null,
+    who_region: selectedRegion.value || null,
     pays: selectedPays.value || null,
     table: selectedTable.value,
     target_column: selectedColumn.value,

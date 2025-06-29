@@ -593,6 +593,15 @@ class HealthDataETL:
             logger.error(f"Erreur lors de la génération des fichiers SQL par pays: {e}")
             country_sql_files = []
         
+        # Export vers fichiers CSV
+        try:
+            logger.info("Génération des fichiers CSV...")
+            csv_files = self.export_to_csv_files()
+            logger.info(f"Fichiers CSV générés: {len(csv_files)} fichiers")
+        except Exception as e:
+            logger.error(f"Erreur lors de la génération des fichiers CSV: {e}")
+            csv_files = []
+        
         # Affichage des statistiques finales
         try:
             stats = self.get_database_stats()
@@ -613,6 +622,10 @@ class HealthDataETL:
                 print(f"🌍 Fichiers SQL par pays: {len(country_sql_files)} fichiers générés")
                 for country_file in country_sql_files:
                     print(f"   • {Path(country_file).name}")
+            if csv_files:
+                print(f"📊 Fichiers CSV: {len(csv_files)} fichiers générés")
+                for csv_file in csv_files:
+                    print(f"   • {Path(csv_file).name}")
             print("="*60)
         except Exception as e:
             logger.error(f"Erreur lors de l'affichage des statistiques: {e}")
@@ -625,7 +638,8 @@ class HealthDataETL:
             'processing_stats': total_stats,
             'validation_report': validation_report,
             'schema_file': schema_file,
-            'country_sql_files': country_sql_files
+            'country_sql_files': country_sql_files,
+            'csv_files': csv_files
         }
 
     def generate_sql_schema_file(self, output_path: str = None) -> str:
@@ -1006,6 +1020,153 @@ class HealthDataETL:
         
         return postgres_sql
 
+    def export_to_csv_files(self, output_dir: str = None) -> List[str]:
+        """
+        Exporte les données de la base SQLite vers des fichiers CSV dans DatasetClean
+        
+        Args:
+            output_dir: Répertoire de sortie (par défaut ../DatasetClean)
+            
+        Returns:
+            Liste des fichiers CSV créés
+        """
+        if output_dir is None:
+            output_dir = Path(self.source_dir) / "../DatasetClean"
+        
+        output_dir = Path(output_dir)
+        output_dir.mkdir(exist_ok=True)
+        
+        created_files = []
+        
+        logger.info("=== Export vers fichiers CSV ===")
+        
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                
+                # 1. Export des pays
+                logger.info("Export des pays...")
+                countries_df = pd.read_sql_query("""
+                    SELECT id, name as nom, who_region as region, iso_code 
+                    FROM countries 
+                    ORDER BY name
+                """, conn)
+                countries_file = output_dir / "pays_clean.csv"
+                countries_df.to_csv(countries_file, index=False, encoding='utf-8', sep=';')
+                created_files.append(str(countries_file))
+                logger.info(f"✅ {countries_file.name} créé ({len(countries_df)} pays)")
+                
+                # 2. Export des types d'indicateurs
+                logger.info("Export des types d'indicateurs...")
+                indicator_types_df = pd.read_sql_query("""
+                    SELECT id, name as nom, description 
+                    FROM indicator_types 
+                    ORDER BY name
+                """, conn)
+                indicator_types_file = output_dir / "type_statistique_clean.csv"
+                indicator_types_df.to_csv(indicator_types_file, index=False, encoding='utf-8', sep=';')
+                created_files.append(str(indicator_types_file))
+                logger.info(f"✅ {indicator_types_file.name} créé ({len(indicator_types_df)} types)")
+                
+                # 3. Export par type d'indicateur (fichiers séparés)
+                indicator_mappings = {
+                    'People living with HIV': 'table_population_hiv.csv',
+                    'ART Coverage': 'table_traitement.csv', 
+                    'Prevention of Mother-to-Child Transmission': 'table_transmission_mere_enfant.csv',
+                    'HIV-related Deaths': 'table_mortalite.csv',
+                    'AIDS Deaths': 'table_mortalite.csv',
+                    'HIV Cases Adults 15-49': 'table_cas_adultes.csv',
+                    'ART Pediatric Coverage': 'table_traitement_pediatrique.csv'
+                }
+                
+                for indicator_type, filename in indicator_mappings.items():
+                    logger.info(f"Export {indicator_type}...")
+                    
+                    # Requête adaptée selon le type d'indicateur
+                    query = """
+                        SELECT 
+                            hi.id,
+                            hi.country_id as id_pays,
+                            c.name as pays,
+                            hi.year as annee,
+                            hi.value as valeur,
+                            hi.value_type as type_valeur,
+                            hi.confidence_min as confiance_min,
+                            hi.confidence_max as confiance_max,
+                            hi.confidence_median as confiance_median,
+                            hi.data_quality as qualite_donnees,
+                            hi.source_file as fichier_source
+                        FROM health_indicators hi
+                        JOIN countries c ON hi.country_id = c.id
+                        JOIN indicator_types it ON hi.indicator_type_id = it.id
+                        WHERE it.name LIKE ?
+                        ORDER BY c.name, hi.year
+                    """
+                    
+                    df = pd.read_sql_query(query, conn, params=[f"%{indicator_type}%"])
+                    
+                    if len(df) > 0:
+                        output_file = output_dir / filename
+                        df.to_csv(output_file, index=False, encoding='utf-8', sep=';')
+                        created_files.append(str(output_file))
+                        logger.info(f"✅ {filename} créé ({len(df)} enregistrements)")
+                    else:
+                        logger.warning(f"⚠️ Aucune donnée trouvée pour {indicator_type}")
+                
+                # 4. Export global des statistiques
+                logger.info("Export des statistiques globales...")
+                all_stats_df = pd.read_sql_query("""
+                    SELECT 
+                        hi.id,
+                        hi.country_id as id_pays,
+                        c.name as pays,
+                        c.who_region as region,
+                        hi.indicator_type_id as id_type_statistique,
+                        it.name as type_statistique,
+                        hi.year as annee,
+                        hi.value as valeur,
+                        hi.value_type as type_valeur,
+                        hi.value_text as valeur_texte,
+                        hi.confidence_min as confiance_min,
+                        hi.confidence_max as confiance_max,
+                        hi.confidence_median as confiance_median,
+                        hi.data_quality as qualite_donnees,
+                        hi.source_file as fichier_source,
+                        hi.created_at as date_creation
+                    FROM health_indicators hi
+                    JOIN countries c ON hi.country_id = c.id
+                    JOIN indicator_types it ON hi.indicator_type_id = it.id
+                    ORDER BY c.name, it.name, hi.year
+                """, conn)
+                
+                all_stats_file = output_dir / "table_statistique.csv"
+                all_stats_df.to_csv(all_stats_file, index=False, encoding='utf-8', sep=';')
+                created_files.append(str(all_stats_file))
+                logger.info(f"✅ {all_stats_file.name} créé ({len(all_stats_df)} enregistrements)")
+                
+                # 5. Export des unités (valeurs distinctes)
+                logger.info("Export des types d'unités...")
+                units_df = pd.read_sql_query("""
+                    SELECT DISTINCT 
+                        ROW_NUMBER() OVER (ORDER BY value_type) as id,
+                        value_type as nom,
+                        value_type as description
+                    FROM health_indicators 
+                    WHERE value_type IS NOT NULL
+                    ORDER BY value_type
+                """, conn)
+                
+                units_file = output_dir / "unite_clean.csv"
+                units_df.to_csv(units_file, index=False, encoding='utf-8', sep=';')
+                created_files.append(str(units_file))
+                logger.info(f"✅ {units_file.name} créé ({len(units_df)} unités)")
+                
+        except Exception as e:
+            logger.error(f"Erreur lors de l'export CSV: {e}")
+            raise
+        
+        logger.info(f"=== Export CSV terminé - {len(created_files)} fichiers créés ===")
+        return created_files
+
 def main():
     """Point d'entrée principal"""
     
@@ -1039,6 +1200,14 @@ def main():
     # Affiche le schéma SQL généré
     if results.get('schema_file'):
         print(f"\n📄 Schéma SQL disponible dans: {results['schema_file']}")
+    
+    # Affiche les fichiers CSV générés
+    if results.get('csv_files'):
+        print(f"\n📊 Fichiers CSV générés dans DatasetClean:")
+        for csv_file in results['csv_files']:
+            file_name = Path(csv_file).name
+            file_size = Path(csv_file).stat().st_size / 1024  # en KB
+            print(f"  • {file_name} ({file_size:.1f} KB)")
         
         # Demande à l'utilisateur s'il veut voir le schéma
         try:

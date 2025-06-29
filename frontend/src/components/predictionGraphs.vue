@@ -16,16 +16,19 @@
         </div>
         <div class="metric-card">
           <span class="metric-label">Échantillons</span>
-          <span class="metric-value">{{ result.prediction?.length || 'N/A' }}</span>
+          <span class="metric-value">{{ getDataLength() }}</span>
         </div>
       </div>
     </div>
     
     <!-- Graphique -->
     <div class="chart-container">
-      <canvas v-if="result && (result.predictions || result.prediction)" id="myChart"></canvas>
+      <canvas v-if="hasValidPredictionData()" id="myChart"></canvas>
       <div v-else class="no-data">
         <p>Aucune donnée de prédiction disponible</p>
+        <div v-if="result" class="debug-info">
+          <small>Données reçues: {{ Object.keys(result).join(', ') }}</small>
+        </div>
       </div>
     </div>
     
@@ -74,11 +77,28 @@ onMounted(async () => {
   }
 });
 
+const getDataLength = () => {
+  const dataArray = result.value?.prediction || result.value?.predictions;
+  return dataArray && Array.isArray(dataArray) ? dataArray.length : 'N/A';
+};
+
+const hasValidPredictionData = () => {
+  const dataArray = result.value?.prediction || result.value?.predictions;
+  return result.value && dataArray && Array.isArray(dataArray) && dataArray.length > 0;
+};
+
 const createChart = () => {
-  const dataArray = result.value?.predictions || result.value?.prediction;
+  // Vérifier différents formats de données possibles
+  const dataArray = result.value?.prediction || result.value?.predictions;
+  const labelsArray = result.value?.labels;
   
   if (!result.value || !dataArray || !Array.isArray(dataArray)) {
-    console.error("Aucune donnée de prédiction disponible");
+    console.error("Aucune donnée de prédiction disponible", {
+      hasResult: !!result.value,
+      hasDataArray: !!dataArray,
+      isArray: Array.isArray(dataArray),
+      resultKeys: result.value ? Object.keys(result.value) : []
+    });
     return;
   }
 
@@ -95,11 +115,19 @@ const createChart = () => {
     chartInstance.destroy();
   }
   
+  // Préparer les labels - utiliser les années si disponibles, sinon indices
+  let finalLabels;
+  if (labelsArray && Array.isArray(labelsArray) && labelsArray.length === dataArray.length) {
+    finalLabels = labelsArray.map(label => label?.toString() || '');
+  } else {
+    finalLabels = dataArray.map((_, i) => `Point ${i + 1}`);
+  }
+  
   // Créer le nouveau graphique
   chartInstance = new Chart(ctx, {
     type: "line",
     data: {
-      labels: result.value.labels || dataArray.map((_, i) => `Point ${i + 1}`),
+      labels: finalLabels,
       datasets: [
         {
           label: "Prédictions",
@@ -108,7 +136,9 @@ const createChart = () => {
           backgroundColor: "rgba(25, 118, 210, 0.1)",
           borderWidth: 2,
           fill: true,
-          tension: 0.1
+          tension: 0.1,
+          pointRadius: 3,
+          pointHoverRadius: 5
         }
       ]
     },
@@ -118,11 +148,22 @@ const createChart = () => {
       plugins: {
         title: {
           display: true,
-          text: "Résultats de Prédiction"
+          text: "Résultats de Prédiction",
+          font: {
+            size: 16,
+            weight: 'bold'
+          }
         },
         legend: {
           display: true,
           position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `Prédiction: ${context.parsed.y.toFixed(2)}`;
+            }
+          }
         }
       },
       scales: {
@@ -131,12 +172,20 @@ const createChart = () => {
           title: {
             display: true,
             text: 'Valeurs Prédites'
+          },
+          grid: {
+            display: true,
+            color: 'rgba(0,0,0,0.1)'
           }
         },
         x: {
           title: {
             display: true,
-            text: 'Points de Données'
+            text: labelsArray && labelsArray.length ? 'Années' : 'Points de Données'
+          },
+          grid: {
+            display: true,
+            color: 'rgba(0,0,0,0.1)'
           }
         }
       }
@@ -266,6 +315,12 @@ canvas {
   text-align: center;
   color: #4caf50;
   font-weight: 500;
+}
+
+.debug-info {
+  margin-top: 1em;
+  color: #999;
+  font-size: 0.8em;
 }
 
 @media (max-width: 768px) {
