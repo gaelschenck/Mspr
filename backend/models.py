@@ -1,140 +1,84 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, DECIMAL
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, DECIMAL, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from typing import List, Optional
 from database import Base
 import datetime
 
 
-class Pays(Base):
-    __tablename__ = "pays"
+class Country(Base):
+    __tablename__ = "countries"
 
-    id_pays: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    pays: Mapped[str] = mapped_column(String(100), nullable=False)  # Renommé de nom_pays
-    region_who: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)  # Renommé de region
-    # sous_region supprimé car absent des ETL
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    who_region: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    iso_code: Mapped[Optional[str]] = mapped_column(String(3), nullable=True)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
+    updated_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
     # Relations
-    population_hiv: Mapped[List["PopulationHIV"]] = relationship(
-        "PopulationHIV", back_populates="pays"
-    )
-    mortalite: Mapped[List["Mortalite"]] = relationship(
-        "Mortalite", back_populates="pays"
-    )
-    transmission: Mapped[List["TransmissionMereEnfant"]] = relationship(
-        "TransmissionMereEnfant", back_populates="pays"
-    )
-    traitement: Mapped[List["Traitement"]] = relationship(
-        "Traitement", back_populates="pays"
-    )
-    statistiques: Mapped[List["Statistique"]] = relationship(
-        "Statistique", back_populates="pays"
+    health_indicators: Mapped[List["HealthIndicator"]] = relationship(
+        "HealthIndicator", back_populates="country"
     )
 
 
-class Unite(Base):
-    __tablename__ = "unite"
-
-    id_unite: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    unite: Mapped[str] = mapped_column(String(50), nullable=False)  # Renommé de nom_unite
-
-
-class PopulationHIV(Base):
-    __tablename__ = "population_hiv"
+class IndicatorType(Base):
+    __tablename__ = "indicator_types"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    annee: Mapped[int] = mapped_column(Integer, nullable=False)
-    valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    unit: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
 
-    pays: Mapped["Pays"] = relationship("Pays", back_populates="population_hiv")
-    unite: Mapped["Unite"] = relationship("Unite")
+    # Relations
+    health_indicators: Mapped[List["HealthIndicator"]] = relationship(
+        "HealthIndicator", back_populates="indicator_type"
+    )
 
 
-class Mortalite(Base):
-    __tablename__ = "mortalite"
+class HealthIndicator(Base):
+    __tablename__ = "health_indicators"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    annee: Mapped[int] = mapped_column(Integer, nullable=False)
-    valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
+    country_id: Mapped[int] = mapped_column(Integer, ForeignKey("countries.id"), nullable=False)
+    indicator_type_id: Mapped[int] = mapped_column(Integer, ForeignKey("indicator_types.id"), nullable=False)
+    year: Mapped[int] = mapped_column(Integer, default=2023)
+    value_type: Mapped[str] = mapped_column(String(100), nullable=False)  # 'received', 'needed', 'percentage', etc.
+    value: Mapped[Optional[float]] = mapped_column(DECIMAL(15, 2), nullable=True)
+    value_text: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)  # pour les valeurs comme "No data"
+    confidence_min: Mapped[Optional[float]] = mapped_column(DECIMAL(15, 2), nullable=True)
+    confidence_max: Mapped[Optional[float]] = mapped_column(DECIMAL(15, 2), nullable=True)
+    confidence_median: Mapped[Optional[float]] = mapped_column(DECIMAL(15, 2), nullable=True)
+    data_quality: Mapped[str] = mapped_column(String(50), default='good')
+    source_file: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    raw_value_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)  # stocke la valeur brute pour traçabilité
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
+    updated_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
-    pays: Mapped["Pays"] = relationship("Pays", back_populates="mortalite")
-    unite: Mapped["Unite"] = relationship("Unite")
-
-
-class TransmissionMereEnfant(Base):
-    __tablename__ = "transmission_mere_enfant"
-
-    id_transmission: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)  # Renommé de id
-    id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    besoin_arv_min: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    besoin_arv_median: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    besoin_arv_max: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    pourcentage_recu_min: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
-    pourcentage_recu_median: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
-    pourcentage_recu_max: Mapped[float] = mapped_column(DECIMAL(5, 2), nullable=False)
-
-    pays: Mapped["Pays"] = relationship("Pays", back_populates="transmission")
+    # Relations
+    country: Mapped["Country"] = relationship("Country", back_populates="health_indicators")
+    indicator_type: Mapped["IndicatorType"] = relationship("IndicatorType", back_populates="health_indicators")
 
 
-class Traitement(Base):
-    __tablename__ = "traitement"
+class ETLMetadata(Base):
+    __tablename__ = "etl_metadata"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
-    id_type_traitement: Mapped[int] = mapped_column(
-        Integer, ForeignKey("type_traitement.id_type_traitement")
-    )
-
-    pays: Mapped["Pays"] = relationship("Pays", back_populates="traitement")
-    unite: Mapped["Unite"] = relationship("Unite")
-    type_traitement: Mapped["TypeTraitement"] = relationship("TypeTraitement")
-
-
-class Statistique(Base):
-    __tablename__ = "statistique"
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    id_pays: Mapped[int] = mapped_column(Integer, ForeignKey("pays.id_pays"))
-    annee: Mapped[int] = mapped_column(Integer, nullable=False)
-    valeur: Mapped[float] = mapped_column(DECIMAL(10, 2), nullable=False)
-    id_unite: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("unite.id_unite"), nullable=True)
-    id_type_statistique: Mapped[int] = mapped_column(
-        Integer, ForeignKey("type_statistique.id_type_statistique")
-    )
-
-    pays: Mapped["Pays"] = relationship("Pays", back_populates="statistiques")
-    unite: Mapped["Unite"] = relationship("Unite")
-    type_statistique: Mapped["TypeStatistique"] = relationship("TypeStatistique")
-
-
-class TypeStatistique(Base):
-    __tablename__ = "type_statistique"
-
-    id_type_statistique: Mapped[int] = mapped_column(
-        Integer, primary_key=True, index=True
-    )
-    nom_type_statistique: Mapped[str] = mapped_column(String(100), nullable=False)
-
-
-class TypeTraitement(Base):
-    __tablename__ = "type_traitement"
-
-    id_type_traitement: Mapped[int] = mapped_column(
-        Integer, primary_key=True, index=True
-    )
-    nom_type_traitement: Mapped[str] = mapped_column(String(100), nullable=False)
+    file_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    processing_date: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
+    records_processed: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    records_success: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    records_failed: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    processing_duration_seconds: Mapped[Optional[float]] = mapped_column(DECIMAL(10, 2), nullable=True)
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
 # Authentification
 
 class Utilisateur(Base):
     __tablename__ = "utilisateur"
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    role = Column(String)
-    rgpd_accept = Column(Integer, nullable=False, default=0)  # 0: non accepté, 1: accepté
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    username: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
+    role: Mapped[str] = mapped_column(String(50), nullable=False)
+    rgpd_accept: Mapped[int] = mapped_column(Integer, nullable=False, default=0)  # 0: non accepté, 1: accepté

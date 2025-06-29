@@ -69,15 +69,21 @@ jobs:
       - name: Build & push backend
         run: |
           cd backend
-          docker build -t $BACKEND_IMAGE_NAME:latest .
+          # Tag avec le hash du commit pour traçabilité
+          COMMIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          docker build -t $BACKEND_IMAGE_NAME:latest -t $BACKEND_IMAGE_NAME:$COMMIT_SHA .
           docker push $BACKEND_IMAGE_NAME:latest
+          docker push $BACKEND_IMAGE_NAME:$COMMIT_SHA
       - name: Build & push frontend
         run: |
           cd frontend
           npm ci
           npm run build
-          docker build -t $FRONTEND_IMAGE_NAME:latest .
+          # Tag avec le hash du commit pour traçabilité
+          COMMIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          docker build -t $FRONTEND_IMAGE_NAME:latest -t $FRONTEND_IMAGE_NAME:$COMMIT_SHA .
           docker push $FRONTEND_IMAGE_NAME:latest
+          docker push $FRONTEND_IMAGE_NAME:$COMMIT_SHA
 
   deploy:
     runs-on: ubuntu-latest

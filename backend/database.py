@@ -10,6 +10,9 @@ from dotenv import load_dotenv
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Base déclarative pour les modèles (doit être définie tôt)
+Base = declarative_base()
+
 # Charge les variables d'environnement depuis .env
 load_dotenv(dotenv_path=".env")
 engine = None
@@ -90,10 +93,19 @@ if POSTGRES_DB:
         logger.error(f"Erreur lors de l'initialisation: {e}")
         engine = None
 else:
-    # Pas de base principale, on laisse le script d'init gérer ses propres connexions
-    logger.info("Aucune base de données principale configurée")
-    DATABASE_URL = None
-    engine = None
+    # Vérifier si on est en mode test avec TEST_MODE
+    TEST_MODE = os.getenv("TEST_MODE", "false").lower() == "true"
+    
+    if TEST_MODE:
+        # En mode test, utiliser SQLite en mémoire
+        DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+        logger.info("Mode TEST activé - Utilisation de SQLite en mémoire")
+        engine = None
+    else:
+        # Pas de base principale, on laisse le script d'init gérer ses propres connexions
+        logger.info("Aucune base de données principale configurée")
+        DATABASE_URL = None
+        engine = None
 
 # Fonction d'initialisation de l'engine
 async def initialize_engine():
@@ -104,9 +116,24 @@ async def initialize_engine():
     
     if DATABASE_URL and engine is None:
         try:
-            engine = await create_engine_with_retry(DATABASE_URL)
+            # Configuration spéciale pour SQLite en mode test
+            if "sqlite" in DATABASE_URL:
+                from sqlalchemy.pool import StaticPool
+                engine = create_async_engine(
+                    DATABASE_URL,
+                    echo=False,
+                    poolclass=StaticPool,
+                    connect_args={"check_same_thread": False},
+                )
+                # Créer les tables pour SQLite
+                async with engine.begin() as conn:
+                    await conn.run_sync(Base.metadata.create_all)
+                logger.info("Engine SQLite initialisé avec tables créées")
+            else:
+                engine = await create_engine_with_retry(DATABASE_URL)
+                logger.info("Engine PostgreSQL initialisé avec succès")
+            
             SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
-            logger.info("Engine et SessionLocal initialisés avec succès")
         except Exception as e:
             logger.error(f"Échec de l'initialisation de l'engine: {e}")
             raise
@@ -115,9 +142,6 @@ async def initialize_engine():
 
 # Création de la session asynchrone (sera initialisée plus tard)
 SessionLocal = None
-
-# Base déclarative pour les modèles
-Base = declarative_base()
 
 # Dépendance pour récupérer la session de la base de données
 async def get_db():

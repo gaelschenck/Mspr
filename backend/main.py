@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi import FastAPI, Depends, HTTPException, Request, Query
 import joblib
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy import select, update, delete
@@ -21,19 +21,14 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from sqlalchemy.future import select
+from contextlib import asynccontextmanager
 
-# Déclare `app`
-app = FastAPI(title="MSPR API", version="1.0.0")
-
-# ========================
-# Event handlers pour l'initialisation
-# ========================
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     """
-    Initialise la connexion à la base de données au démarrage de l'application
+    Gère le cycle de vie de l'application FastAPI
     """
+    # Startup
     try:
         print("Démarrage de l'application...")
         await initialize_engine()
@@ -47,16 +42,17 @@ async def startup_event():
         # Les retry se feront automatiquement lors des requêtes
         import traceback
         traceback.print_exc()
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """
-    Nettoie les connexions à la base de données à l'arrêt
-    """
+    
+    yield
+    
+    # Shutdown
     import database
     if database.engine:
         await database.engine.dispose()
         print("Connexions à la base de données fermées")
+
+# Déclare `app`
+app = FastAPI(title="MSPR API", version="1.0.0", lifespan=lifespan)
 
 # ========================
 # Configuration de la securité/authentification
@@ -335,149 +331,155 @@ async def options_handler():
 
 
 # ========================
-# Endpoints PAYS
+# Endpoints COUNTRIES (remplace PAYS)
 # ========================
-@app.get("/payslist/")
-async def get_pays(db: AsyncSession = Depends(get_db)):
+@app.get("/countries/")
+async def get_countries(db: AsyncSession = Depends(get_db)):
     """
-    Endpoint pour récupérer les informations des pays depuis la table `pays`.
+    Endpoint pour récupérer les informations des pays depuis la table `countries`.
     """
-    result = await db.execute(select(models.Pays))
-    pays_list = result.scalars().all()
-    return [{"id": pays.id_pays, "nom": pays.pays, "region": pays.region_who} for pays in pays_list]
+    result = await db.execute(select(models.Country))
+    countries_list = result.scalars().all()
+    return [{"id": country.id, "name": country.name, "who_region": country.who_region} for country in countries_list]
 
 
-@app.get("/pays/", response_model=List[schemas.Pays])
-async def get_pays(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.Pays))
+@app.get("/countries/list/", response_model=List[schemas.Country])
+async def get_countries_list(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(models.Country))
     return result.scalars().all()
 
 
-@app.post("/pays/", response_model=schemas.Pays)
-async def create_pays(pays: schemas.PaysCreate, db: AsyncSession = Depends(get_db)):
-    new_pays = models.Pays(**pays.dict())
-    db.add(new_pays)
+@app.post("/countries/", response_model=schemas.Country)
+async def create_country(country: schemas.CountryCreate, db: AsyncSession = Depends(get_db)):
+    new_country = models.Country(**country.dict())
+    db.add(new_country)
     await db.commit()
-    await db.refresh(new_pays)
-    return new_pays
+    await db.refresh(new_country)
+    return new_country
 
 
-@app.put("/pays/{pays_id}/", response_model=schemas.Pays)
-async def update_pays(
-    pays_id: int, pays: schemas.PaysCreate, db: AsyncSession = Depends(get_db)
+@app.put("/countries/{country_id}/", response_model=schemas.Country)
+async def update_country(
+    country_id: int, country: schemas.CountryCreate, db: AsyncSession = Depends(get_db)
 ):
-    result = await db.execute(select(models.Pays).where(models.Pays.id_pays == pays_id))
-    db_pays = result.scalar_one_or_none()
+    result = await db.execute(select(models.Country).where(models.Country.id == country_id))
+    db_country = result.scalar_one_or_none()
 
-    if not db_pays:
+    if not db_country:
         raise HTTPException(status_code=404, detail=tr("country_not_found"))
 
     await db.execute(
-        update(models.Pays).where(models.Pays.id_pays == pays_id).values(**pays.dict())
+        update(models.Country).where(models.Country.id == country_id).values(**country.dict())
     )
     await db.commit()
-    return {**pays.dict(), "id_pays": pays_id}
+    return {**country.dict(), "id": country_id}
 
 
-@app.delete("/pays/{pays_id}/")
-async def delete_pays(pays_id: int, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.Pays).where(models.Pays.id_pays == pays_id))
-    db_pays = result.scalar_one_or_none()
+@app.delete("/countries/{country_id}/")
+async def delete_country(country_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(models.Country).where(models.Country.id == country_id))
+    db_country = result.scalar_one_or_none()
 
-    if not db_pays:
+    if not db_country:
         raise HTTPException(status_code=404, detail=tr("country_not_found"))
 
-    await db.execute(delete(models.Pays).where(models.Pays.id_pays == pays_id))
+    await db.execute(delete(models.Country).where(models.Country.id == country_id))
     await db.commit()
     return {"message": tr("country_deleted")}
 
 
 # ========================
-# Endpoints POPULATION HIV
+# Endpoints INDICATOR TYPES
 # ========================
 
-
-@app.get("/population_hiv/", response_model=List[schemas.PopulationHIV])
-async def get_population_hiv(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.PopulationHIV))
+@app.get("/indicator-types/", response_model=List[schemas.IndicatorType])
+async def get_indicator_types(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(models.IndicatorType))
     return result.scalars().all()
 
 
-@app.post("/population_hiv/", response_model=schemas.PopulationHIV)
-async def create_population_hiv(
-    data: schemas.PopulationHIVCreate, db: AsyncSession = Depends(get_db)
+@app.post("/indicator-types/", response_model=schemas.IndicatorType)
+async def create_indicator_type(
+    indicator_type: schemas.IndicatorTypeCreate, db: AsyncSession = Depends(get_db)
 ):
-    new_data = models.PopulationHIV(**data.dict())
-    db.add(new_data)
+    new_indicator_type = models.IndicatorType(**indicator_type.dict())
+    db.add(new_indicator_type)
     await db.commit()
-    await db.refresh(new_data)
-    return new_data
+    await db.refresh(new_indicator_type)
+    return new_indicator_type
 
 
 # ========================
-# Endpoints MORTALITE
+# Endpoints HEALTH INDICATORS
 # ========================
 
-
-@app.get("/mortalite/", response_model=List[schemas.Mortalite])
-async def get_mortalite(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.Mortalite))
+@app.get("/health-indicators/", response_model=List[schemas.HealthIndicator])
+async def get_health_indicators(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(models.HealthIndicator))
     return result.scalars().all()
 
 
-@app.post("/mortalite/", response_model=schemas.Mortalite)
-async def create_mortalite(
-    data: schemas.MortaliteCreate, db: AsyncSession = Depends(get_db)
+@app.post("/health-indicators/", response_model=schemas.HealthIndicator)
+async def create_health_indicator(
+    health_indicator: schemas.HealthIndicatorCreate, db: AsyncSession = Depends(get_db)
 ):
-    new_data = models.Mortalite(**data.dict())
-    db.add(new_data)
+    new_health_indicator = models.HealthIndicator(**health_indicator.dict())
+    db.add(new_health_indicator)
     await db.commit()
-    await db.refresh(new_data)
-    return new_data
+    await db.refresh(new_health_indicator)
+    return new_health_indicator
 
 
-# ========================
-# Endpoints TRANSMISSION MÈRE-ENFANT
-# ========================
-
-
-@app.get("/transmission/", response_model=List[schemas.TransmissionMereEnfant])
-async def get_transmission(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.TransmissionMereEnfant))
-    return result.scalars().all()
-
-
-@app.post("/transmission/", response_model=schemas.TransmissionMereEnfant)
-async def create_transmission(
-    data: schemas.TransmissionMereEnfantCreate, db: AsyncSession = Depends(get_db)
+@app.get("/health-indicators/detailed/")
+async def get_health_indicators_detailed(
+    offset: int = Query(0, ge=0),
+    limit: int = Query(25, ge=1, le=1000),
+    country_name: str = Query(None),
+    indicator_type_name: str = Query(None),
+    who_region: str = Query(None),
+    year: int = Query(None),
+    db: AsyncSession = Depends(get_db)
 ):
-    new_data = models.TransmissionMereEnfant(**data.dict())
-    db.add(new_data)
-    await db.commit()
-    await db.refresh(new_data)
-    return new_data
-
-
-# ========================
-# Endpoints STATISTIQUES
-# ========================
-
-
-@app.get("/statistiques/", response_model=List[schemas.Statistique])
-async def get_statistiques(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(models.Statistique))
-    return result.scalars().all()
-
-
-@app.post("/statistiques/", response_model=schemas.Statistique)
-async def create_statistique(
-    data: schemas.StatistiqueCreate, db: AsyncSession = Depends(get_db)
-):
-    new_data = models.Statistique(**data.dict())
-    db.add(new_data)
-    await db.commit()
-    await db.refresh(new_data)
-    return new_data
+    """
+    Endpoint avec pagination et filtres pour récupérer les indicateurs de santé avec détails
+    """
+    query = select(models.HealthIndicator).options(
+        selectinload(models.HealthIndicator.country),
+        selectinload(models.HealthIndicator.indicator_type)
+    )
+    
+    # Filtres
+    if country_name:
+        query = query.join(models.Country).filter(models.Country.name.ilike(f"%{country_name}%"))
+    if indicator_type_name:
+        query = query.join(models.IndicatorType).filter(models.IndicatorType.name.ilike(f"%{indicator_type_name}%"))
+    if who_region:
+        query = query.join(models.Country).filter(models.Country.who_region == who_region)
+    if year:
+        query = query.filter(models.HealthIndicator.year == year)
+    
+    query = query.offset(offset).limit(limit)
+    result = await db.execute(query)
+    data = result.scalars().all()
+    
+    return [
+        {
+            "id": indicator.id,
+            "country_name": indicator.country.name if indicator.country else None,
+            "who_region": indicator.country.who_region if indicator.country else None,
+            "indicator_type": indicator.indicator_type.name if indicator.indicator_type else None,
+            "year": indicator.year,
+            "value_type": indicator.value_type,
+            "value": float(indicator.value) if indicator.value else None,
+            "value_text": indicator.value_text,
+            "confidence_min": float(indicator.confidence_min) if indicator.confidence_min else None,
+            "confidence_max": float(indicator.confidence_max) if indicator.confidence_max else None,
+            "confidence_median": float(indicator.confidence_median) if indicator.confidence_median else None,
+            "data_quality": indicator.data_quality,
+            "source_file": indicator.source_file
+        }
+        for indicator in data
+    ]
 
 
 # ========================
@@ -525,123 +527,156 @@ async def health_check():
 @app.post("/dataframe/")
 async def create_dataframe(payload: schemas.PredictionRequest, db: AsyncSession = Depends(get_db)):
     """
-    Endpoint pour générer un DataFrame croisé basé sur les choix de l'utilisateur.
+    Endpoint pour générer un DataFrame basé sur les choix de l'utilisateur.
+    Utilise le nouveau schéma normalisé.
     """
     region = payload.region
-    pays = payload.pays
-    table = payload.table
-    target_column = payload.target_column
+    country = payload.country
+    indicator_type = payload.indicator_type
+    value_type = payload.value_type
 
-    # Validation des tables supportées
-    valid_tables = ["mortalite", "population_hiv", "statistique", "traitement", "transmission_mere_enfant", "pays"]
-    if table not in valid_tables:
-        raise HTTPException(status_code=400, detail=f"Table invalide. Tables supportées: {valid_tables}")
-    
-    if not region and not pays:
+    # Validation des paramètres
+    if not region and not country:
         raise HTTPException(status_code=400, detail=tr("region_or_country_required"))
 
-    # Récupérer les pays selon les critères
-    query_pays = select(models.Pays)
+    # Construire la requête pour récupérer les indicateurs de santé
+    query = select(models.HealthIndicator).options(
+        selectinload(models.HealthIndicator.country),
+        selectinload(models.HealthIndicator.indicator_type)
+    )
+
+    # Filtres par région ou pays
     if region:
-        query_pays = query_pays.filter(models.Pays.region_who == region)
-    if pays:
-        query_pays = query_pays.filter(models.Pays.pays == pays)
+        query = query.join(models.Country).filter(models.Country.who_region == region)
+    if country:
+        query = query.join(models.Country).filter(models.Country.name == country)
 
-    result_pays = await db.execute(query_pays)
-    data_pays = result_pays.scalars().all()
+    # Filtre par type d'indicateur
+    if indicator_type:
+        query = query.join(models.IndicatorType).filter(models.IndicatorType.name == indicator_type)
+
+    # Filtre par type de valeur
+    if value_type:
+        query = query.filter(models.HealthIndicator.value_type == value_type)
+
+    # Exécuter la requête
+    result = await db.execute(query)
+    health_indicators = result.scalars().all()
+
+    if not health_indicators:
+        raise HTTPException(status_code=404, detail="Aucun indicateur trouvé avec ces critères")
+
+    # Conversion en DataFrame
+    data = []
+    for indicator in health_indicators:
+        data.append({
+            "id": indicator.id,
+            "country_id": indicator.country_id,
+            "country_name": indicator.country.name if indicator.country else None,
+            "who_region": indicator.country.who_region if indicator.country else None,
+            "indicator_type_id": indicator.indicator_type_id,
+            "indicator_type_name": indicator.indicator_type.name if indicator.indicator_type else None,
+            "year": indicator.year,
+            "value_type": indicator.value_type,
+            "value": float(indicator.value) if indicator.value else None,
+            "value_text": indicator.value_text,
+            "confidence_min": float(indicator.confidence_min) if indicator.confidence_min else None,
+            "confidence_max": float(indicator.confidence_max) if indicator.confidence_max else None,
+            "confidence_median": float(indicator.confidence_median) if indicator.confidence_median else None,
+            "data_quality": indicator.data_quality,
+            "source_file": indicator.source_file
+        })
+
+    df = pd.DataFrame(data)
     
-    if not data_pays:
-        raise HTTPException(status_code=404, detail="Aucun pays trouvé avec ces critères")
-
-    # Mapping précis entre nom de table (frontend) et classe modèle Python
-    MODEL_MAPPING = {
-        "mortalite": models.Mortalite,
-        "population_hiv": models.PopulationHIV,
-        "statistique": models.Statistique,
-        "traitement": models.Traitement,
-        "transmission_mere_enfant": models.TransmissionMereEnfant,
-        "pays": models.Pays,
-    }
+    # Filtrer les lignes avec des valeurs nulles pour la prédiction
+    df_clean = df.dropna(subset=['value'])
     
-    model = MODEL_MAPPING.get(table)
-    if not model:
-        raise HTTPException(status_code=400, detail=tr("unknown_table"))
-    
-    # Requête pour la table sélectionnée
-    query_table = select(model)
-    result_table = await db.execute(query_table)
-    data_table = result_table.scalars().all()
+    print(f"DataFrame original: {df.shape}, après nettoyage: {df_clean.shape}")
+    print(f"Colonnes: {df_clean.columns.tolist()}")
 
-    # Conversion des données en DataFrames
-    df_pays = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_pays])
-    df_table = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_table])
+    # Vérifications pour éviter les erreurs 422
+    if len(df_clean) == 0:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Aucune donnée numérique trouvée pour région='{region}', pays='{country}', type_indicateur='{indicator_type}'"
+        )
 
-    print(f"df_pays shape: {df_pays.shape}, colonnes: {df_pays.columns.tolist()}")
-    print(f"df_table shape: {df_table.shape}, colonnes: {df_table.columns.tolist()}")
+    if len(df_clean) < 5:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Pas assez de données pour l'entraînement (seulement {len(df_clean)} lignes, minimum 5 requis). Essayez avec d'autres critères."
+        )
 
-    # Fusion des deux DataFrames pour créer un DataFrame croisé
-    try:
-        # Si on travaille sur la table pays directement, pas besoin de fusion
-        if table == "pays":
-            dataframe_croise = df_pays
-        else:
-            # Fusionner sur id_pays
-            if "id_pays" in df_pays.columns and "id_pays" in df_table.columns:
-                dataframe_croise = pd.merge(df_pays, df_table, on="id_pays", how="inner")
-            else:
-                raise HTTPException(status_code=400, detail="Impossible de fusionner: colonne id_pays manquante")
-        
-        # Nettoyer les colonnes nulles si nécessaire
-        dataframe_croise = dataframe_croise.dropna(subset=[target_column] if target_column and target_column in dataframe_croise.columns else [])
-        
-        print(f"DataFrame final shape: {dataframe_croise.shape}")
-        print(f"Colonnes finales: {dataframe_croise.columns.tolist()}")
-        
-        return {"dataframe": dataframe_croise.to_dict(orient='records')}
-        
-    except Exception as e:
-        print(f"Erreur lors de la fusion: {e}")
-        raise HTTPException(status_code=400, detail=f"Erreur lors de la fusion des données: {str(e)}")
+    # Vérifier la variance des valeurs
+    if df_clean['value'].nunique() == 1:
+        unique_val = df_clean['value'].iloc[0]
+        raise HTTPException(
+            status_code=422,
+            detail=f"Toutes les valeurs sont identiques ({unique_val}). Le modèle ne peut pas apprendre. Essayez avec d'autres critères."
+        )
+
+    print(f"✅ Validation réussie: {len(df_clean)} lignes, {df_clean['value'].nunique()} valeurs uniques")
+
+    return {"dataframe": df_clean.to_dict(orient='records')}
 
 
 
 @app.get("/tables/")
 async def get_available_tables():
     """
-    Endpoint pour fournir les noms des tables disponibles et leurs relations.
+    Endpoint pour fournir les informations sur le nouveau schéma normalisé.
     """
-    tables = {
-        "pays": ["region"],
-        "mortalite": [],
-        "population_hiv": [],
-        "statistique": [],
-        "traitement": [],
-        "transmission_mere_enfant": [],
-    }
-    return {"tables": tables}
-
-@app.get("/columns/{table_name}")
-async def get_columns(table_name: str):
-    """
-    Endpoint pour récupérer la liste des colonnes disponibles dans une table donnée.
-    """
-    TABLE_MAPPING = {
-        "mortalite": models.Mortalite,
-        "population_hiv": models.PopulationHIV,
-        "statistique": models.Statistique,
-        "traitement": models.Traitement,
-        "transmission_mere_enfant": models.TransmissionMereEnfant
-        # Ajoute ici d'autres tables et leurs modèles
+    return {
+        "tables": {
+            "health_indicators": "Table principale contenant tous les indicateurs de santé",
+            "countries": "Table des pays avec régions WHO",
+            "indicator_types": "Types d'indicateurs disponibles"
+        },
+        "filters": {
+            "country": "Filtrer par nom de pays",
+            "region": "Filtrer par région WHO",
+            "indicator_type": "Filtrer par type d'indicateur", 
+            "value_type": "Filtrer par type de valeur",
+            "year": "Filtrer par année"
+        }
     }
 
-    # Vérifie si la table existe
-    model = TABLE_MAPPING.get(table_name)
-    if not model:
-        raise HTTPException(status_code=404, detail=tr("table_not_found", table=table_name))
+@app.get("/indicator-types/list/")
+async def get_indicator_types_list(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer la liste des types d'indicateurs disponibles.
+    """
+    result = await db.execute(select(models.IndicatorType.name).distinct())
+    indicator_types = [row[0] for row in result.fetchall()]
+    return {"indicator_types": indicator_types}
 
-    # Récupère les colonnes du modèle
-    columns = [column.key for column in model.__table__.columns]
-    return {"columns": columns}
+@app.get("/countries/regions/")
+async def get_who_regions(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer la liste des régions WHO disponibles.
+    """
+    result = await db.execute(select(models.Country.who_region).distinct().filter(models.Country.who_region.isnot(None)))
+    regions = [row[0] for row in result.fetchall()]
+    return {"who_regions": regions}
+
+@app.get("/health-indicators/value-types/")
+async def get_value_types(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer la liste des types de valeurs disponibles.
+    """
+    result = await db.execute(select(models.HealthIndicator.value_type).distinct())
+    value_types = [row[0] for row in result.fetchall()]
+    return {"value_types": value_types}
+
+@app.get("/health-indicators/years/")
+async def get_available_years(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer la liste des années disponibles.
+    """
+    result = await db.execute(select(models.HealthIndicator.year).distinct().order_by(models.HealthIndicator.year))
+    years = [row[0] for row in result.fetchall()]
+    return {"years": years}
 
 @app.post("/train_model/", response_model=schemas.PredictionResponse)
 async def train_model_endpoint(payload: schemas.TrainingRequest):
@@ -693,7 +728,7 @@ async def train_model_endpoint(payload: schemas.TrainingRequest):
 
         # Faire des prédictions sur toutes les données pour visualisation
         predictions = trained_model.predict(X)
-        labels = list(df["annee"]) if "annee" in df.columns else list(range(len(predictions)))
+        labels = list(df["year"]) if "year" in df.columns else (list(df["annee"]) if "annee" in df.columns else list(range(len(predictions))))
 
         return {
             "prediction": [safe(x) for x in predictions],
@@ -704,6 +739,10 @@ async def train_model_endpoint(payload: schemas.TrainingRequest):
             "future_prediction": safe(future_pred_value),
             "future_year": safe(future_year)
         }
+    except ValueError as ve:
+        # Erreurs de validation spécifiques (pas assez de données, etc.)
+        print(f"Erreur de validation dans /train_model/: {ve}")
+        raise HTTPException(status_code=422, detail=str(ve))
     except Exception as e:
         import traceback
         print("Erreur dans /train_model/:", e)
@@ -718,28 +757,47 @@ async def train_model_endpoint(payload: schemas.TrainingRequest):
 async def test_prediction_endpoint(db: AsyncSession = Depends(get_db)):
     """
     Endpoint de test pour vérifier que la prédiction fonctionne avec des données réelles.
+    Utilise le nouveau schéma normalisé.
     """
     try:
-        # Récupérer des données de mortalité pour test
-        query = select(models.Mortalite).limit(50)
-        result = await db.execute(query)
-        data_mortalite = result.scalars().all()
+        # Récupérer des données d'indicateurs de santé pour test
+        query = select(models.HealthIndicator).options(
+            selectinload(models.HealthIndicator.country),
+            selectinload(models.HealthIndicator.indicator_type)
+        ).filter(models.HealthIndicator.value.isnot(None)).limit(50)
         
-        if not data_mortalite:
-            return {"error": "Aucune donnée de mortalité disponible pour le test"}
+        result = await db.execute(query)
+        health_indicators = result.scalars().all()
+        
+        if not health_indicators:
+            return {"error": "Aucune donnée d'indicateur de santé disponible pour le test"}
         
         # Convertir en DataFrame
-        df_test = pd.DataFrame([{key: value for key, value in item.__dict__.items() if not key.startswith('_')} for item in data_mortalite])
+        data = []
+        for indicator in health_indicators:
+            data.append({
+                "id": indicator.id,
+                "country_name": indicator.country.name if indicator.country else None,
+                "who_region": indicator.country.who_region if indicator.country else None,
+                "indicator_type_name": indicator.indicator_type.name if indicator.indicator_type else None,
+                "year": indicator.year,
+                "value_type": indicator.value_type,
+                "value": float(indicator.value),
+                "confidence_min": float(indicator.confidence_min) if indicator.confidence_min else None,
+                "confidence_max": float(indicator.confidence_max) if indicator.confidence_max else None
+            })
+        
+        df_test = pd.DataFrame(data)
         
         # Ajouter quelques features synthétiques pour le test
-        df_test['feature1'] = df_test['valeur'] * 1.2
-        df_test['feature2'] = df_test['annee'] / 100
+        df_test['feature1'] = df_test['value'] * 1.2
+        df_test['feature2'] = df_test['year'] / 100
         
         print(f"DataFrame de test: {df_test.shape}")
         print(f"Colonnes: {df_test.columns.tolist()}")
         
         # Préparer les données
-        X, y = prepare_data_generic(df_test, target_column='valeur')
+        X, y = prepare_data_generic(df_test, target_column='value')
         
         if y is None or len(y) < 5:
             return {"error": "Pas assez de données pour l'entraînement"}
@@ -764,7 +822,9 @@ async def test_prediction_endpoint(db: AsyncSession = Depends(get_db)):
             "sample_predictions": [float(p) for p in predictions[:5]],
             "sample_actual": [float(v) for v in y.head(5)],
             "future_prediction": float(future_pred_value) if future_pred_value else None,
-            "future_year": int(future_year) if future_year else None
+            "future_year": int(future_year) if future_year else None,
+            "unique_countries": df_test['country_name'].nunique(),
+            "unique_indicators": df_test['indicator_type_name'].nunique()
         }
         
     except Exception as e:
@@ -774,101 +834,169 @@ async def test_prediction_endpoint(db: AsyncSession = Depends(get_db)):
         return {"error": str(e), "traceback": traceback.format_exc()}
 
 # ========================
-# END POINTS US - GESTION SCALABILITE
+# END POINTS - GESTION SCALABILITE (Nouveau schéma normalisé)
 #========================
 
-from fastapi import Query
 from sqlalchemy.orm import selectinload
-
 from sqlalchemy import func
 
-@app.get("/population_hiv/paginated/")
-async def get_population_hiv_paginated(
+@app.get("/health-indicators/paginated/")
+async def get_health_indicators_paginated(
     offset: int = Query(0, ge=0),
     limit: int = Query(25, ge=1, le=1000),
+    country_name: str = Query(None),
+    indicator_type_name: str = Query(None),
+    who_region: str = Query(None),
+    year: int = Query(None),
+    value_type: str = Query(None),
     db: AsyncSession = Depends(get_db)
 ):
-    query = select(models.PopulationHIV).options(selectinload(models.PopulationHIV.pays))
+    """
+    Endpoint paginé pour récupérer les indicateurs de santé avec filtres
+    """
+    query = select(models.HealthIndicator).options(
+        selectinload(models.HealthIndicator.country),
+        selectinload(models.HealthIndicator.indicator_type)
+    )
+    
+    # Filtres
+    if country_name:
+        query = query.join(models.Country).filter(models.Country.name.ilike(f"%{country_name}%"))
+    if indicator_type_name:
+        query = query.join(models.IndicatorType).filter(models.IndicatorType.name.ilike(f"%{indicator_type_name}%"))
+    if who_region:
+        query = query.join(models.Country).filter(models.Country.who_region == who_region)
+    if year:
+        query = query.filter(models.HealthIndicator.year == year)
+    if value_type:
+        query = query.filter(models.HealthIndicator.value_type == value_type)
+    
     query = query.offset(offset).limit(limit)
     result = await db.execute(query)
     data = result.scalars().all()
+    
     return [
         {
-            "id": m.id,
-            "id_pays": m.id_pays,
-            "nom_pays": m.pays.pays if m.pays else None,
-            "annee": m.annee,
-            "valeur": m.valeur
+            "id": indicator.id,
+            "country_id": indicator.country_id,
+            "country_name": indicator.country.name if indicator.country else None,
+            "who_region": indicator.country.who_region if indicator.country else None,
+            "indicator_type_id": indicator.indicator_type_id,
+            "indicator_type_name": indicator.indicator_type.name if indicator.indicator_type else None,
+            "year": indicator.year,
+            "value_type": indicator.value_type,
+            "value": float(indicator.value) if indicator.value else None,
+            "value_text": indicator.value_text,
+            "confidence_min": float(indicator.confidence_min) if indicator.confidence_min else None,
+            "confidence_max": float(indicator.confidence_max) if indicator.confidence_max else None,
+            "confidence_median": float(indicator.confidence_median) if indicator.confidence_median else None,
+            "data_quality": indicator.data_quality,
+            "source_file": indicator.source_file
         }
-        for m in data
+        for indicator in data
     ]
 
-@app.get("/traitement/paginated/")
-async def get_traitement_paginated(
+@app.get("/countries/paginated/")
+async def get_countries_paginated(
     offset: int = Query(0, ge=0),
     limit: int = Query(25, ge=1, le=1000),
+    who_region: str = Query(None),
+    name_filter: str = Query(None),
     db: AsyncSession = Depends(get_db)
 ):
-    query = select(models.Traitement).options(selectinload(models.Traitement.pays))
+    """
+    Endpoint paginé pour récupérer les pays avec filtres
+    """
+    query = select(models.Country)
+    
+    if who_region:
+        query = query.filter(models.Country.who_region == who_region)
+    if name_filter:
+        query = query.filter(models.Country.name.ilike(f"%{name_filter}%"))
+    
     query = query.offset(offset).limit(limit)
     result = await db.execute(query)
     data = result.scalars().all()
-    output = []
-    for t in data:
-        if not t.pays:
-            print(f"[WARN] Traitement id={t.id} id_pays={t.id_pays} sans pays associé")
-        output.append({
-            "id": t.id,
-            "id_pays": t.id_pays,
-            "nom_pays": t.pays.pays if t.pays and t.pays.pays else None,
-            "valeur": t.valeur
-        })
-    return output
-
-@app.get("/transmission_mere_enfant/paginated/")
-async def get_transmission_mere_enfant_paginated(
-    offset: int = Query(0, ge=0),
-    limit: int = Query(25, ge=1, le=1000),
-    db: AsyncSession = Depends(get_db)
-):
-    query = select(models.TransmissionMereEnfant).options(selectinload(models.TransmissionMereEnfant.pays))
-    query = query.offset(offset).limit(limit)
-    result = await db.execute(query)
-    data = result.scalars().all()
+    
     return [
         {
-            "id": t.id_transmission,
-            "id_pays": t.id_pays,
-            "nom_pays": t.pays.pays if t.pays else None,
-            "besoin_arv_min": float(t.besoin_arv_min),
-            "besoin_arv_median": float(t.besoin_arv_median),
-            "besoin_arv_max": float(t.besoin_arv_max),
-            "pourcentage_recu_min": float(t.pourcentage_recu_min),
-            "pourcentage_recu_median": float(t.pourcentage_recu_median),
-            "pourcentage_recu_max": float(t.pourcentage_recu_max)
+            "id": country.id,
+            "name": country.name,
+            "who_region": country.who_region,
+            "iso_code": country.iso_code,
+            "created_at": country.created_at.isoformat() if country.created_at else None
         }
-        for t in data
+        for country in data
     ]
 
-@app.get("/mortalite/paginated/")
-async def get_mortalite_paginated(
-    offset: int = Query(0, ge=0),
-    limit: int = Query(25, ge=1, le=1000),
-    db: AsyncSession = Depends(get_db)
-):
-    query = select(models.Mortalite).options(selectinload(models.Mortalite.pays))
-    query = query.offset(offset).limit(limit)
-    result = await db.execute(query)
-    data = result.scalars().all()
-    return [
+@app.get("/health-indicators/summary/")
+async def get_health_indicators_summary(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint pour récupérer un résumé des indicateurs de santé
+    """
+    # Statistiques générales
+    total_indicators = await db.execute(select(func.count(models.HealthIndicator.id)))
+    total_indicators = total_indicators.scalar()
+    
+    indicators_with_values = await db.execute(
+        select(func.count(models.HealthIndicator.id)).filter(models.HealthIndicator.value.isnot(None))
+    )
+    indicators_with_values = indicators_with_values.scalar()
+    
+    unique_countries = await db.execute(select(func.count(func.distinct(models.HealthIndicator.country_id))))
+    unique_countries = unique_countries.scalar()
+    
+    unique_indicator_types = await db.execute(select(func.count(func.distinct(models.HealthIndicator.indicator_type_id))))
+    unique_indicator_types = unique_indicator_types.scalar()
+    
+    # Répartition par région WHO
+    region_stats = await db.execute(
+        select(
+            models.Country.who_region,
+            func.count(func.distinct(models.Country.id)).label('country_count'),
+            func.count(models.HealthIndicator.id).label('indicator_count')
+        )
+        .join(models.HealthIndicator, models.Country.id == models.HealthIndicator.country_id)
+        .group_by(models.Country.who_region)
+        .order_by(func.count(func.distinct(models.Country.id)).desc())
+    )
+    region_distribution = [
         {
-            "id": m.id,
-            "id_pays": m.id_pays,
-            "nom_pays": m.pays.pays if m.pays else None,
-            "annee": m.annee,
-            "valeur": m.valeur,
-            "id_unite": m.id_unite
+            "who_region": region,
+            "country_count": country_count,
+            "indicator_count": indicator_count
         }
-        for m in data
+        for region, country_count, indicator_count in region_stats.fetchall()
     ]
+    
+    return {
+        "total_indicators": total_indicators,
+        "indicators_with_values": indicators_with_values,
+        "data_completeness_rate": round((indicators_with_values / total_indicators) * 100, 2) if total_indicators > 0 else 0,
+        "unique_countries": unique_countries,
+        "unique_indicator_types": unique_indicator_types,
+        "region_distribution": region_distribution
+    }
+
+# ========================
+# ENDPOINTS DE COMPATIBILITÉ (pour le frontend existant)
+# ========================
+
+@app.get("/payslist/")
+async def get_pays_legacy(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint de compatibilité pour l'ancien format payslist
+    """
+    result = await db.execute(select(models.Country))
+    countries_list = result.scalars().all()
+    return [{"id": country.id, "nom": country.name, "region": country.who_region} for country in countries_list]
+
+@app.get("/pays/", response_model=List[schemas.Country])
+async def get_pays_legacy_full(db: AsyncSession = Depends(get_db)):
+    """
+    Endpoint de compatibilité pour l'ancien format pays complet
+    """
+    return await get_countries_list(db)
+
+# ========================
 

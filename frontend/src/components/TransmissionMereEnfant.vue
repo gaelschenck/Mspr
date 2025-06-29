@@ -32,11 +32,13 @@
         </tbody>
       </table>
       <div v-else class="no-data">Aucune donnée disponible</div>
-      <div class="pagination">
-        <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-        <span>Page {{ page + 1 }}</span>
-        <button @click="nextPage" :disabled="data.length < limit || loading">Suivant</button>
-      </div>
+    </div>
+    
+    <!-- Pagination toujours visible sauf en cas d'erreur -->
+    <div v-if="!error" class="pagination">
+      <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
+      <span>Page {{ page + 1 }}</span>
+      <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
     </div>
   </div>
 </template>
@@ -50,22 +52,33 @@ const page = ref(0);
 const limit = 25;
 const loading = ref(false);
 const error = ref(null);
+const hasNextPage = ref(false); // Nouvelle variable pour gérer la pagination
 
 async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    const result = await fetchTransmissionMereEnfant(page.value * limit, limit);
+    // Demander une donnée de plus pour savoir s'il y a une page suivante
+    const result = await fetchTransmissionMereEnfant(page.value * limit, limit + 1);
+    
+    let rawData = [];
     // Gérer les différents formats de réponse
     if (Array.isArray(result)) {
-      data.value = result;
+      rawData = result;
     } else if (result && Array.isArray(result.items)) {
-      data.value = result.items;
+      rawData = result.items;
     } else if (result && Array.isArray(result.data)) {
-      data.value = result.data;
+      rawData = result.data;
     } else {
-      data.value = [];
+      rawData = [];
     }
+    
+    // Vérifier s'il y a une page suivante
+    hasNextPage.value = rawData.length > limit;
+    
+    // Ne garder que les éléments de la page actuelle
+    data.value = rawData.slice(0, limit);
+    
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de transmission mère-enfant:', err);
@@ -75,7 +88,7 @@ async function loadData() {
 }
 
 function nextPage() {
-  if (!loading.value && data.value.length === limit) {
+  if (!loading.value && hasNextPage.value) {
     page.value++;
   }
 }
@@ -98,6 +111,7 @@ watch(page, loadData);
 <style scoped>
 .pagination {
   margin-top: 1em;
+  margin-bottom: 2em; /* Ajouter de l'espace pour éviter la superposition avec le footer */
   display: flex;
   align-items: center;
   gap: 1em;

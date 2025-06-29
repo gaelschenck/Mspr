@@ -1,192 +1,167 @@
 #!/usr/bin/env python3
 """
-Tests unitaires pour les modèles et schémas de l'API MSPR
+Tests des schémas Pydantic
 """
-
 import pytest
+from pydantic import ValidationError
 import sys
 import os
 
-# Ajouter le répertoire du backend au path pour les imports
+# Ajouter le répertoire backend au path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-try:
-    from schemas import (
-        TransmissionMereEnfant, 
-        Mortalite, 
-        PopulationHIV, 
-        Traitement,
-        Pays,
-        Unite,
-        TypeStatistique,
-        TypeTraitement
-    )
-    from pydantic import ValidationError
-    SCHEMAS_AVAILABLE = True
-except ImportError as e:
-    print(f"AVERTISSEMENT: Erreur d'import des schémas: {e}")
-    SCHEMAS_AVAILABLE = False
+from schemas import (
+    PredictionRequest, TrainingRequest, PredictionResponse,
+    CountryBase, CountryCreate, Country,
+    HealthIndicatorBase, HealthIndicatorCreate, HealthIndicator,
+    UtilisateurCreate, UtilisateurOut
+)
 
-@pytest.mark.skipif(not SCHEMAS_AVAILABLE, reason="Schémas non disponibles")
 class TestSchemas:
-    """Tests pour les schémas Pydantic"""
+    """Tests des schémas de validation"""
     
-    def test_transmission_mere_enfant_schema(self):
-        """Test du schéma TransmissionMereEnfant"""
-        # Test données valides
-        data = {
-            "id_transmission": 1,
-            "id_pays": 42,
-            "besoin_arv_min": 100,
-            "besoin_arv_median": 150,
-            "besoin_arv_max": 200,
-            "pourcentage_recu_min": 50,
-            "pourcentage_recu_median": 75,
-            "pourcentage_recu_max": 90
+    def test_prediction_request_valid(self):
+        """Test de validation d'une requête de prédiction valide"""
+        request = PredictionRequest(
+            region="Europe",
+            indicator_type="HIV Population"
+        )
+        
+        assert request.region == "Europe"
+        assert request.indicator_type == "HIV Population"
+        assert request.country is None
+        assert request.value_type is None
+    
+    def test_prediction_request_with_optional_fields(self):
+        """Test avec tous les champs optionnels"""
+        request = PredictionRequest(
+            region="Europe",
+            country="France",
+            indicator_type="HIV Population",
+            value_type="estimated"
+        )
+        
+        assert request.region == "Europe"
+        assert request.country == "France"
+        assert request.indicator_type == "HIV Population"
+        assert request.value_type == "estimated"
+    
+    def test_prediction_request_missing_required_fields(self):
+        """Test d'erreur avec champs obligatoires manquants"""
+        with pytest.raises(ValidationError) as exc_info:
+            PredictionRequest()  # indicator_type manquant
+        
+        errors = exc_info.value.errors()
+        assert len(errors) >= 1  # Seul indicator_type est obligatoire
+        
+        # Vérifier que indicator_type manquant est détecté
+        missing_fields = [error['loc'][0] for error in errors]
+        assert 'indicator_type' in missing_fields
+    
+    def test_training_request_valid(self):
+        """Test de validation d'une requête d'entraînement valide"""
+        dataframe = {
+            "data": [
+                {
+                    "country_id": 1,
+                    "year": 2020,
+                    "value": 100000,
+                    "indicator_type_id": 1
+                },
+                {
+                    "country_id": 1,
+                    "year": 2021,
+                    "value": 105000,
+                    "indicator_type_id": 1
+                }
+            ]
         }
         
-        transmission = TransmissionMereEnfant(**data)
-        assert transmission.id_transmission == 1
-        assert transmission.id_pays == 42
-        assert transmission.besoin_arv_min == 100
-        assert transmission.besoin_arv_median == 150
-        assert transmission.besoin_arv_max == 200
-        assert transmission.pourcentage_recu_min == 50
-        assert transmission.pourcentage_recu_median == 75
-        assert transmission.pourcentage_recu_max == 90
-    
-    def test_transmission_mere_enfant_schema_optional_fields(self):
-        """Test du schéma avec champs optionnels"""
-        data = {
-            "id_transmission": 1,
-            "id_pays": 42,
-            "besoin_arv_min": 100,
-            "besoin_arv_median": 150,
-            "besoin_arv_max": 200,
-            "pourcentage_recu_min": 50,
-            "pourcentage_recu_median": 75,
-            "pourcentage_recu_max": 90
-        }
+        request = TrainingRequest(
+            dataframe=dataframe,
+            target_column="value"
+        )
         
-        transmission = TransmissionMereEnfant(**data)
-        # Vérifier que le schéma fonctionne sans champs optionnels
-        assert transmission.id_transmission == 1
+        assert request.dataframe == dataframe
+        assert request.target_column == "value"
     
-    def test_mortalite_schema(self):
-        """Test du schéma Mortalite"""
-        data = {
-            "id": 1,
-            "id_pays": 42,
-            "annee": 2023,
-            "valeur": 1500,
-            "id_unite": 1
-        }
+    def test_training_request_empty_dataframe(self):
+        """Test avec dataframe vide - doit passer car dict vide est valide"""
+        # Le schéma TrainingRequest accepte n'importe quel dict, même vide
+        request = TrainingRequest(
+            dataframe={},  # Dict vide est valide selon le schéma
+            target_column="value"
+        )
         
-        mortalite = Mortalite(**data)
-        assert mortalite.id == 1
-        assert mortalite.id_pays == 42
-        assert mortalite.annee == 2023
-        assert mortalite.valeur == 1500
-        assert mortalite.id_unite == 1
+        assert request.dataframe == {}
+        assert request.target_column == "value"
     
-    def test_population_hiv_schema(self):
-        """Test du schéma PopulationHIV"""
-        data = {
-            "id": 1,
-            "id_pays": 42,
-            "annee": 2023,
-            "valeur": 50000,
-            "id_unite": 1
-        }
+    def test_training_request_missing_target_column(self):
+        """Test d'erreur avec target_column manquant"""
+        dataframe = {"data": [{"country_id": 1, "year": 2020, "value": 100000}]}
         
-        population = PopulationHIV(**data)
-        assert population.id == 1
-        assert population.id_pays == 42
-        assert population.annee == 2023
-        assert population.valeur == 50000
-        assert population.id_unite == 1
-    
-    def test_pays_schema(self):
-        """Test du schéma Pays"""
-        data = {
-            "id_pays": 1,
-            "pays": "France",
-            "region_who": "European Region"
-        }
+        with pytest.raises(ValidationError) as exc_info:
+            TrainingRequest(dataframe=dataframe)
         
-        pays = Pays(**data)
-        assert pays.id_pays == 1
-        assert pays.pays == "France"
-        assert pays.region_who == "European Region"
+        errors = exc_info.value.errors()
+        missing_fields = [error['loc'][0] for error in errors]
+        assert 'target_column' in missing_fields
     
-    def test_unite_schema(self):
-        """Test du schéma Unite"""
-        data = {
-            "id_unite": 1,
-            "unite": "Number"
-        }
+    def test_health_indicator_validation(self):
+        """Test de validation d'un indicateur de santé"""
+        health_indicator = HealthIndicatorCreate(
+            country_id=1,
+            indicator_type_id=1,
+            year=2023,
+            value_type="estimated",
+            value=180000,
+            confidence_min=170000,
+            confidence_max=190000,
+            data_quality="good"
+        )
         
-        unite = Unite(**data)
-        assert unite.id_unite == 1
-        assert unite.unite == "Number"
+        assert health_indicator.country_id == 1
+        assert health_indicator.indicator_type_id == 1
+        assert health_indicator.year == 2023
+        assert health_indicator.value == 180000
     
-    def test_invalid_data_raises_validation_error(self):
-        """Test que des données invalides lèvent une ValidationError"""
+    def test_utilisateur_create_validation(self):
+        """Test de validation d'une création d'utilisateur"""
+        user_request = UtilisateurCreate(
+            username="testuser",
+            password="testpassword",
+            role="user"
+        )
+        
+        assert user_request.username == "testuser"
+        assert user_request.password == "testpassword"
+        assert user_request.role == "user"
+    
+    def test_utilisateur_create_missing_fields(self):
+        """Test d'erreur avec champs d'utilisateur manquants"""
+        with pytest.raises(ValidationError) as exc_info:
+            UtilisateurCreate(username="testuser")  # password et role manquants
+        
+        errors = exc_info.value.errors()
+        missing_fields = [error['loc'][0] for error in errors]
+        assert 'password' in missing_fields
+    
+    def test_schema_field_types(self):
+        """Test des types de champs"""
+        # Tester que les types incorrects sont rejetés
         with pytest.raises(ValidationError):
-            # Pourcentage > 100 non autorisé
-            TransmissionMereEnfant(
-                id_transmission=1,
-                id_pays=42,
-                besoin_arv_min=100,
-                besoin_arv_median=150,
-                besoin_arv_max=200,
-                pourcentage_recu_min=50,
-                pourcentage_recu_median=75,
-                pourcentage_recu_max=150  # > 100, devrait échouer
+            PredictionRequest(
+                region=123,  # Devrait être string
+                indicator_type="HIV Population"
             )
-
-class TestDataValidation:
-    """Tests de validation des données"""
-    
-    def test_transmission_structure_consistency(self):
-        """Test que la structure des données transmission est cohérente"""
-        # Les valeurs médianes doivent être entre min et max
-        data = {
-            "id_transmission": 1,
-            "id_pays": 42,
-            "besoin_arv_min": 100,
-            "besoin_arv_median": 150,  # Entre 100 et 200
-            "besoin_arv_max": 200,
-            "pourcentage_recu_min": 50,
-            "pourcentage_recu_median": 75,  # Entre 50 et 90
-            "pourcentage_recu_max": 90
-        }
         
-        transmission = TransmissionMereEnfant(**data)
-        
-        # Vérifications logiques
-        assert transmission.besoin_arv_min <= transmission.besoin_arv_median <= transmission.besoin_arv_max
-        assert transmission.pourcentage_recu_min <= transmission.pourcentage_recu_median <= transmission.pourcentage_recu_max
-    
-    def test_percentage_bounds(self):
-        """Test que les pourcentages sont dans des limites raisonnables"""
-        data = {
-            "id_transmission": 1,
-            "id_pays": 42,
-            "besoin_arv_min": 100,
-            "besoin_arv_median": 150,
-            "besoin_arv_max": 200,
-            "pourcentage_recu_min": 0,    # 0% valide
-            "pourcentage_recu_median": 50,
-            "pourcentage_recu_max": 100   # 100% valide
-        }
-        
-        transmission = TransmissionMereEnfant(**data)
-        
-        # Les pourcentages doivent être entre 0 et 100
-        assert 0 <= transmission.pourcentage_recu_min <= 100
-        assert 0 <= transmission.pourcentage_recu_median <= 100
-        assert 0 <= transmission.pourcentage_recu_max <= 100
+        with pytest.raises(ValidationError):
+            HealthIndicatorCreate(
+                country_id="not_an_int",  # Devrait être int
+                indicator_type_id=1,
+                year=2023,
+                value_type="estimated"
+            )
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

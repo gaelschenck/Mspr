@@ -24,11 +24,13 @@
         </tbody>
       </table>
       <div v-else class="no-data">Aucune donnée disponible</div>
-      <div class="pagination">
-        <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-        <span>Page {{ page + 1 }}</span>
-        <button @click="nextPage" :disabled="usData.length < limit || loading">Suivant</button>
-      </div>
+    </div>
+    
+    <!-- Pagination toujours visible sauf en cas d'erreur -->
+    <div v-if="!error" class="pagination">
+      <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
+      <span>Page {{ page + 1 }}</span>
+      <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
     </div>
   </div>
 </template>
@@ -42,12 +44,23 @@ const page = ref(0);
 const limit = 25;
 const loading = ref(false);
 const error = ref(null);
+const hasNextPage = ref(false);
 
 async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    usData.value = await fetchMortalite(page.value * limit, limit);
+    const result = await fetchMortalite(page.value * limit, limit + 1); // +1 pour détecter s'il y a une page suivante
+    
+    if (result.length > limit) {
+      // Il y a plus de données disponibles
+      hasNextPage.value = true;
+      usData.value = result.slice(0, limit); // Prendre seulement les 25 premiers
+    } else {
+      // Pas de page suivante
+      hasNextPage.value = false;
+      usData.value = result;
+    }
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de mortalité:', err);
@@ -57,7 +70,7 @@ async function loadData() {
 }
 
 function nextPage() {
-  if (!loading.value && usData.value.length === limit) {
+  if (!loading.value && hasNextPage.value) {
     page.value++;
   }
 }
@@ -80,6 +93,7 @@ watch(() => page.value, loadData);
 <style scoped>
 .pagination {
   margin-top: 1em;
+  margin-bottom: 2em; /* Ajouter de l'espace pour éviter la superposition avec le footer */
   display: flex;
   align-items: center;
   gap: 1em;

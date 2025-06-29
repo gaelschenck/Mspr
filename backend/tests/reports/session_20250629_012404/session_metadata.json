@@ -1,0 +1,71 @@
+{
+  "timestamp": "20250629_012404",
+  "session_dir": "session_20250629_012404",
+  "mode": "complete",
+  "total_tests": 9,
+  "successful_tests": 5,
+  "failed_tests": 4,
+  "success_rate": 55.56,
+  "final_status": "FAILURE",
+  "reports_generated": {
+    "html": true,
+    "coverage": true
+  },
+  "critical_failures": [],
+  "test_results": [
+    {
+      "name": "Tests critiques CI/CD",
+      "status": "SUCCES",
+      "timeout": 30,
+      "error": null
+    },
+    {
+      "name": "Tests des modèles normalisés",
+      "status": "SUCCES",
+      "timeout": 30,
+      "error": null
+    },
+    {
+      "name": "Tests des schémas normalisés",
+      "status": "SUCCES",
+      "timeout": 30,
+      "error": null
+    },
+    {
+      "name": "Tests de logique métier",
+      "status": "SUCCES",
+      "timeout": 45,
+      "error": null
+    },
+    {
+      "name": "Tests d'intégration base de données",
+      "status": "SUCCES",
+      "timeout": 60,
+      "error": null
+    },
+    {
+      "name": "Tests des endpoints API",
+      "status": "TIMEOUT",
+      "timeout": 90,
+      "error": "Test depasse 90s"
+    },
+    {
+      "name": "Tests des endpoints ML",
+      "status": "TIMEOUT",
+      "timeout": 120,
+      "error": "Test depasse 120s"
+    },
+    {
+      "name": "Tests de prédiction ML",
+      "status": "ECHEC",
+      "timeout": 120,
+      "error": "tests\\test_simple_schema.py             91     91     0%   5-161\n------------------------------------------------------------------\nTOTAL                                 2525   2249    11%\nCoverage HT"
+    },
+    {
+      "name": "Tests de performance",
+      "status": "TIMEOUT",
+      "timeout": 180,
+      "error": "Test depasse 180s"
+    }
+  ]
+}

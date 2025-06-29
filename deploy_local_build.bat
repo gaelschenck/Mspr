@@ -44,8 +44,8 @@ echo ============================
 echo [2/6] Build des images applicatives (avec vos modifications)
 echo ============================
 cd backend
-echo Building backend image...
-docker build -t my_backend_image:latest .
+echo Building backend image (no cache)...
+docker build --no-cache -t my_backend_image:latest .
 if errorlevel 1 (
     echo [ERREUR] Echec du build de l'image backend.
     pause
@@ -54,8 +54,8 @@ if errorlevel 1 (
 cd ..
 
 cd frontend
-echo Building frontend image...
-docker build -t my_frontend_image:latest .
+echo Building frontend image (no cache)...
+docker build --no-cache -t my_frontend_image:latest .
 if errorlevel 1 (
     echo [ERREUR] Echec du build de l'image frontend.
     pause
@@ -123,24 +123,11 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [6/6] Redemarrage des pods backend et DB
+echo [6/6] Statut final et lancement du service
 echo ============================
-echo Suppression des pods backend...
-for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "backend-"') do (
-    kubectl delete %%i
-)
+echo Attente que tous les pods soient prets...
+timeout /t 15
 
-echo Suppression des pods DB...
-for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr db-ch db-us"') do (
-    kubectl delete %%i
-)
-
-echo Attente du redemarrage des pods...
-timeout /t 10
-
-echo ============================
-echo [7/7] Statut final et lancement du service
-echo ============================
 kubectl get pods
 echo.
 echo Demarrage du port-forward...

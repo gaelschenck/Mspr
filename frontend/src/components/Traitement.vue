@@ -22,11 +22,13 @@
         </tbody>
       </table>
       <div v-else class="no-data">Aucune donnée disponible</div>
-      <div class="pagination">
-        <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
-        <span>Page {{ page + 1 }}</span>
-        <button @click="nextPage" :disabled="data.length < limit || loading">Suivant</button>
-      </div>
+    </div>
+    
+    <!-- Pagination toujours visible sauf en cas d'erreur -->
+    <div v-if="!error" class="pagination">
+      <button @click="prevPage" :disabled="page === 0 || loading">Précédent</button>
+      <span>Page {{ page + 1 }}</span>
+      <button @click="nextPage" :disabled="!hasNextPage || loading">Suivant</button>
     </div>
   </div>
 </template>
@@ -40,25 +42,35 @@ const page = ref(0);
 const limit = 25;
 const loading = ref(false);
 const error = ref(null);
+const hasNextPage = ref(false); // Nouvelle variable pour gérer la pagination
 
 async function loadData() {
   loading.value = true;
   error.value = null;
   try {
-    const response = await fetchTraitement(page.value * limit, limit);
+    // Demander une donnée de plus pour savoir s'il y a une page suivante
+    const response = await fetchTraitement(page.value * limit, limit + 1);
     console.log('Réponse API Traitement:', response); // Debug temporaire
     
+    let rawData = [];
     // Gérer les différents formats de réponse
     if (Array.isArray(response)) {
-      data.value = response;
+      rawData = response;
     } else if (response && Array.isArray(response.items)) {
-      data.value = response.items;
+      rawData = response.items;
     } else if (response && Array.isArray(response.data)) {
-      data.value = response.data;
+      rawData = response.data;
     } else {
       console.error('Format de réponse inattendu:', response);
-      data.value = [];
+      rawData = [];
     }
+    
+    // Vérifier s'il y a une page suivante
+    hasNextPage.value = rawData.length > limit;
+    
+    // Ne garder que les éléments de la page actuelle
+    data.value = rawData.slice(0, limit);
+    
   } catch (err) {
     error.value = err;
     console.error('Erreur lors du chargement des données de traitement:', err);
@@ -68,7 +80,7 @@ async function loadData() {
 }
 
 function nextPage() {
-  if (!loading.value && data.value.length === limit) {
+  if (!loading.value && hasNextPage.value) {
     page.value++;
   }
 }
@@ -91,6 +103,7 @@ watch(page, loadData);
 <style scoped>
 .pagination {
   margin-top: 1em;
+  margin-bottom: 2em; /* Ajouter de l'espace pour éviter la superposition avec le footer */
   display: flex;
   align-items: center;
   gap: 1em;
@@ -141,7 +154,7 @@ button:disabled {
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1em 0;
+  margin: 1em 0 3em 0; /* Marge en bas plus importante pour éviter le footer */
 }
 
 .data-table th,
@@ -167,6 +180,18 @@ button:disabled {
 
 .data-table td {
   color: #495057;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 2em 0;
+  padding: 1em 0;
+  background-color: white;
+  position: relative;
+  z-index: 1;
 }
 
 .pagination button {

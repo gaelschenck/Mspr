@@ -14,9 +14,12 @@ bcrypt==4.3.0
 python-multipart
 pytest
 pytest-asyncio
+pytest-html
+pytest-cov
 httpx
 aiohttp
 requests
+aiosqlite
 
 # cd API
 #uvicorn main:app --reload --port 8084
