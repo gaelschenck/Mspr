@@ -72,64 +72,59 @@ goto MENU
 :DEPLOY
 echo.
 
+echo ============================
+echo [1/5] Pull images PostgreSQL et Build Backend/Frontend
+echo ============================
 
-echo ============================
-echo [1/6] Creation des ConfigMap SQL
-echo ============================
-cd /d "%~dp0essaidocker"
-kubectl create configmap initdb-sql --from-file=initdb/dump.sql --dry-run=client -o yaml | kubectl apply -f -
+echo � Pull des images PostgreSQL depuis Docker Hub...
+docker pull gaelschenck/mspr-postgres-fr:latest
 if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap initdb-sql.
+    echo [ERREUR] Echec du pull de l'image PostgreSQL FR.
+    pause
+    goto MENU
 )
-kubectl create configmap init-us-sql --from-file=init_us/dumpus.sql --dry-run=client -o yaml | kubectl apply -f -
-if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap init-us-sql.
-)
-kubectl create configmap init-ch-sql --from-file=init_ch/dumpch.sql --dry-run=client -o yaml | kubectl apply -f -
-if errorlevel 1 (
-    echo [ERREUR] Echec creation ConfigMap init-ch-sql.
-)
-cd ..
+docker tag gaelschenck/mspr-postgres-fr:latest mspr-postgres-fr:latest
 
-echo ============================
-echo [2/7] Pull des images depuis Docker Hub
-echo ============================
+docker pull gaelschenck/mspr-postgres-us:latest
+if errorlevel 1 (
+    echo [ERREUR] Echec du pull de l'image PostgreSQL US.
+    pause
+    goto MENU
+)
+docker tag gaelschenck/mspr-postgres-us:latest mspr-postgres-us:latest
+
+docker pull gaelschenck/mspr-postgres-ch:latest
+if errorlevel 1 (
+    echo [ERREUR] Echec du pull de l'image PostgreSQL CH.
+    pause
+    goto MENU
+)
+docker tag gaelschenck/mspr-postgres-ch:latest mspr-postgres-ch:latest
+
+echo.
+echo 📦 Build image backend...
 cd backend
-docker pull gaelschenck/mspr-backend:latest
+docker build -t my_backend_image:latest .
 if errorlevel 1 (
-    echo [ERREUR] Echec du pull de l'image backend.
+    echo [ERREUR] Echec du build de l'image backend.
     pause
     goto MENU
 )
 cd ..
 
+echo.
+echo 📦 Build image frontend...
 cd frontend
-docker pull gaelschenck/mspr-frontend:latest
+docker build -t my_frontend_image:latest .
 if errorlevel 1 (
-    echo [ERREUR] Echec du pull de l'image frontend.
+    echo [ERREUR] Echec du build de l'image frontend.
     pause
     goto MENU
 )
 cd ..
 
 echo ============================
-echo [3/7] Tag des images pour Kind
-echo ============================
-docker tag gaelschenck/mspr-backend:latest my_backend_image:latest
-if errorlevel 1 (
-    echo [ERREUR] Echec du tag de l'image backend.
-    pause
-    goto MENU
-)
-docker tag gaelschenck/mspr-frontend:latest my_frontend_image:latest
-if errorlevel 1 (
-    echo [ERREUR] Echec du tag de l'image frontend.
-    pause
-    goto MENU
-)
-
-echo ============================
-echo [4/7] Chargement des images dans Kind
+echo [2/5] Chargement des images dans Kind
 echo ============================
 kind load docker-image my_backend_image:latest --name mspr
 if errorlevel 1 (
@@ -144,8 +139,28 @@ if errorlevel 1 (
     goto MENU
 )
 
+echo Chargement des images PostgreSQL...
+kind load docker-image mspr-postgres-fr:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL FR dans Kind.
+    pause
+    goto MENU
+)
+kind load docker-image mspr-postgres-ch:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL CH dans Kind.
+    pause
+    goto MENU
+)
+kind load docker-image mspr-postgres-us:latest --name mspr
+if errorlevel 1 (
+    echo [ERREUR] Echec du chargement de l'image PostgreSQL US dans Kind.
+    pause
+    goto MENU
+)
+
 echo ============================
-echo [5/7] Deploiement des manifests Kubernetes
+echo [3/5] Deploiement des manifests Kubernetes
 echo ============================
 kubectl apply -f k8s_manifests/
 if errorlevel 1 (
@@ -155,14 +170,14 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [6/7] Redemarrage des pods de base de donnees
+echo [4/5] Redemarrage des pods de base de donnees
 echo ============================
 for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr db-ch db-us"') do (
     kubectl delete %%i
 )
 
 echo ============================
-echo [7/7] Statut final des pods et lancement du service
+echo [5/5] Statut final des pods et lancement du service
 echo ============================
 kubectl get pods
 start "" cmd /k "kubectl port-forward svc/reverse-proxy-service 8080:80"

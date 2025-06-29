@@ -84,6 +84,21 @@ jobs:
           docker build -t $FRONTEND_IMAGE_NAME:latest -t $FRONTEND_IMAGE_NAME:$COMMIT_SHA .
           docker push $FRONTEND_IMAGE_NAME:latest
           docker push $FRONTEND_IMAGE_NAME:$COMMIT_SHA
+      - name: Build and push PostgreSQL images
+        run: |
+          cd essaidocker
+          COMMIT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          
+          docker build -f Dockerfile.postgres-fr -t gaelschenck/mspr-postgres-fr:latest -t gaelschenck/mspr-postgres-fr:$COMMIT_SHA .
+          docker build -f Dockerfile.postgres-us -t gaelschenck/mspr-postgres-us:latest -t gaelschenck/mspr-postgres-us:$COMMIT_SHA .
+          docker build -f Dockerfile.postgres-ch -t gaelschenck/mspr-postgres-ch:latest -t gaelschenck/mspr-postgres-ch:$COMMIT_SHA .
+          
+          docker push gaelschenck/mspr-postgres-fr:latest
+          docker push gaelschenck/mspr-postgres-fr:$COMMIT_SHA
+          docker push gaelschenck/mspr-postgres-us:latest
+          docker push gaelschenck/mspr-postgres-us:$COMMIT_SHA
+          docker push gaelschenck/mspr-postgres-ch:latest
+          docker push gaelschenck/mspr-postgres-ch:$COMMIT_SHA
 
   deploy:
     runs-on: ubuntu-latest
