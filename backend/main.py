@@ -79,8 +79,10 @@ async def get_user_by_username(db, username):
 
 async def authenticate_user(db, username: str, password: str):
     user = await get_user_by_username(db, username)
-    if not user or not verify_password(password, user.hashed_password):
-        return None
+    if not user:
+        raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+    if not verify_password(password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Mot de passe incorrect")
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
@@ -148,10 +150,26 @@ async def login(
     try:
         async with AsyncSession(local_engine) as db:
             user = await authenticate_user(db, form_data.username, form_data.password)
-            if not user:
-                raise HTTPException(status_code=401, detail="Incorrect username or password")
             access_token = create_access_token(data={"sub": user.username, "role": user.role, "cluster": cluster})
             return {"access_token": access_token, "token_type": "bearer"}
+    finally:
+        await local_engine.dispose()
+
+@app.get("/users/", response_model=List[schemas.UtilisateurOut])
+async def list_users(request: Request):
+    """Liste tous les utilisateurs de la base sélectionnée (pour debug)"""
+    cluster = request.headers.get("X-Cluster")
+    if not cluster:
+        raise HTTPException(status_code=400, detail="Cluster non spécifié")
+
+    db_url = f"postgresql+asyncpg://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
+
+    local_engine = create_async_engine(db_url, echo=False, future=True, pool_size=1, max_overflow=0)
+    try:
+        async with AsyncSession(local_engine) as db:
+            result = await db.execute(select(models.Utilisateur))
+            users = result.scalars().all()
+            return users
     finally:
         await local_engine.dispose()
     
@@ -198,24 +216,13 @@ async def route_protegee(current_user=Depends(require_role("admin"))):
 
 async def init_db():
     """
-    Initialise les tables de la base de données
+    Initialise les tables de la base de données si nécessaire
     """
     try:
-        # Importer database au lieu d'engine directement
         import database
-        
-        # S'assurer que l'engine est initialisé
-        if database.engine is None:
-            print("ERREUR: Engine non initialisé! Tentative d'initialisation...")
-            await database.initialize_engine()
-            
-        if database.engine is None:
-            print("ERREUR: Impossible d'initialiser l'engine!")
-            return
-            
-        print(f"engine in main.py: {database.engine}")
-        async with database.engine.begin() as conn:
-            await conn.run_sync(models.Base.metadata.create_all)
+        if database.engine:
+            async with database.engine.begin() as conn:
+                await conn.run_sync(models.Base.metadata.create_all)
             print("Tables créées avec succès")
     except Exception as e:
         print(f"Erreur lors de la création des tables: {e}")

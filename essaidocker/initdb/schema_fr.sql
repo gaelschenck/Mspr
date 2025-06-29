@@ -90,8 +90,8 @@ CREATE INDEX idx_utilisateur_username ON utilisateur(username);
 CREATE INDEX idx_utilisateur_role ON utilisateur(role);
 
 -- Données utilisateur pour FR
-INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (1, 'adminfr', '$2b$12$lN4GPs6jcnuhJHfYSIuTZOvksHo1WQjUZ2sn8XBh4M9WslOhZ18qW', 'admin', 0);
-INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (2, 'userfr', '$2b$12$3bIXd2nTT8zvU80IMEKlg.QvMmFdcxc/.2aM3WT0wPauN2e9tl1wu', 'user', 0);
+INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (1, 'adminfr', '$2b$12$9X7EhmsTFOBUitABWlw9kOIjvL9ZyuEHufpq41W6wEc/X0DIRRRWi', 'admin', 0);
+INSERT INTO utilisateur (id, username, hashed_password, role, rgpd_accept) VALUES (2, 'userfr', '$2b$12$lpcVVMlPidgD0Hn5zRoVNuWqeBQxoMNzh24cz7Mdqwi8acBH6KCLC', 'user', 0);
 
 -- Réinitialise la séquence de l'ID utilisateur
 SELECT setval('utilisateur_id_seq', (SELECT MAX(id) FROM utilisateur));

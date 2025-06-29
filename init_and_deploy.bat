@@ -76,7 +76,7 @@ echo ============================
 echo [1/5] Pull images PostgreSQL et Build Backend/Frontend
 echo ============================
 
-echo � Pull des images PostgreSQL depuis Docker Hub...
+echo  Pull des images PostgreSQL depuis Docker Hub...
 docker pull gaelschenck/mspr-postgres-fr:latest
 if errorlevel 1 (
     echo [ERREUR] Echec du pull de l'image PostgreSQL FR.
@@ -102,7 +102,7 @@ if errorlevel 1 (
 docker tag gaelschenck/mspr-postgres-ch:latest mspr-postgres-ch:latest
 
 echo.
-echo 📦 Build image backend...
+echo  Build image backend...
 cd backend
 docker build -t my_backend_image:latest .
 if errorlevel 1 (
@@ -113,7 +113,7 @@ if errorlevel 1 (
 cd ..
 
 echo.
-echo 📦 Build image frontend...
+echo  Build image frontend...
 cd frontend
 docker build -t my_frontend_image:latest .
 if errorlevel 1 (

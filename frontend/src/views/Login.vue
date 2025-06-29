@@ -20,6 +20,8 @@
       </div>
       <button type="submit">Se connecter</button>
       <p v-if="error" class="error">{{ error }}</p>
+      
+
     </form>
   </div>
 </template>
@@ -60,7 +62,17 @@ export default {
         localStorage.setItem("selectedCountry", this.country);
         this.$router.push("/");
       } catch (err) {
-        this.error = "Identifiants invalides";
+        console.log('Erreur login:', err.response?.status, err.response?.data?.detail);
+        
+        if (err.response?.status === 404) {
+          this.error = `Utilisateur "${this.username}" non trouvé dans la base ${this.country.toUpperCase()}`;
+        } else if (err.response?.status === 401) {
+          this.error = `Mot de passe incorrect pour l'utilisateur "${this.username}"`;
+        } else if (err.response?.status === 400) {
+          this.error = "Erreur de configuration (cluster non spécifié)";
+        } else {
+          this.error = err.response?.data?.detail || "Erreur de connexion";
+        }
       }
     },
   },
