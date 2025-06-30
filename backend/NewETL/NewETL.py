@@ -14,11 +14,16 @@ from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
 
 # Configuration du logging
+script_dir = Path(__file__).parent
+log_dir = script_dir / "DatasetClean"
+log_dir.mkdir(exist_ok=True)
+log_file = log_dir / "new_etl.log"
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('new_etl.log'),
+        logging.FileHandler(str(log_file)),
         logging.StreamHandler()
     ]
 )
@@ -683,8 +688,9 @@ class HealthDataETL:
             Le chemin du fichier SQL généré
         """
         if output_path is None:
-            # Par défaut, sauvegarde dans DatasetClean
-            output_dir = Path(self.source_dir).parent / "DatasetClean"
+            # Par défaut, sauvegarde dans DatasetClean dans le même répertoire que le script
+            script_dir = Path(__file__).parent
+            output_dir = script_dir / "DatasetClean"
             output_dir.mkdir(exist_ok=True)
             output_path = output_dir / "normalized_health_data_schema.sql"
         
@@ -901,8 +907,9 @@ class HealthDataETL:
         }
         
         generated_files = []
-        # Utiliser DatasetClean au lieu du répertoire de la base de données
-        output_dir = Path(self.source_dir).parent / "DatasetClean"
+        # Utiliser DatasetClean dans le même répertoire que le script
+        script_dir = Path(__file__).parent
+        output_dir = script_dir / "DatasetClean"
         output_dir.mkdir(exist_ok=True)
         
         try:
@@ -1064,7 +1071,9 @@ class HealthDataETL:
             Liste des fichiers CSV créés
         """
         if output_dir is None:
-            output_dir = Path(self.source_dir).parent / "DatasetClean"
+            # Utiliser DatasetClean dans le même répertoire que le script
+            script_dir = Path(__file__).parent
+            output_dir = script_dir / "DatasetClean"
         
         output_dir = Path(output_dir)
         output_dir.mkdir(exist_ok=True)

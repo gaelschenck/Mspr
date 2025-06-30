@@ -1,0 +1,511 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+2;1;Afghanistan;2023;200.0;needing_antiretrovirals;100.0;500.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+3;1;Afghanistan;2023;11.0;percentage_received;7.0;18.0;11.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+1;1;Afghanistan;2023;20.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+5;2;Albania;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+6;2;Albania;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+4;2;Albania;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+8;3;Algeria;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+9;3;Algeria;2023;74.0;percentage_received;69.0;78.0;74.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+7;3;Algeria;2023;320.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+11;4;Angola;2023;25000.0;needing_antiretrovirals;19000.0;32000.0;25000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+12;4;Angola;2023;38.0;percentage_received;29.0;48.0;38.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+10;4;Angola;2023;9600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+14;5;Argentina;2023;1800.0;needing_antiretrovirals;1600.0;2000.0;1800.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+15;5;Argentina;2023;95.0;percentage_received;85.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+13;5;Argentina;2023;1800.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+17;6;Armenia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+18;6;Armenia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+16;6;Armenia;2023;50.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+20;7;Australia;2023;100.0;needing_antiretrovirals;100.0;100.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+21;7;Australia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+19;7;Australia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+23;8;Austria;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+24;8;Austria;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+22;8;Austria;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+26;9;Azerbaijan;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+27;9;Azerbaijan;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+25;9;Azerbaijan;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+29;10;Bahamas;2023;100.0;needing_antiretrovirals;100.0;200.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+30;10;Bahamas;2023;58.0;percentage_received;51.0;65.0;58.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+28;10;Bahamas;2023;50.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+32;11;Bahrain;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+33;11;Bahrain;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+31;11;Bahrain;2023;0.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+35;12;Bangladesh;2023;200.0;needing_antiretrovirals;200.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+36;12;Bangladesh;2023;28.0;percentage_received;24.0;33.0;28.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+34;12;Bangladesh;2023;40.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+38;13;Barbados;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+39;13;Barbados;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+37;13;Barbados;2023;20.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+41;14;Belarus;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+42;14;Belarus;2023;90.0;percentage_received;67.0;95.0;90.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+40;14;Belarus;2023;230.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+44;15;Belgium;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+45;15;Belgium;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+43;15;Belgium;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+47;16;Belize;2023;100.0;needing_antiretrovirals;100.0;200.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+48;16;Belize;2023;44.0;percentage_received;39.0;49.0;44.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+46;16;Belize;2023;40.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+50;17;Benin;2023;2600.0;needing_antiretrovirals;1600.0;4300.0;2600.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+51;17;Benin;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+49;17;Benin;2023;4600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+53;18;Bhutan;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+54;18;Bhutan;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+52;18;Bhutan;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+56;19;Bolivia;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+57;19;Bolivia;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+55;19;Bolivia;2023;350.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+59;20;Bosnia and Herzegovina;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+60;20;Bosnia and Herzegovina;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+58;20;Bosnia and Herzegovina;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+62;21;Botswana;2023;13000.0;needing_antiretrovirals;10000.0;14000.0;13000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+63;21;Botswana;2023;95.0;percentage_received;77.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+61;21;Botswana;2023;12400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+65;22;Brazil;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+66;22;Brazil;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+64;22;Brazil;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+68;23;Brunei Darussalam;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+69;23;Brunei Darussalam;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+67;23;Brunei Darussalam;2023;0.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+71;24;Bulgaria;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+72;24;Bulgaria;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+70;24;Bulgaria;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+74;25;Burkina Faso;2023;4900.0;needing_antiretrovirals;3600.0;6100.0;4900.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+75;25;Burkina Faso;2023;95.0;percentage_received;71.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+73;25;Burkina Faso;2023;4700.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+77;26;Burundi;2023;5000.0;needing_antiretrovirals;3800.0;6000.0;5000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+78;26;Burundi;2023;80.0;percentage_received;61.0;95.0;80.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+76;26;Burundi;2023;4000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+80;27;Cabo Verde;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+81;27;Cabo Verde;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+79;27;Cabo Verde;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+83;28;Cambodia;2023;730.0;needing_antiretrovirals;600.0;850.0;730.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+84;28;Cambodia;2023;85.0;percentage_received;71.0;95.0;85.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+82;28;Cambodia;2023;620.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+86;29;Cameroon;2023;27000.0;needing_antiretrovirals;21000.0;32000.0;27000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+87;29;Cameroon;2023;80.0;percentage_received;61.0;94.0;80.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+85;29;Cameroon;2023;21700.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+89;30;Canada;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+90;30;Canada;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+88;30;Canada;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+92;31;Central African Republic;2023;4500.0;needing_antiretrovirals;3300.0;5800.0;4500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+93;31;Central African Republic;2023;71.0;percentage_received;52.0;91.0;71.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+91;31;Central African Republic;2023;3200.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+95;32;Chad;2023;10000.0;needing_antiretrovirals;7200.0;13000.0;10000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+96;32;Chad;2023;56.0;percentage_received;40.0;72.0;56.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+94;32;Chad;2023;5600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+98;33;Chile;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+99;33;Chile;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+97;33;Chile;2023;370.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+101;34;China;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+102;34;China;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+100;34;China;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+104;35;Colombia;2023;2300.0;needing_antiretrovirals;1900.0;2700.0;2300.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+105;35;Colombia;2023;21.0;percentage_received;17.0;25.0;21.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+103;35;Colombia;2023;490.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+107;36;Comoros;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+108;36;Comoros;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+106;36;Comoros;2023;0.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+110;37;Congo;2023;4100.0;needing_antiretrovirals;2800.0;5800.0;4100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+111;37;Congo;2023;25.0;percentage_received;17.0;36.0;25.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+109;37;Congo;2023;1000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+113;38;Costa Rica;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+114;38;Costa Rica;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+112;38;Costa Rica;2023;40.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+119;40;Croatia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+120;40;Croatia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+118;40;Croatia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+122;41;Cuba;2023;200.0;needing_antiretrovirals;200.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+123;41;Cuba;2023;95.0;percentage_received;86.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+121;41;Cuba;2023;180.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+125;42;Cyprus;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+126;42;Cyprus;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+124;42;Cyprus;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+128;43;Czechia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+129;43;Czechia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+127;43;Czechia;2023;10.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+116;39;Côte d'Ivoire;2023;18000.0;needing_antiretrovirals;13000.0;24000.0;18000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+117;39;Côte d'Ivoire;2023;90.0;percentage_received;65.0;95.0;90.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+115;39;Côte d'Ivoire;2023;16500.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+134;45;DR Congo;2023;26000.0;needing_antiretrovirals;20000.0;31000.0;26000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+135;45;DR Congo;2023;44.0;percentage_received;33.0;52.0;44.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+133;45;DR Congo;2023;11400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+137;46;Denmark;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+138;46;Denmark;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+136;46;Denmark;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+140;47;Djibouti;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+141;47;Djibouti;2023;30.0;percentage_received;22.0;39.0;30.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+139;47;Djibouti;2023;60.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+143;48;Dominican Republic;2023;910.0;needing_antiretrovirals;690.0;1200.0;910.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+144;48;Dominican Republic;2023;84.0;percentage_received;64.0;95.0;84.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+142;48;Dominican Republic;2023;770.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+146;49;Ecuador;2023;500.0;needing_antiretrovirals;500.0;620.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+147;49;Ecuador;2023;95.0;percentage_received;68.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+145;49;Ecuador;2023;370.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+149;50;Egypt;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+150;50;Egypt;2023;16.0;percentage_received;15.0;18.0;16.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+148;50;Egypt;2023;60.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+152;51;El Salvador;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+153;51;El Salvador;2023;40.0;percentage_received;33.0;46.0;40.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+151;51;El Salvador;2023;110.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+155;52;Equatorial Guinea;2023;2600.0;needing_antiretrovirals;1800.0;3500.0;2600.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+156;52;Equatorial Guinea;2023;50.0;percentage_received;35.0;68.0;50.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+154;52;Equatorial Guinea;2023;1300.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+158;53;Eritrea;2023;500.0;needing_antiretrovirals;500.0;690.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+159;53;Eritrea;2023;48.0;percentage_received;34.0;69.0;48.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+157;53;Eritrea;2023;230.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+161;54;Estonia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+162;54;Estonia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+160;54;Estonia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+164;55;Eswatini;2023;11000.0;needing_antiretrovirals;9000.0;12000.0;11000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+165;55;Eswatini;2023;79.0;percentage_received;66.0;89.0;79.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+163;55;Eswatini;2023;8600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+167;56;Ethiopia;2023;20000.0;needing_antiretrovirals;14000.0;28000.0;20000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+168;56;Ethiopia;2023;92.0;percentage_received;63.0;95.0;92.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+166;56;Ethiopia;2023;18400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+170;57;Fiji;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+171;57;Fiji;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+169;57;Fiji;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+173;58;Finland;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+174;58;Finland;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+172;58;Finland;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+176;59;France;2023;1200.0;needing_antiretrovirals;1100.0;1300.0;1200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+177;59;France;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+175;59;France;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+179;60;Gabon;2023;2700.0;needing_antiretrovirals;1900.0;3600.0;2700.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+180;60;Gabon;2023;72.0;percentage_received;52.0;95.0;72.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+178;60;Gabon;2023;1900.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+182;61;Gambia;2023;1000.0;needing_antiretrovirals;820.0;1300.0;1000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+183;61;Gambia;2023;68.0;percentage_received;54.0;86.0;68.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+181;61;Gambia;2023;700.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+185;62;Georgia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+186;62;Georgia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+184;62;Georgia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+188;63;Germany;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+189;63;Germany;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+187;63;Germany;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+191;64;Ghana;2023;16000.0;needing_antiretrovirals;12000.0;21000.0;16000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+192;64;Ghana;2023;79.0;percentage_received;58.0;95.0;79.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+190;64;Ghana;2023;13000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+194;65;Greece;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+195;65;Greece;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+193;65;Greece;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+197;66;Guatemala;2023;790.0;needing_antiretrovirals;720.0;870.0;790.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+198;66;Guatemala;2023;34.0;percentage_received;31.0;38.0;34.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+196;66;Guatemala;2023;270.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+200;67;Guinea;2023;5100.0;needing_antiretrovirals;3800.0;6600.0;5100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+201;67;Guinea;2023;65.0;percentage_received;48.0;84.0;65.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+199;67;Guinea;2023;3300.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+203;68;Guinea-Bissau;2023;2100.0;needing_antiretrovirals;1700.0;2500.0;2100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+204;68;Guinea-Bissau;2023;48.0;percentage_received;38.0;58.0;48.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+202;68;Guinea-Bissau;2023;1000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+206;69;Guyana;2023;200.0;needing_antiretrovirals;200.0;500.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+207;69;Guyana;2023;89.0;percentage_received;67.0;95.0;89.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+205;69;Guyana;2023;160.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+209;70;Haiti;2023;5900.0;needing_antiretrovirals;4700.0;6800.0;5900.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+210;70;Haiti;2023;83.0;percentage_received;67.0;95.0;83.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+208;70;Haiti;2023;4900.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+212;71;Honduras;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+213;71;Honduras;2023;59.0;percentage_received;48.0;72.0;59.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+211;71;Honduras;2023;200.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+215;72;Hungary;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+216;72;Hungary;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+214;72;Hungary;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+218;73;Iceland;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+219;73;Iceland;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+217;73;Iceland;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+221;74;India;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+222;74;India;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+220;74;India;2023;13200.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+224;75;Indonesia;2023;12000.0;needing_antiretrovirals;10000.0;14000.0;12000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+225;75;Indonesia;2023;15.0;percentage_received;13.0;18.0;15.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+223;75;Indonesia;2023;1800.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+227;76;Iran;2023;500.0;needing_antiretrovirals;200.0;840.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+228;76;Iran;2023;81.0;percentage_received;41.0;95.0;81.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+226;76;Iran;2023;310.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+230;77;Ireland;2023;100.0;needing_antiretrovirals;100.0;100.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+231;77;Ireland;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+229;77;Ireland;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+233;78;Israel;2023;100.0;needing_antiretrovirals;100.0;100.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+234;78;Israel;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+232;78;Israel;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+236;79;Italy;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+237;79;Italy;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+235;79;Italy;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+239;80;Jamaica;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+240;80;Jamaica;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+238;80;Jamaica;2023;400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+242;81;Japan;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+243;81;Japan;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+241;81;Japan;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+245;82;Jordan;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+246;82;Jordan;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+244;82;Jordan;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+248;83;Kazakhstan;2023;610.0;needing_antiretrovirals;550.0;660.0;610.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+249;83;Kazakhstan;2023;59.0;percentage_received;54.0;65.0;59.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+247;83;Kazakhstan;2023;360.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+251;84;Kenya;2023;63000.0;needing_antiretrovirals;49000.0;80000.0;63000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+252;84;Kenya;2023;91.0;percentage_received;70.0;95.0;91.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+250;84;Kenya;2023;57500.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+254;85;Kuwait;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+255;85;Kuwait;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+253;85;Kuwait;2023;0.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+257;86;Kyrgyzstan;2023;200.0;needing_antiretrovirals;200.0;500.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+258;86;Kyrgyzstan;2023;88.0;percentage_received;69.0;95.0;88.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+256;86;Kyrgyzstan;2023;130.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+260;87;Laos;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+261;87;Laos;2023;35.0;percentage_received;31.0;41.0;35.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+259;87;Laos;2023;90.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+263;88;Latvia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+264;88;Latvia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+262;88;Latvia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+266;89;Lebanon;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+267;89;Lebanon;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+265;89;Lebanon;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+269;90;Lesotho;2023;11000.0;needing_antiretrovirals;8200.0;12000.0;11000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+270;90;Lesotho;2023;77.0;percentage_received;59.0;89.0;77.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+268;90;Lesotho;2023;8200.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+272;91;Liberia;2023;2000.0;needing_antiretrovirals;1500.0;2300.0;2000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+273;91;Liberia;2023;93.0;percentage_received;70.0;95.0;93.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+271;91;Liberia;2023;1800.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+275;92;Libya;2023;200.0;needing_antiretrovirals;100.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+276;92;Libya;2023;63.0;percentage_received;56.0;69.0;63.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+274;92;Libya;2023;60.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+278;93;Lithuania;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+279;93;Lithuania;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+277;93;Lithuania;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+281;94;Luxembourg;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+282;94;Luxembourg;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+280;94;Luxembourg;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+284;95;Madagascar;2023;1100.0;needing_antiretrovirals;820.0;1600.0;1100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+285;95;Madagascar;2023;25.0;percentage_received;19.0;36.0;25.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+283;95;Madagascar;2023;280.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+287;96;Malawi;2023;45000.0;needing_antiretrovirals;34000.0;53000.0;45000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+288;96;Malawi;2023;95.0;percentage_received;80.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+286;96;Malawi;2023;47100.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+290;97;Malaysia;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+291;97;Malaysia;2023;95.0;percentage_received;86.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+289;97;Malaysia;2023;260.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+293;98;Maldives;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+294;98;Maldives;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+292;98;Maldives;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+296;99;Mali;2023;10000.0;needing_antiretrovirals;8300.0;13000.0;10000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+297;99;Mali;2023;24.0;percentage_received;19.0;31.0;24.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+295;99;Mali;2023;2400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+299;100;Malta;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+300;100;Malta;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+298;100;Malta;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+302;101;Mauritania;2023;200.0;needing_antiretrovirals;200.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+303;101;Mauritania;2023;38.0;percentage_received;31.0;47.0;38.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+301;101;Mauritania;2023;50.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+305;102;Mauritius;2023;100.0;needing_antiretrovirals;100.0;100.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+306;102;Mauritius;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+304;102;Mauritius;2023;110.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+308;103;Mexico;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+309;103;Mexico;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+307;103;Mexico;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+383;128;Moldova;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+384;128;Moldova;2023;73.0;percentage_received;54.0;95.0;73.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+382;128;Moldova;2023;180.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+311;104;Mongolia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+312;104;Mongolia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+310;104;Mongolia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+314;105;Montenegro;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+315;105;Montenegro;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+313;105;Montenegro;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+317;106;Morocco;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+318;106;Morocco;2023;61.0;percentage_received;50.0;78.0;61.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+316;106;Morocco;2023;220.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+320;107;Mozambique;2023;110000.0;needing_antiretrovirals;78000.0;140000.0;110000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+321;107;Mozambique;2023;95.0;percentage_received;73.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+319;107;Mozambique;2023;109000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+323;108;Myanmar;2023;5400.0;needing_antiretrovirals;4700.0;6100.0;5400.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+324;108;Myanmar;2023;80.0;percentage_received;69.0;89.0;80.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+322;108;Myanmar;2023;4300.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+326;109;Namibia;2023;10000.0;needing_antiretrovirals;8200.0;12000.0;10000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+327;109;Namibia;2023;95.0;percentage_received;92.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+325;109;Namibia;2023;12100.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+329;110;Nepal;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+330;110;Nepal;2023;51.0;percentage_received;43.0;60.0;51.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+328;110;Nepal;2023;150.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+332;111;Netherlands;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+333;111;Netherlands;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+331;111;Netherlands;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+335;112;New Zealand;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+336;112;New Zealand;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+334;112;New Zealand;2023;0.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+338;113;Nicaragua;2023;200.0;needing_antiretrovirals;200.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+339;113;Nicaragua;2023;90.0;percentage_received;73.0;95.0;90.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+337;113;Nicaragua;2023;120.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+341;114;Niger;2023;1600.0;needing_antiretrovirals;1400.0;2000.0;1600.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+342;114;Niger;2023;58.0;percentage_received;48.0;70.0;58.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+340;114;Niger;2023;940.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+344;115;Nigeria;2023;100000.0;needing_antiretrovirals;65000.0;140000.0;100000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+345;115;Nigeria;2023;44.0;percentage_received;28.0;62.0;44.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+343;115;Nigeria;2023;43700.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+131;44;North Korea;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+132;44;North Korea;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+130;44;North Korea;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+386;129;North Macedonia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+387;129;North Macedonia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+385;129;North Macedonia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+347;116;Norway;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+348;116;Norway;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+346;116;Norway;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+350;117;Oman;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+351;117;Oman;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+349;117;Oman;2023;40.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+353;118;Pakistan;2023;3200.0;needing_antiretrovirals;2700.0;3800.0;3200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+354;118;Pakistan;2023;10.0;percentage_received;8.0;12.0;10.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+352;118;Pakistan;2023;320.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+356;119;Panama;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+357;119;Panama;2023;92.0;percentage_received;83.0;95.0;92.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+355;119;Panama;2023;190.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+359;120;Papua New Guinea;2023;1200.0;needing_antiretrovirals;910.0;1500.0;1200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+360;120;Papua New Guinea;2023;79.0;percentage_received;59.0;95.0;79.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+358;120;Papua New Guinea;2023;960.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+362;121;Paraguay;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+363;121;Paraguay;2023;88.0;percentage_received;60.0;95.0;88.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+361;121;Paraguay;2023;250.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+365;122;Peru;2023;1100.0;needing_antiretrovirals;880.0;1500.0;1100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+366;122;Peru;2023;85.0;percentage_received;67.0;95.0;85.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+364;122;Peru;2023;930.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+368;123;Philippines;2023;500.0;needing_antiretrovirals;500.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+369;123;Philippines;2023;18.0;percentage_received;15.0;22.0;18.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+367;123;Philippines;2023;70.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+371;124;Poland;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+372;124;Poland;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+370;124;Poland;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+374;125;Portugal;2023;200.0;needing_antiretrovirals;100.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+375;125;Portugal;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+373;125;Portugal;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+377;126;Qatar;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+378;126;Qatar;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+376;126;Qatar;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+389;130;Romania;2023;200.0;needing_antiretrovirals;200.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+390;130;Romania;2023;95.0;percentage_received;95.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+388;130;Romania;2023;230.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+392;131;Russia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+393;131;Russia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+391;131;Russia;2023;13600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+395;132;Rwanda;2023;8100.0;needing_antiretrovirals;6000.0;9400.0;8100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+396;132;Rwanda;2023;95.0;percentage_received;79.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+394;132;Rwanda;2023;8600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+398;133;Saudi Arabia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+399;133;Saudi Arabia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+397;133;Saudi Arabia;2023;40.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+401;134;Senegal;2023;2200.0;needing_antiretrovirals;1800.0;2500.0;2200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+402;134;Senegal;2023;65.0;percentage_received;56.0;75.0;65.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+400;134;Senegal;2023;1400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+404;135;Serbia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+405;135;Serbia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+403;135;Serbia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+407;136;Sierra Leone;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+408;136;Sierra Leone;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+406;136;Sierra Leone;2023;4400.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+410;137;Singapore;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+411;137;Singapore;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+409;137;Singapore;2023;20.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+413;138;Slovakia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+414;138;Slovakia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+412;138;Slovakia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+416;139;Slovenia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+417;139;Slovenia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+415;139;Slovenia;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+419;140;Somalia;2023;500.0;needing_antiretrovirals;500.0;730.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+420;140;Somalia;2023;19.0;percentage_received;14.0;31.0;19.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+418;140;Somalia;2023;90.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+422;141;South Africa;2023;290000.0;needing_antiretrovirals;210000.0;350000.0;290000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+423;141;South Africa;2023;87.0;percentage_received;63.0;95.0;87.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+421;141;South Africa;2023;248000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+380;127;South Korea;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+381;127;South Korea;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+379;127;South Korea;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+425;142;South Sudan;2023;9900.0;needing_antiretrovirals;7200.0;13000.0;9900.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+426;142;South Sudan;2023;56.0;percentage_received;41.0;74.0;56.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+424;142;South Sudan;2023;5500.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+428;143;Spain;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+429;143;Spain;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+427;143;Spain;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+431;144;Sri Lanka;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+432;144;Sri Lanka;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+430;144;Sri Lanka;2023;20.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+434;145;Sudan;2023;2000.0;needing_antiretrovirals;760.0;3700.0;2000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+435;145;Sudan;2023;5.0;percentage_received;2.0;9.0;5.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+433;145;Sudan;2023;100.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+437;146;Suriname;2023;100.0;needing_antiretrovirals;100.0;100.0;100.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+438;146;Suriname;2023;95.0;percentage_received;84.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+436;146;Suriname;2023;90.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+440;147;Sweden;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+441;147;Sweden;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+439;147;Sweden;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+443;148;Switzerland;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+444;148;Switzerland;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+442;148;Switzerland;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+446;149;Syria;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+447;149;Syria;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+445;149;Syria;2023;10.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+449;150;Tajikistan;2023;500.0;needing_antiretrovirals;500.0;560.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+450;150;Tajikistan;2023;46.0;percentage_received;39.0;56.0;46.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+448;150;Tajikistan;2023;220.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+485;162;Tanzania;2023;83000.0;needing_antiretrovirals;62000.0;98000.0;83000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+486;162;Tanzania;2023;93.0;percentage_received;70.0;95.0;93.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+484;162;Tanzania;2023;77000.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+452;151;Thailand;2023;3900.0;needing_antiretrovirals;3200.0;4500.0;3900.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+453;151;Thailand;2023;95.0;percentage_received;81.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+451;151;Thailand;2023;3800.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+455;152;Timor-Leste;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+456;152;Timor-Leste;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+454;152;Timor-Leste;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+458;153;Togo;2023;5400.0;needing_antiretrovirals;4200.0;6200.0;5400.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+459;153;Togo;2023;80.0;percentage_received;62.0;92.0;80.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+457;153;Togo;2023;4300.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+461;154;Trinidad and Tobago;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+462;154;Trinidad and Tobago;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+460;154;Trinidad and Tobago;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+464;155;Tunisia;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+465;155;Tunisia;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+463;155;Tunisia;2023;10.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+467;156;Turkey;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+468;156;Turkey;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+466;156;Turkey;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+470;157;Turkmenistan;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+471;157;Turkmenistan;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+469;157;Turkmenistan;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+473;158;Uganda;2023;100000.0;needing_antiretrovirals;81000.0;120000.0;100000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+474;158;Uganda;2023;93.0;percentage_received;73.0;95.0;93.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+472;158;Uganda;2023;94800.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+476;159;Ukraine;2023;2200.0;needing_antiretrovirals;1900.0;2500.0;2200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+477;159;Ukraine;2023;95.0;percentage_received;89.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+475;159;Ukraine;2023;2200.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+479;160;United Arab Emirates;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+480;160;United Arab Emirates;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+478;160;United Arab Emirates;2023;10.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+482;161;United Kingdom;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+483;161;United Kingdom;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+481;161;United Kingdom;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+488;163;United States;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+489;163;United States;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+487;163;United States;2023;;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+491;164;Uruguay;2023;200.0;needing_antiretrovirals;100.0;200.0;200.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+492;164;Uruguay;2023;95.0;percentage_received;71.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+490;164;Uruguay;2023;140.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+494;165;Uzbekistan;2023;1500.0;needing_antiretrovirals;1400.0;1600.0;1500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+495;165;Uzbekistan;2023;35.0;percentage_received;33.0;38.0;35.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+493;165;Uzbekistan;2023;540.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+497;166;Venezuela;2023;;needing_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+498;166;Venezuela;2023;;percentage_received;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+496;166;Venezuela;2023;410.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+500;167;Viet Nam;2023;2400.0;needing_antiretrovirals;2000.0;2800.0;2400.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+501;167;Viet Nam;2023;81.0;percentage_received;69.0;95.0;81.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+499;167;Viet Nam;2023;1900.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+503;168;Yemen;2023;500.0;needing_antiretrovirals;200.0;500.0;500.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+504;168;Yemen;2023;13.0;percentage_received;8.0;20.0;13.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+502;168;Yemen;2023;30.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+506;169;Zambia;2023;48000.0;needing_antiretrovirals;38000.0;57000.0;48000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+507;169;Zambia;2023;95.0;percentage_received;94.0;95.0;95.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+505;169;Zambia;2023;56500.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+509;170;Zimbabwe;2023;63000.0;needing_antiretrovirals;48000.0;76000.0;63000.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+510;170;Zimbabwe;2023;94.0;percentage_received;71.0;95.0;94.0;good;prevention_of_mother_to_child_transmission_by_country_clean.csv
+508;170;Zimbabwe;2023;59600.0;received_antiretrovirals;;;;good;prevention_of_mother_to_child_transmission_by_country_clean.csv

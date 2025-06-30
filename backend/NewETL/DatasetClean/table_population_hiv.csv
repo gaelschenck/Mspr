@@ -1,0 +1,681 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+1531;1;Afghanistan;2000;1600.0;count;1000.0;3500.0;1600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1361;1;Afghanistan;2005;2900.0;count;1700.0;5000.0;2900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1191;1;Afghanistan;2010;4200.0;count;2500.0;6200.0;4200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1021;1;Afghanistan;2018;7200.0;count;4100.0;11000.0;7200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1532;2;Albania;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1362;2;Albania;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1192;2;Albania;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1022;2;Albania;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1533;3;Algeria;2000;1900.0;count;1700.0;2000.0;1900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1363;3;Algeria;2005;3700.0;count;3500.0;4000.0;3700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1193;3;Algeria;2010;7100.0;count;6600.0;7600.0;7100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1023;3;Algeria;2018;16000.0;count;15000.0;17000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1534;4;Angola;2000;87000.0;count;72000.0;110000.0;87000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1364;4;Angola;2005;150000.0;count;120000.0;170000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1194;4;Angola;2010;220000.0;count;180000.0;250000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1024;4;Angola;2018;330000.0;count;290000.0;390000.0;330000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1535;5;Argentina;2000;64000.0;count;55000.0;71000.0;64000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1365;5;Argentina;2005;85000.0;count;76000.0;94000.0;85000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1195;5;Argentina;2010;110000.0;count;96000.0;120000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1025;5;Argentina;2018;140000.0;count;130000.0;150000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1536;6;Armenia;2000;950.0;count;580.0;1600.0;950.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1366;6;Armenia;2005;2700.0;count;2000.0;3500.0;2700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1196;6;Armenia;2010;3300.0;count;2800.0;4100.0;3300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1026;6;Armenia;2018;3500.0;count;3000.0;4400.0;3500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1537;7;Australia;2000;13000.0;count;11000.0;15000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1367;7;Australia;2005;16000.0;count;14000.0;19000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1197;7;Australia;2010;21000.0;count;17000.0;23000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1027;7;Australia;2018;28000.0;count;23000.0;31000.0;28000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1538;8;Austria;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1368;8;Austria;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1198;8;Austria;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1028;8;Austria;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1539;9;Azerbaijan;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1369;9;Azerbaijan;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1199;9;Azerbaijan;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1029;9;Azerbaijan;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1540;10;Bahamas;2000;5100.0;count;4400.0;5900.0;5100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1370;10;Bahamas;2005;5100.0;count;4400.0;6000.0;5100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1200;10;Bahamas;2010;5800.0;count;5100.0;6600.0;5800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1030;10;Bahamas;2018;6000.0;count;5300.0;6700.0;6000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1541;11;Bahrain;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1371;11;Bahrain;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1201;11;Bahrain;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1031;11;Bahrain;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1542;12;Bangladesh;2000;940.0;count;800.0;1100.0;940.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1372;12;Bangladesh;2005;4000.0;count;3500.0;4600.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1202;12;Bangladesh;2010;7700.0;count;6600.0;8800.0;7700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1032;12;Bangladesh;2018;14000.0;count;12000.0;16000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1543;13;Barbados;2000;1100.0;count;1000.0;1300.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1373;13;Barbados;2005;1700.0;count;1500.0;1900.0;1700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1203;13;Barbados;2010;2300.0;count;2100.0;2600.0;2300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1033;13;Barbados;2018;3000.0;count;2700.0;3400.0;3000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1544;14;Belarus;2000;1400.0;count;1100.0;1900.0;1400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1374;14;Belarus;2005;5400.0;count;4500.0;6700.0;5400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1204;14;Belarus;2010;12000.0;count;10000.0;15000.0;12000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1034;14;Belarus;2018;27000.0;count;22000.0;34000.0;27000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1545;15;Belgium;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1375;15;Belgium;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1205;15;Belgium;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1035;15;Belgium;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1546;16;Belize;2000;1700.0;count;1600.0;1800.0;1700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1376;16;Belize;2005;2800.0;count;2600.0;3100.0;2800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1206;16;Belize;2010;3700.0;count;3400.0;4100.0;3700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1036;16;Belize;2018;4900.0;count;4400.0;5400.0;4900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1547;17;Benin;2000;47000.0;count;31000.0;75000.0;47000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1377;17;Benin;2005;56000.0;count;37000.0;90000.0;56000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1207;17;Benin;2010;61000.0;count;41000.0;98000.0;61000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1037;17;Benin;2018;73000.0;count;48000.0;120000.0;73000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1548;18;Bhutan;2000;530.0;count;200.0;970.0;530.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1378;18;Bhutan;2005;1100.0;count;500.0;2000.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1208;18;Bhutan;2010;1300.0;count;590.0;2700.0;1300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1038;18;Bhutan;2018;1300.0;count;700.0;2700.0;1300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1549;19;Bolivia;2000;21000.0;count;20000.0;23000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1379;19;Bolivia;2005;26000.0;count;24000.0;28000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1209;19;Bolivia;2010;23000.0;count;20000.0;25000.0;23000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1039;19;Bolivia;2018;22000.0;count;20000.0;24000.0;22000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1550;20;Bosnia and Herzegovina;2000;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1380;20;Bosnia and Herzegovina;2005;200.0;count;100.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1210;20;Bosnia and Herzegovina;2010;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1040;20;Bosnia and Herzegovina;2018;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1551;21;Botswana;2000;280000.0;count;270000.0;300000.0;280000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1381;21;Botswana;2005;310000.0;count;280000.0;330000.0;310000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1211;21;Botswana;2010;340000.0;count;300000.0;360000.0;340000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1041;21;Botswana;2018;370000.0;count;330000.0;400000.0;370000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1552;22;Brazil;2000;410000.0;count;320000.0;510000.0;410000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1382;22;Brazil;2005;550000.0;count;420000.0;680000.0;550000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1212;22;Brazil;2010;670000.0;count;520000.0;830000.0;670000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1042;22;Brazil;2018;900000.0;count;690000.0;1100000.0;900000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1553;23;Brunei Darussalam;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1383;23;Brunei Darussalam;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1213;23;Brunei Darussalam;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1043;23;Brunei Darussalam;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1554;24;Bulgaria;2000;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1384;24;Bulgaria;2005;980.0;count;910.0;1100.0;980.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1214;24;Bulgaria;2010;1700.0;count;1600.0;1900.0;1700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1044;24;Bulgaria;2018;3500.0;count;3000.0;4100.0;3500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1555;25;Burkina Faso;2000;140000.0;count;110000.0;170000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1385;25;Burkina Faso;2005;120000.0;count;95000.0;140000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1215;25;Burkina Faso;2010;110000.0;count;88000.0;130000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1045;25;Burkina Faso;2018;96000.0;count;78000.0;120000.0;96000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1556;26;Burundi;2000;130000.0;count;110000.0;150000.0;130000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1386;26;Burundi;2005;110000.0;count;88000.0;120000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1216;26;Burundi;2010;93000.0;count;79000.0;110000.0;93000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1046;26;Burundi;2018;82000.0;count;71000.0;97000.0;82000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1557;27;Cabo Verde;2000;1600.0;count;1200.0;2500.0;1600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1387;27;Cabo Verde;2005;1800.0;count;1400.0;2700.0;1800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1217;27;Cabo Verde;2010;2100.0;count;1700.0;2600.0;2100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1047;27;Cabo Verde;2018;2400.0;count;2100.0;2900.0;2400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1558;28;Cambodia;2000;81000.0;count;73000.0;91000.0;81000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1388;28;Cambodia;2005;82000.0;count;70000.0;97000.0;82000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1218;28;Cambodia;2010;79000.0;count;68000.0;93000.0;79000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1048;28;Cambodia;2018;73000.0;count;64000.0;84000.0;73000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1559;29;Cameroon;2000;370000.0;count;350000.0;410000.0;370000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1389;29;Cameroon;2005;470000.0;count;430000.0;500000.0;470000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1219;29;Cameroon;2010;520000.0;count;460000.0;560000.0;520000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1049;29;Cameroon;2018;540000.0;count;470000.0;590000.0;540000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1560;30;Canada;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1390;30;Canada;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1220;30;Canada;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1050;30;Canada;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1561;31;Central African Republic;2000;160000.0;count;130000.0;190000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1391;31;Central African Republic;2005;150000.0;count;130000.0;170000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1221;31;Central African Republic;2010;140000.0;count;110000.0;160000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1051;31;Central African Republic;2018;110000.0;count;90000.0;140000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1562;32;Chad;2000;80000.0;count;60000.0;100000.0;80000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1392;32;Chad;2005;88000.0;count;69000.0;110000.0;88000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1222;32;Chad;2010;99000.0;count;80000.0;120000.0;99000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1052;32;Chad;2018;120000.0;count;94000.0;150000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1563;33;Chile;2000;14000.0;count;13000.0;16000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1393;33;Chile;2005;25000.0;count;22000.0;27000.0;25000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1223;33;Chile;2010;39000.0;count;34000.0;43000.0;39000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1053;33;Chile;2018;71000.0;count;63000.0;78000.0;71000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1564;34;China;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1394;34;China;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1224;34;China;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1054;34;China;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1565;35;Colombia;2000;110000.0;count;91000.0;130000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1395;35;Colombia;2005;120000.0;count;98000.0;140000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1225;35;Colombia;2010;130000.0;count;100000.0;150000.0;130000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1055;35;Colombia;2018;160000.0;count;130000.0;180000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1566;36;Comoros;2000;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1396;36;Comoros;2005;100.0;count;100.0;200.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1226;36;Comoros;2010;200.0;count;100.0;500.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1056;36;Comoros;2018;200.0;count;100.0;500.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1567;37;Congo;2000;80000.0;count;64000.0;96000.0;80000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1397;37;Congo;2005;77000.0;count;63000.0;90000.0;77000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1227;37;Congo;2010;82000.0;count;69000.0;95000.0;82000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1057;37;Congo;2018;89000.0;count;69000.0;120000.0;89000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1568;38;Costa Rica;2000;4300.0;count;3700.0;4700.0;4300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1398;38;Costa Rica;2005;6500.0;count;5800.0;7200.0;6500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1228;38;Costa Rica;2010;9300.0;count;8400.0;10000.0;9300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1058;38;Costa Rica;2018;15000.0;count;13000.0;17000.0;15000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1570;40;Croatia;2000;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1400;40;Croatia;2005;710.0;count;630.0;800.0;710.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1230;40;Croatia;2010;1000.0;count;930.0;1100.0;1000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1060;40;Croatia;2018;1600.0;count;1400.0;1700.0;1600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1571;41;Cuba;2000;4100.0;count;2900.0;5000.0;4100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1401;41;Cuba;2005;9000.0;count;6700.0;11000.0;9000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1231;41;Cuba;2010;17000.0;count;13000.0;21000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1061;41;Cuba;2018;31000.0;count;24000.0;37000.0;31000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1572;42;Cyprus;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1402;42;Cyprus;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1232;42;Cyprus;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1062;42;Cyprus;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1573;43;Czechia;2000;510.0;count;500.0;580.0;510.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1403;43;Czechia;2005;970.0;count;820.0;1100.0;970.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1233;43;Czechia;2010;1800.0;count;1500.0;2000.0;1800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1063;43;Czechia;2018;4400.0;count;3700.0;5000.0;4400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1569;39;Côte d'Ivoire;2000;590000.0;count;470000.0;740000.0;590000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1399;39;Côte d'Ivoire;2005;510000.0;count;410000.0;650000.0;510000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1229;39;Côte d'Ivoire;2010;480000.0;count;380000.0;610000.0;480000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1059;39;Côte d'Ivoire;2018;460000.0;count;360000.0;580000.0;460000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1575;45;DR Congo;2000;540000.0;count;470000.0;610000.0;540000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1405;45;DR Congo;2005;510000.0;count;430000.0;590000.0;510000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1235;45;DR Congo;2010;480000.0;count;400000.0;560000.0;480000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1065;45;DR Congo;2018;450000.0;count;370000.0;530000.0;450000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1576;46;Denmark;2000;4000.0;count;3600.0;4600.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1406;46;Denmark;2005;4900.0;count;4500.0;5500.0;4900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1236;46;Denmark;2010;5500.0;count;5000.0;6200.0;5500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1066;46;Denmark;2018;6200.0;count;5600.0;7000.0;6200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1577;47;Djibouti;2000;9400.0;count;7200.0;12000.0;9400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1407;47;Djibouti;2005;11000.0;count;9000.0;13000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1237;47;Djibouti;2010;9400.0;count;7700.0;11000.0;9400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1067;47;Djibouti;2018;8800.0;count;7100.0;11000.0;8800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1578;48;Dominican Republic;2000;85000.0;count;62000.0;120000.0;85000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1408;48;Dominican Republic;2005;79000.0;count;61000.0;100000.0;79000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1238;48;Dominican Republic;2010;72000.0;count;54000.0;91000.0;72000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1068;48;Dominican Republic;2018;70000.0;count;54000.0;92000.0;70000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1579;49;Ecuador;2000;26000.0;count;15000.0;46000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1409;49;Ecuador;2005;29000.0;count;19000.0;49000.0;29000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1239;49;Ecuador;2010;34000.0;count;22000.0;57000.0;34000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1069;49;Ecuador;2018;44000.0;count;29000.0;71000.0;44000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1580;50;Egypt;2000;1500.0;count;1400.0;1600.0;1500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1410;50;Egypt;2005;3200.0;count;2800.0;3500.0;3200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1240;50;Egypt;2010;6800.0;count;6100.0;7400.0;6800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1070;50;Egypt;2018;22000.0;count;20000.0;24000.0;22000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1581;51;El Salvador;2000;18000.0;count;14000.0;23000.0;18000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1411;51;El Salvador;2005;23000.0;count;17000.0;28000.0;23000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1241;51;El Salvador;2010;26000.0;count;20000.0;31000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1071;51;El Salvador;2018;25000.0;count;21000.0;30000.0;25000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1582;52;Equatorial Guinea;2000;13000.0;count;9200.0;18000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1412;52;Equatorial Guinea;2005;22000.0;count;17000.0;28000.0;22000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1242;52;Equatorial Guinea;2010;35000.0;count;29000.0;41000.0;35000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1072;52;Equatorial Guinea;2018;62000.0;count;50000.0;81000.0;62000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1583;53;Eritrea;2000;16000.0;count;12000.0;20000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1413;53;Eritrea;2005;17000.0;count;13000.0;22000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1243;53;Eritrea;2010;17000.0;count;13000.0;22000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1073;53;Eritrea;2018;18000.0;count;13000.0;24000.0;18000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1584;54;Estonia;2000;3400.0;count;2900.0;3900.0;3400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1414;54;Estonia;2005;5400.0;count;4600.0;6000.0;5400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1244;54;Estonia;2010;6000.0;count;5100.0;6700.0;6000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1074;54;Estonia;2018;7400.0;count;6600.0;8200.0;7400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1585;55;Eswatini;2000;110000.0;count;98000.0;120000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1415;55;Eswatini;2005;130000.0;count;120000.0;140000.0;130000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1245;55;Eswatini;2010;160000.0;count;150000.0;170000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1075;55;Eswatini;2018;210000.0;count;190000.0;220000.0;210000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1586;56;Ethiopia;2000;750000.0;count;570000.0;980000.0;750000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1416;56;Ethiopia;2005;640000.0;count;490000.0;840000.0;640000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1246;56;Ethiopia;2010;630000.0;count;480000.0;830000.0;630000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1076;56;Ethiopia;2018;690000.0;count;530000.0;900000.0;690000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1587;57;Fiji;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1417;57;Fiji;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1247;57;Fiji;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1077;57;Fiji;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1588;58;Finland;2000;1100.0;count;850.0;1400.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1418;58;Finland;2005;1900.0;count;1500.0;2400.0;1900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1248;58;Finland;2010;2700.0;count;2200.0;3500.0;2700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1078;58;Finland;2018;4000.0;count;3100.0;4900.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1589;59;France;2000;82000.0;count;69000.0;97000.0;82000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1419;59;France;2005;110000.0;count;95000.0;130000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1249;59;France;2010;140000.0;count;120000.0;160000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1079;59;France;2018;180000.0;count;150000.0;210000.0;180000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1590;60;Gabon;2000;28000.0;count;20000.0;38000.0;28000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1420;60;Gabon;2005;35000.0;count;27000.0;43000.0;35000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1250;60;Gabon;2010;43000.0;count;36000.0;51000.0;43000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1080;60;Gabon;2018;53000.0;count;43000.0;67000.0;53000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1591;61;Gambia;2000;9900.0;count;7200.0;13000.0;9900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1421;61;Gambia;2005;15000.0;count;11000.0;19000.0;15000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1251;61;Gambia;2010;18000.0;count;15000.0;23000.0;18000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1081;61;Gambia;2018;26000.0;count;21000.0;33000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1592;62;Georgia;2000;980.0;count;720.0;1300.0;980.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1422;62;Georgia;2005;2800.0;count;2300.0;3400.0;2800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1252;62;Georgia;2010;5600.0;count;4500.0;6700.0;5600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1082;62;Georgia;2018;9400.0;count;8100.0;11000.0;9400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1593;63;Germany;2000;45000.0;count;37000.0;54000.0;45000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1423;63;Germany;2005;56000.0;count;46000.0;65000.0;56000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1253;63;Germany;2010;69000.0;count;57000.0;81000.0;69000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1083;63;Germany;2018;87000.0;count;71000.0;100000.0;87000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1594;64;Ghana;2000;270000.0;count;240000.0;300000.0;270000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1424;64;Ghana;2005;280000.0;count;240000.0;320000.0;280000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1254;64;Ghana;2010;300000.0;count;250000.0;340000.0;300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1084;64;Ghana;2018;330000.0;count;280000.0;390000.0;330000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1595;65;Greece;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1425;65;Greece;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1255;65;Greece;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1085;65;Greece;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1596;66;Guatemala;2000;44000.0;count;41000.0;47000.0;44000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1426;66;Guatemala;2005;48000.0;count;44000.0;51000.0;48000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1256;66;Guatemala;2010;49000.0;count;44000.0;53000.0;49000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1086;66;Guatemala;2018;47000.0;count;43000.0;51000.0;47000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1597;67;Guinea;2000;83000.0;count;67000.0;100000.0;83000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1427;67;Guinea;2005;93000.0;count;81000.0;110000.0;93000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1257;67;Guinea;2010;100000.0;count;90000.0;120000.0;100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1087;67;Guinea;2018;120000.0;count;100000.0;140000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1598;68;Guinea-Bissau;2000;22000.0;count;20000.0;25000.0;22000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1428;68;Guinea-Bissau;2005;31000.0;count;28000.0;35000.0;31000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1258;68;Guinea-Bissau;2010;38000.0;count;34000.0;42000.0;38000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1088;68;Guinea-Bissau;2018;44000.0;count;39000.0;49000.0;44000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1599;69;Guyana;2000;2300.0;count;1600.0;3100.0;2300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1429;69;Guyana;2005;5000.0;count;4400.0;5700.0;5000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1259;69;Guyana;2010;6700.0;count;6000.0;7400.0;6700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1089;69;Guyana;2018;8200.0;count;7200.0;9400.0;8200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1600;70;Haiti;2000;150000.0;count;130000.0;180000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1430;70;Haiti;2005;140000.0;count;120000.0;160000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1260;70;Haiti;2010;140000.0;count;130000.0;160000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1090;70;Haiti;2018;160000.0;count;140000.0;180000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1601;71;Honduras;2000;40000.0;count;34000.0;49000.0;40000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1431;71;Honduras;2005;31000.0;count;24000.0;38000.0;31000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1261;71;Honduras;2010;26000.0;count;21000.0;32000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1091;71;Honduras;2018;23000.0;count;18000.0;28000.0;23000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1602;72;Hungary;2000;830.0;count;700.0;950.0;830.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1432;72;Hungary;2005;1200.0;count;1000.0;1300.0;1200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1262;72;Hungary;2010;2000.0;count;1800.0;2300.0;2000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1092;72;Hungary;2018;3700.0;count;3200.0;4200.0;3700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1603;73;Iceland;2000;100.0;count;100.0;200.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1433;73;Iceland;2005;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1263;73;Iceland;2010;500.0;count;200.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1093;73;Iceland;2018;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1604;74;India;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1434;74;India;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1264;74;India;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1094;74;India;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1605;75;Indonesia;2000;80000.0;count;72000.0;89000.0;80000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1435;75;Indonesia;2005;290000.0;count;260000.0;330000.0;290000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1265;75;Indonesia;2010;510000.0;count;450000.0;590000.0;510000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1095;75;Indonesia;2018;640000.0;count;550000.0;750000.0;640000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1606;76;Iran;2000;16000.0;count;7900.0;35000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1436;76;Iran;2005;37000.0;count;25000.0;56000.0;37000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1266;76;Iran;2010;50000.0;count;37000.0;70000.0;50000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1096;76;Iran;2018;61000.0;count;34000.0;120000.0;61000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1607;77;Ireland;2000;1900.0;count;1700.0;2200.0;1900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1437;77;Ireland;2005;3200.0;count;2800.0;3600.0;3200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1267;77;Ireland;2010;4800.0;count;4200.0;5400.0;4800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1097;77;Ireland;2018;7200.0;count;6200.0;8000.0;7200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1608;78;Israel;2000;2700.0;count;2400.0;3100.0;2700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1438;78;Israel;2005;4100.0;count;3700.0;4600.0;4100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1268;78;Israel;2010;6000.0;count;5400.0;6800.0;6000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1098;78;Israel;2018;9000.0;count;8000.0;10000.0;9000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1609;79;Italy;2000;68000.0;count;57000.0;78000.0;68000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1439;79;Italy;2005;89000.0;count;76000.0;100000.0;89000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1269;79;Italy;2010;110000.0;count;92000.0;120000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1099;79;Italy;2018;130000.0;count;110000.0;140000.0;130000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1610;80;Jamaica;2000;41000.0;count;37000.0;46000.0;41000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1440;80;Jamaica;2005;38000.0;count;33000.0;42000.0;38000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1270;80;Jamaica;2010;37000.0;count;32000.0;42000.0;37000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1100;80;Jamaica;2018;40000.0;count;35000.0;46000.0;40000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1611;81;Japan;2000;6200.0;count;5100.0;7200.0;6200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1441;81;Japan;2005;12000.0;count;9700.0;14000.0;12000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1271;81;Japan;2010;19000.0;count;16000.0;22000.0;19000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1101;81;Japan;2018;30000.0;count;25000.0;34000.0;30000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1612;82;Jordan;2000;100.0;count;100.0;200.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1442;82;Jordan;2005;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1272;82;Jordan;2010;200.0;count;200.0;500.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1102;82;Jordan;2018;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1613;83;Kazakhstan;2000;1100.0;count;1100.0;1200.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1443;83;Kazakhstan;2005;4000.0;count;3800.0;4300.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1273;83;Kazakhstan;2010;11000.0;count;10000.0;11000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1103;83;Kazakhstan;2018;26000.0;count;24000.0;27000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1614;84;Kenya;2000;1700000.0;count;1400000.0;2000000.0;1700000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1444;84;Kenya;2005;1500000.0;count;1300000.0;1900000.0;1500000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1274;84;Kenya;2010;1500000.0;count;1200000.0;1800000.0;1500000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1104;84;Kenya;2018;1600000.0;count;1300000.0;1900000.0;1600000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1615;85;Kuwait;2000;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1445;85;Kuwait;2005;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1275;85;Kuwait;2010;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1105;85;Kuwait;2018;640.0;count;580.0;700.0;640.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1616;86;Kyrgyzstan;2000;710.0;count;580.0;840.0;710.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1446;86;Kyrgyzstan;2005;1500.0;count;1300.0;1900.0;1500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1276;86;Kyrgyzstan;2010;4100.0;count;3200.0;5500.0;4100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1106;86;Kyrgyzstan;2018;8500.0;count;6500.0;12000.0;8500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1617;87;Laos;2000;2200.0;count;2000.0;2400.0;2200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1447;87;Laos;2005;6700.0;count;6000.0;7500.0;6700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1277;87;Laos;2010;9900.0;count;8800.0;11000.0;9900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1107;87;Laos;2018;12000.0;count;11000.0;14000.0;12000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1618;88;Latvia;2000;2300.0;count;2200.0;2500.0;2300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1448;88;Latvia;2005;3200.0;count;2900.0;3600.0;3200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1278;88;Latvia;2010;4000.0;count;3500.0;4500.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1108;88;Latvia;2018;5300.0;count;4800.0;5900.0;5300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1619;89;Lebanon;2000;910.0;count;790.0;1000.0;910.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1449;89;Lebanon;2005;1300.0;count;1100.0;1400.0;1300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1279;89;Lebanon;2010;1600.0;count;1400.0;1800.0;1600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1109;89;Lebanon;2018;2500.0;count;2200.0;2800.0;2500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1620;90;Lesotho;2000;260000.0;count;240000.0;290000.0;260000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1450;90;Lesotho;2005;280000.0;count;260000.0;300000.0;280000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1280;90;Lesotho;2010;300000.0;count;280000.0;320000.0;300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1110;90;Lesotho;2018;340000.0;count;320000.0;360000.0;340000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1621;91;Liberia;2000;43000.0;count;41000.0;45000.0;43000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1451;91;Liberia;2005;41000.0;count;38000.0;45000.0;41000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1281;91;Liberia;2010;41000.0;count;37000.0;46000.0;41000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1111;91;Liberia;2018;39000.0;count;36000.0;44000.0;39000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1622;92;Libya;2000;950.0;count;870.0;1000.0;950.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1452;92;Libya;2005;2900.0;count;2700.0;3100.0;2900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1282;92;Libya;2010;6100.0;count;5600.0;6500.0;6100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1112;92;Libya;2018;9200.0;count;8300.0;10000.0;9200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1623;93;Lithuania;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1453;93;Lithuania;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1283;93;Lithuania;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1113;93;Lithuania;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1624;94;Luxembourg;2000;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1454;94;Luxembourg;2005;500.0;count;500.0;540.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1284;94;Luxembourg;2010;700.0;count;620.0;780.0;700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1114;94;Luxembourg;2018;1200.0;count;1000.0;1300.0;1200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1625;95;Madagascar;2000;13000.0;count;7900.0;20000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1455;95;Madagascar;2005;19000.0;count;15000.0;23000.0;19000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1285;95;Madagascar;2010;21000.0;count;18000.0;24000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1115;95;Madagascar;2018;39000.0;count;30000.0;55000.0;39000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1626;96;Malawi;2000;810000.0;count;740000.0;860000.0;810000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1456;96;Malawi;2005;820000.0;count;720000.0;900000.0;820000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1286;96;Malawi;2010;870000.0;count;770000.0;960000.0;870000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1116;96;Malawi;2018;1000000.0;count;940000.0;1100000.0;1000000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1627;97;Malaysia;2000;55000.0;count;48000.0;65000.0;55000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1457;97;Malaysia;2005;66000.0;count;57000.0;77000.0;66000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1287;97;Malaysia;2010;74000.0;count;65000.0;86000.0;74000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1117;97;Malaysia;2018;87000.0;count;77000.0;98000.0;87000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1628;98;Maldives;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1458;98;Maldives;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1288;98;Maldives;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1118;98;Maldives;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1629;99;Mali;2000;110000.0;count;91000.0;130000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1459;99;Mali;2005;110000.0;count;91000.0;130000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1289;99;Mali;2010;120000.0;count;94000.0;140000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1119;99;Mali;2018;150000.0;count;120000.0;190000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1630;100;Malta;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1460;100;Malta;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1290;100;Malta;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1120;100;Malta;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1631;101;Mauritania;2000;5500.0;count;4500.0;6500.0;5500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1461;101;Mauritania;2005;7500.0;count;6400.0;8800.0;7500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1291;101;Mauritania;2010;7100.0;count;5900.0;8400.0;7100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1121;101;Mauritania;2018;5600.0;count;4500.0;7200.0;5600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1632;102;Mauritius;2000;3200.0;count;1500.0;6000.0;3200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1462;102;Mauritius;2005;8000.0;count;6100.0;11000.0;8000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1292;102;Mauritius;2010;11000.0;count;9500.0;12000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1122;102;Mauritius;2018;13000.0;count;10000.0;15000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1633;103;Mexico;2000;130000.0;count;94000.0;190000.0;130000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1463;103;Mexico;2005;150000.0;count;120000.0;200000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1293;103;Mexico;2010;180000.0;count;150000.0;210000.0;180000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1123;103;Mexico;2018;230000.0;count;200000.0;270000.0;230000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1658;128;Moldova;2000;10000.0;count;8000.0;13000.0;10000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1488;128;Moldova;2005;12000.0;count;9600.0;16000.0;12000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1318;128;Moldova;2010;16000.0;count;12000.0;20000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1148;128;Moldova;2018;17000.0;count;14000.0;23000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1634;104;Mongolia;2000;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1464;104;Mongolia;2005;500.0;count;200.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1294;104;Mongolia;2010;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1124;104;Mongolia;2018;600.0;count;530.0;670.0;600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1635;105;Montenegro;2000;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1465;105;Montenegro;2005;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1295;105;Montenegro;2010;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1125;105;Montenegro;2018;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1636;106;Morocco;2000;9700.0;count;7800.0;13000.0;9700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1466;106;Morocco;2005;13000.0;count;11000.0;18000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1296;106;Morocco;2010;17000.0;count;13000.0;22000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1126;106;Morocco;2018;21000.0;count;17000.0;28000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1637;107;Mozambique;2000;840000.0;count;670000.0;1000000.0;840000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1467;107;Mozambique;2005;1200000.0;count;980000.0;1500000.0;1200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1297;107;Mozambique;2010;1600000.0;count;1300000.0;1900000.0;1600000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1127;107;Mozambique;2018;2200000.0;count;1700000.0;2700000.0;2200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1638;108;Myanmar;2000;150000.0;count;130000.0;170000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1468;108;Myanmar;2005;210000.0;count;180000.0;240000.0;210000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1298;108;Myanmar;2010;220000.0;count;190000.0;260000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1128;108;Myanmar;2018;240000.0;count;210000.0;270000.0;240000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1639;109;Namibia;2000;140000.0;count;130000.0;160000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1469;109;Namibia;2005;160000.0;count;140000.0;170000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1299;109;Namibia;2010;170000.0;count;160000.0;180000.0;170000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1129;109;Namibia;2018;200000.0;count;190000.0;220000.0;200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1640;110;Nepal;2000;16000.0;count;14000.0;17000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1470;110;Nepal;2005;29000.0;count;25000.0;33000.0;29000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1300;110;Nepal;2010;31000.0;count;27000.0;36000.0;31000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1130;110;Nepal;2018;30000.0;count;26000.0;34000.0;30000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1641;111;Netherlands;2000;11000.0;count;11000.0;12000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1471;111;Netherlands;2005;16000.0;count;15000.0;17000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1301;111;Netherlands;2010;20000.0;count;19000.0;21000.0;20000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1131;111;Netherlands;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1642;112;New Zealand;2000;1300.0;count;1100.0;1500.0;1300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1472;112;New Zealand;2005;1800.0;count;1600.0;2100.0;1800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1302;112;New Zealand;2010;2500.0;count;2100.0;2800.0;2500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1132;112;New Zealand;2018;3600.0;count;3100.0;4200.0;3600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1643;113;Nicaragua;2000;3600.0;count;2100.0;5300.0;3600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1473;113;Nicaragua;2005;6100.0;count;4600.0;8300.0;6100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1303;113;Nicaragua;2010;7900.0;count;6500.0;10000.0;7900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1133;113;Nicaragua;2018;9400.0;count;7600.0;12000.0;9400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1644;114;Niger;2000;37000.0;count;31000.0;44000.0;37000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1474;114;Niger;2005;40000.0;count;34000.0;46000.0;40000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1304;114;Niger;2010;37000.0;count;32000.0;42000.0;37000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1134;114;Niger;2018;36000.0;count;30000.0;43000.0;36000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1645;115;Nigeria;2000;1300000.0;count;940000.0;1700000.0;1300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1475;115;Nigeria;2005;1400000.0;count;1000000.0;1900000.0;1400000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1305;115;Nigeria;2010;1500000.0;count;1100000.0;2100000.0;1500000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1135;115;Nigeria;2018;1900000.0;count;1400000.0;2600000.0;1900000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1574;44;North Korea;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1404;44;North Korea;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1234;44;North Korea;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1064;44;North Korea;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1659;129;North Macedonia;2000;100.0;count;100.0;100.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1489;129;North Macedonia;2005;100.0;count;100.0;200.0;100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1319;129;North Macedonia;2010;200.0;count;200.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1149;129;North Macedonia;2018;500.0;count;500.0;520.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1646;116;Norway;2000;1900.0;count;1700.0;2100.0;1900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1476;116;Norway;2005;3000.0;count;2700.0;3300.0;3000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1306;116;Norway;2010;4200.0;count;3800.0;4600.0;4200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1136;116;Norway;2018;5800.0;count;5200.0;6300.0;5800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1647;117;Oman;2000;1300.0;count;1100.0;1400.0;1300.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1477;117;Oman;2005;1700.0;count;1600.0;1900.0;1700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1307;117;Oman;2010;2200.0;count;2000.0;2500.0;2200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1137;117;Oman;2018;3200.0;count;2900.0;3600.0;3200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1648;118;Pakistan;2000;500.0;count;500.0;520.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1478;118;Pakistan;2005;12000.0;count;10000.0;14000.0;12000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1308;118;Pakistan;2010;67000.0;count;57000.0;76000.0;67000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1138;118;Pakistan;2018;160000.0;count;140000.0;190000.0;160000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1649;119;Panama;2000;11000.0;count;10000.0;12000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1479;119;Panama;2005;16000.0;count;14000.0;17000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1309;119;Panama;2010;20000.0;count;18000.0;22000.0;20000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1139;119;Panama;2018;26000.0;count;24000.0;29000.0;26000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1650;120;Papua New Guinea;2000;20000.0;count;17000.0;25000.0;20000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1480;120;Papua New Guinea;2005;38000.0;count;34000.0;42000.0;38000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1310;120;Papua New Guinea;2010;38000.0;count;34000.0;42000.0;38000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1140;120;Papua New Guinea;2018;45000.0;count;41000.0;50000.0;45000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1651;121;Paraguay;2000;14000.0;count;7100.0;21000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1481;121;Paraguay;2005;19000.0;count;14000.0;25000.0;19000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1311;121;Paraguay;2010;20000.0;count;14000.0;27000.0;20000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1141;121;Paraguay;2018;21000.0;count;16000.0;31000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1652;122;Peru;2000;71000.0;count;56000.0;94000.0;71000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1482;122;Peru;2005;65000.0;count;50000.0;91000.0;65000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1312;122;Peru;2010;65000.0;count;49000.0;91000.0;65000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1142;122;Peru;2018;79000.0;count;58000.0;110000.0;79000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1653;123;Philippines;2000;1000.0;count;910.0;1200.0;1000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1483;123;Philippines;2005;3700.0;count;3100.0;4300.0;3700.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1313;123;Philippines;2010;15000.0;count;13000.0;18000.0;15000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1143;123;Philippines;2018;77000.0;count;65000.0;90000.0;77000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1654;124;Poland;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1484;124;Poland;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1314;124;Poland;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1144;124;Poland;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1655;125;Portugal;2000;32000.0;count;27000.0;37000.0;32000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1485;125;Portugal;2005;37000.0;count;33000.0;42000.0;37000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1315;125;Portugal;2010;40000.0;count;35000.0;45000.0;40000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1145;125;Portugal;2018;41000.0;count;36000.0;46000.0;41000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1656;126;Qatar;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1486;126;Qatar;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1316;126;Qatar;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1146;126;Qatar;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1660;130;Romania;2000;7500.0;count;6900.0;8100.0;7500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1490;130;Romania;2005;11000.0;count;9800.0;12000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1320;130;Romania;2010;14000.0;count;12000.0;15000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1150;130;Romania;2018;18000.0;count;16000.0;20000.0;18000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1661;131;Russia;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1491;131;Russia;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1321;131;Russia;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1151;131;Russia;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1662;132;Rwanda;2000;240000.0;count;220000.0;280000.0;240000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1492;132;Rwanda;2005;220000.0;count;190000.0;250000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1322;132;Rwanda;2010;220000.0;count;200000.0;250000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1152;132;Rwanda;2018;220000.0;count;200000.0;250000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1663;133;Saudi Arabia;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1493;133;Saudi Arabia;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1323;133;Saudi Arabia;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1153;133;Saudi Arabia;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1664;134;Senegal;2000;33000.0;count;29000.0;39000.0;33000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1494;134;Senegal;2005;42000.0;count;38000.0;48000.0;42000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1324;134;Senegal;2010;44000.0;count;39000.0;50000.0;44000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1154;134;Senegal;2018;42000.0;count;37000.0;47000.0;42000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1665;135;Serbia;2000;1000.0;count;660.0;1400.0;1000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1495;135;Serbia;2005;1100.0;count;750.0;1500.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1325;135;Serbia;2010;1800.0;count;1300.0;2200.0;1800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1155;135;Serbia;2018;3000.0;count;2200.0;3800.0;3000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1666;136;Sierra Leone;2000;40000.0;count;31000.0;50000.0;40000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1496;136;Sierra Leone;2005;51000.0;count;42000.0;61000.0;51000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1326;136;Sierra Leone;2010;58000.0;count;48000.0;70000.0;58000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1156;136;Sierra Leone;2018;70000.0;count;56000.0;86000.0;70000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1667;137;Singapore;2000;2900.0;count;2600.0;3300.0;2900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1497;137;Singapore;2005;4100.0;count;3500.0;4700.0;4100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1327;137;Singapore;2010;6500.0;count;5700.0;7300.0;6500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1157;137;Singapore;2018;7900.0;count;7200.0;8700.0;7900.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1668;138;Slovakia;2000;200.0;count;100.0;200.0;200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1498;138;Slovakia;2005;500.0;count;200.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1328;138;Slovakia;2010;500.0;count;500.0;730.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1158;138;Slovakia;2018;1200.0;count;910.0;1900.0;1200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1669;139;Slovenia;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1499;139;Slovenia;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1329;139;Slovenia;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1159;139;Slovenia;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1670;140;Somalia;2000;16000.0;count;14000.0;20000.0;16000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1500;140;Somalia;2005;20000.0;count;18000.0;23000.0;20000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1330;140;Somalia;2010;17000.0;count;15000.0;20000.0;17000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1160;140;Somalia;2018;11000.0;count;8400.0;15000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1671;141;South Africa;2000;3300000.0;count;2900000.0;3700000.0;3300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1501;141;South Africa;2005;5000000.0;count;4400000.0;5400000.0;5000000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1331;141;South Africa;2010;6100000.0;count;5500000.0;6600000.0;6100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1161;141;South Africa;2018;7700000.0;count;7100000.0;8300000.0;7700000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1657;127;South Korea;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1487;127;South Korea;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1317;127;South Korea;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1147;127;South Korea;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1672;142;South Sudan;2000;90000.0;count;56000.0;120000.0;90000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1502;142;South Sudan;2005;120000.0;count;89000.0;150000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1332;142;South Sudan;2010;140000.0;count;110000.0;170000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1162;142;South Sudan;2018;190000.0;count;140000.0;240000.0;190000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1673;143;Spain;2000;92000.0;count;78000.0;110000.0;92000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1503;143;Spain;2005;120000.0;count;100000.0;130000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1333;143;Spain;2010;140000.0;count;120000.0;150000.0;140000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1163;143;Spain;2018;150000.0;count;130000.0;170000.0;150000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1674;144;Sri Lanka;2000;2200.0;count;1900.0;2400.0;2200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1504;144;Sri Lanka;2005;3600.0;count;3100.0;4100.0;3600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1334;144;Sri Lanka;2010;4000.0;count;3400.0;4700.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1164;144;Sri Lanka;2018;3500.0;count;3100.0;4000.0;3500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1675;145;Sudan;2000;15000.0;count;7500.0;29000.0;15000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1505;145;Sudan;2005;29000.0;count;20000.0;40000.0;29000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1335;145;Sudan;2010;43000.0;count;36000.0;51000.0;43000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1165;145;Sudan;2018;59000.0;count;26000.0;110000.0;59000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1676;146;Suriname;2000;3100.0;count;2300.0;4400.0;3100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1506;146;Suriname;2005;4000.0;count;3000.0;5600.0;4000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1336;146;Suriname;2010;4600.0;count;3300.0;6200.0;4600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1166;146;Suriname;2018;5600.0;count;3700.0;8100.0;5600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1677;147;Sweden;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1507;147;Sweden;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1337;147;Sweden;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1167;147;Sweden;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1678;148;Switzerland;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1508;148;Switzerland;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1338;148;Switzerland;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1168;148;Switzerland;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1679;149;Syria;2000;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1509;149;Syria;2005;500.0;count;500.0;500.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1339;149;Syria;2010;570.0;count;510.0;630.0;570.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1169;149;Syria;2018;660.0;count;590.0;720.0;660.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1680;150;Tajikistan;2000;1400.0;count;780.0;2700.0;1400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1510;150;Tajikistan;2005;5200.0;count;3700.0;6900.0;5200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1340;150;Tajikistan;2010;9200.0;count;7500.0;11000.0;9200.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1170;150;Tajikistan;2018;13000.0;count;11000.0;16000.0;13000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1692;162;Tanzania;2000;1100000.0;count;1000000.0;1200000.0;1100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1522;162;Tanzania;2005;1200000.0;count;1000000.0;1300000.0;1200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1352;162;Tanzania;2010;1300000.0;count;1100000.0;1400000.0;1300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1182;162;Tanzania;2018;1600000.0;count;1400000.0;1700000.0;1600000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1681;151;Thailand;2000;740000.0;count;610000.0;890000.0;740000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1511;151;Thailand;2005;630000.0;count;510000.0;780000.0;630000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1341;151;Thailand;2010;580000.0;count;490000.0;690000.0;580000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1171;151;Thailand;2018;480000.0;count;420000.0;550000.0;480000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1682;152;Timor-Leste;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1512;152;Timor-Leste;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1342;152;Timor-Leste;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1172;152;Timor-Leste;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1683;153;Togo;2000;94000.0;count;87000.0;100000.0;94000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1513;153;Togo;2005;100000.0;count;94000.0;110000.0;100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1343;153;Togo;2010;100000.0;count;96000.0;110000.0;100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1173;153;Togo;2018;110000.0;count;100000.0;120000.0;110000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1684;154;Trinidad and Tobago;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1514;154;Trinidad and Tobago;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1344;154;Trinidad and Tobago;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1174;154;Trinidad and Tobago;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1685;155;Tunisia;2000;500.0;count;200.0;710.0;500.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1515;155;Tunisia;2005;640.0;count;500.0;1100.0;640.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1345;155;Tunisia;2010;1400.0;count;980.0;2200.0;1400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1175;155;Tunisia;2018;2800.0;count;1700.0;4400.0;2800.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1686;156;Turkey;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1516;156;Turkey;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1346;156;Turkey;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1176;156;Turkey;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1687;157;Turkmenistan;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1517;157;Turkmenistan;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1347;157;Turkmenistan;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1177;157;Turkmenistan;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1688;158;Uganda;2000;1000000.0;count;930000.0;1100000.0;1000000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1518;158;Uganda;2005;1100000.0;count;1000000.0;1100000.0;1100000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1348;158;Uganda;2010;1200000.0;count;1100000.0;1300000.0;1200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1178;158;Uganda;2018;1400000.0;count;1300000.0;1500000.0;1400000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1689;159;Ukraine;2000;170000.0;count;150000.0;180000.0;170000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1519;159;Ukraine;2005;230000.0;count;220000.0;240000.0;230000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1349;159;Ukraine;2010;230000.0;count;220000.0;250000.0;230000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1179;159;Ukraine;2018;240000.0;count;220000.0;260000.0;240000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1690;160;United Arab Emirates;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1520;160;United Arab Emirates;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1350;160;United Arab Emirates;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1180;160;United Arab Emirates;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1691;161;United Kingdom;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1521;161;United Kingdom;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1351;161;United Kingdom;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1181;161;United Kingdom;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1693;163;United States;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1523;163;United States;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1353;163;United States;2010;990000.0;count;880000.0;1100000.0;990000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1183;163;United States;2018;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1694;164;Uruguay;2000;6000.0;count;4200.0;12000.0;6000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1524;164;Uruguay;2005;7600.0;count;6200.0;10000.0;7600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1354;164;Uruguay;2010;9600.0;count;8000.0;11000.0;9600.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1184;164;Uruguay;2018;14000.0;count;9900.0;19000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1695;165;Uzbekistan;2000;14000.0;count;13000.0;16000.0;14000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1525;165;Uzbekistan;2005;21000.0;count;19000.0;23000.0;21000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1355;165;Uzbekistan;2010;30000.0;count;27000.0;32000.0;30000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1185;165;Uzbekistan;2018;52000.0;count;48000.0;56000.0;52000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1696;166;Venezuela;2000;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1526;166;Venezuela;2005;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1356;166;Venezuela;2010;;count;;;;good;no_of_people_living_with_hiv_by_country_clean.csv
+1186;166;Venezuela;2018;120000.0;count;100000.0;130000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1697;167;Viet Nam;2000;120000.0;count;110000.0;130000.0;120000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1527;167;Viet Nam;2005;180000.0;count;160000.0;210000.0;180000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1357;167;Viet Nam;2010;220000.0;count;180000.0;250000.0;220000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1187;167;Viet Nam;2018;230000.0;count;200000.0;260000.0;230000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1698;168;Yemen;2000;1100.0;count;680.0;2500.0;1100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1528;168;Yemen;2005;2400.0;count;1500.0;4000.0;2400.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1358;168;Yemen;2010;5100.0;count;3500.0;7400.0;5100.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1188;168;Yemen;2018;11000.0;count;6500.0;18000.0;11000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1699;169;Zambia;2000;890000.0;count;800000.0;1000000.0;890000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1529;169;Zambia;2005;920000.0;count;820000.0;1000000.0;920000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1359;169;Zambia;2010;1000000.0;count;900000.0;1100000.0;1000000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1189;169;Zambia;2018;1200000.0;count;1100000.0;1400000.0;1200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1700;170;Zimbabwe;2000;1600000.0;count;1400000.0;1900000.0;1600000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1530;170;Zimbabwe;2005;1400000.0;count;1200000.0;1600000.0;1400000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1360;170;Zimbabwe;2010;1200000.0;count;1100000.0;1400000.0;1200000.0;good;no_of_people_living_with_hiv_by_country_clean.csv
+1190;170;Zimbabwe;2018;1300000.0;count;1100000.0;1500000.0;1300000.0;good;no_of_people_living_with_hiv_by_country_clean.csv

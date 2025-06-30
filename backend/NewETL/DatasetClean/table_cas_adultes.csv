@@ -1,0 +1,681 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+2721;1;Afghanistan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2551;1;Afghanistan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2381;1;Afghanistan;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2211;1;Afghanistan;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2722;2;Albania;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2552;2;Albania;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2382;2;Albania;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2212;2;Albania;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2723;3;Algeria;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2553;3;Algeria;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2383;3;Algeria;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2213;3;Algeria;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2724;4;Angola;2000;1.0;count;0.8;1.2;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2554;4;Angola;2005;1.4;count;1.2;1.7;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2384;4;Angola;2010;1.7;count;1.5;2.0;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2214;4;Angola;2018;2.0;count;1.7;2.3;2.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2725;5;Argentina;2000;0.3;count;0.3;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2555;5;Argentina;2005;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2385;5;Argentina;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2215;5;Argentina;2018;0.4;count;0.4;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2726;6;Armenia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2556;6;Armenia;2005;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2386;6;Armenia;2010;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2216;6;Armenia;2018;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2727;7;Australia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2557;7;Australia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2387;7;Australia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2217;7;Australia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2728;8;Austria;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2558;8;Austria;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2388;8;Austria;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2218;8;Austria;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2729;9;Azerbaijan;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2559;9;Azerbaijan;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2389;9;Azerbaijan;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2219;9;Azerbaijan;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2730;10;Bahamas;2000;2.6;count;2.2;3.1;2.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2560;10;Bahamas;2005;2.3;count;1.9;2.7;2.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2390;10;Bahamas;2010;2.2;count;1.9;2.5;2.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2220;10;Bahamas;2018;1.8;count;1.5;1.9;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2731;11;Bahrain;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2561;11;Bahrain;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2391;11;Bahrain;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2221;11;Bahrain;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2732;12;Bangladesh;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2562;12;Bangladesh;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2392;12;Bangladesh;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2222;12;Bangladesh;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2733;13;Barbados;2000;0.7;count;0.6;0.8;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2563;13;Barbados;2005;1.0;count;0.9;1.1;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2393;13;Barbados;2010;1.3;count;1.2;1.4;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2223;13;Barbados;2018;1.5;count;1.3;1.7;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2734;14;Belarus;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2564;14;Belarus;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2394;14;Belarus;2010;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2224;14;Belarus;2018;0.5;count;0.4;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2735;15;Belgium;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2565;15;Belgium;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2395;15;Belgium;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2225;15;Belgium;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2736;16;Belize;2000;1.3;count;1.2;1.4;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2566;16;Belize;2005;1.7;count;1.5;1.9;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2396;16;Belize;2010;1.9;count;1.7;2.1;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2226;16;Belize;2018;1.9;count;1.7;2.1;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2737;17;Benin;2000;1.3;count;0.9;2.2;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2567;17;Benin;2005;1.3;count;0.8;2.1;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2397;17;Benin;2010;1.1;count;0.7;1.8;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2227;17;Benin;2018;1.0;count;0.7;1.7;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2738;18;Bhutan;2000;0.2;count;0.1;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2568;18;Bhutan;2005;0.3;count;0.1;0.6;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2398;18;Bhutan;2010;0.3;count;0.1;0.6;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2228;18;Bhutan;2018;0.3;count;0.1;0.5;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2739;19;Bolivia;2000;0.5;count;0.5;0.5;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2569;19;Bolivia;2005;0.5;count;0.5;0.5;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2399;19;Bolivia;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2229;19;Bolivia;2018;0.3;count;0.3;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2740;20;Bosnia and Herzegovina;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2570;20;Bosnia and Herzegovina;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2400;20;Bosnia and Herzegovina;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2230;20;Bosnia and Herzegovina;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2741;21;Botswana;2000;26.3;count;25.1;27.2;26.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2571;21;Botswana;2005;24.6;count;22.1;25.9;24.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2401;21;Botswana;2010;23.2;count;20.9;24.8;23.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2231;21;Botswana;2018;20.3;count;17.3;21.8;20.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2742;22;Brazil;2000;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2572;22;Brazil;2005;0.5;count;0.3;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2402;22;Brazil;2010;0.5;count;0.4;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2232;22;Brazil;2018;0.5;count;0.4;0.7;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2743;23;Brunei Darussalam;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2573;23;Brunei Darussalam;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2403;23;Brunei Darussalam;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2233;23;Brunei Darussalam;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2744;24;Bulgaria;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2574;24;Bulgaria;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2404;24;Bulgaria;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2234;24;Bulgaria;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2745;25;Burkina Faso;2000;2.1;count;1.7;2.6;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2575;25;Burkina Faso;2005;1.5;count;1.1;1.8;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2405;25;Burkina Faso;2010;1.2;count;0.9;1.4;1.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2235;25;Burkina Faso;2018;0.7;count;0.6;0.9;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2746;26;Burundi;2000;3.3;count;2.8;4.0;3.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2576;26;Burundi;2005;2.2;count;1.7;2.6;2.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2406;26;Burundi;2010;1.6;count;1.3;1.8;1.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2236;26;Burundi;2018;1.0;count;0.9;1.2;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2747;27;Cabo Verde;2000;0.7;count;0.5;1.1;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2577;27;Cabo Verde;2005;0.6;count;0.5;1.0;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2407;27;Cabo Verde;2010;0.6;count;0.5;0.8;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2237;27;Cabo Verde;2018;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2748;28;Cambodia;2000;1.2;count;1.1;1.4;1.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2578;28;Cambodia;2005;1.0;count;0.8;1.2;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2408;28;Cambodia;2010;0.8;count;0.7;1.0;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2238;28;Cambodia;2018;0.5;count;0.5;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2749;29;Cameroon;2000;4.6;count;4.3;4.9;4.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2579;29;Cameroon;2005;4.8;count;4.3;5.1;4.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2409;29;Cameroon;2010;4.5;count;3.9;4.9;4.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2239;29;Cameroon;2018;3.6;count;3.1;4.0;3.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2750;30;Canada;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2580;30;Canada;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2410;30;Canada;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2240;30;Canada;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2751;31;Central African Republic;2000;7.2;count;6.1;8.6;7.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2581;31;Central African Republic;2005;5.9;count;4.9;7.0;5.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2411;31;Central African Republic;2010;5.0;count;4.2;5.9;5.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2241;31;Central African Republic;2018;3.6;count;2.9;4.5;3.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2752;32;Chad;2000;1.8;count;1.3;2.3;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2582;32;Chad;2005;1.5;count;1.2;2.0;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2412;32;Chad;2010;1.5;count;1.2;1.8;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2242;32;Chad;2018;1.3;count;1.0;1.7;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2753;33;Chile;2000;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2583;33;Chile;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2413;33;Chile;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2243;33;Chile;2018;0.5;count;0.5;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2754;34;China;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2584;34;China;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2414;34;China;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2244;34;China;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2755;35;Colombia;2000;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2585;35;Colombia;2005;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2415;35;Colombia;2010;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2245;35;Colombia;2018;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2756;36;Comoros;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2586;36;Comoros;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2416;36;Comoros;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2246;36;Comoros;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2757;37;Congo;2000;4.2;count;3.4;5.1;4.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2587;37;Congo;2005;3.5;count;2.8;4.1;3.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2417;37;Congo;2010;3.1;count;2.6;3.7;3.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2247;37;Congo;2018;2.6;count;2.0;3.5;2.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2758;38;Costa Rica;2000;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2588;38;Costa Rica;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2418;38;Costa Rica;2010;0.3;count;0.3;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2248;38;Costa Rica;2018;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2760;40;Croatia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2590;40;Croatia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2420;40;Croatia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2250;40;Croatia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2761;41;Cuba;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2591;41;Cuba;2005;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2421;41;Cuba;2010;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2251;41;Cuba;2018;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2762;42;Cyprus;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2592;42;Cyprus;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2422;42;Cyprus;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2252;42;Cyprus;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2763;43;Czechia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2593;43;Czechia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2423;43;Czechia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2253;43;Czechia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2759;39;Côte d'Ivoire;2000;5.6;count;4.4;7.2;5.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2589;39;Côte d'Ivoire;2005;4.4;count;3.4;5.6;4.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2419;39;Côte d'Ivoire;2010;3.6;count;2.8;4.6;3.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2249;39;Côte d'Ivoire;2018;2.6;count;2.0;3.3;2.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2765;45;DR Congo;2000;1.8;count;1.5;2.1;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2595;45;DR Congo;2005;1.4;count;1.2;1.7;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2425;45;DR Congo;2010;1.1;count;0.9;1.3;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2255;45;DR Congo;2018;0.8;count;0.6;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2766;46;Denmark;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2596;46;Denmark;2005;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2426;46;Denmark;2010;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2256;46;Denmark;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2767;47;Djibouti;2000;2.2;count;1.7;2.9;2.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2597;47;Djibouti;2005;2.1;count;1.8;2.5;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2427;47;Djibouti;2010;1.6;count;1.2;1.9;1.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2257;47;Djibouti;2018;1.2;count;1.0;1.5;1.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2768;48;Dominican Republic;2000;1.7;count;1.3;2.4;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2598;48;Dominican Republic;2005;1.4;count;1.1;1.9;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2428;48;Dominican Republic;2010;1.2;count;0.9;1.5;1.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2258;48;Dominican Republic;2018;0.9;count;0.7;1.3;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2769;49;Ecuador;2000;0.4;count;0.2;0.6;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2599;49;Ecuador;2005;0.4;count;0.2;0.6;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2429;49;Ecuador;2010;0.4;count;0.2;0.6;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2259;49;Ecuador;2018;0.4;count;0.2;0.6;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2770;50;Egypt;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2600;50;Egypt;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2430;50;Egypt;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2260;50;Egypt;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2771;51;El Salvador;2000;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2601;51;El Salvador;2005;0.7;count;0.5;0.9;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2431;51;El Salvador;2010;0.7;count;0.6;0.9;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2261;51;El Salvador;2018;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2772;52;Equatorial Guinea;2000;3.5;count;2.5;4.9;3.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2602;52;Equatorial Guinea;2005;4.6;count;3.6;5.9;4.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2432;52;Equatorial Guinea;2010;5.7;count;4.8;6.7;5.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2262;52;Equatorial Guinea;2018;7.1;count;5.6;9.2;7.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2773;53;Eritrea;2000;1.5;count;1.1;1.9;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2603;53;Eritrea;2005;1.1;count;0.8;1.5;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2433;53;Eritrea;2010;0.9;count;0.7;1.2;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2263;53;Eritrea;2018;0.7;count;0.5;0.9;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2774;54;Estonia;2000;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2604;54;Estonia;2005;0.7;count;0.6;0.7;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2434;54;Estonia;2010;0.7;count;0.6;0.8;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2264;54;Estonia;2018;0.9;count;0.7;0.9;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2775;55;Eswatini;2000;24.6;count;23.0;26.5;24.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2605;55;Eswatini;2005;26.3;count;23.9;27.8;26.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2435;55;Eswatini;2010;27.4;count;25.2;29.3;27.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2265;55;Eswatini;2018;27.3;count;25.1;29.0;27.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2776;56;Ethiopia;2000;2.4;count;1.7;3.2;2.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2606;56;Ethiopia;2005;1.7;count;1.2;2.2;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2436;56;Ethiopia;2010;1.3;count;1.0;1.8;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2266;56;Ethiopia;2018;1.0;count;0.7;1.4;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2777;57;Fiji;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2607;57;Fiji;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2437;57;Fiji;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2267;57;Fiji;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2778;58;Finland;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2608;58;Finland;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2438;58;Finland;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2268;58;Finland;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2779;59;France;2000;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2609;59;France;2005;0.3;count;0.3;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2439;59;France;2010;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2269;59;France;2018;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2780;60;Gabon;2000;4.1;count;3.0;5.6;4.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2610;60;Gabon;2005;4.2;count;3.3;5.3;4.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2440;60;Gabon;2010;4.1;count;3.4;5.0;4.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2270;60;Gabon;2018;3.8;count;2.9;4.9;3.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2781;61;Gambia;2000;1.4;count;1.1;1.9;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2611;61;Gambia;2005;1.8;count;1.4;2.3;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2441;61;Gambia;2010;1.9;count;1.5;2.4;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2271;61;Gambia;2018;1.9;count;1.6;2.5;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2782;62;Georgia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2612;62;Georgia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2442;62;Georgia;2010;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2272;62;Georgia;2018;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2783;63;Germany;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2613;63;Germany;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2443;63;Germany;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2273;63;Germany;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2784;64;Ghana;2000;2.4;count;2.1;2.7;2.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2614;64;Ghana;2005;2.1;count;1.8;2.4;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2444;64;Ghana;2010;1.9;count;1.6;2.2;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2274;64;Ghana;2018;1.7;count;1.4;2.0;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2785;65;Greece;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2615;65;Greece;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2445;65;Greece;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2275;65;Greece;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2786;66;Guatemala;2000;0.7;count;0.7;0.7;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2616;66;Guatemala;2005;0.7;count;0.6;0.7;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2446;66;Guatemala;2010;0.6;count;0.5;0.6;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2276;66;Guatemala;2018;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2787;67;Guinea;2000;1.7;count;1.4;2.0;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2617;67;Guinea;2005;1.7;count;1.4;1.9;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2447;67;Guinea;2010;1.6;count;1.3;1.9;1.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2277;67;Guinea;2018;1.4;count;1.2;1.7;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2788;68;Guinea-Bissau;2000;3.2;count;2.8;3.5;3.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2618;68;Guinea-Bissau;2005;3.8;count;3.4;4.2;3.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2448;68;Guinea-Bissau;2010;3.8;count;3.4;4.3;3.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2278;68;Guinea-Bissau;2018;3.5;count;3.0;4.0;3.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2789;69;Guyana;2000;0.6;count;0.4;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2619;69;Guyana;2005;1.3;count;1.1;1.4;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2449;69;Guyana;2010;1.5;count;1.4;1.7;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2279;69;Guyana;2018;1.4;count;1.3;1.6;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2790;70;Haiti;2000;3.0;count;2.7;3.4;3.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2620;70;Haiti;2005;2.4;count;2.2;2.6;2.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2450;70;Haiti;2010;2.1;count;2.0;2.3;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2280;70;Haiti;2018;2.0;count;1.8;2.3;2.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2791;71;Honduras;2000;1.1;count;0.9;1.4;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2621;71;Honduras;2005;0.7;count;0.5;0.9;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2451;71;Honduras;2010;0.5;count;0.4;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2281;71;Honduras;2018;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2792;72;Hungary;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2622;72;Hungary;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2452;72;Hungary;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2282;72;Hungary;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2793;73;Iceland;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2623;73;Iceland;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2453;73;Iceland;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2283;73;Iceland;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2794;74;India;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2624;74;India;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2454;74;India;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2284;74;India;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2795;75;Indonesia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2625;75;Indonesia;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2455;75;Indonesia;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2285;75;Indonesia;2018;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2796;76;Iran;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2626;76;Iran;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2456;76;Iran;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2286;76;Iran;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2797;77;Ireland;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2627;77;Ireland;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2457;77;Ireland;2010;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2287;77;Ireland;2018;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2798;78;Israel;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2628;78;Israel;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2458;78;Israel;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2288;78;Israel;2018;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2799;79;Italy;2000;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2629;79;Italy;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2459;79;Italy;2010;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2289;79;Italy;2018;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2800;80;Jamaica;2000;2.8;count;2.5;3.0;2.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2630;80;Jamaica;2005;2.3;count;2.0;2.6;2.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2460;80;Jamaica;2010;2.1;count;1.8;2.3;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2290;80;Jamaica;2018;1.9;count;1.6;2.1;1.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2801;81;Japan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2631;81;Japan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2461;81;Japan;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2291;81;Japan;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2802;82;Jordan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2632;82;Jordan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2462;82;Jordan;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2292;82;Jordan;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2803;83;Kazakhstan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2633;83;Kazakhstan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2463;83;Kazakhstan;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2293;83;Kazakhstan;2018;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2804;84;Kenya;2000;9.8;count;8.4;11.7;9.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2634;84;Kenya;2005;7.3;count;6.2;8.7;7.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2464;84;Kenya;2010;6.0;count;5.1;7.1;6.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2294;84;Kenya;2018;4.7;count;4.0;5.7;4.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2805;85;Kuwait;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2635;85;Kuwait;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2465;85;Kuwait;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2295;85;Kuwait;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2806;86;Kyrgyzstan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2636;86;Kyrgyzstan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2466;86;Kyrgyzstan;2010;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2296;86;Kyrgyzstan;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2807;87;Laos;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2637;87;Laos;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2467;87;Laos;2010;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2297;87;Laos;2018;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2808;88;Latvia;2000;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2638;88;Latvia;2005;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2468;88;Latvia;2010;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2298;88;Latvia;2018;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2809;89;Lebanon;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2639;89;Lebanon;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2469;89;Lebanon;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2299;89;Lebanon;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2810;90;Lesotho;2000;23.2;count;21.5;24.8;23.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2640;90;Lesotho;2005;23.8;count;22.9;24.8;23.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2470;90;Lesotho;2010;24.1;count;22.7;24.9;24.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2300;90;Lesotho;2018;23.6;count;21.2;24.7;23.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2811;91;Liberia;2000;2.6;count;2.4;2.7;2.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2641;91;Liberia;2005;2.1;count;1.9;2.4;2.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2471;91;Liberia;2010;1.7;count;1.5;2.0;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2301;91;Liberia;2018;1.3;count;1.1;1.4;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2812;92;Libya;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2642;92;Libya;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2472;92;Libya;2010;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2302;92;Libya;2018;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2813;93;Lithuania;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2643;93;Lithuania;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2473;93;Lithuania;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2303;93;Lithuania;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2814;94;Luxembourg;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2644;94;Luxembourg;2005;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2474;94;Luxembourg;2010;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2304;94;Luxembourg;2018;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2815;95;Madagascar;2000;0.2;count;0.1;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2645;95;Madagascar;2005;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2475;95;Madagascar;2010;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2305;95;Madagascar;2018;0.3;count;0.2;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2816;96;Malawi;2000;14.4;count;13.0;15.4;14.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2646;96;Malawi;2005;12.2;count;10.5;13.4;12.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2476;96;Malawi;2010;10.6;count;9.3;11.7;10.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2306;96;Malawi;2018;9.2;count;8.0;10.0;9.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2817;97;Malaysia;2000;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2647;97;Malaysia;2005;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2477;97;Malaysia;2010;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2307;97;Malaysia;2018;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2818;98;Maldives;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2648;98;Maldives;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2478;98;Maldives;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2308;98;Maldives;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2819;99;Mali;2000;1.8;count;1.5;2.2;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2649;99;Mali;2005;1.5;count;1.2;1.8;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2479;99;Mali;2010;1.4;count;1.1;1.6;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2309;99;Mali;2018;1.4;count;1.1;1.7;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2820;100;Malta;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2650;100;Malta;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2480;100;Malta;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2310;100;Malta;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2821;101;Mauritania;2000;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2651;101;Mauritania;2005;0.5;count;0.4;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2481;101;Mauritania;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2311;101;Mauritania;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2822;102;Mauritius;2000;0.4;count;0.2;0.8;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2652;102;Mauritius;2005;1.0;count;0.8;1.4;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2482;102;Mauritius;2010;1.3;count;1.2;1.4;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2312;102;Mauritius;2018;1.3;count;1.1;1.5;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2823;103;Mexico;2000;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2653;103;Mexico;2005;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2483;103;Mexico;2010;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2313;103;Mexico;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2848;128;Moldova;2000;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2678;128;Moldova;2005;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2508;128;Moldova;2010;0.5;count;0.4;0.7;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2338;128;Moldova;2018;0.6;count;0.5;0.8;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2824;104;Mongolia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2654;104;Mongolia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2484;104;Mongolia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2314;104;Mongolia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2825;105;Montenegro;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2655;105;Montenegro;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2485;105;Montenegro;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2315;105;Montenegro;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2826;106;Morocco;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2656;106;Morocco;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2486;106;Morocco;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2316;106;Morocco;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2827;107;Mozambique;2000;8.8;count;7.0;11.0;8.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2657;107;Mozambique;2005;11.1;count;8.9;13.8;11.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2487;107;Mozambique;2010;12.0;count;9.5;14.9;12.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2317;107;Mozambique;2018;12.6;count;10.0;15.7;12.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2828;108;Myanmar;2000;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2658;108;Myanmar;2005;0.8;count;0.6;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2488;108;Myanmar;2010;0.8;count;0.6;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2318;108;Myanmar;2018;0.8;count;0.6;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2829;109;Namibia;2000;14.0;count;13.1;15.1;14.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2659;109;Namibia;2005;13.8;count;12.6;14.7;13.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2489;109;Namibia;2010;13.4;count;12.2;14.2;13.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2319;109;Namibia;2018;11.8;count;10.6;12.7;11.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2830;110;Nepal;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2660;110;Nepal;2005;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2490;110;Nepal;2010;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2320;110;Nepal;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2831;111;Netherlands;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2661;111;Netherlands;2005;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2491;111;Netherlands;2010;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2321;111;Netherlands;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2832;112;New Zealand;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2662;112;New Zealand;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2492;112;New Zealand;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2322;112;New Zealand;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2833;113;Nicaragua;2000;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2663;113;Nicaragua;2005;0.2;count;0.1;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2493;113;Nicaragua;2010;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2323;113;Nicaragua;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2834;114;Niger;2000;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2664;114;Niger;2005;0.6;count;0.5;0.6;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2494;114;Niger;2010;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2324;114;Niger;2018;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2835;115;Nigeria;2000;1.8;count;1.3;2.4;1.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2665;115;Nigeria;2005;1.7;count;1.2;2.2;1.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2495;115;Nigeria;2010;1.6;count;1.2;2.1;1.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2325;115;Nigeria;2018;1.5;count;1.1;2.1;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2764;44;North Korea;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2594;44;North Korea;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2424;44;North Korea;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2254;44;North Korea;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2849;129;North Macedonia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2679;129;North Macedonia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2509;129;North Macedonia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2339;129;North Macedonia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2836;116;Norway;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2666;116;Norway;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2496;116;Norway;2010;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2326;116;Norway;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2837;117;Oman;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2667;117;Oman;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2497;117;Oman;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2327;117;Oman;2018;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2838;118;Pakistan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2668;118;Pakistan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2498;118;Pakistan;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2328;118;Pakistan;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2839;119;Panama;2000;0.6;count;0.6;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2669;119;Panama;2005;0.8;count;0.7;0.8;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2499;119;Panama;2010;0.8;count;0.8;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2329;119;Panama;2018;0.9;count;0.8;1.0;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2840;120;Papua New Guinea;2000;0.6;count;0.5;0.8;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2670;120;Papua New Guinea;2005;1.0;count;0.9;1.1;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2500;120;Papua New Guinea;2010;0.8;count;0.7;1.0;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2330;120;Papua New Guinea;2018;0.8;count;0.7;0.9;0.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2841;121;Paraguay;2000;0.5;count;0.3;0.7;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2671;121;Paraguay;2005;0.6;count;0.4;0.8;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2501;121;Paraguay;2010;0.5;count;0.4;0.8;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2331;121;Paraguay;2018;0.5;count;0.3;0.7;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2842;122;Peru;2000;0.5;count;0.4;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2672;122;Peru;2005;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2502;122;Peru;2010;0.3;count;0.3;0.5;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2332;122;Peru;2018;0.3;count;0.2;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2843;123;Philippines;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2673;123;Philippines;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2503;123;Philippines;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2333;123;Philippines;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2844;124;Poland;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2674;124;Poland;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2504;124;Poland;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2334;124;Poland;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2845;125;Portugal;2000;0.5;count;0.5;0.6;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2675;125;Portugal;2005;0.6;count;0.5;0.6;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2505;125;Portugal;2010;0.6;count;0.5;0.6;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2335;125;Portugal;2018;0.5;count;0.4;0.5;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2846;126;Qatar;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2676;126;Qatar;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2506;126;Qatar;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2336;126;Qatar;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2850;130;Romania;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2680;130;Romania;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2510;130;Romania;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2340;130;Romania;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2851;131;Russia;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2681;131;Russia;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2511;131;Russia;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2341;131;Russia;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2852;132;Rwanda;2000;5.2;count;4.6;5.9;5.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2682;132;Rwanda;2005;3.8;count;3.2;4.3;3.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2512;132;Rwanda;2010;3.3;count;2.8;3.7;3.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2342;132;Rwanda;2018;2.5;count;2.1;2.8;2.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2853;133;Saudi Arabia;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2683;133;Saudi Arabia;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2513;133;Saudi Arabia;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2343;133;Saudi Arabia;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2854;134;Senegal;2000;0.6;count;0.5;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2684;134;Senegal;2005;0.7;count;0.6;0.7;0.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2514;134;Senegal;2010;0.6;count;0.5;0.6;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2344;134;Senegal;2018;0.4;count;0.4;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2855;135;Serbia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2685;135;Serbia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2515;135;Serbia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2345;135;Serbia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2856;136;Sierra Leone;2000;1.5;count;1.2;1.9;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2686;136;Sierra Leone;2005;1.5;count;1.3;1.9;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2516;136;Sierra Leone;2010;1.5;count;1.2;1.9;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2346;136;Sierra Leone;2018;1.5;count;1.2;1.9;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2857;137;Singapore;2000;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2687;137;Singapore;2005;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2517;137;Singapore;2010;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2347;137;Singapore;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2858;138;Slovakia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2688;138;Slovakia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2518;138;Slovakia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2348;138;Slovakia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2859;139;Slovenia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2689;139;Slovenia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2519;139;Slovenia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2349;139;Slovenia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2860;140;Somalia;2000;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2690;140;Somalia;2005;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2520;140;Somalia;2010;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2350;140;Somalia;2018;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2861;141;South Africa;2000;12.6;count;10.7;13.9;12.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2691;141;South Africa;2005;16.8;count;15.0;18.4;16.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2521;141;South Africa;2010;18.9;count;16.8;20.7;18.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2351;141;South Africa;2018;20.4;count;17.4;22.5;20.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2847;127;South Korea;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2677;127;South Korea;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2507;127;South Korea;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2337;127;South Korea;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2862;142;South Sudan;2000;2.5;count;1.5;3.2;2.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2692;142;South Sudan;2005;2.5;count;2.0;3.2;2.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2522;142;South Sudan;2010;2.4;count;1.9;3.0;2.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2352;142;South Sudan;2018;2.5;count;1.9;3.1;2.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2863;143;Spain;2000;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2693;143;Spain;2005;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2523;143;Spain;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2353;143;Spain;2018;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2864;144;Sri Lanka;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2694;144;Sri Lanka;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2524;144;Sri Lanka;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2354;144;Sri Lanka;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2865;145;Sudan;2000;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2695;145;Sudan;2005;0.2;count;0.1;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2525;145;Sudan;2010;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2355;145;Sudan;2018;0.2;count;0.1;0.5;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2866;146;Suriname;2000;1.1;count;0.8;1.6;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2696;146;Suriname;2005;1.3;count;1.0;1.9;1.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2526;146;Suriname;2010;1.4;count;1.0;1.9;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2356;146;Suriname;2018;1.4;count;0.9;2.0;1.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2867;147;Sweden;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2697;147;Sweden;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2527;147;Sweden;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2357;147;Sweden;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2868;148;Switzerland;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2698;148;Switzerland;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2528;148;Switzerland;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2358;148;Switzerland;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2869;149;Syria;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2699;149;Syria;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2529;149;Syria;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2359;149;Syria;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2870;150;Tajikistan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2700;150;Tajikistan;2005;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2530;150;Tajikistan;2010;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2360;150;Tajikistan;2018;0.2;count;0.2;0.3;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2882;162;Tanzania;2000;6.3;count;5.5;6.9;6.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2712;162;Tanzania;2005;5.4;count;4.6;6.1;5.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2542;162;Tanzania;2010;5.0;count;4.3;5.7;5.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2372;162;Tanzania;2018;4.6;count;4.0;5.1;4.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2871;151;Thailand;2000;2.0;count;1.6;2.5;2.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2701;151;Thailand;2005;1.6;count;1.3;2.1;1.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2531;151;Thailand;2010;1.5;count;1.2;1.8;1.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2361;151;Thailand;2018;1.1;count;0.9;1.3;1.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2872;152;Timor-Leste;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2702;152;Timor-Leste;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2532;152;Timor-Leste;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2362;152;Timor-Leste;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2873;153;Togo;2000;3.6;count;3.2;3.8;3.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2703;153;Togo;2005;3.3;count;3.0;3.6;3.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2533;153;Togo;2010;2.9;count;2.6;3.1;2.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2363;153;Togo;2018;2.3;count;2.1;2.5;2.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2874;154;Trinidad and Tobago;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2704;154;Trinidad and Tobago;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2534;154;Trinidad and Tobago;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2364;154;Trinidad and Tobago;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2875;155;Tunisia;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2705;155;Tunisia;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2535;155;Tunisia;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2365;155;Tunisia;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2876;156;Turkey;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2706;156;Turkey;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2536;156;Turkey;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2366;156;Turkey;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2877;157;Turkmenistan;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2707;157;Turkmenistan;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2537;157;Turkmenistan;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2367;157;Turkmenistan;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2878;158;Uganda;2000;8.3;count;7.7;8.9;8.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2708;158;Uganda;2005;7.3;count;6.9;7.6;7.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2538;158;Uganda;2010;6.8;count;6.5;7.1;6.8;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2368;158;Uganda;2018;5.7;count;5.4;6.1;5.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2879;159;Ukraine;2000;0.6;count;0.6;0.7;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2709;159;Ukraine;2005;0.9;count;0.8;0.9;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2539;159;Ukraine;2010;0.9;count;0.9;0.9;0.9;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2369;159;Ukraine;2018;1.0;count;0.9;1.0;1.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2880;160;United Arab Emirates;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2710;160;United Arab Emirates;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2540;160;United Arab Emirates;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2370;160;United Arab Emirates;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2881;161;United Kingdom;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2711;161;United Kingdom;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2541;161;United Kingdom;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2371;161;United Kingdom;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2883;163;United States;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2713;163;United States;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2543;163;United States;2010;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2373;163;United States;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2884;164;Uruguay;2000;0.3;count;0.2;0.6;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2714;164;Uruguay;2005;0.4;count;0.3;0.5;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2544;164;Uruguay;2010;0.5;count;0.4;0.5;0.5;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2374;164;Uruguay;2018;0.6;count;0.4;0.8;0.6;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2885;165;Uzbekistan;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2715;165;Uzbekistan;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2545;165;Uzbekistan;2010;0.1;count;0.1;0.2;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2375;165;Uzbekistan;2018;0.2;count;0.2;0.2;0.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2886;166;Venezuela;2000;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2716;166;Venezuela;2005;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2546;166;Venezuela;2010;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2376;166;Venezuela;2018;;count;;;;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2887;167;Viet Nam;2000;0.3;count;0.2;0.3;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2717;167;Viet Nam;2005;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2547;167;Viet Nam;2010;0.4;count;0.3;0.4;0.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2377;167;Viet Nam;2018;0.3;count;0.3;0.4;0.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2888;168;Yemen;2000;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2718;168;Yemen;2005;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2548;168;Yemen;2010;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2378;168;Yemen;2018;0.1;count;0.1;0.1;0.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2889;169;Zambia;2000;16.2;count;14.3;18.2;16.2;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2719;169;Zambia;2005;14.1;count;12.5;15.8;14.1;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2549;169;Zambia;2010;13.0;count;11.5;14.5;13.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2379;169;Zambia;2018;11.3;count;10.0;12.6;11.3;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2890;170;Zimbabwe;2000;25.0;count;21.2;28.3;25.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2720;170;Zimbabwe;2005;19.0;count;16.2;21.6;19.0;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2550;170;Zimbabwe;2010;15.4;count;13.1;17.5;15.4;good;no_of_cases_adults_15_to_49_by_country_clean.csv
+2380;170;Zimbabwe;2018;12.7;count;10.8;14.5;12.7;good;no_of_cases_adults_15_to_49_by_country_clean.csv

@@ -1,0 +1,511 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+2893;1;Afghanistan;2023;17.0;estimated_children_art_coverage_percent;10.0;26.0;17.0;good;art_pediatric_coverage_by_country_clean.csv
+2892;1;Afghanistan;2023;500.0;estimated_children_needing_art;500.0;530.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+2891;1;Afghanistan;2023;60.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2896;2;Albania;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2895;2;Albania;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2894;2;Albania;2023;20.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2899;3;Algeria;2023;95.0;estimated_children_art_coverage_percent;95.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+2898;3;Algeria;2023;500.0;estimated_children_needing_art;500.0;520.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+2897;3;Algeria;2023;770.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2902;4;Angola;2023;13.0;estimated_children_art_coverage_percent;10.0;16.0;13.0;good;art_pediatric_coverage_by_country_clean.csv
+2901;4;Angola;2023;38000.0;estimated_children_needing_art;30000.0;47000.0;38000.0;good;art_pediatric_coverage_by_country_clean.csv
+2900;4;Angola;2023;4800.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2905;5;Argentina;2023;92.0;estimated_children_art_coverage_percent;84.0;95.0;92.0;good;art_pediatric_coverage_by_country_clean.csv
+2904;5;Argentina;2023;1800.0;estimated_children_needing_art;1600.0;2100.0;1800.0;good;art_pediatric_coverage_by_country_clean.csv
+2903;5;Argentina;2023;1700.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2908;6;Armenia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2907;6;Armenia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2906;6;Armenia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2911;7;Australia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2910;7;Australia;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+2909;7;Australia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2914;8;Austria;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2913;8;Austria;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2912;8;Austria;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2917;9;Azerbaijan;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2916;9;Azerbaijan;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2915;9;Azerbaijan;2023;110.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2920;10;Bahamas;2023;21.0;estimated_children_art_coverage_percent;18.0;26.0;21.0;good;art_pediatric_coverage_by_country_clean.csv
+2919;10;Bahamas;2023;200.0;estimated_children_needing_art;200.0;500.0;200.0;good;art_pediatric_coverage_by_country_clean.csv
+2918;10;Bahamas;2023;40.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2923;11;Bahrain;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2922;11;Bahrain;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2921;11;Bahrain;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2926;12;Bangladesh;2023;33.0;estimated_children_art_coverage_percent;28.0;38.0;33.0;good;art_pediatric_coverage_by_country_clean.csv
+2925;12;Bangladesh;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+2924;12;Bangladesh;2023;130.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2929;13;Barbados;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2928;13;Barbados;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2927;13;Barbados;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2932;14;Belarus;2023;88.0;estimated_children_art_coverage_percent;64.0;95.0;88.0;good;art_pediatric_coverage_by_country_clean.csv
+2931;14;Belarus;2023;500.0;estimated_children_needing_art;200.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+2930;14;Belarus;2023;220.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2935;15;Belgium;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2934;15;Belgium;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2933;15;Belgium;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2938;16;Belize;2023;34.0;estimated_children_art_coverage_percent;31.0;38.0;34.0;good;art_pediatric_coverage_by_country_clean.csv
+2937;16;Belize;2023;200.0;estimated_children_needing_art;200.0;200.0;200.0;good;art_pediatric_coverage_by_country_clean.csv
+2936;16;Belize;2023;60.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2941;17;Benin;2023;44.0;estimated_children_art_coverage_percent;27.0;77.0;44.0;good;art_pediatric_coverage_by_country_clean.csv
+2940;17;Benin;2023;4600.0;estimated_children_needing_art;2800.0;8000.0;4600.0;good;art_pediatric_coverage_by_country_clean.csv
+2939;17;Benin;2023;2000.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2944;18;Bhutan;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2943;18;Bhutan;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2942;18;Bhutan;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2947;19;Bolivia;2023;40.0;estimated_children_art_coverage_percent;37.0;43.0;40.0;good;art_pediatric_coverage_by_country_clean.csv
+2946;19;Bolivia;2023;620.0;estimated_children_needing_art;560.0;670.0;620.0;good;art_pediatric_coverage_by_country_clean.csv
+2945;19;Bolivia;2023;250.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2950;20;Bosnia and Herzegovina;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2949;20;Bosnia and Herzegovina;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2948;20;Bosnia and Herzegovina;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2953;21;Botswana;2023;38.0;estimated_children_art_coverage_percent;28.0;46.0;38.0;good;art_pediatric_coverage_by_country_clean.csv
+2952;21;Botswana;2023;14000.0;estimated_children_needing_art;10000.0;17000.0;14000.0;good;art_pediatric_coverage_by_country_clean.csv
+2951;21;Botswana;2023;5400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2956;22;Brazil;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2955;22;Brazil;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2954;22;Brazil;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2959;23;Brunei Darussalam;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2958;23;Brunei Darussalam;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2957;23;Brunei Darussalam;2023;0.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2962;24;Bulgaria;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2961;24;Bulgaria;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2960;24;Bulgaria;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2965;25;Burkina Faso;2023;21.0;estimated_children_art_coverage_percent;15.0;29.0;21.0;good;art_pediatric_coverage_by_country_clean.csv
+2964;25;Burkina Faso;2023;9100.0;estimated_children_needing_art;6300.0;12000.0;9100.0;good;art_pediatric_coverage_by_country_clean.csv
+2963;25;Burkina Faso;2023;1900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2968;26;Burundi;2023;30.0;estimated_children_art_coverage_percent;22.0;38.0;30.0;good;art_pediatric_coverage_by_country_clean.csv
+2967;26;Burundi;2023;11000.0;estimated_children_needing_art;8000.0;14000.0;11000.0;good;art_pediatric_coverage_by_country_clean.csv
+2966;26;Burundi;2023;3400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2971;27;Cabo Verde;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2970;27;Cabo Verde;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2969;27;Cabo Verde;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2974;28;Cambodia;2023;92.0;estimated_children_art_coverage_percent;78.0;95.0;92.0;good;art_pediatric_coverage_by_country_clean.csv
+2973;28;Cambodia;2023;3300.0;estimated_children_needing_art;2800.0;3900.0;3300.0;good;art_pediatric_coverage_by_country_clean.csv
+2972;28;Cambodia;2023;3000.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2977;29;Cameroon;2023;24.0;estimated_children_art_coverage_percent;18.0;28.0;24.0;good;art_pediatric_coverage_by_country_clean.csv
+2976;29;Cameroon;2023;43000.0;estimated_children_needing_art;33000.0;51000.0;43000.0;good;art_pediatric_coverage_by_country_clean.csv
+2975;29;Cameroon;2023;10300.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2980;30;Canada;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2979;30;Canada;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2978;30;Canada;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2983;31;Central African Republic;2023;23.0;estimated_children_art_coverage_percent;18.0;29.0;23.0;good;art_pediatric_coverage_by_country_clean.csv
+2982;31;Central African Republic;2023;11000.0;estimated_children_needing_art;8200.0;14000.0;11000.0;good;art_pediatric_coverage_by_country_clean.csv
+2981;31;Central African Republic;2023;2500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2986;32;Chad;2023;16.0;estimated_children_art_coverage_percent;11.0;22.0;16.0;good;art_pediatric_coverage_by_country_clean.csv
+2985;32;Chad;2023;16000.0;estimated_children_needing_art;11000.0;21000.0;16000.0;good;art_pediatric_coverage_by_country_clean.csv
+2984;32;Chad;2023;2600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2989;33;Chile;2023;56.0;estimated_children_art_coverage_percent;50.0;61.0;56.0;good;art_pediatric_coverage_by_country_clean.csv
+2988;33;Chile;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+2987;33;Chile;2023;140.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2992;34;China;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2991;34;China;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2990;34;China;2023;6200.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2995;35;Colombia;2023;41.0;estimated_children_art_coverage_percent;32.0;49.0;41.0;good;art_pediatric_coverage_by_country_clean.csv
+2994;35;Colombia;2023;3600.0;estimated_children_needing_art;2900.0;4300.0;3600.0;good;art_pediatric_coverage_by_country_clean.csv
+2993;35;Colombia;2023;1500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2998;36;Comoros;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+2997;36;Comoros;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+2996;36;Comoros;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3001;37;Congo;2023;25.0;estimated_children_art_coverage_percent;19.0;33.0;25.0;good;art_pediatric_coverage_by_country_clean.csv
+3000;37;Congo;2023;7700.0;estimated_children_needing_art;5800.0;10000.0;7700.0;good;art_pediatric_coverage_by_country_clean.csv
+2999;37;Congo;2023;2000.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3004;38;Costa Rica;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3003;38;Costa Rica;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3002;38;Costa Rica;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3010;40;Croatia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3009;40;Croatia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3008;40;Croatia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3013;41;Cuba;2023;34.0;estimated_children_art_coverage_percent;23.0;46.0;34.0;good;art_pediatric_coverage_by_country_clean.csv
+3012;41;Cuba;2023;100.0;estimated_children_needing_art;100.0;200.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3011;41;Cuba;2023;30.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3016;42;Cyprus;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3015;42;Cyprus;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3014;42;Cyprus;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3019;43;Czechia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3018;43;Czechia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3017;43;Czechia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3007;39;Côte d'Ivoire;2023;40.0;estimated_children_art_coverage_percent;29.0;54.0;40.0;good;art_pediatric_coverage_by_country_clean.csv
+3006;39;Côte d'Ivoire;2023;31000.0;estimated_children_needing_art;23000.0;41000.0;31000.0;good;art_pediatric_coverage_by_country_clean.csv
+3005;39;Côte d'Ivoire;2023;12300.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3025;45;DR Congo;2023;25.0;estimated_children_art_coverage_percent;20.0;30.0;25.0;good;art_pediatric_coverage_by_country_clean.csv
+3024;45;DR Congo;2023;64000.0;estimated_children_needing_art;50000.0;76000.0;64000.0;good;art_pediatric_coverage_by_country_clean.csv
+3023;45;DR Congo;2023;16000.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3028;46;Denmark;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3027;46;Denmark;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3026;46;Denmark;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3031;47;Djibouti;2023;10.0;estimated_children_art_coverage_percent;8.0;13.0;10.0;good;art_pediatric_coverage_by_country_clean.csv
+3030;47;Djibouti;2023;810.0;estimated_children_needing_art;640.0;1000.0;810.0;good;art_pediatric_coverage_by_country_clean.csv
+3029;47;Djibouti;2023;80.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3034;48;Dominican Republic;2023;55.0;estimated_children_art_coverage_percent;39.0;74.0;55.0;good;art_pediatric_coverage_by_country_clean.csv
+3033;48;Dominican Republic;2023;1400.0;estimated_children_needing_art;1000.0;1900.0;1400.0;good;art_pediatric_coverage_by_country_clean.csv
+3032;48;Dominican Republic;2023;780.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3037;49;Ecuador;2023;82.0;estimated_children_art_coverage_percent;54.0;95.0;82.0;good;art_pediatric_coverage_by_country_clean.csv
+3036;49;Ecuador;2023;660.0;estimated_children_needing_art;500.0;1200.0;660.0;good;art_pediatric_coverage_by_country_clean.csv
+3035;49;Ecuador;2023;540.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3040;50;Egypt;2023;39.0;estimated_children_art_coverage_percent;36.0;42.0;39.0;good;art_pediatric_coverage_by_country_clean.csv
+3039;50;Egypt;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3038;50;Egypt;2023;180.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3043;51;El Salvador;2023;24.0;estimated_children_art_coverage_percent;19.0;30.0;24.0;good;art_pediatric_coverage_by_country_clean.csv
+3042;51;El Salvador;2023;610.0;estimated_children_needing_art;500.0;740.0;610.0;good;art_pediatric_coverage_by_country_clean.csv
+3041;51;El Salvador;2023;150.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3046;52;Equatorial Guinea;2023;14.0;estimated_children_art_coverage_percent;10.0;19.0;14.0;good;art_pediatric_coverage_by_country_clean.csv
+3045;52;Equatorial Guinea;2023;5300.0;estimated_children_needing_art;3800.0;7100.0;5300.0;good;art_pediatric_coverage_by_country_clean.csv
+3044;52;Equatorial Guinea;2023;770.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3049;53;Eritrea;2023;37.0;estimated_children_art_coverage_percent;26.0;55.0;37.0;good;art_pediatric_coverage_by_country_clean.csv
+3048;53;Eritrea;2023;1300.0;estimated_children_needing_art;930.0;2000.0;1300.0;good;art_pediatric_coverage_by_country_clean.csv
+3047;53;Eritrea;2023;500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3052;54;Estonia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3051;54;Estonia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3050;54;Estonia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3055;55;Eswatini;2023;76.0;estimated_children_art_coverage_percent;63.0;88.0;76.0;good;art_pediatric_coverage_by_country_clean.csv
+3054;55;Eswatini;2023;11000.0;estimated_children_needing_art;9400.0;13000.0;11000.0;good;art_pediatric_coverage_by_country_clean.csv
+3053;55;Eswatini;2023;8600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3058;56;Ethiopia;2023;59.0;estimated_children_art_coverage_percent;38.0;90.0;59.0;good;art_pediatric_coverage_by_country_clean.csv
+3057;56;Ethiopia;2023;36000.0;estimated_children_needing_art;23000.0;55000.0;36000.0;good;art_pediatric_coverage_by_country_clean.csv
+3056;56;Ethiopia;2023;21500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3061;57;Fiji;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3060;57;Fiji;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3059;57;Fiji;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3064;58;Finland;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3063;58;Finland;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3062;58;Finland;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3067;59;France;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3066;59;France;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3065;59;France;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3070;60;Gabon;2023;57.0;estimated_children_art_coverage_percent;41.0;78.0;57.0;good;art_pediatric_coverage_by_country_clean.csv
+3069;60;Gabon;2023;3200.0;estimated_children_needing_art;2300.0;4400.0;3200.0;good;art_pediatric_coverage_by_country_clean.csv
+3068;60;Gabon;2023;1900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3073;61;Gambia;2023;30.0;estimated_children_art_coverage_percent;23.0;39.0;30.0;good;art_pediatric_coverage_by_country_clean.csv
+3072;61;Gambia;2023;1900.0;estimated_children_needing_art;1400.0;2500.0;1900.0;good;art_pediatric_coverage_by_country_clean.csv
+3071;61;Gambia;2023;550.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3076;62;Georgia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3075;62;Georgia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3074;62;Georgia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3079;63;Germany;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3078;63;Germany;2023;200.0;estimated_children_needing_art;100.0;200.0;200.0;good;art_pediatric_coverage_by_country_clean.csv
+3077;63;Germany;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3082;64;Ghana;2023;20.0;estimated_children_art_coverage_percent;15.0;25.0;20.0;good;art_pediatric_coverage_by_country_clean.csv
+3081;64;Ghana;2023;30000.0;estimated_children_needing_art;23000.0;37000.0;30000.0;good;art_pediatric_coverage_by_country_clean.csv
+3080;64;Ghana;2023;5900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3085;65;Greece;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3084;65;Greece;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3083;65;Greece;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3088;66;Guatemala;2023;36.0;estimated_children_art_coverage_percent;33.0;39.0;36.0;good;art_pediatric_coverage_by_country_clean.csv
+3087;66;Guatemala;2023;2000.0;estimated_children_needing_art;1800.0;2200.0;2000.0;good;art_pediatric_coverage_by_country_clean.csv
+3086;66;Guatemala;2023;730.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3091;67;Guinea;2023;20.0;estimated_children_art_coverage_percent;15.0;25.0;20.0;good;art_pediatric_coverage_by_country_clean.csv
+3090;67;Guinea;2023;10000.0;estimated_children_needing_art;7900.0;13000.0;10000.0;good;art_pediatric_coverage_by_country_clean.csv
+3089;67;Guinea;2023;2100.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3094;68;Guinea-Bissau;2023;6.0;estimated_children_art_coverage_percent;5.0;7.0;6.0;good;art_pediatric_coverage_by_country_clean.csv
+3093;68;Guinea-Bissau;2023;5700.0;estimated_children_needing_art;4700.0;6600.0;5700.0;good;art_pediatric_coverage_by_country_clean.csv
+3092;68;Guinea-Bissau;2023;350.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3097;69;Guyana;2023;38.0;estimated_children_art_coverage_percent;31.0;44.0;38.0;good;art_pediatric_coverage_by_country_clean.csv
+3096;69;Guyana;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3095;69;Guyana;2023;110.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3100;70;Haiti;2023;40.0;estimated_children_art_coverage_percent;32.0;45.0;40.0;good;art_pediatric_coverage_by_country_clean.csv
+3099;70;Haiti;2023;8700.0;estimated_children_needing_art;7000.0;9900.0;8700.0;good;art_pediatric_coverage_by_country_clean.csv
+3098;70;Haiti;2023;3400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3103;71;Honduras;2023;41.0;estimated_children_art_coverage_percent;33.0;49.0;41.0;good;art_pediatric_coverage_by_country_clean.csv
+3102;71;Honduras;2023;890.0;estimated_children_needing_art;710.0;1100.0;890.0;good;art_pediatric_coverage_by_country_clean.csv
+3101;71;Honduras;2023;360.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3106;72;Hungary;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3105;72;Hungary;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3104;72;Hungary;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3109;73;Iceland;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3108;73;Iceland;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3107;73;Iceland;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3112;74;India;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3111;74;India;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3110;74;India;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3115;75;Indonesia;2023;22.0;estimated_children_art_coverage_percent;19.0;26.0;22.0;good;art_pediatric_coverage_by_country_clean.csv
+3114;75;Indonesia;2023;18000.0;estimated_children_needing_art;15000.0;20000.0;18000.0;good;art_pediatric_coverage_by_country_clean.csv
+3113;75;Indonesia;2023;3900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3118;76;Iran;2023;58.0;estimated_children_art_coverage_percent;39.0;95.0;58.0;good;art_pediatric_coverage_by_country_clean.csv
+3117;76;Iran;2023;880.0;estimated_children_needing_art;580.0;1600.0;880.0;good;art_pediatric_coverage_by_country_clean.csv
+3116;76;Iran;2023;510.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3121;77;Ireland;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3120;77;Ireland;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3119;77;Ireland;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3124;78;Israel;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3123;78;Israel;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3122;78;Israel;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3127;79;Italy;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3126;79;Italy;2023;500.0;estimated_children_needing_art;200.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3125;79;Italy;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3130;80;Jamaica;2023;51.0;estimated_children_art_coverage_percent;46.0;57.0;51.0;good;art_pediatric_coverage_by_country_clean.csv
+3129;80;Jamaica;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3128;80;Jamaica;2023;140.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3133;81;Japan;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3132;81;Japan;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3131;81;Japan;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3136;82;Jordan;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3135;82;Jordan;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3134;82;Jordan;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3139;83;Kazakhstan;2023;95.0;estimated_children_art_coverage_percent;95.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3138;83;Kazakhstan;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3137;83;Kazakhstan;2023;430.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3142;84;Kenya;2023;61.0;estimated_children_art_coverage_percent;47.0;78.0;61.0;good;art_pediatric_coverage_by_country_clean.csv
+3141;84;Kenya;2023;120000.0;estimated_children_needing_art;95000.0;160000.0;120000.0;good;art_pediatric_coverage_by_country_clean.csv
+3140;84;Kenya;2023;74300.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3145;85;Kuwait;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3144;85;Kuwait;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3143;85;Kuwait;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3148;86;Kyrgyzstan;2023;95.0;estimated_children_art_coverage_percent;95.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3147;86;Kyrgyzstan;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3146;86;Kyrgyzstan;2023;450.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3151;87;Laos;2023;40.0;estimated_children_art_coverage_percent;35.0;46.0;40.0;good;art_pediatric_coverage_by_country_clean.csv
+3150;87;Laos;2023;700.0;estimated_children_needing_art;620.0;820.0;700.0;good;art_pediatric_coverage_by_country_clean.csv
+3149;87;Laos;2023;280.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3154;88;Latvia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3153;88;Latvia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3152;88;Latvia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3157;89;Lebanon;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3156;89;Lebanon;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3155;89;Lebanon;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3160;90;Lesotho;2023;70.0;estimated_children_art_coverage_percent;55.0;81.0;70.0;good;art_pediatric_coverage_by_country_clean.csv
+3159;90;Lesotho;2023;12000.0;estimated_children_needing_art;9500.0;14000.0;12000.0;good;art_pediatric_coverage_by_country_clean.csv
+3158;90;Lesotho;2023;8500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3163;91;Liberia;2023;18.0;estimated_children_art_coverage_percent;14.0;21.0;18.0;good;art_pediatric_coverage_by_country_clean.csv
+3162;91;Liberia;2023;3700.0;estimated_children_needing_art;3000.0;4400.0;3700.0;good;art_pediatric_coverage_by_country_clean.csv
+3161;91;Liberia;2023;680.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3166;92;Libya;2023;33.0;estimated_children_art_coverage_percent;30.0;35.0;33.0;good;art_pediatric_coverage_by_country_clean.csv
+3165;92;Libya;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3164;92;Libya;2023;80.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3169;93;Lithuania;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3168;93;Lithuania;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3167;93;Lithuania;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3172;94;Luxembourg;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3171;94;Luxembourg;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3170;94;Luxembourg;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3175;95;Madagascar;2023;5.0;estimated_children_art_coverage_percent;4.0;6.0;5.0;good;art_pediatric_coverage_by_country_clean.csv
+3174;95;Madagascar;2023;1900.0;estimated_children_needing_art;1600.0;2500.0;1900.0;good;art_pediatric_coverage_by_country_clean.csv
+3173;95;Madagascar;2023;90.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3178;96;Malawi;2023;61.0;estimated_children_art_coverage_percent;47.0;73.0;61.0;good;art_pediatric_coverage_by_country_clean.csv
+3177;96;Malawi;2023;74000.0;estimated_children_needing_art;57000.0;89000.0;74000.0;good;art_pediatric_coverage_by_country_clean.csv
+3176;96;Malawi;2023;45100.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3181;97;Malaysia;2023;94.0;estimated_children_art_coverage_percent;77.0;95.0;94.0;good;art_pediatric_coverage_by_country_clean.csv
+3180;97;Malaysia;2023;500.0;estimated_children_needing_art;500.0;520.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3179;97;Malaysia;2023;400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3184;98;Maldives;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3183;98;Maldives;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3182;98;Maldives;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3187;99;Mali;2023;18.0;estimated_children_art_coverage_percent;14.0;23.0;18.0;good;art_pediatric_coverage_by_country_clean.csv
+3186;99;Mali;2023;19000.0;estimated_children_needing_art;15000.0;24000.0;19000.0;good;art_pediatric_coverage_by_country_clean.csv
+3185;99;Mali;2023;3400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3190;100;Malta;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3189;100;Malta;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3188;100;Malta;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3193;101;Mauritania;2023;54.0;estimated_children_art_coverage_percent;46.0;66.0;54.0;good;art_pediatric_coverage_by_country_clean.csv
+3192;101;Mauritania;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3191;101;Mauritania;2023;180.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3196;102;Mauritius;2023;45.0;estimated_children_art_coverage_percent;40.0;50.0;45.0;good;art_pediatric_coverage_by_country_clean.csv
+3195;102;Mauritius;2023;100.0;estimated_children_needing_art;100.0;200.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3194;102;Mauritius;2023;40.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3199;103;Mexico;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3198;103;Mexico;2023;2300.0;estimated_children_needing_art;1900.0;2600.0;2300.0;good;art_pediatric_coverage_by_country_clean.csv
+3197;103;Mexico;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3274;128;Moldova;2023;40.0;estimated_children_art_coverage_percent;30.0;55.0;40.0;good;art_pediatric_coverage_by_country_clean.csv
+3273;128;Moldova;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3272;128;Moldova;2023;130.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3202;104;Mongolia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3201;104;Mongolia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3200;104;Mongolia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3205;105;Montenegro;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3204;105;Montenegro;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3203;105;Montenegro;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3208;106;Morocco;2023;95.0;estimated_children_art_coverage_percent;88.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3207;106;Morocco;2023;560.0;estimated_children_needing_art;500.0;770.0;560.0;good;art_pediatric_coverage_by_country_clean.csv
+3206;106;Morocco;2023;670.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3211;107;Mozambique;2023;60.0;estimated_children_art_coverage_percent;45.0;81.0;60.0;good;art_pediatric_coverage_by_country_clean.csv
+3210;107;Mozambique;2023;140000.0;estimated_children_needing_art;110000.0;190000.0;140000.0;good;art_pediatric_coverage_by_country_clean.csv
+3209;107;Mozambique;2023;86900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3214;108;Myanmar;2023;80.0;estimated_children_art_coverage_percent;69.0;93.0;80.0;good;art_pediatric_coverage_by_country_clean.csv
+3213;108;Myanmar;2023;9800.0;estimated_children_needing_art;8400.0;11000.0;9800.0;good;art_pediatric_coverage_by_country_clean.csv
+3212;108;Myanmar;2023;7900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3217;109;Namibia;2023;78.0;estimated_children_art_coverage_percent;61.0;89.0;78.0;good;art_pediatric_coverage_by_country_clean.csv
+3216;109;Namibia;2023;11000.0;estimated_children_needing_art;8700.0;13000.0;11000.0;good;art_pediatric_coverage_by_country_clean.csv
+3215;109;Namibia;2023;8600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3220;110;Nepal;2023;91.0;estimated_children_art_coverage_percent;80.0;95.0;91.0;good;art_pediatric_coverage_by_country_clean.csv
+3219;110;Nepal;2023;1400.0;estimated_children_needing_art;1200.0;1600.0;1400.0;good;art_pediatric_coverage_by_country_clean.csv
+3218;110;Nepal;2023;1300.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3223;111;Netherlands;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3222;111;Netherlands;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3221;111;Netherlands;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3226;112;New Zealand;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3225;112;New Zealand;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3224;112;New Zealand;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3229;113;Nicaragua;2023;55.0;estimated_children_art_coverage_percent;41.0;76.0;55.0;good;art_pediatric_coverage_by_country_clean.csv
+3228;113;Nicaragua;2023;500.0;estimated_children_needing_art;200.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3227;113;Nicaragua;2023;120.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3232;114;Niger;2023;52.0;estimated_children_art_coverage_percent;42.0;66.0;52.0;good;art_pediatric_coverage_by_country_clean.csv
+3231;114;Niger;2023;2500.0;estimated_children_needing_art;2100.0;3200.0;2500.0;good;art_pediatric_coverage_by_country_clean.csv
+3230;114;Niger;2023;1300.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3235;115;Nigeria;2023;35.0;estimated_children_art_coverage_percent;22.0;53.0;35.0;good;art_pediatric_coverage_by_country_clean.csv
+3234;115;Nigeria;2023;140000.0;estimated_children_needing_art;91000.0;220000.0;140000.0;good;art_pediatric_coverage_by_country_clean.csv
+3233;115;Nigeria;2023;50200.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3022;44;North Korea;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3021;44;North Korea;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3020;44;North Korea;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3277;129;North Macedonia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3276;129;North Macedonia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3275;129;North Macedonia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3238;116;Norway;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3237;116;Norway;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3236;116;Norway;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3241;117;Oman;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3240;117;Oman;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3239;117;Oman;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3244;118;Pakistan;2023;11.0;estimated_children_art_coverage_percent;10.0;13.0;11.0;good;art_pediatric_coverage_by_country_clean.csv
+3243;118;Pakistan;2023;5500.0;estimated_children_needing_art;4700.0;6300.0;5500.0;good;art_pediatric_coverage_by_country_clean.csv
+3242;118;Pakistan;2023;610.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3247;119;Panama;2023;76.0;estimated_children_art_coverage_percent;69.0;84.0;76.0;good;art_pediatric_coverage_by_country_clean.csv
+3246;119;Panama;2023;500.0;estimated_children_needing_art;500.0;500.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3245;119;Panama;2023;200.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3250;120;Papua New Guinea;2023;49.0;estimated_children_art_coverage_percent;39.0;58.0;49.0;good;art_pediatric_coverage_by_country_clean.csv
+3249;120;Papua New Guinea;2023;2900.0;estimated_children_needing_art;2300.0;3500.0;2900.0;good;art_pediatric_coverage_by_country_clean.csv
+3248;120;Papua New Guinea;2023;1400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3253;121;Paraguay;2023;43.0;estimated_children_art_coverage_percent;28.0;68.0;43.0;good;art_pediatric_coverage_by_country_clean.csv
+3252;121;Paraguay;2023;500.0;estimated_children_needing_art;500.0;640.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3251;121;Paraguay;2023;170.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3256;122;Peru;2023;48.0;estimated_children_art_coverage_percent;34.0;70.0;48.0;good;art_pediatric_coverage_by_country_clean.csv
+3255;122;Peru;2023;1600.0;estimated_children_needing_art;1100.0;2300.0;1600.0;good;art_pediatric_coverage_by_country_clean.csv
+3254;122;Peru;2023;740.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3259;123;Philippines;2023;20.0;estimated_children_art_coverage_percent;16.0;25.0;20.0;good;art_pediatric_coverage_by_country_clean.csv
+3258;123;Philippines;2023;500.0;estimated_children_needing_art;500.0;510.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3257;123;Philippines;2023;90.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3262;124;Poland;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3261;124;Poland;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3260;124;Poland;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3265;125;Portugal;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3264;125;Portugal;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3263;125;Portugal;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3268;126;Qatar;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3267;126;Qatar;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3266;126;Qatar;2023;0.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3280;130;Romania;2023;95.0;estimated_children_art_coverage_percent;95.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3279;130;Romania;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3278;130;Romania;2023;170.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3283;131;Russia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3282;131;Russia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3281;131;Russia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3286;132;Rwanda;2023;63.0;estimated_children_art_coverage_percent;47.0;80.0;63.0;good;art_pediatric_coverage_by_country_clean.csv
+3285;132;Rwanda;2023;12000.0;estimated_children_needing_art;8900.0;15000.0;12000.0;good;art_pediatric_coverage_by_country_clean.csv
+3284;132;Rwanda;2023;7500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3289;133;Saudi Arabia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3288;133;Saudi Arabia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3287;133;Saudi Arabia;2023;120.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3292;134;Senegal;2023;31.0;estimated_children_art_coverage_percent;26.0;35.0;31.0;good;art_pediatric_coverage_by_country_clean.csv
+3291;134;Senegal;2023;4500.0;estimated_children_needing_art;3700.0;5100.0;4500.0;good;art_pediatric_coverage_by_country_clean.csv
+3290;134;Senegal;2023;1400.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3295;135;Serbia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3294;135;Serbia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3293;135;Serbia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3298;136;Sierra Leone;2023;17.0;estimated_children_art_coverage_percent;13.0;22.0;17.0;good;art_pediatric_coverage_by_country_clean.csv
+3297;136;Sierra Leone;2023;6600.0;estimated_children_needing_art;5100.0;8500.0;6600.0;good;art_pediatric_coverage_by_country_clean.csv
+3296;136;Sierra Leone;2023;1100.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3301;137;Singapore;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3300;137;Singapore;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3299;137;Singapore;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3304;138;Slovakia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3303;138;Slovakia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3302;138;Slovakia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3307;139;Slovenia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3306;139;Slovenia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3305;139;Slovenia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3310;140;Somalia;2023;14.0;estimated_children_art_coverage_percent;12.0;19.0;14.0;good;art_pediatric_coverage_by_country_clean.csv
+3309;140;Somalia;2023;1300.0;estimated_children_needing_art;1100.0;1800.0;1300.0;good;art_pediatric_coverage_by_country_clean.csv
+3308;140;Somalia;2023;190.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3313;141;South Africa;2023;63.0;estimated_children_art_coverage_percent;49.0;87.0;63.0;good;art_pediatric_coverage_by_country_clean.csv
+3312;141;South Africa;2023;260000.0;estimated_children_needing_art;200000.0;360000.0;260000.0;good;art_pediatric_coverage_by_country_clean.csv
+3311;141;South Africa;2023;163000.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3271;127;South Korea;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3270;127;South Korea;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3269;127;South Korea;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3316;142;South Sudan;2023;9.0;estimated_children_art_coverage_percent;7.0;12.0;9.0;good;art_pediatric_coverage_by_country_clean.csv
+3315;142;South Sudan;2023;16000.0;estimated_children_needing_art;12000.0;21000.0;16000.0;good;art_pediatric_coverage_by_country_clean.csv
+3314;142;South Sudan;2023;1500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3319;143;Spain;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3318;143;Spain;2023;100.0;estimated_children_needing_art;100.0;200.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3317;143;Spain;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3322;144;Sri Lanka;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3321;144;Sri Lanka;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3320;144;Sri Lanka;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3325;145;Sudan;2023;15.0;estimated_children_art_coverage_percent;8.0;23.0;15.0;good;art_pediatric_coverage_by_country_clean.csv
+3324;145;Sudan;2023;4200.0;estimated_children_needing_art;2400.0;6800.0;4200.0;good;art_pediatric_coverage_by_country_clean.csv
+3323;145;Sudan;2023;620.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3328;146;Suriname;2023;72.0;estimated_children_art_coverage_percent;45.0;95.0;72.0;good;art_pediatric_coverage_by_country_clean.csv
+3327;146;Suriname;2023;100.0;estimated_children_needing_art;100.0;100.0;100.0;good;art_pediatric_coverage_by_country_clean.csv
+3326;146;Suriname;2023;50.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3331;147;Sweden;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3330;147;Sweden;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3329;147;Sweden;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3334;148;Switzerland;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3333;148;Switzerland;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3332;148;Switzerland;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3337;149;Syria;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3336;149;Syria;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3335;149;Syria;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3340;150;Tajikistan;2023;95.0;estimated_children_art_coverage_percent;95.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3339;150;Tajikistan;2023;540.0;estimated_children_needing_art;500.0;630.0;540.0;good;art_pediatric_coverage_by_country_clean.csv
+3338;150;Tajikistan;2023;750.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3376;162;Tanzania;2023;65.0;estimated_children_art_coverage_percent;51.0;80.0;65.0;good;art_pediatric_coverage_by_country_clean.csv
+3375;162;Tanzania;2023;92000.0;estimated_children_needing_art;72000.0;110000.0;92000.0;good;art_pediatric_coverage_by_country_clean.csv
+3374;162;Tanzania;2023;59600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3343;151;Thailand;2023;83.0;estimated_children_art_coverage_percent;68.0;95.0;83.0;good;art_pediatric_coverage_by_country_clean.csv
+3342;151;Thailand;2023;3200.0;estimated_children_needing_art;2600.0;3800.0;3200.0;good;art_pediatric_coverage_by_country_clean.csv
+3341;151;Thailand;2023;2600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3346;152;Timor-Leste;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3345;152;Timor-Leste;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3344;152;Timor-Leste;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3349;153;Togo;2023;34.0;estimated_children_art_coverage_percent;29.0;38.0;34.0;good;art_pediatric_coverage_by_country_clean.csv
+3348;153;Togo;2023;12000.0;estimated_children_needing_art;11000.0;14000.0;12000.0;good;art_pediatric_coverage_by_country_clean.csv
+3347;153;Togo;2023;4200.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3352;154;Trinidad and Tobago;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3351;154;Trinidad and Tobago;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3350;154;Trinidad and Tobago;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3355;155;Tunisia;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3354;155;Tunisia;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3353;155;Tunisia;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3358;156;Turkey;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3357;156;Turkey;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3356;156;Turkey;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3361;157;Turkmenistan;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3360;157;Turkmenistan;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3359;157;Turkmenistan;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3364;158;Uganda;2023;66.0;estimated_children_art_coverage_percent;57.0;74.0;66.0;good;art_pediatric_coverage_by_country_clean.csv
+3363;158;Uganda;2023;100000.0;estimated_children_needing_art;88000.0;110000.0;100000.0;good;art_pediatric_coverage_by_country_clean.csv
+3362;158;Uganda;2023;67100.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3367;159;Ukraine;2023;95.0;estimated_children_art_coverage_percent;84.0;95.0;95.0;good;art_pediatric_coverage_by_country_clean.csv
+3366;159;Ukraine;2023;850.0;estimated_children_needing_art;750.0;980.0;850.0;good;art_pediatric_coverage_by_country_clean.csv
+3365;159;Ukraine;2023;820.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3370;160;United Arab Emirates;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3369;160;United Arab Emirates;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3368;160;United Arab Emirates;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3373;161;United Kingdom;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3372;161;United Kingdom;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3371;161;United Kingdom;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3379;163;United States;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3378;163;United States;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3377;163;United States;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3382;164;Uruguay;2023;64.0;estimated_children_art_coverage_percent;47.0;90.0;64.0;good;art_pediatric_coverage_by_country_clean.csv
+3381;164;Uruguay;2023;200.0;estimated_children_needing_art;100.0;200.0;200.0;good;art_pediatric_coverage_by_country_clean.csv
+3380;164;Uruguay;2023;80.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3385;165;Uzbekistan;2023;93.0;estimated_children_art_coverage_percent;87.0;95.0;93.0;good;art_pediatric_coverage_by_country_clean.csv
+3384;165;Uzbekistan;2023;6000.0;estimated_children_needing_art;5600.0;6300.0;6000.0;good;art_pediatric_coverage_by_country_clean.csv
+3383;165;Uzbekistan;2023;5500.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3388;166;Venezuela;2023;;estimated_children_art_coverage_percent;;;;good;art_pediatric_coverage_by_country_clean.csv
+3387;166;Venezuela;2023;;estimated_children_needing_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3386;166;Venezuela;2023;;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3391;167;Viet Nam;2023;92.0;estimated_children_art_coverage_percent;74.0;95.0;92.0;good;art_pediatric_coverage_by_country_clean.csv
+3390;167;Viet Nam;2023;5000.0;estimated_children_needing_art;4000.0;5900.0;5000.0;good;art_pediatric_coverage_by_country_clean.csv
+3389;167;Viet Nam;2023;4600.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3394;168;Yemen;2023;33.0;estimated_children_art_coverage_percent;24.0;50.0;33.0;good;art_pediatric_coverage_by_country_clean.csv
+3393;168;Yemen;2023;500.0;estimated_children_needing_art;500.0;580.0;500.0;good;art_pediatric_coverage_by_country_clean.csv
+3392;168;Yemen;2023;130.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3397;169;Zambia;2023;79.0;estimated_children_art_coverage_percent;65.0;93.0;79.0;good;art_pediatric_coverage_by_country_clean.csv
+3396;169;Zambia;2023;62000.0;estimated_children_needing_art;52000.0;74000.0;62000.0;good;art_pediatric_coverage_by_country_clean.csv
+3395;169;Zambia;2023;49100.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv
+3400;170;Zimbabwe;2023;76.0;estimated_children_art_coverage_percent;59.0;93.0;76.0;good;art_pediatric_coverage_by_country_clean.csv
+3399;170;Zimbabwe;2023;84000.0;estimated_children_needing_art;65000.0;100000.0;84000.0;good;art_pediatric_coverage_by_country_clean.csv
+3398;170;Zimbabwe;2023;63900.0;reported_children_receiving_art;;;;good;art_pediatric_coverage_by_country_clean.csv

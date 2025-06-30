@@ -1,0 +1,511 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+513;1;Afghanistan;2023;13.0;estimated_art_coverage_percent;7.0;20.0;13.0;good;art_coverage_by_country_clean.csv
+512;1;Afghanistan;2023;7200.0;estimated_living_with_hiv;4100.0;11000.0;7200.0;good;art_coverage_by_country_clean.csv
+511;1;Afghanistan;2023;920.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+516;2;Albania;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+515;2;Albania;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+514;2;Albania;2023;580.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+519;3;Algeria;2023;81.0;estimated_art_coverage_percent;75.0;86.0;81.0;good;art_coverage_by_country_clean.csv
+518;3;Algeria;2023;16000.0;estimated_living_with_hiv;15000.0;17000.0;16000.0;good;art_coverage_by_country_clean.csv
+517;3;Algeria;2023;12800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+522;4;Angola;2023;27.0;estimated_art_coverage_percent;23.0;31.0;27.0;good;art_coverage_by_country_clean.csv
+521;4;Angola;2023;330000.0;estimated_living_with_hiv;290000.0;390000.0;330000.0;good;art_coverage_by_country_clean.csv
+520;4;Angola;2023;88700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+525;5;Argentina;2023;61.0;estimated_art_coverage_percent;55.0;67.0;61.0;good;art_coverage_by_country_clean.csv
+524;5;Argentina;2023;140000.0;estimated_living_with_hiv;130000.0;150000.0;140000.0;good;art_coverage_by_country_clean.csv
+523;5;Argentina;2023;85500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+528;6;Armenia;2023;53.0;estimated_art_coverage_percent;44.0;65.0;53.0;good;art_coverage_by_country_clean.csv
+527;6;Armenia;2023;3500.0;estimated_living_with_hiv;3000.0;4400.0;3500.0;good;art_coverage_by_country_clean.csv
+526;6;Armenia;2023;1900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+531;7;Australia;2023;83.0;estimated_art_coverage_percent;70.0;93.0;83.0;good;art_coverage_by_country_clean.csv
+530;7;Australia;2023;28000.0;estimated_living_with_hiv;23000.0;31000.0;28000.0;good;art_coverage_by_country_clean.csv
+529;7;Australia;2023;22800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+534;8;Austria;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+533;8;Austria;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+532;8;Austria;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+537;9;Azerbaijan;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+536;9;Azerbaijan;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+535;9;Azerbaijan;2023;4400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+540;10;Bahamas;2023;52.0;estimated_art_coverage_percent;45.0;58.0;52.0;good;art_coverage_by_country_clean.csv
+539;10;Bahamas;2023;6000.0;estimated_living_with_hiv;5300.0;6700.0;6000.0;good;art_coverage_by_country_clean.csv
+538;10;Bahamas;2023;3100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+543;11;Bahrain;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+542;11;Bahrain;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+541;11;Bahrain;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+546;12;Bangladesh;2023;22.0;estimated_art_coverage_percent;19.0;25.0;22.0;good;art_coverage_by_country_clean.csv
+545;12;Bangladesh;2023;14000.0;estimated_living_with_hiv;12000.0;16000.0;14000.0;good;art_coverage_by_country_clean.csv
+544;12;Bangladesh;2023;3000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+549;13;Barbados;2023;50.0;estimated_art_coverage_percent;44.0;57.0;50.0;good;art_coverage_by_country_clean.csv
+548;13;Barbados;2023;3000.0;estimated_living_with_hiv;2700.0;3400.0;3000.0;good;art_coverage_by_country_clean.csv
+547;13;Barbados;2023;1500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+552;14;Belarus;2023;59.0;estimated_art_coverage_percent;48.0;75.0;59.0;good;art_coverage_by_country_clean.csv
+551;14;Belarus;2023;27000.0;estimated_living_with_hiv;22000.0;34000.0;27000.0;good;art_coverage_by_country_clean.csv
+550;14;Belarus;2023;15500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+555;15;Belgium;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+554;15;Belgium;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+553;15;Belgium;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+558;16;Belize;2023;28.0;estimated_art_coverage_percent;26.0;31.0;28.0;good;art_coverage_by_country_clean.csv
+557;16;Belize;2023;4900.0;estimated_living_with_hiv;4400.0;5400.0;4900.0;good;art_coverage_by_country_clean.csv
+556;16;Belize;2023;1400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+561;17;Benin;2023;61.0;estimated_art_coverage_percent;40.0;95.0;61.0;good;art_coverage_by_country_clean.csv
+560;17;Benin;2023;73000.0;estimated_living_with_hiv;48000.0;120000.0;73000.0;good;art_coverage_by_country_clean.csv
+559;17;Benin;2023;44200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+564;18;Bhutan;2023;37.0;estimated_art_coverage_percent;20.0;78.0;37.0;good;art_coverage_by_country_clean.csv
+563;18;Bhutan;2023;1300.0;estimated_living_with_hiv;700.0;2700.0;1300.0;good;art_coverage_by_country_clean.csv
+562;18;Bhutan;2023;480.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+567;19;Bolivia;2023;44.0;estimated_art_coverage_percent;40.0;48.0;44.0;good;art_coverage_by_country_clean.csv
+566;19;Bolivia;2023;22000.0;estimated_living_with_hiv;20000.0;24000.0;22000.0;good;art_coverage_by_country_clean.csv
+565;19;Bolivia;2023;9900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+570;20;Bosnia and Herzegovina;2023;67.0;estimated_art_coverage_percent;57.0;78.0;67.0;good;art_coverage_by_country_clean.csv
+569;20;Bosnia and Herzegovina;2023;500.0;estimated_living_with_hiv;500.0;500.0;500.0;good;art_coverage_by_country_clean.csv
+568;20;Bosnia and Herzegovina;2023;220.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+573;21;Botswana;2023;83.0;estimated_art_coverage_percent;75.0;90.0;83.0;good;art_coverage_by_country_clean.csv
+572;21;Botswana;2023;370000.0;estimated_living_with_hiv;330000.0;400000.0;370000.0;good;art_coverage_by_country_clean.csv
+571;21;Botswana;2023;307000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+576;22;Brazil;2023;66.0;estimated_art_coverage_percent;51.0;82.0;66.0;good;art_coverage_by_country_clean.csv
+575;22;Brazil;2023;900000.0;estimated_living_with_hiv;690000.0;1100000.0;900000.0;good;art_coverage_by_country_clean.csv
+574;22;Brazil;2023;593000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+579;23;Brunei Darussalam;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+578;23;Brunei Darussalam;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+577;23;Brunei Darussalam;2023;150.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+582;24;Bulgaria;2023;41.0;estimated_art_coverage_percent;35.0;48.0;41.0;good;art_coverage_by_country_clean.csv
+581;24;Bulgaria;2023;3500.0;estimated_living_with_hiv;3000.0;4100.0;3500.0;good;art_coverage_by_country_clean.csv
+580;24;Bulgaria;2023;1500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+585;25;Burkina Faso;2023;62.0;estimated_art_coverage_percent;50.0;75.0;62.0;good;art_coverage_by_country_clean.csv
+584;25;Burkina Faso;2023;96000.0;estimated_living_with_hiv;78000.0;120000.0;96000.0;good;art_coverage_by_country_clean.csv
+583;25;Burkina Faso;2023;59300.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+588;26;Burundi;2023;80.0;estimated_art_coverage_percent;69.0;94.0;80.0;good;art_coverage_by_country_clean.csv
+587;26;Burundi;2023;82000.0;estimated_living_with_hiv;71000.0;97000.0;82000.0;good;art_coverage_by_country_clean.csv
+586;26;Burundi;2023;65500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+591;27;Cabo Verde;2023;89.0;estimated_art_coverage_percent;75.0;95.0;89.0;good;art_coverage_by_country_clean.csv
+590;27;Cabo Verde;2023;2400.0;estimated_living_with_hiv;2100.0;2900.0;2400.0;good;art_coverage_by_country_clean.csv
+589;27;Cabo Verde;2023;2200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+594;28;Cambodia;2023;81.0;estimated_art_coverage_percent;71.0;93.0;81.0;good;art_coverage_by_country_clean.csv
+593;28;Cambodia;2023;73000.0;estimated_living_with_hiv;64000.0;84000.0;73000.0;good;art_coverage_by_country_clean.csv
+592;28;Cambodia;2023;59500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+597;29;Cameroon;2023;52.0;estimated_art_coverage_percent;46.0;57.0;52.0;good;art_coverage_by_country_clean.csv
+596;29;Cameroon;2023;540000.0;estimated_living_with_hiv;470000.0;590000.0;540000.0;good;art_coverage_by_country_clean.csv
+595;29;Cameroon;2023;281000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+600;30;Canada;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+599;30;Canada;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+598;30;Canada;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+603;31;Central African Republic;2023;36.0;estimated_art_coverage_percent;30.0;45.0;36.0;good;art_coverage_by_country_clean.csv
+602;31;Central African Republic;2023;110000.0;estimated_living_with_hiv;90000.0;140000.0;110000.0;good;art_coverage_by_country_clean.csv
+601;31;Central African Republic;2023;39600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+606;32;Chad;2023;51.0;estimated_art_coverage_percent;40.0;63.0;51.0;good;art_coverage_by_country_clean.csv
+605;32;Chad;2023;120000.0;estimated_living_with_hiv;94000.0;150000.0;120000.0;good;art_coverage_by_country_clean.csv
+604;32;Chad;2023;61400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+609;33;Chile;2023;63.0;estimated_art_coverage_percent;56.0;70.0;63.0;good;art_coverage_by_country_clean.csv
+608;33;Chile;2023;71000.0;estimated_living_with_hiv;63000.0;78000.0;71000.0;good;art_coverage_by_country_clean.csv
+607;33;Chile;2023;45100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+612;34;China;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+611;34;China;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+610;34;China;2023;718000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+615;35;Colombia;2023;73.0;estimated_art_coverage_percent;60.0;86.0;73.0;good;art_coverage_by_country_clean.csv
+614;35;Colombia;2023;160000.0;estimated_living_with_hiv;130000.0;180000.0;160000.0;good;art_coverage_by_country_clean.csv
+613;35;Colombia;2023;113000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+618;36;Comoros;2023;79.0;estimated_art_coverage_percent;39.0;95.0;79.0;good;art_coverage_by_country_clean.csv
+617;36;Comoros;2023;200.0;estimated_living_with_hiv;100.0;500.0;200.0;good;art_coverage_by_country_clean.csv
+616;36;Comoros;2023;100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+621;37;Congo;2023;35.0;estimated_art_coverage_percent;27.0;46.0;35.0;good;art_coverage_by_country_clean.csv
+620;37;Congo;2023;89000.0;estimated_living_with_hiv;69000.0;120000.0;89000.0;good;art_coverage_by_country_clean.csv
+619;37;Congo;2023;31200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+624;38;Costa Rica;2023;49.0;estimated_art_coverage_percent;44.0;54.0;49.0;good;art_coverage_by_country_clean.csv
+623;38;Costa Rica;2023;15000.0;estimated_living_with_hiv;13000.0;17000.0;15000.0;good;art_coverage_by_country_clean.csv
+622;38;Costa Rica;2023;7200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+630;40;Croatia;2023;75.0;estimated_art_coverage_percent;67.0;83.0;75.0;good;art_coverage_by_country_clean.csv
+629;40;Croatia;2023;1600.0;estimated_living_with_hiv;1400.0;1700.0;1600.0;good;art_coverage_by_country_clean.csv
+628;40;Croatia;2023;1200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+633;41;Cuba;2023;72.0;estimated_art_coverage_percent;55.0;85.0;72.0;good;art_coverage_by_country_clean.csv
+632;41;Cuba;2023;31000.0;estimated_living_with_hiv;24000.0;37000.0;31000.0;good;art_coverage_by_country_clean.csv
+631;41;Cuba;2023;21900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+636;42;Cyprus;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+635;42;Cyprus;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+634;42;Cyprus;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+639;43;Czechia;2023;60.0;estimated_art_coverage_percent;51.0;68.0;60.0;good;art_coverage_by_country_clean.csv
+638;43;Czechia;2023;4400.0;estimated_living_with_hiv;3700.0;5000.0;4400.0;good;art_coverage_by_country_clean.csv
+637;43;Czechia;2023;2600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+627;39;Côte d'Ivoire;2023;55.0;estimated_art_coverage_percent;44.0;70.0;55.0;good;art_coverage_by_country_clean.csv
+626;39;Côte d'Ivoire;2023;460000.0;estimated_living_with_hiv;360000.0;580000.0;460000.0;good;art_coverage_by_country_clean.csv
+625;39;Côte d'Ivoire;2023;252000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+645;45;DR Congo;2023;57.0;estimated_art_coverage_percent;47.0;67.0;57.0;good;art_coverage_by_country_clean.csv
+644;45;DR Congo;2023;450000.0;estimated_living_with_hiv;370000.0;530000.0;450000.0;good;art_coverage_by_country_clean.csv
+643;45;DR Congo;2023;256000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+648;46;Denmark;2023;89.0;estimated_art_coverage_percent;79.0;95.0;89.0;good;art_coverage_by_country_clean.csv
+647;46;Denmark;2023;6200.0;estimated_living_with_hiv;5600.0;7000.0;6200.0;good;art_coverage_by_country_clean.csv
+646;46;Denmark;2023;5500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+651;47;Djibouti;2023;30.0;estimated_art_coverage_percent;25.0;38.0;30.0;good;art_coverage_by_country_clean.csv
+650;47;Djibouti;2023;8800.0;estimated_living_with_hiv;7100.0;11000.0;8800.0;good;art_coverage_by_country_clean.csv
+649;47;Djibouti;2023;2700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+654;48;Dominican Republic;2023;56.0;estimated_art_coverage_percent;43.0;73.0;56.0;good;art_coverage_by_country_clean.csv
+653;48;Dominican Republic;2023;70000.0;estimated_living_with_hiv;54000.0;92000.0;70000.0;good;art_coverage_by_country_clean.csv
+652;48;Dominican Republic;2023;39000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+657;49;Ecuador;2023;57.0;estimated_art_coverage_percent;38.0;93.0;57.0;good;art_coverage_by_country_clean.csv
+656;49;Ecuador;2023;44000.0;estimated_living_with_hiv;29000.0;71000.0;44000.0;good;art_coverage_by_country_clean.csv
+655;49;Ecuador;2023;25100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+660;50;Egypt;2023;31.0;estimated_art_coverage_percent;28.0;33.0;31.0;good;art_coverage_by_country_clean.csv
+659;50;Egypt;2023;22000.0;estimated_living_with_hiv;20000.0;24000.0;22000.0;good;art_coverage_by_country_clean.csv
+658;50;Egypt;2023;6700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+663;51;El Salvador;2023;47.0;estimated_art_coverage_percent;39.0;55.0;47.0;good;art_coverage_by_country_clean.csv
+662;51;El Salvador;2023;25000.0;estimated_living_with_hiv;21000.0;30000.0;25000.0;good;art_coverage_by_country_clean.csv
+661;51;El Salvador;2023;11900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+666;52;Equatorial Guinea;2023;34.0;estimated_art_coverage_percent;27.0;44.0;34.0;good;art_coverage_by_country_clean.csv
+665;52;Equatorial Guinea;2023;62000.0;estimated_living_with_hiv;50000.0;81000.0;62000.0;good;art_coverage_by_country_clean.csv
+664;52;Equatorial Guinea;2023;21400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+669;53;Eritrea;2023;51.0;estimated_art_coverage_percent;38.0;68.0;51.0;good;art_coverage_by_country_clean.csv
+668;53;Eritrea;2023;18000.0;estimated_living_with_hiv;13000.0;24000.0;18000.0;good;art_coverage_by_country_clean.csv
+667;53;Eritrea;2023;8900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+672;54;Estonia;2023;59.0;estimated_art_coverage_percent;53.0;66.0;59.0;good;art_coverage_by_country_clean.csv
+671;54;Estonia;2023;7400.0;estimated_living_with_hiv;6600.0;8200.0;7400.0;good;art_coverage_by_country_clean.csv
+670;54;Estonia;2023;4300.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+675;55;Eswatini;2023;86.0;estimated_art_coverage_percent;80.0;94.0;86.0;good;art_coverage_by_country_clean.csv
+674;55;Eswatini;2023;210000.0;estimated_living_with_hiv;190000.0;220000.0;210000.0;good;art_coverage_by_country_clean.csv
+673;55;Eswatini;2023;177000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+678;56;Ethiopia;2023;65.0;estimated_art_coverage_percent;50.0;85.0;65.0;good;art_coverage_by_country_clean.csv
+677;56;Ethiopia;2023;690000.0;estimated_living_with_hiv;530000.0;900000.0;690000.0;good;art_coverage_by_country_clean.csv
+676;56;Ethiopia;2023;450000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+681;57;Fiji;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+680;57;Fiji;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+679;57;Fiji;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+684;58;Finland;2023;76.0;estimated_art_coverage_percent;60.0;95.0;76.0;good;art_coverage_by_country_clean.csv
+683;58;Finland;2023;4000.0;estimated_living_with_hiv;3100.0;4900.0;4000.0;good;art_coverage_by_country_clean.csv
+682;58;Finland;2023;3000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+687;59;France;2023;83.0;estimated_art_coverage_percent;69.0;95.0;83.0;good;art_coverage_by_country_clean.csv
+686;59;France;2023;180000.0;estimated_living_with_hiv;150000.0;210000.0;180000.0;good;art_coverage_by_country_clean.csv
+685;59;France;2023;148000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+690;60;Gabon;2023;67.0;estimated_art_coverage_percent;54.0;85.0;67.0;good;art_coverage_by_country_clean.csv
+689;60;Gabon;2023;53000.0;estimated_living_with_hiv;43000.0;67000.0;53000.0;good;art_coverage_by_country_clean.csv
+688;60;Gabon;2023;35600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+693;61;Gambia;2023;29.0;estimated_art_coverage_percent;24.0;38.0;29.0;good;art_coverage_by_country_clean.csv
+692;61;Gambia;2023;26000.0;estimated_living_with_hiv;21000.0;33000.0;26000.0;good;art_coverage_by_country_clean.csv
+691;61;Gambia;2023;7500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+696;62;Georgia;2023;49.0;estimated_art_coverage_percent;42.0;57.0;49.0;good;art_coverage_by_country_clean.csv
+695;62;Georgia;2023;9400.0;estimated_living_with_hiv;8100.0;11000.0;9400.0;good;art_coverage_by_country_clean.csv
+694;62;Georgia;2023;4600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+699;63;Germany;2023;80.0;estimated_art_coverage_percent;65.0;93.0;80.0;good;art_coverage_by_country_clean.csv
+698;63;Germany;2023;87000.0;estimated_living_with_hiv;71000.0;100000.0;87000.0;good;art_coverage_by_country_clean.csv
+697;63;Germany;2023;69900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+702;64;Ghana;2023;34.0;estimated_art_coverage_percent;28.0;39.0;34.0;good;art_coverage_by_country_clean.csv
+701;64;Ghana;2023;330000.0;estimated_living_with_hiv;280000.0;390000.0;330000.0;good;art_coverage_by_country_clean.csv
+700;64;Ghana;2023;113000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+705;65;Greece;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+704;65;Greece;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+703;65;Greece;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+708;66;Guatemala;2023;43.0;estimated_art_coverage_percent;40.0;47.0;43.0;good;art_coverage_by_country_clean.csv
+707;66;Guatemala;2023;47000.0;estimated_living_with_hiv;43000.0;51000.0;47000.0;good;art_coverage_by_country_clean.csv
+706;66;Guatemala;2023;20200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+711;67;Guinea;2023;40.0;estimated_art_coverage_percent;34.0;48.0;40.0;good;art_coverage_by_country_clean.csv
+710;67;Guinea;2023;120000.0;estimated_living_with_hiv;100000.0;140000.0;120000.0;good;art_coverage_by_country_clean.csv
+709;67;Guinea;2023;48600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+714;68;Guinea-Bissau;2023;33.0;estimated_art_coverage_percent;29.0;37.0;33.0;good;art_coverage_by_country_clean.csv
+713;68;Guinea-Bissau;2023;44000.0;estimated_living_with_hiv;39000.0;49000.0;44000.0;good;art_coverage_by_country_clean.csv
+712;68;Guinea-Bissau;2023;14600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+717;69;Guyana;2023;68.0;estimated_art_coverage_percent;60.0;78.0;68.0;good;art_coverage_by_country_clean.csv
+716;69;Guyana;2023;8200.0;estimated_living_with_hiv;7200.0;9400.0;8200.0;good;art_coverage_by_country_clean.csv
+715;69;Guyana;2023;5600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+720;70;Haiti;2023;58.0;estimated_art_coverage_percent;52.0;65.0;58.0;good;art_coverage_by_country_clean.csv
+719;70;Haiti;2023;160000.0;estimated_living_with_hiv;140000.0;180000.0;160000.0;good;art_coverage_by_country_clean.csv
+718;70;Haiti;2023;91500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+723;71;Honduras;2023;50.0;estimated_art_coverage_percent;40.0;61.0;50.0;good;art_coverage_by_country_clean.csv
+722;71;Honduras;2023;23000.0;estimated_living_with_hiv;18000.0;28000.0;23000.0;good;art_coverage_by_country_clean.csv
+721;71;Honduras;2023;11700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+726;72;Hungary;2023;56.0;estimated_art_coverage_percent;48.0;63.0;56.0;good;art_coverage_by_country_clean.csv
+725;72;Hungary;2023;3700.0;estimated_living_with_hiv;3200.0;4200.0;3700.0;good;art_coverage_by_country_clean.csv
+724;72;Hungary;2023;2000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+729;73;Iceland;2023;79.0;estimated_art_coverage_percent;71.0;87.0;79.0;good;art_coverage_by_country_clean.csv
+728;73;Iceland;2023;500.0;estimated_living_with_hiv;500.0;500.0;500.0;good;art_coverage_by_country_clean.csv
+727;73;Iceland;2023;250.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+732;74;India;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+731;74;India;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+730;74;India;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+735;75;Indonesia;2023;17.0;estimated_art_coverage_percent;15.0;20.0;17.0;good;art_coverage_by_country_clean.csv
+734;75;Indonesia;2023;640000.0;estimated_living_with_hiv;550000.0;750000.0;640000.0;good;art_coverage_by_country_clean.csv
+733;75;Indonesia;2023;108000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+738;76;Iran;2023;20.0;estimated_art_coverage_percent;11.0;39.0;20.0;good;art_coverage_by_country_clean.csv
+737;76;Iran;2023;61000.0;estimated_living_with_hiv;34000.0;120000.0;61000.0;good;art_coverage_by_country_clean.csv
+736;76;Iran;2023;12400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+741;77;Ireland;2023;80.0;estimated_art_coverage_percent;69.0;89.0;80.0;good;art_coverage_by_country_clean.csv
+740;77;Ireland;2023;7200.0;estimated_living_with_hiv;6200.0;8000.0;7200.0;good;art_coverage_by_country_clean.csv
+739;77;Ireland;2023;5700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+744;78;Israel;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+743;78;Israel;2023;9000.0;estimated_living_with_hiv;8000.0;10000.0;9000.0;good;art_coverage_by_country_clean.csv
+742;78;Israel;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+747;79;Italy;2023;91.0;estimated_art_coverage_percent;78.0;95.0;91.0;good;art_coverage_by_country_clean.csv
+746;79;Italy;2023;130000.0;estimated_living_with_hiv;110000.0;140000.0;130000.0;good;art_coverage_by_country_clean.csv
+745;79;Italy;2023;118000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+750;80;Jamaica;2023;31.0;estimated_art_coverage_percent;27.0;36.0;31.0;good;art_coverage_by_country_clean.csv
+749;80;Jamaica;2023;40000.0;estimated_living_with_hiv;35000.0;46000.0;40000.0;good;art_coverage_by_country_clean.csv
+748;80;Jamaica;2023;12600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+753;81;Japan;2023;80.0;estimated_art_coverage_percent;68.0;92.0;80.0;good;art_coverage_by_country_clean.csv
+752;81;Japan;2023;30000.0;estimated_living_with_hiv;25000.0;34000.0;30000.0;good;art_coverage_by_country_clean.csv
+751;81;Japan;2023;23700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+756;82;Jordan;2023;84.0;estimated_art_coverage_percent;76.0;95.0;84.0;good;art_coverage_by_country_clean.csv
+755;82;Jordan;2023;500.0;estimated_living_with_hiv;500.0;500.0;500.0;good;art_coverage_by_country_clean.csv
+754;82;Jordan;2023;310.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+759;83;Kazakhstan;2023;58.0;estimated_art_coverage_percent;54.0;62.0;58.0;good;art_coverage_by_country_clean.csv
+758;83;Kazakhstan;2023;26000.0;estimated_living_with_hiv;24000.0;27000.0;26000.0;good;art_coverage_by_country_clean.csv
+757;83;Kazakhstan;2023;15000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+762;84;Kenya;2023;68.0;estimated_art_coverage_percent;58.0;82.0;68.0;good;art_coverage_by_country_clean.csv
+761;84;Kenya;2023;1600000.0;estimated_living_with_hiv;1300000.0;1900000.0;1600000.0;good;art_coverage_by_country_clean.csv
+760;84;Kenya;2023;1068000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+765;85;Kuwait;2023;62.0;estimated_art_coverage_percent;55.0;67.0;62.0;good;art_coverage_by_country_clean.csv
+764;85;Kuwait;2023;640.0;estimated_living_with_hiv;580.0;700.0;640.0;good;art_coverage_by_country_clean.csv
+763;85;Kuwait;2023;400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+768;86;Kyrgyzstan;2023;43.0;estimated_art_coverage_percent;33.0;59.0;43.0;good;art_coverage_by_country_clean.csv
+767;86;Kyrgyzstan;2023;8500.0;estimated_living_with_hiv;6500.0;12000.0;8500.0;good;art_coverage_by_country_clean.csv
+766;86;Kyrgyzstan;2023;3700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+771;87;Laos;2023;54.0;estimated_art_coverage_percent;48.0;62.0;54.0;good;art_coverage_by_country_clean.csv
+770;87;Laos;2023;12000.0;estimated_living_with_hiv;11000.0;14000.0;12000.0;good;art_coverage_by_country_clean.csv
+769;87;Laos;2023;6500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+774;88;Latvia;2023;45.0;estimated_art_coverage_percent;41.0;50.0;45.0;good;art_coverage_by_country_clean.csv
+773;88;Latvia;2023;5300.0;estimated_living_with_hiv;4800.0;5900.0;5300.0;good;art_coverage_by_country_clean.csv
+772;88;Latvia;2023;2400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+777;89;Lebanon;2023;60.0;estimated_art_coverage_percent;53.0;67.0;60.0;good;art_coverage_by_country_clean.csv
+776;89;Lebanon;2023;2500.0;estimated_living_with_hiv;2200.0;2800.0;2500.0;good;art_coverage_by_country_clean.csv
+775;89;Lebanon;2023;1500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+780;90;Lesotho;2023;61.0;estimated_art_coverage_percent;57.0;65.0;61.0;good;art_coverage_by_country_clean.csv
+779;90;Lesotho;2023;340000.0;estimated_living_with_hiv;320000.0;360000.0;340000.0;good;art_coverage_by_country_clean.csv
+778;90;Lesotho;2023;206000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+783;91;Liberia;2023;35.0;estimated_art_coverage_percent;32.0;39.0;35.0;good;art_coverage_by_country_clean.csv
+782;91;Liberia;2023;39000.0;estimated_living_with_hiv;36000.0;44000.0;39000.0;good;art_coverage_by_country_clean.csv
+781;91;Liberia;2023;13900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+786;92;Libya;2023;44.0;estimated_art_coverage_percent;40.0;49.0;44.0;good;art_coverage_by_country_clean.csv
+785;92;Libya;2023;9200.0;estimated_living_with_hiv;8300.0;10000.0;9200.0;good;art_coverage_by_country_clean.csv
+784;92;Libya;2023;4100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+789;93;Lithuania;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+788;93;Lithuania;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+787;93;Lithuania;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+792;94;Luxembourg;2023;77.0;estimated_art_coverage_percent;67.0;86.0;77.0;good;art_coverage_by_country_clean.csv
+791;94;Luxembourg;2023;1200.0;estimated_living_with_hiv;1000.0;1300.0;1200.0;good;art_coverage_by_country_clean.csv
+790;94;Luxembourg;2023;890.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+795;95;Madagascar;2023;9.0;estimated_art_coverage_percent;7.0;13.0;9.0;good;art_coverage_by_country_clean.csv
+794;95;Madagascar;2023;39000.0;estimated_living_with_hiv;30000.0;55000.0;39000.0;good;art_coverage_by_country_clean.csv
+793;95;Madagascar;2023;3500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+798;96;Malawi;2023;78.0;estimated_art_coverage_percent;70.0;84.0;78.0;good;art_coverage_by_country_clean.csv
+797;96;Malawi;2023;1000000.0;estimated_living_with_hiv;940000.0;1100000.0;1000000.0;good;art_coverage_by_country_clean.csv
+796;96;Malawi;2023;814000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+801;97;Malaysia;2023;48.0;estimated_art_coverage_percent;42.0;53.0;48.0;good;art_coverage_by_country_clean.csv
+800;97;Malaysia;2023;87000.0;estimated_living_with_hiv;77000.0;98000.0;87000.0;good;art_coverage_by_country_clean.csv
+799;97;Malaysia;2023;41500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+804;98;Maldives;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+803;98;Maldives;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+802;98;Maldives;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+807;99;Mali;2023;31.0;estimated_art_coverage_percent;25.0;39.0;31.0;good;art_coverage_by_country_clean.csv
+806;99;Mali;2023;150000.0;estimated_living_with_hiv;120000.0;190000.0;150000.0;good;art_coverage_by_country_clean.csv
+805;99;Mali;2023;47100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+810;100;Malta;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+809;100;Malta;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+808;100;Malta;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+813;101;Mauritania;2023;54.0;estimated_art_coverage_percent;44.0;69.0;54.0;good;art_coverage_by_country_clean.csv
+812;101;Mauritania;2023;5600.0;estimated_living_with_hiv;4500.0;7200.0;5600.0;good;art_coverage_by_country_clean.csv
+811;101;Mauritania;2023;3000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+816;102;Mauritius;2023;22.0;estimated_art_coverage_percent;18.0;26.0;22.0;good;art_coverage_by_country_clean.csv
+815;102;Mauritius;2023;13000.0;estimated_living_with_hiv;10000.0;15000.0;13000.0;good;art_coverage_by_country_clean.csv
+814;102;Mauritius;2023;2800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+819;103;Mexico;2023;70.0;estimated_art_coverage_percent;60.0;80.0;70.0;good;art_coverage_by_country_clean.csv
+818;103;Mexico;2023;230000.0;estimated_living_with_hiv;200000.0;270000.0;230000.0;good;art_coverage_by_country_clean.csv
+817;103;Mexico;2023;165000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+894;128;Moldova;2023;34.0;estimated_art_coverage_percent;27.0;45.0;34.0;good;art_coverage_by_country_clean.csv
+893;128;Moldova;2023;17000.0;estimated_living_with_hiv;14000.0;23000.0;17000.0;good;art_coverage_by_country_clean.csv
+892;128;Moldova;2023;6000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+822;104;Mongolia;2023;32.0;estimated_art_coverage_percent;29.0;36.0;32.0;good;art_coverage_by_country_clean.csv
+821;104;Mongolia;2023;600.0;estimated_living_with_hiv;530.0;670.0;600.0;good;art_coverage_by_country_clean.csv
+820;104;Mongolia;2023;200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+825;105;Montenegro;2023;40.0;estimated_art_coverage_percent;34.0;46.0;40.0;good;art_coverage_by_country_clean.csv
+824;105;Montenegro;2023;500.0;estimated_living_with_hiv;500.0;500.0;500.0;good;art_coverage_by_country_clean.csv
+823;105;Montenegro;2023;160.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+828;106;Morocco;2023;65.0;estimated_art_coverage_percent;52.0;86.0;65.0;good;art_coverage_by_country_clean.csv
+827;106;Morocco;2023;21000.0;estimated_living_with_hiv;17000.0;28000.0;21000.0;good;art_coverage_by_country_clean.csv
+826;106;Morocco;2023;13600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+831;107;Mozambique;2023;56.0;estimated_art_coverage_percent;44.0;68.0;56.0;good;art_coverage_by_country_clean.csv
+830;107;Mozambique;2023;2200000.0;estimated_living_with_hiv;1700000.0;2700000.0;2200000.0;good;art_coverage_by_country_clean.csv
+829;107;Mozambique;2023;1213000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+834;108;Myanmar;2023;70.0;estimated_art_coverage_percent;63.0;79.0;70.0;good;art_coverage_by_country_clean.csv
+833;108;Myanmar;2023;240000.0;estimated_living_with_hiv;210000.0;270000.0;240000.0;good;art_coverage_by_country_clean.csv
+832;108;Myanmar;2023;167000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+837;109;Namibia;2023;92.0;estimated_art_coverage_percent;84.0;95.0;92.0;good;art_coverage_by_country_clean.csv
+836;109;Namibia;2023;200000.0;estimated_living_with_hiv;190000.0;220000.0;200000.0;good;art_coverage_by_country_clean.csv
+835;109;Namibia;2023;184000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+840;110;Nepal;2023;56.0;estimated_art_coverage_percent;50.0;65.0;56.0;good;art_coverage_by_country_clean.csv
+839;110;Nepal;2023;30000.0;estimated_living_with_hiv;26000.0;34000.0;30000.0;good;art_coverage_by_country_clean.csv
+838;110;Nepal;2023;16900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+843;111;Netherlands;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+842;111;Netherlands;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+841;111;Netherlands;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+846;112;New Zealand;2023;73.0;estimated_art_coverage_percent;62.0;84.0;73.0;good;art_coverage_by_country_clean.csv
+845;112;New Zealand;2023;3600.0;estimated_living_with_hiv;3100.0;4200.0;3600.0;good;art_coverage_by_country_clean.csv
+844;112;New Zealand;2023;2700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+849;113;Nicaragua;2023;53.0;estimated_art_coverage_percent;43.0;68.0;53.0;good;art_coverage_by_country_clean.csv
+848;113;Nicaragua;2023;9400.0;estimated_living_with_hiv;7600.0;12000.0;9400.0;good;art_coverage_by_country_clean.csv
+847;113;Nicaragua;2023;5000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+852;114;Niger;2023;54.0;estimated_art_coverage_percent;45.0;65.0;54.0;good;art_coverage_by_country_clean.csv
+851;114;Niger;2023;36000.0;estimated_living_with_hiv;30000.0;43000.0;36000.0;good;art_coverage_by_country_clean.csv
+850;114;Niger;2023;19800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+855;115;Nigeria;2023;53.0;estimated_art_coverage_percent;40.0;71.0;53.0;good;art_coverage_by_country_clean.csv
+854;115;Nigeria;2023;1900000.0;estimated_living_with_hiv;1400000.0;2600000.0;1900000.0;good;art_coverage_by_country_clean.csv
+853;115;Nigeria;2023;1016000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+642;44;North Korea;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+641;44;North Korea;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+640;44;North Korea;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+897;129;North Macedonia;2023;54.0;estimated_art_coverage_percent;47.0;63.0;54.0;good;art_coverage_by_country_clean.csv
+896;129;North Macedonia;2023;500.0;estimated_living_with_hiv;500.0;520.0;500.0;good;art_coverage_by_country_clean.csv
+895;129;North Macedonia;2023;240.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+858;116;Norway;2023;82.0;estimated_art_coverage_percent;74.0;90.0;82.0;good;art_coverage_by_country_clean.csv
+857;116;Norway;2023;5800.0;estimated_living_with_hiv;5200.0;6300.0;5800.0;good;art_coverage_by_country_clean.csv
+856;116;Norway;2023;4700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+861;117;Oman;2023;41.0;estimated_art_coverage_percent;37.0;45.0;41.0;good;art_coverage_by_country_clean.csv
+860;117;Oman;2023;3200.0;estimated_living_with_hiv;2900.0;3600.0;3200.0;good;art_coverage_by_country_clean.csv
+859;117;Oman;2023;1300.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+864;118;Pakistan;2023;10.0;estimated_art_coverage_percent;9.0;11.0;10.0;good;art_coverage_by_country_clean.csv
+863;118;Pakistan;2023;160000.0;estimated_living_with_hiv;140000.0;190000.0;160000.0;good;art_coverage_by_country_clean.csv
+862;118;Pakistan;2023;15800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+867;119;Panama;2023;54.0;estimated_art_coverage_percent;48.0;59.0;54.0;good;art_coverage_by_country_clean.csv
+866;119;Panama;2023;26000.0;estimated_living_with_hiv;24000.0;29000.0;26000.0;good;art_coverage_by_country_clean.csv
+865;119;Panama;2023;14200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+870;120;Papua New Guinea;2023;65.0;estimated_art_coverage_percent;58.0;71.0;65.0;good;art_coverage_by_country_clean.csv
+869;120;Papua New Guinea;2023;45000.0;estimated_living_with_hiv;41000.0;50000.0;45000.0;good;art_coverage_by_country_clean.csv
+868;120;Papua New Guinea;2023;29400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+873;121;Paraguay;2023;40.0;estimated_art_coverage_percent;31.0;58.0;40.0;good;art_coverage_by_country_clean.csv
+872;121;Paraguay;2023;21000.0;estimated_living_with_hiv;16000.0;31000.0;21000.0;good;art_coverage_by_country_clean.csv
+871;121;Paraguay;2023;8500.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+876;122;Peru;2023;73.0;estimated_art_coverage_percent;54.0;95.0;73.0;good;art_coverage_by_country_clean.csv
+875;122;Peru;2023;79000.0;estimated_living_with_hiv;58000.0;110000.0;79000.0;good;art_coverage_by_country_clean.csv
+874;122;Peru;2023;57800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+879;123;Philippines;2023;44.0;estimated_art_coverage_percent;37.0;51.0;44.0;good;art_coverage_by_country_clean.csv
+878;123;Philippines;2023;77000.0;estimated_living_with_hiv;65000.0;90000.0;77000.0;good;art_coverage_by_country_clean.csv
+877;123;Philippines;2023;33600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+882;124;Poland;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+881;124;Poland;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+880;124;Poland;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+885;125;Portugal;2023;90.0;estimated_art_coverage_percent;78.0;95.0;90.0;good;art_coverage_by_country_clean.csv
+884;125;Portugal;2023;41000.0;estimated_living_with_hiv;36000.0;46000.0;41000.0;good;art_coverage_by_country_clean.csv
+883;125;Portugal;2023;37200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+888;126;Qatar;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+887;126;Qatar;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+886;126;Qatar;2023;150.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+900;130;Romania;2023;67.0;estimated_art_coverage_percent;60.0;73.0;67.0;good;art_coverage_by_country_clean.csv
+899;130;Romania;2023;18000.0;estimated_living_with_hiv;16000.0;20000.0;18000.0;good;art_coverage_by_country_clean.csv
+898;130;Romania;2023;12100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+903;131;Russia;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+902;131;Russia;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+901;131;Russia;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+906;132;Rwanda;2023;87.0;estimated_art_coverage_percent;76.0;95.0;87.0;good;art_coverage_by_country_clean.csv
+905;132;Rwanda;2023;220000.0;estimated_living_with_hiv;200000.0;250000.0;220000.0;good;art_coverage_by_country_clean.csv
+904;132;Rwanda;2023;194000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+909;133;Saudi Arabia;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+908;133;Saudi Arabia;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+907;133;Saudi Arabia;2023;6300.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+912;134;Senegal;2023;63.0;estimated_art_coverage_percent;55.0;71.0;63.0;good;art_coverage_by_country_clean.csv
+911;134;Senegal;2023;42000.0;estimated_living_with_hiv;37000.0;47000.0;42000.0;good;art_coverage_by_country_clean.csv
+910;134;Senegal;2023;26600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+915;135;Serbia;2023;65.0;estimated_art_coverage_percent;47.0;83.0;65.0;good;art_coverage_by_country_clean.csv
+914;135;Serbia;2023;3000.0;estimated_living_with_hiv;2200.0;3800.0;3000.0;good;art_coverage_by_country_clean.csv
+913;135;Serbia;2023;2000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+918;136;Sierra Leone;2023;41.0;estimated_art_coverage_percent;33.0;50.0;41.0;good;art_coverage_by_country_clean.csv
+917;136;Sierra Leone;2023;70000.0;estimated_living_with_hiv;56000.0;86000.0;70000.0;good;art_coverage_by_country_clean.csv
+916;136;Sierra Leone;2023;28400.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+921;137;Singapore;2023;78.0;estimated_art_coverage_percent;71.0;86.0;78.0;good;art_coverage_by_country_clean.csv
+920;137;Singapore;2023;7900.0;estimated_living_with_hiv;7200.0;8700.0;7900.0;good;art_coverage_by_country_clean.csv
+919;137;Singapore;2023;6200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+924;138;Slovakia;2023;54.0;estimated_art_coverage_percent;40.0;85.0;54.0;good;art_coverage_by_country_clean.csv
+923;138;Slovakia;2023;1200.0;estimated_living_with_hiv;910.0;1900.0;1200.0;good;art_coverage_by_country_clean.csv
+922;138;Slovakia;2023;650.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+927;139;Slovenia;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+926;139;Slovenia;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+925;139;Slovenia;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+930;140;Somalia;2023;30.0;estimated_art_coverage_percent;23.0;41.0;30.0;good;art_coverage_by_country_clean.csv
+929;140;Somalia;2023;11000.0;estimated_living_with_hiv;8400.0;15000.0;11000.0;good;art_coverage_by_country_clean.csv
+928;140;Somalia;2023;3300.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+933;141;South Africa;2023;62.0;estimated_art_coverage_percent;57.0;66.0;62.0;good;art_coverage_by_country_clean.csv
+932;141;South Africa;2023;7700000.0;estimated_living_with_hiv;7100000.0;8300000.0;7700000.0;good;art_coverage_by_country_clean.csv
+931;141;South Africa;2023;4788000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+891;127;South Korea;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+890;127;South Korea;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+889;127;South Korea;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+936;142;South Sudan;2023;16.0;estimated_art_coverage_percent;12.0;20.0;16.0;good;art_coverage_by_country_clean.csv
+935;142;South Sudan;2023;190000.0;estimated_living_with_hiv;140000.0;240000.0;190000.0;good;art_coverage_by_country_clean.csv
+934;142;South Sudan;2023;30700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+939;143;Spain;2023;84.0;estimated_art_coverage_percent;73.0;94.0;84.0;good;art_coverage_by_country_clean.csv
+938;143;Spain;2023;150000.0;estimated_living_with_hiv;130000.0;170000.0;150000.0;good;art_coverage_by_country_clean.csv
+937;143;Spain;2023;125000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+942;144;Sri Lanka;2023;45.0;estimated_art_coverage_percent;40.0;52.0;45.0;good;art_coverage_by_country_clean.csv
+941;144;Sri Lanka;2023;3500.0;estimated_living_with_hiv;3100.0;4000.0;3500.0;good;art_coverage_by_country_clean.csv
+940;144;Sri Lanka;2023;1600.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+945;145;Sudan;2023;15.0;estimated_art_coverage_percent;7.0;28.0;15.0;good;art_coverage_by_country_clean.csv
+944;145;Sudan;2023;59000.0;estimated_living_with_hiv;26000.0;110000.0;59000.0;good;art_coverage_by_country_clean.csv
+943;145;Sudan;2023;9000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+948;146;Suriname;2023;52.0;estimated_art_coverage_percent;35.0;75.0;52.0;good;art_coverage_by_country_clean.csv
+947;146;Suriname;2023;5600.0;estimated_living_with_hiv;3700.0;8100.0;5600.0;good;art_coverage_by_country_clean.csv
+946;146;Suriname;2023;2900.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+951;147;Sweden;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+950;147;Sweden;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+949;147;Sweden;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+954;148;Switzerland;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+953;148;Switzerland;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+952;148;Switzerland;2023;14800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+957;149;Syria;2023;20.0;estimated_art_coverage_percent;18.0;22.0;20.0;good;art_coverage_by_country_clean.csv
+956;149;Syria;2023;660.0;estimated_living_with_hiv;590.0;720.0;660.0;good;art_coverage_by_country_clean.csv
+955;149;Syria;2023;130.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+960;150;Tajikistan;2023;46.0;estimated_art_coverage_percent;38.0;56.0;46.0;good;art_coverage_by_country_clean.csv
+959;150;Tajikistan;2023;13000.0;estimated_living_with_hiv;11000.0;16000.0;13000.0;good;art_coverage_by_country_clean.csv
+958;150;Tajikistan;2023;6000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+996;162;Tanzania;2023;71.0;estimated_art_coverage_percent;64.0;78.0;71.0;good;art_coverage_by_country_clean.csv
+995;162;Tanzania;2023;1600000.0;estimated_living_with_hiv;1400000.0;1700000.0;1600000.0;good;art_coverage_by_country_clean.csv
+994;162;Tanzania;2023;1109000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+963;151;Thailand;2023;75.0;estimated_art_coverage_percent;66.0;86.0;75.0;good;art_coverage_by_country_clean.csv
+962;151;Thailand;2023;480000.0;estimated_living_with_hiv;420000.0;550000.0;480000.0;good;art_coverage_by_country_clean.csv
+961;151;Thailand;2023;359000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+966;152;Timor-Leste;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+965;152;Timor-Leste;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+964;152;Timor-Leste;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+969;153;Togo;2023;60.0;estimated_art_coverage_percent;56.0;65.0;60.0;good;art_coverage_by_country_clean.csv
+968;153;Togo;2023;110000.0;estimated_living_with_hiv;100000.0;120000.0;110000.0;good;art_coverage_by_country_clean.csv
+967;153;Togo;2023;64800.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+972;154;Trinidad and Tobago;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+971;154;Trinidad and Tobago;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+970;154;Trinidad and Tobago;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+975;155;Tunisia;2023;39.0;estimated_art_coverage_percent;24.0;61.0;39.0;good;art_coverage_by_country_clean.csv
+974;155;Tunisia;2023;2800.0;estimated_living_with_hiv;1700.0;4400.0;2800.0;good;art_coverage_by_country_clean.csv
+973;155;Tunisia;2023;1100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+978;156;Turkey;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+977;156;Turkey;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+976;156;Turkey;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+981;157;Turkmenistan;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+980;157;Turkmenistan;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+979;157;Turkmenistan;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+984;158;Uganda;2023;72.0;estimated_art_coverage_percent;68.0;78.0;72.0;good;art_coverage_by_country_clean.csv
+983;158;Uganda;2023;1400000.0;estimated_living_with_hiv;1300000.0;1500000.0;1400000.0;good;art_coverage_by_country_clean.csv
+982;158;Uganda;2023;1004000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+987;159;Ukraine;2023;52.0;estimated_art_coverage_percent;48.0;56.0;52.0;good;art_coverage_by_country_clean.csv
+986;159;Ukraine;2023;240000.0;estimated_living_with_hiv;220000.0;260000.0;240000.0;good;art_coverage_by_country_clean.csv
+985;159;Ukraine;2023;124000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+990;160;United Arab Emirates;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+989;160;United Arab Emirates;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+988;160;United Arab Emirates;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+993;161;United Kingdom;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+992;161;United Kingdom;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+991;161;United Kingdom;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+999;163;United States;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+998;163;United States;2023;;estimated_living_with_hiv;;;;good;art_coverage_by_country_clean.csv
+997;163;United States;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1002;164;Uruguay;2023;58.0;estimated_art_coverage_percent;41.0;76.0;58.0;good;art_coverage_by_country_clean.csv
+1001;164;Uruguay;2023;14000.0;estimated_living_with_hiv;9900.0;19000.0;14000.0;good;art_coverage_by_country_clean.csv
+1000;164;Uruguay;2023;8100.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1005;165;Uzbekistan;2023;51.0;estimated_art_coverage_percent;47.0;55.0;51.0;good;art_coverage_by_country_clean.csv
+1004;165;Uzbekistan;2023;52000.0;estimated_living_with_hiv;48000.0;56000.0;52000.0;good;art_coverage_by_country_clean.csv
+1003;165;Uzbekistan;2023;26700.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1008;166;Venezuela;2023;;estimated_art_coverage_percent;;;;good;art_coverage_by_country_clean.csv
+1007;166;Venezuela;2023;120000.0;estimated_living_with_hiv;100000.0;130000.0;120000.0;good;art_coverage_by_country_clean.csv
+1006;166;Venezuela;2023;;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1011;167;Viet Nam;2023;65.0;estimated_art_coverage_percent;57.0;73.0;65.0;good;art_coverage_by_country_clean.csv
+1010;167;Viet Nam;2023;230000.0;estimated_living_with_hiv;200000.0;260000.0;230000.0;good;art_coverage_by_country_clean.csv
+1009;167;Viet Nam;2023;150000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1014;168;Yemen;2023;21.0;estimated_art_coverage_percent;12.0;35.0;21.0;good;art_coverage_by_country_clean.csv
+1013;168;Yemen;2023;11000.0;estimated_living_with_hiv;6500.0;18000.0;11000.0;good;art_coverage_by_country_clean.csv
+1012;168;Yemen;2023;2200.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1017;169;Zambia;2023;78.0;estimated_art_coverage_percent;69.0;88.0;78.0;good;art_coverage_by_country_clean.csv
+1016;169;Zambia;2023;1200000.0;estimated_living_with_hiv;1100000.0;1400000.0;1200000.0;good;art_coverage_by_country_clean.csv
+1015;169;Zambia;2023;965000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv
+1020;170;Zimbabwe;2023;88.0;estimated_art_coverage_percent;77.0;95.0;88.0;good;art_coverage_by_country_clean.csv
+1019;170;Zimbabwe;2023;1300000.0;estimated_living_with_hiv;1100000.0;1500000.0;1300000.0;good;art_coverage_by_country_clean.csv
+1018;170;Zimbabwe;2023;1151000.0;reported_receiving_art;;;;good;art_coverage_by_country_clean.csv

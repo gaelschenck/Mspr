@@ -1,0 +1,511 @@
+id;id_pays;pays;annee;valeur;type_valeur;confiance_min;confiance_max;confiance_median;qualite_donnees;fichier_source
+2041;1;Afghanistan;2000;100.0;count;100.0;500.0;100.0;good;no_of_deaths_by_country_clean.csv
+1871;1;Afghanistan;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1701;1;Afghanistan;2018;500.0;count;200.0;610.0;500.0;good;no_of_deaths_by_country_clean.csv
+2042;2;Albania;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1872;2;Albania;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1702;2;Albania;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2043;3;Algeria;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1873;3;Algeria;2010;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1703;3;Algeria;2018;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2044;4;Angola;2000;4800.0;count;3500.0;6400.0;4800.0;good;no_of_deaths_by_country_clean.csv
+1874;4;Angola;2010;10000.0;count;7300.0;13000.0;10000.0;good;no_of_deaths_by_country_clean.csv
+1704;4;Angola;2018;14000.0;count;9500.0;18000.0;14000.0;good;no_of_deaths_by_country_clean.csv
+2045;5;Argentina;2000;1400.0;count;1200.0;1700.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1875;5;Argentina;2010;1600.0;count;1300.0;2000.0;1600.0;good;no_of_deaths_by_country_clean.csv
+1705;5;Argentina;2018;1700.0;count;1300.0;2100.0;1700.0;good;no_of_deaths_by_country_clean.csv
+2046;6;Armenia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1876;6;Armenia;2010;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1706;6;Armenia;2018;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2047;7;Australia;2000;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1877;7;Australia;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1707;7;Australia;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2048;8;Austria;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1878;8;Austria;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1708;8;Austria;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2049;9;Azerbaijan;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1879;9;Azerbaijan;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1709;9;Azerbaijan;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2050;10;Bahamas;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1880;10;Bahamas;2010;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1710;10;Bahamas;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2051;11;Bahrain;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1881;11;Bahrain;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1711;11;Bahrain;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2052;12;Bangladesh;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1882;12;Bangladesh;2010;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1712;12;Bangladesh;2018;580.0;count;500.0;680.0;580.0;good;no_of_deaths_by_country_clean.csv
+2053;13;Barbados;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1883;13;Barbados;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1713;13;Barbados;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2054;14;Belarus;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1884;14;Belarus;2010;200.0;count;100.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1714;14;Belarus;2018;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2055;15;Belgium;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1885;15;Belgium;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1715;15;Belgium;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2056;16;Belize;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1886;16;Belize;2010;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1716;16;Belize;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2057;17;Benin;2000;2400.0;count;1200.0;4900.0;2400.0;good;no_of_deaths_by_country_clean.csv
+1887;17;Benin;2010;2000.0;count;980.0;4100.0;2000.0;good;no_of_deaths_by_country_clean.csv
+1717;17;Benin;2018;2200.0;count;1100.0;4400.0;2200.0;good;no_of_deaths_by_country_clean.csv
+2058;18;Bhutan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1888;18;Bhutan;2010;100.0;count;100.0;500.0;100.0;good;no_of_deaths_by_country_clean.csv
+1718;18;Bhutan;2018;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+2059;19;Bolivia;2000;670.0;count;500.0;830.0;670.0;good;no_of_deaths_by_country_clean.csv
+1889;19;Bolivia;2010;1600.0;count;1500.0;1800.0;1600.0;good;no_of_deaths_by_country_clean.csv
+1719;19;Bolivia;2018;670.0;count;550.0;760.0;670.0;good;no_of_deaths_by_country_clean.csv
+2060;20;Bosnia and Herzegovina;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1890;20;Bosnia and Herzegovina;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1720;20;Bosnia and Herzegovina;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2061;21;Botswana;2000;15000.0;count;13000.0;18000.0;15000.0;good;no_of_deaths_by_country_clean.csv
+1891;21;Botswana;2010;7300.0;count;6500.0;8000.0;7300.0;good;no_of_deaths_by_country_clean.csv
+1721;21;Botswana;2018;4800.0;count;4100.0;5700.0;4800.0;good;no_of_deaths_by_country_clean.csv
+2062;22;Brazil;2000;15000.0;count;11000.0;20000.0;15000.0;good;no_of_deaths_by_country_clean.csv
+1892;22;Brazil;2010;15000.0;count;11000.0;19000.0;15000.0;good;no_of_deaths_by_country_clean.csv
+1722;22;Brazil;2018;15000.0;count;11000.0;19000.0;15000.0;good;no_of_deaths_by_country_clean.csv
+2063;23;Brunei Darussalam;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1893;23;Brunei Darussalam;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1723;23;Brunei Darussalam;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2064;24;Bulgaria;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1894;24;Bulgaria;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1724;24;Bulgaria;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2065;25;Burkina Faso;2000;12000.0;count;9300.0;15000.0;12000.0;good;no_of_deaths_by_country_clean.csv
+1895;25;Burkina Faso;2010;4800.0;count;3600.0;6300.0;4800.0;good;no_of_deaths_by_country_clean.csv
+1725;25;Burkina Faso;2018;3300.0;count;2400.0;4400.0;3300.0;good;no_of_deaths_by_country_clean.csv
+2066;26;Burundi;2000;11000.0;count;7800.0;13000.0;11000.0;good;no_of_deaths_by_country_clean.csv
+1896;26;Burundi;2010;5200.0;count;4100.0;6400.0;5200.0;good;no_of_deaths_by_country_clean.csv
+1726;26;Burundi;2018;1900.0;count;1400.0;2500.0;1900.0;good;no_of_deaths_by_country_clean.csv
+2067;27;Cabo Verde;2000;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1897;27;Cabo Verde;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1727;27;Cabo Verde;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2068;28;Cambodia;2000;4500.0;count;3200.0;5800.0;4500.0;good;no_of_deaths_by_country_clean.csv
+1898;28;Cambodia;2010;2500.0;count;1900.0;3400.0;2500.0;good;no_of_deaths_by_country_clean.csv
+1728;28;Cambodia;2018;1300.0;count;920.0;1900.0;1300.0;good;no_of_deaths_by_country_clean.csv
+2069;29;Cameroon;2000;19000.0;count;15000.0;24000.0;19000.0;good;no_of_deaths_by_country_clean.csv
+1899;29;Cameroon;2010;22000.0;count;19000.0;25000.0;22000.0;good;no_of_deaths_by_country_clean.csv
+1729;29;Cameroon;2018;18000.0;count;15000.0;21000.0;18000.0;good;no_of_deaths_by_country_clean.csv
+2070;30;Canada;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1900;30;Canada;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1730;30;Canada;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2071;31;Central African Republic;2000;11000.0;count;8400.0;14000.0;11000.0;good;no_of_deaths_by_country_clean.csv
+1901;31;Central African Republic;2010;7800.0;count;6400.0;9400.0;7800.0;good;no_of_deaths_by_country_clean.csv
+1731;31;Central African Republic;2018;4800.0;count;3700.0;6400.0;4800.0;good;no_of_deaths_by_country_clean.csv
+2072;32;Chad;2000;5600.0;count;3800.0;7700.0;5600.0;good;no_of_deaths_by_country_clean.csv
+1902;32;Chad;2010;3500.0;count;2600.0;4800.0;3500.0;good;no_of_deaths_by_country_clean.csv
+1732;32;Chad;2018;3100.0;count;2000.0;4500.0;3100.0;good;no_of_deaths_by_country_clean.csv
+2073;33;Chile;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1903;33;Chile;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1733;33;Chile;2018;590.0;count;500.0;770.0;590.0;good;no_of_deaths_by_country_clean.csv
+2074;34;China;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1904;34;China;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1734;34;China;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2075;35;Colombia;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1905;35;Colombia;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1735;35;Colombia;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2076;36;Comoros;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1906;36;Comoros;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1736;36;Comoros;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2077;37;Congo;2000;6100.0;count;4700.0;7800.0;6100.0;good;no_of_deaths_by_country_clean.csv
+1907;37;Congo;2010;3900.0;count;3100.0;4800.0;3900.0;good;no_of_deaths_by_country_clean.csv
+1737;37;Congo;2018;4000.0;count;2800.0;5400.0;4000.0;good;no_of_deaths_by_country_clean.csv
+2078;38;Costa Rica;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1908;38;Costa Rica;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1738;38;Costa Rica;2018;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2080;40;Croatia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1910;40;Croatia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1740;40;Croatia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2081;41;Cuba;2000;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1911;41;Cuba;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1741;41;Cuba;2018;500.0;count;500.0;580.0;500.0;good;no_of_deaths_by_country_clean.csv
+2082;42;Cyprus;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1912;42;Cyprus;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1742;42;Cyprus;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2083;43;Czechia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1913;43;Czechia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1743;43;Czechia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2079;39;Côte d'Ivoire;2000;44000.0;count;32000.0;63000.0;44000.0;good;no_of_deaths_by_country_clean.csv
+1909;39;Côte d'Ivoire;2010;24000.0;count;17000.0;34000.0;24000.0;good;no_of_deaths_by_country_clean.csv
+1739;39;Côte d'Ivoire;2018;16000.0;count;11000.0;23000.0;16000.0;good;no_of_deaths_by_country_clean.csv
+2085;45;DR Congo;2000;43000.0;count;35000.0;49000.0;43000.0;good;no_of_deaths_by_country_clean.csv
+1915;45;DR Congo;2010;34000.0;count;27000.0;40000.0;34000.0;good;no_of_deaths_by_country_clean.csv
+1745;45;DR Congo;2018;13000.0;count;10000.0;17000.0;13000.0;good;no_of_deaths_by_country_clean.csv
+2086;46;Denmark;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1916;46;Denmark;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1746;46;Denmark;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2087;47;Djibouti;2000;500.0;count;500.0;690.0;500.0;good;no_of_deaths_by_country_clean.csv
+1917;47;Djibouti;2010;630.0;count;500.0;780.0;630.0;good;no_of_deaths_by_country_clean.csv
+1747;47;Djibouti;2018;500.0;count;500.0;550.0;500.0;good;no_of_deaths_by_country_clean.csv
+2088;48;Dominican Republic;2000;4800.0;count;3100.0;7100.0;4800.0;good;no_of_deaths_by_country_clean.csv
+1918;48;Dominican Republic;2010;3000.0;count;2100.0;4300.0;3000.0;good;no_of_deaths_by_country_clean.csv
+1748;48;Dominican Republic;2018;1200.0;count;750.0;1900.0;1200.0;good;no_of_deaths_by_country_clean.csv
+2089;49;Ecuador;2000;1500.0;count;620.0;2600.0;1500.0;good;no_of_deaths_by_country_clean.csv
+1919;49;Ecuador;2010;1100.0;count;520.0;2200.0;1100.0;good;no_of_deaths_by_country_clean.csv
+1749;49;Ecuador;2018;620.0;count;500.0;1500.0;620.0;good;no_of_deaths_by_country_clean.csv
+2090;50;Egypt;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1920;50;Egypt;2010;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1750;50;Egypt;2018;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2091;51;El Salvador;2000;810.0;count;580.0;1000.0;810.0;good;no_of_deaths_by_country_clean.csv
+1921;51;El Salvador;2010;500.0;count;500.0;730.0;500.0;good;no_of_deaths_by_country_clean.csv
+1751;51;El Salvador;2018;700.0;count;500.0;1000.0;700.0;good;no_of_deaths_by_country_clean.csv
+2092;52;Equatorial Guinea;2000;680.0;count;500.0;1000.0;680.0;good;no_of_deaths_by_country_clean.csv
+1922;52;Equatorial Guinea;2010;1400.0;count;970.0;1900.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1752;52;Equatorial Guinea;2018;1800.0;count;1200.0;2600.0;1800.0;good;no_of_deaths_by_country_clean.csv
+2093;53;Eritrea;2000;1100.0;count;690.0;1500.0;1100.0;good;no_of_deaths_by_country_clean.csv
+1923;53;Eritrea;2010;620.0;count;500.0;980.0;620.0;good;no_of_deaths_by_country_clean.csv
+1753;53;Eritrea;2018;500.0;count;500.0;890.0;500.0;good;no_of_deaths_by_country_clean.csv
+2094;54;Estonia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1924;54;Estonia;2010;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1754;54;Estonia;2018;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+2095;55;Eswatini;2000;5000.0;count;4000.0;6100.0;5000.0;good;no_of_deaths_by_country_clean.csv
+1925;55;Eswatini;2010;3800.0;count;3400.0;4200.0;3800.0;good;no_of_deaths_by_country_clean.csv
+1755;55;Eswatini;2018;2400.0;count;2000.0;2900.0;2400.0;good;no_of_deaths_by_country_clean.csv
+2096;56;Ethiopia;2000;58000.0;count;35000.0;100000.0;58000.0;good;no_of_deaths_by_country_clean.csv
+1926;56;Ethiopia;2010;20000.0;count;12000.0;35000.0;20000.0;good;no_of_deaths_by_country_clean.csv
+1756;56;Ethiopia;2018;11000.0;count;6800.0;19000.0;11000.0;good;no_of_deaths_by_country_clean.csv
+2097;57;Fiji;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1927;57;Fiji;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1757;57;Fiji;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2098;58;Finland;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1928;58;Finland;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1758;58;Finland;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2099;59;France;2000;880.0;count;720.0;1000.0;880.0;good;no_of_deaths_by_country_clean.csv
+1929;59;France;2010;600.0;count;500.0;780.0;600.0;good;no_of_deaths_by_country_clean.csv
+1759;59;France;2018;500.0;count;500.0;540.0;500.0;good;no_of_deaths_by_country_clean.csv
+2100;60;Gabon;2000;1600.0;count;1100.0;2300.0;1600.0;good;no_of_deaths_by_country_clean.csv
+1930;60;Gabon;2010;1600.0;count;1100.0;2100.0;1600.0;good;no_of_deaths_by_country_clean.csv
+1760;60;Gabon;2018;1200.0;count;790.0;1700.0;1200.0;good;no_of_deaths_by_country_clean.csv
+2101;61;Gambia;2000;500.0;count;500.0;620.0;500.0;good;no_of_deaths_by_country_clean.csv
+1931;61;Gambia;2010;970.0;count;660.0;1400.0;970.0;good;no_of_deaths_by_country_clean.csv
+1761;61;Gambia;2018;980.0;count;650.0;1400.0;980.0;good;no_of_deaths_by_country_clean.csv
+2102;62;Georgia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1932;62;Georgia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1762;62;Georgia;2018;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2103;63;Germany;2000;880.0;count;690.0;1100.0;880.0;good;no_of_deaths_by_country_clean.csv
+1933;63;Germany;2010;500.0;count;500.0;720.0;500.0;good;no_of_deaths_by_country_clean.csv
+1763;63;Germany;2018;500.0;count;500.0;670.0;500.0;good;no_of_deaths_by_country_clean.csv
+2104;64;Ghana;2000;18000.0;count;15000.0;22000.0;18000.0;good;no_of_deaths_by_country_clean.csv
+1934;64;Ghana;2010;17000.0;count;14000.0;19000.0;17000.0;good;no_of_deaths_by_country_clean.csv
+1764;64;Ghana;2018;14000.0;count;11000.0;18000.0;14000.0;good;no_of_deaths_by_country_clean.csv
+2105;65;Greece;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1935;65;Greece;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1765;65;Greece;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2106;66;Guatemala;2000;2400.0;count;2000.0;2700.0;2400.0;good;no_of_deaths_by_country_clean.csv
+1936;66;Guatemala;2010;1700.0;count;1500.0;1900.0;1700.0;good;no_of_deaths_by_country_clean.csv
+1766;66;Guatemala;2018;2200.0;count;2000.0;2400.0;2200.0;good;no_of_deaths_by_country_clean.csv
+2107;67;Guinea;2000;5000.0;count;3400.0;7000.0;5000.0;good;no_of_deaths_by_country_clean.csv
+1937;67;Guinea;2010;4100.0;count;3300.0;5000.0;4100.0;good;no_of_deaths_by_country_clean.csv
+1767;67;Guinea;2018;4300.0;count;3300.0;5400.0;4300.0;good;no_of_deaths_by_country_clean.csv
+2108;68;Guinea-Bissau;2000;1100.0;count;850.0;1400.0;1100.0;good;no_of_deaths_by_country_clean.csv
+1938;68;Guinea-Bissau;2010;1900.0;count;1500.0;2200.0;1900.0;good;no_of_deaths_by_country_clean.csv
+1768;68;Guinea-Bissau;2018;1800.0;count;1400.0;2100.0;1800.0;good;no_of_deaths_by_country_clean.csv
+2109;69;Guyana;2000;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1939;69;Guyana;2010;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1769;69;Guyana;2018;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2110;70;Haiti;2000;12000.0;count;9400.0;15000.0;12000.0;good;no_of_deaths_by_country_clean.csv
+1940;70;Haiti;2010;4900.0;count;3800.0;6600.0;4900.0;good;no_of_deaths_by_country_clean.csv
+1770;70;Haiti;2018;2700.0;count;2200.0;3600.0;2700.0;good;no_of_deaths_by_country_clean.csv
+2111;71;Honduras;2000;3200.0;count;2300.0;4000.0;3200.0;good;no_of_deaths_by_country_clean.csv
+1941;71;Honduras;2010;1400.0;count;990.0;1800.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1771;71;Honduras;2018;780.0;count;540.0;1100.0;780.0;good;no_of_deaths_by_country_clean.csv
+2112;72;Hungary;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1942;72;Hungary;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1772;72;Hungary;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2113;73;Iceland;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1943;73;Iceland;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1773;73;Iceland;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2114;74;India;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1944;74;India;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1774;74;India;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2115;75;Indonesia;2000;1900.0;count;1200.0;2500.0;1900.0;good;no_of_deaths_by_country_clean.csv
+1945;75;Indonesia;2010;24000.0;count;19000.0;28000.0;24000.0;good;no_of_deaths_by_country_clean.csv
+1775;75;Indonesia;2018;38000.0;count;33000.0;43000.0;38000.0;good;no_of_deaths_by_country_clean.csv
+2116;76;Iran;2000;500.0;count;500.0;1400.0;500.0;good;no_of_deaths_by_country_clean.csv
+1946;76;Iran;2010;2400.0;count;1700.0;3500.0;2400.0;good;no_of_deaths_by_country_clean.csv
+1776;76;Iran;2018;2600.0;count;1400.0;5100.0;2600.0;good;no_of_deaths_by_country_clean.csv
+2117;77;Ireland;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1947;77;Ireland;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1777;77;Ireland;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2118;78;Israel;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1948;78;Israel;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1778;78;Israel;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2119;79;Italy;2000;1200.0;count;1000.0;1500.0;1200.0;good;no_of_deaths_by_country_clean.csv
+1949;79;Italy;2010;830.0;count;620.0;1100.0;830.0;good;no_of_deaths_by_country_clean.csv
+1779;79;Italy;2018;710.0;count;510.0;930.0;710.0;good;no_of_deaths_by_country_clean.csv
+2120;80;Jamaica;2000;2400.0;count;1900.0;3100.0;2400.0;good;no_of_deaths_by_country_clean.csv
+1950;80;Jamaica;2010;1800.0;count;1500.0;2100.0;1800.0;good;no_of_deaths_by_country_clean.csv
+1780;80;Jamaica;2018;1500.0;count;1300.0;1800.0;1500.0;good;no_of_deaths_by_country_clean.csv
+2121;81;Japan;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1951;81;Japan;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1781;81;Japan;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2122;82;Jordan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1952;82;Jordan;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1782;82;Jordan;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2123;83;Kazakhstan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1953;83;Kazakhstan;2010;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1783;83;Kazakhstan;2018;500.0;count;500.0;530.0;500.0;good;no_of_deaths_by_country_clean.csv
+2124;84;Kenya;2000;120000.0;count;88000.0;190000.0;120000.0;good;no_of_deaths_by_country_clean.csv
+1954;84;Kenya;2010;56000.0;count;41000.0;86000.0;56000.0;good;no_of_deaths_by_country_clean.csv
+1784;84;Kenya;2018;25000.0;count;18000.0;38000.0;25000.0;good;no_of_deaths_by_country_clean.csv
+2125;85;Kuwait;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1955;85;Kuwait;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1785;85;Kuwait;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2126;86;Kyrgyzstan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1956;86;Kyrgyzstan;2010;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1786;86;Kyrgyzstan;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2127;87;Laos;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1957;87;Laos;2010;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1787;87;Laos;2018;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2128;88;Latvia;2000;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1958;88;Latvia;2010;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1788;88;Latvia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2129;89;Lebanon;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1959;89;Lebanon;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1789;89;Lebanon;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2130;90;Lesotho;2000;12000.0;count;9000.0;16000.0;12000.0;good;no_of_deaths_by_country_clean.csv
+1960;90;Lesotho;2010;7200.0;count;5600.0;10000.0;7200.0;good;no_of_deaths_by_country_clean.csv
+1790;90;Lesotho;2018;6100.0;count;5000.0;7600.0;6100.0;good;no_of_deaths_by_country_clean.csv
+2131;91;Liberia;2000;3000.0;count;2600.0;3400.0;3000.0;good;no_of_deaths_by_country_clean.csv
+1961;91;Liberia;2010;2700.0;count;2600.0;2900.0;2700.0;good;no_of_deaths_by_country_clean.csv
+1791;91;Liberia;2018;1800.0;count;1700.0;1900.0;1800.0;good;no_of_deaths_by_country_clean.csv
+2132;92;Libya;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1962;92;Libya;2010;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1792;92;Libya;2018;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2133;93;Lithuania;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1963;93;Lithuania;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1793;93;Lithuania;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2134;94;Luxembourg;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1964;94;Luxembourg;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1794;94;Luxembourg;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2135;95;Madagascar;2000;500.0;count;200.0;930.0;500.0;good;no_of_deaths_by_country_clean.csv
+1965;95;Madagascar;2010;1400.0;count;1000.0;1700.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1795;95;Madagascar;2018;1700.0;count;1200.0;2300.0;1700.0;good;no_of_deaths_by_country_clean.csv
+2136;96;Malawi;2000;57000.0;count;49000.0;65000.0;57000.0;good;no_of_deaths_by_country_clean.csv
+1966;96;Malawi;2010;29000.0;count;25000.0;33000.0;29000.0;good;no_of_deaths_by_country_clean.csv
+1796;96;Malawi;2018;13000.0;count;11000.0;16000.0;13000.0;good;no_of_deaths_by_country_clean.csv
+2137;97;Malaysia;2000;2700.0;count;2200.0;3200.0;2700.0;good;no_of_deaths_by_country_clean.csv
+1967;97;Malaysia;2010;2900.0;count;2400.0;3300.0;2900.0;good;no_of_deaths_by_country_clean.csv
+1797;97;Malaysia;2018;2600.0;count;2100.0;3300.0;2600.0;good;no_of_deaths_by_country_clean.csv
+2138;98;Maldives;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1968;98;Maldives;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1798;98;Maldives;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2139;99;Mali;2000;7700.0;count;5600.0;9800.0;7700.0;good;no_of_deaths_by_country_clean.csv
+1969;99;Mali;2010;5300.0;count;4100.0;6700.0;5300.0;good;no_of_deaths_by_country_clean.csv
+1799;99;Mali;2018;6500.0;count;5000.0;8700.0;6500.0;good;no_of_deaths_by_country_clean.csv
+2140;100;Malta;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1970;100;Malta;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1800;100;Malta;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2141;101;Mauritania;2000;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1971;101;Mauritania;2010;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1801;101;Mauritania;2018;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2142;102;Mauritius;2000;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1972;102;Mauritius;2010;500.0;count;500.0;680.0;500.0;good;no_of_deaths_by_country_clean.csv
+1802;102;Mauritius;2018;610.0;count;500.0;820.0;610.0;good;no_of_deaths_by_country_clean.csv
+2143;103;Mexico;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1973;103;Mexico;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1803;103;Mexico;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2168;128;Moldova;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1998;128;Moldova;2010;740.0;count;510.0;1100.0;740.0;good;no_of_deaths_by_country_clean.csv
+1828;128;Moldova;2018;570.0;count;500.0;860.0;570.0;good;no_of_deaths_by_country_clean.csv
+2144;104;Mongolia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1974;104;Mongolia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1804;104;Mongolia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2145;105;Montenegro;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1975;105;Montenegro;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1805;105;Montenegro;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2146;106;Morocco;2000;500.0;count;500.0;680.0;500.0;good;no_of_deaths_by_country_clean.csv
+1976;106;Morocco;2010;550.0;count;500.0;840.0;550.0;good;no_of_deaths_by_country_clean.csv
+1806;106;Morocco;2018;500.0;count;500.0;600.0;500.0;good;no_of_deaths_by_country_clean.csv
+2147;107;Mozambique;2000;40000.0;count;29000.0;54000.0;40000.0;good;no_of_deaths_by_country_clean.csv
+1977;107;Mozambique;2010;64000.0;count;46000.0;87000.0;64000.0;good;no_of_deaths_by_country_clean.csv
+1807;107;Mozambique;2018;54000.0;count;39000.0;73000.0;54000.0;good;no_of_deaths_by_country_clean.csv
+2148;108;Myanmar;2000;5800.0;count;4600.0;6800.0;5800.0;good;no_of_deaths_by_country_clean.csv
+1978;108;Myanmar;2010;11000.0;count;9600.0;13000.0;11000.0;good;no_of_deaths_by_country_clean.csv
+1808;108;Myanmar;2018;7800.0;count;5900.0;11000.0;7800.0;good;no_of_deaths_by_country_clean.csv
+2149;109;Namibia;2000;7300.0;count;5700.0;9100.0;7300.0;good;no_of_deaths_by_country_clean.csv
+1979;109;Namibia;2010;3500.0;count;3000.0;3900.0;3500.0;good;no_of_deaths_by_country_clean.csv
+1809;109;Namibia;2018;2700.0;count;2300.0;3200.0;2700.0;good;no_of_deaths_by_country_clean.csv
+2150;110;Nepal;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1980;110;Nepal;2010;1400.0;count;1200.0;1700.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1810;110;Nepal;2018;910.0;count;700.0;1200.0;910.0;good;no_of_deaths_by_country_clean.csv
+2151;111;Netherlands;2000;200.0;count;200.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1981;111;Netherlands;2010;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1811;111;Netherlands;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2152;112;New Zealand;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1982;112;New Zealand;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1812;112;New Zealand;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2153;113;Nicaragua;2000;100.0;count;100.0;500.0;100.0;good;no_of_deaths_by_country_clean.csv
+1983;113;Nicaragua;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1813;113;Nicaragua;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2154;114;Niger;2000;2300.0;count;1700.0;3000.0;2300.0;good;no_of_deaths_by_country_clean.csv
+1984;114;Niger;2010;1700.0;count;1300.0;2100.0;1700.0;good;no_of_deaths_by_country_clean.csv
+1814;114;Niger;2018;1200.0;count;970.0;1700.0;1200.0;good;no_of_deaths_by_country_clean.csv
+2155;115;Nigeria;2000;78000.0;count;45000.0;130000.0;78000.0;good;no_of_deaths_by_country_clean.csv
+1985;115;Nigeria;2010;72000.0;count;42000.0;120000.0;72000.0;good;no_of_deaths_by_country_clean.csv
+1815;115;Nigeria;2018;53000.0;count;31000.0;89000.0;53000.0;good;no_of_deaths_by_country_clean.csv
+2084;44;North Korea;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1914;44;North Korea;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1744;44;North Korea;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2169;129;North Macedonia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1999;129;North Macedonia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1829;129;North Macedonia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2156;116;Norway;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1986;116;Norway;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1816;116;Norway;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2157;117;Oman;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1987;117;Oman;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1817;117;Oman;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2158;118;Pakistan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1988;118;Pakistan;2010;1400.0;count;870.0;1900.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1818;118;Pakistan;2018;6400.0;count;5200.0;7600.0;6400.0;good;no_of_deaths_by_country_clean.csv
+2159;119;Panama;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1989;119;Panama;2010;500.0;count;500.0;570.0;500.0;good;no_of_deaths_by_country_clean.csv
+1819;119;Panama;2018;500.0;count;500.0;530.0;500.0;good;no_of_deaths_by_country_clean.csv
+2160;120;Papua New Guinea;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1990;120;Papua New Guinea;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1820;120;Papua New Guinea;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2161;121;Paraguay;2000;500.0;count;200.0;920.0;500.0;good;no_of_deaths_by_country_clean.csv
+1991;121;Paraguay;2010;790.0;count;540.0;1200.0;790.0;good;no_of_deaths_by_country_clean.csv
+1821;121;Paraguay;2018;720.0;count;500.0;1200.0;720.0;good;no_of_deaths_by_country_clean.csv
+2162;122;Peru;2000;5100.0;count;3800.0;7000.0;5100.0;good;no_of_deaths_by_country_clean.csv
+1992;122;Peru;2010;2100.0;count;1400.0;3300.0;2100.0;good;no_of_deaths_by_country_clean.csv
+1822;122;Peru;2018;1000.0;count;650.0;1900.0;1000.0;good;no_of_deaths_by_country_clean.csv
+2163;123;Philippines;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1993;123;Philippines;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1823;123;Philippines;2018;1200.0;count;800.0;1700.0;1200.0;good;no_of_deaths_by_country_clean.csv
+2164;124;Poland;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1994;124;Poland;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1824;124;Poland;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2165;125;Portugal;2000;1100.0;count;890.0;1400.0;1100.0;good;no_of_deaths_by_country_clean.csv
+1995;125;Portugal;2010;930.0;count;730.0;1200.0;930.0;good;no_of_deaths_by_country_clean.csv
+1825;125;Portugal;2018;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2166;126;Qatar;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1996;126;Qatar;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1826;126;Qatar;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2170;130;Romania;2000;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2000;130;Romania;2010;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+1830;130;Romania;2018;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2171;131;Russia;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2001;131;Russia;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1831;131;Russia;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2172;132;Rwanda;2000;18000.0;count;14000.0;22000.0;18000.0;good;no_of_deaths_by_country_clean.csv
+2002;132;Rwanda;2010;5700.0;count;4700.0;7100.0;5700.0;good;no_of_deaths_by_country_clean.csv
+1832;132;Rwanda;2018;2900.0;count;2400.0;3500.0;2900.0;good;no_of_deaths_by_country_clean.csv
+2173;133;Saudi Arabia;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2003;133;Saudi Arabia;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1833;133;Saudi Arabia;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2174;134;Senegal;2000;1700.0;count;1300.0;2300.0;1700.0;good;no_of_deaths_by_country_clean.csv
+2004;134;Senegal;2010;1300.0;count;1000.0;1800.0;1300.0;good;no_of_deaths_by_country_clean.csv
+1834;134;Senegal;2018;1300.0;count;1000.0;1600.0;1300.0;good;no_of_deaths_by_country_clean.csv
+2175;135;Serbia;2000;200.0;count;100.0;200.0;200.0;good;no_of_deaths_by_country_clean.csv
+2005;135;Serbia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1835;135;Serbia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2176;136;Sierra Leone;2000;2400.0;count;1600.0;3300.0;2400.0;good;no_of_deaths_by_country_clean.csv
+2006;136;Sierra Leone;2010;2900.0;count;2400.0;3600.0;2900.0;good;no_of_deaths_by_country_clean.csv
+1836;136;Sierra Leone;2018;2100.0;count;1600.0;2800.0;2100.0;good;no_of_deaths_by_country_clean.csv
+2177;137;Singapore;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2007;137;Singapore;2010;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+1837;137;Singapore;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2178;138;Slovakia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2008;138;Slovakia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1838;138;Slovakia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2179;139;Slovenia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2009;139;Slovenia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1839;139;Slovenia;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2180;140;Somalia;2000;810.0;count;560.0;1100.0;810.0;good;no_of_deaths_by_country_clean.csv
+2010;140;Somalia;2010;1400.0;count;1200.0;1700.0;1400.0;good;no_of_deaths_by_country_clean.csv
+1840;140;Somalia;2018;710.0;count;530.0;1000.0;710.0;good;no_of_deaths_by_country_clean.csv
+2181;141;South Africa;2000;100000.0;count;68000.0;140000.0;100000.0;good;no_of_deaths_by_country_clean.csv
+2011;141;South Africa;2010;140000.0;count;110000.0;170000.0;140000.0;good;no_of_deaths_by_country_clean.csv
+1841;141;South Africa;2018;71000.0;count;52000.0;91000.0;71000.0;good;no_of_deaths_by_country_clean.csv
+2167;127;South Korea;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+1997;127;South Korea;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1827;127;South Korea;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2182;142;South Sudan;2000;5100.0;count;2600.0;7500.0;5100.0;good;no_of_deaths_by_country_clean.csv
+2012;142;South Sudan;2010;9800.0;count;7300.0;13000.0;9800.0;good;no_of_deaths_by_country_clean.csv
+1842;142;South Sudan;2018;9900.0;count;6900.0;13000.0;9900.0;good;no_of_deaths_by_country_clean.csv
+2183;143;Spain;2000;1800.0;count;1500.0;2300.0;1800.0;good;no_of_deaths_by_country_clean.csv
+2013;143;Spain;2010;1300.0;count;1100.0;1700.0;1300.0;good;no_of_deaths_by_country_clean.csv
+1843;143;Spain;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2184;144;Sri Lanka;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2014;144;Sri Lanka;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1844;144;Sri Lanka;2018;200.0;count;200.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2185;145;Sudan;2000;650.0;count;500.0;1700.0;650.0;good;no_of_deaths_by_country_clean.csv
+2015;145;Sudan;2010;1900.0;count;1300.0;2600.0;1900.0;good;no_of_deaths_by_country_clean.csv
+1845;145;Sudan;2018;2900.0;count;1400.0;5200.0;2900.0;good;no_of_deaths_by_country_clean.csv
+2186;146;Suriname;2000;200.0;count;100.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2016;146;Suriname;2010;200.0;count;100.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1846;146;Suriname;2018;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+2187;147;Sweden;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2017;147;Sweden;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1847;147;Sweden;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2188;148;Switzerland;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2018;148;Switzerland;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1848;148;Switzerland;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2189;149;Syria;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2019;149;Syria;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1849;149;Syria;2018;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2190;150;Tajikistan;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2020;150;Tajikistan;2010;500.0;count;500.0;560.0;500.0;good;no_of_deaths_by_country_clean.csv
+1850;150;Tajikistan;2018;500.0;count;500.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2202;162;Tanzania;2000;80000.0;count;69000.0;90000.0;80000.0;good;no_of_deaths_by_country_clean.csv
+2032;162;Tanzania;2010;48000.0;count;42000.0;53000.0;48000.0;good;no_of_deaths_by_country_clean.csv
+1862;162;Tanzania;2018;24000.0;count;20000.0;29000.0;24000.0;good;no_of_deaths_by_country_clean.csv
+2191;151;Thailand;2000;54000.0;count;45000.0;62000.0;54000.0;good;no_of_deaths_by_country_clean.csv
+2021;151;Thailand;2010;27000.0;count;19000.0;36000.0;27000.0;good;no_of_deaths_by_country_clean.csv
+1851;151;Thailand;2018;18000.0;count;13000.0;26000.0;18000.0;good;no_of_deaths_by_country_clean.csv
+2192;152;Timor-Leste;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2022;152;Timor-Leste;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1852;152;Timor-Leste;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2193;153;Togo;2000;5600.0;count;5000.0;6300.0;5600.0;good;no_of_deaths_by_country_clean.csv
+2023;153;Togo;2010;5700.0;count;5100.0;6300.0;5700.0;good;no_of_deaths_by_country_clean.csv
+1853;153;Togo;2018;3800.0;count;3300.0;4200.0;3800.0;good;no_of_deaths_by_country_clean.csv
+2194;154;Trinidad and Tobago;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2024;154;Trinidad and Tobago;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1854;154;Trinidad and Tobago;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2195;155;Tunisia;2000;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+2025;155;Tunisia;2010;100.0;count;100.0;100.0;100.0;good;no_of_deaths_by_country_clean.csv
+1855;155;Tunisia;2018;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+2196;156;Turkey;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2026;156;Turkey;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1856;156;Turkey;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2197;157;Turkmenistan;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2027;157;Turkmenistan;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1857;157;Turkmenistan;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2198;158;Uganda;2000;85000.0;count;75000.0;99000.0;85000.0;good;no_of_deaths_by_country_clean.csv
+2028;158;Uganda;2010;56000.0;count;48000.0;66000.0;56000.0;good;no_of_deaths_by_country_clean.csv
+1858;158;Uganda;2018;23000.0;count;19000.0;31000.0;23000.0;good;no_of_deaths_by_country_clean.csv
+2199;159;Ukraine;2000;4500.0;count;3100.0;6200.0;4500.0;good;no_of_deaths_by_country_clean.csv
+2029;159;Ukraine;2010;12000.0;count;10000.0;15000.0;12000.0;good;no_of_deaths_by_country_clean.csv
+1859;159;Ukraine;2018;6100.0;count;4700.0;8000.0;6100.0;good;no_of_deaths_by_country_clean.csv
+2200;160;United Arab Emirates;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2030;160;United Arab Emirates;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1860;160;United Arab Emirates;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2201;161;United Kingdom;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2031;161;United Kingdom;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1861;161;United Kingdom;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2203;163;United States;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2033;163;United States;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1863;163;United States;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2204;164;Uruguay;2000;500.0;count;100.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+2034;164;Uruguay;2010;500.0;count;200.0;500.0;500.0;good;no_of_deaths_by_country_clean.csv
+1864;164;Uruguay;2018;200.0;count;100.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+2205;165;Uzbekistan;2000;840.0;count;740.0;920.0;840.0;good;no_of_deaths_by_country_clean.csv
+2035;165;Uzbekistan;2010;1800.0;count;1700.0;1900.0;1800.0;good;no_of_deaths_by_country_clean.csv
+1865;165;Uzbekistan;2018;1300.0;count;1100.0;1500.0;1300.0;good;no_of_deaths_by_country_clean.csv
+2206;166;Venezuela;2000;;count;;;;good;no_of_deaths_by_country_clean.csv
+2036;166;Venezuela;2010;;count;;;;good;no_of_deaths_by_country_clean.csv
+1866;166;Venezuela;2018;;count;;;;good;no_of_deaths_by_country_clean.csv
+2207;167;Viet Nam;2000;6100.0;count;4300.0;7800.0;6100.0;good;no_of_deaths_by_country_clean.csv
+2037;167;Viet Nam;2010;8500.0;count;6400.0;9800.0;8500.0;good;no_of_deaths_by_country_clean.csv
+1867;167;Viet Nam;2018;4700.0;count;3200.0;6200.0;4700.0;good;no_of_deaths_by_country_clean.csv
+2208;168;Yemen;2000;100.0;count;100.0;200.0;100.0;good;no_of_deaths_by_country_clean.csv
+2038;168;Yemen;2010;200.0;count;100.0;500.0;200.0;good;no_of_deaths_by_country_clean.csv
+1868;168;Yemen;2018;500.0;count;200.0;520.0;500.0;good;no_of_deaths_by_country_clean.csv
+2209;169;Zambia;2000;62000.0;count;49000.0;81000.0;62000.0;good;no_of_deaths_by_country_clean.csv
+2039;169;Zambia;2010;26000.0;count;21000.0;35000.0;26000.0;good;no_of_deaths_by_country_clean.csv
+1869;169;Zambia;2018;17000.0;count;13000.0;22000.0;17000.0;good;no_of_deaths_by_country_clean.csv
+2210;170;Zimbabwe;2000;120000.0;count;98000.0;150000.0;120000.0;good;no_of_deaths_by_country_clean.csv
+2040;170;Zimbabwe;2010;54000.0;count;43000.0;68000.0;54000.0;good;no_of_deaths_by_country_clean.csv
+1870;170;Zimbabwe;2018;22000.0;count;17000.0;27000.0;22000.0;good;no_of_deaths_by_country_clean.csv
