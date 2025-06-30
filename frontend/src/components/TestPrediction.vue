@@ -5,11 +5,11 @@
     
     <!-- Encart d'informations importantes -->
     <div class="info-panel">
-      <h3>📊 {{ $t('prediction_guidelines_title') || 'Guide pour une prédiction réussie' }}</h3>
+      <h3> {{ $t('prediction_guidelines_title') || 'Guide pour une prédiction réussie' }}</h3>
       
       <div class="guidelines-grid">
         <div class="guideline-item success">
-          <h4>✅ {{ $t('what_works') || 'Combinaisons qui fonctionnent bien' }}</h4>
+          <h4> {{ $t('what_works') || 'Combinaisons qui fonctionnent bien' }}</h4>
           <ul>
             <li><strong>{{ $t('region_only') || 'Région seule' }}</strong> : {{ $t('region_simple_effective') || 'Sélectionnez juste une région (Europe, Americas...) - Simple et efficace !' }}</li>
             <li><strong>{{ $t('region_plus_indicator') || 'Région + Indicateur' }}</strong> : {{ $t('combine_region_indicator') || 'Combinez une région avec un indicateur spécifique' }}</li>
@@ -22,7 +22,7 @@
         </div>
         
         <div class="guideline-item warning">
-          <h4>⚠️ {{ $t('what_to_avoid') || 'À éviter absolument' }}</h4>
+          <h4> {{ $t('what_to_avoid') || 'À éviter absolument' }}</h4>
           <ul>
             <li><strong>{{ $t('no_filter') || 'Aucun filtre' }}</strong> : {{ $t('select_at_least_region') || 'Sélectionnez au moins une région OU un indicateur' }}</li>
             <li><strong>{{ $t('too_specific') || 'Trop de filtres' }}</strong> : {{ $t('avoid_rare_short') || 'Évitez de combiner indicateur rare + période courte' }}</li>
@@ -34,7 +34,7 @@
       
       <div class="guidelines-grid">
         <div class="guideline-item info">
-          <h4>🎯 {{ $t('recommended_start') || 'Pour commencer facilement' }}</h4>
+          <h4> {{ $t('recommended_start') || 'Pour commencer facilement' }}</h4>
           <ul>
             <li><strong>{{ $t('beginner') }}</strong> : {{ $t('select_europe_americas') || 'Sélectionnez juste "Europe" ou "Americas"' }}</li>
             <li><strong>{{ $t('intermediate') }}</strong> : {{ $t('europe_plus_column') || '"Europe" + "' + $t('column_people_living_hiv') + '"' }}</li>
@@ -43,7 +43,7 @@
         </div>
         
         <div class="guideline-item technical">
-          <h4>⚙️ {{ $t('technical_info') || 'Informations techniques' }}</h4>
+          <h4> {{ $t('technical_info') || 'Informations techniques' }}</h4>
           <ul>
             <li><strong>{{ $t('minimum_required') }}</strong> : {{ $t('min_10_data_points') || '10+ points de données' }}</li>
             <li><strong>{{ $t('optimal') }}</strong> : {{ $t('optimal_50_data_points') || '50+ points de données' }}</li>
@@ -88,12 +88,12 @@
   </div>
 
     <button @click="submitChoices" :disabled="!canSubmit || loading">
-      {{ loading ? `🔄 ${$t('processing_in_progress')}` : `🚀 ${$t('launch_prediction')}` }}
+      {{ loading ? ` ${$t('processing_in_progress')}` : ` ${$t('launch_prediction')}` }}
     </button>
     
     <!-- Message d'aide simplifié -->
     <div class="help-info-simple">
-      💡 <strong>{{ $t('quick_tip') || 'Conseil express' }}</strong> : 
+       <strong>{{ $t('quick_tip') || 'Conseil express' }}</strong> : 
       {{ $t('quick_tip_text') || 'Pour commencer, sélectionnez juste une région (Europe, Americas...). C\'est simple et ça marche très bien !' }}
     </div>
     
@@ -146,7 +146,7 @@ const canSubmit = computed(() => {
 
 // Chargement des métadonnées essentielles
 onMounted(async () => {
-  console.log("🚀 TESTPREDICTION.VUE - VERSION SIMPLIFIÉE !");
+  console.log(" TESTPREDICTION.VUE - VERSION SIMPLIFIÉE !");
   
   try {
     loading.value = true;
@@ -163,7 +163,7 @@ onMounted(async () => {
       fetchFromAPI("/health-indicators/years/")
     ]);
 
-    console.log("📊 Métadonnées chargées:");
+    console.log(" Métadonnées chargées:");
     console.log("- Régions:", responseRegions);
     console.log("- Types d'indicateurs:", responseIndicatorTypes);
     console.log("- Années:", responseYears);
@@ -173,10 +173,10 @@ onMounted(async () => {
     indicatorTypes.value = responseIndicatorTypes.indicator_types || [];
     availableYears.value = responseYears.years || [];
 
-    console.log("✅ Interface simplifiée prête");
+    console.log(" Interface simplifiée prête");
 
   } catch (err) {
-    console.error("❌ Erreur lors du chargement des métadonnées:", err);
+    console.error(" Erreur lors du chargement des métadonnées:", err);
     error.value = t('metadata_loading_error') + ": " + err.message;
   } finally {
     loading.value = false;
@@ -206,7 +206,7 @@ const updateDebugInfo = () => {
 const submitChoices = async () => {
   // Validation simplifiée
   if (!canSubmit.value) {
-    error.value = `💡 ${t('tip_select_region')}`;
+    error.value = ` ${t('tip_select_region')}`;
     return;
   }
 
@@ -236,8 +236,8 @@ const submitChoices = async () => {
     payload.year_max = parseInt(yearMax.value);
   }
 
-  console.log("📤 Payload optimisé envoyé:", payload);
-  console.log("📋 Validation du payload:");
+  console.log(" Payload optimisé envoyé:", payload);
+  console.log(" Validation du payload:");
   console.log(`  - table: ${payload.table} (requis)`);
   console.log(`  - target_column: ${payload.target_column} (requis)`);
   console.log(`  - max_records: ${payload.max_records} (entre 100-100000)`);
@@ -251,26 +251,26 @@ const submitChoices = async () => {
     success.value = null;
     
     // Étape 1: Créer le DataFrame avec la nouvelle API flexible
-    console.log("📊 Création du DataFrame...");
+    console.log(" Création du DataFrame...");
     const response = await fetchFromAPI("/dataframe/", {
       method: "POST",
       data: payload  // Changer de 'body' à 'data' pour correspondre au service API
     });
     
-    console.log("✅ DataFrame créé:", response);
-    console.log(`📈 ${response.data.length} enregistrements, ${response.shape[1]} colonnes`);
-    console.log("📊 Statistiques:", response.statistics);
+    console.log(" DataFrame créé:", response);
+    console.log(` ${response.data.length} enregistrements, ${response.shape[1]} colonnes`);
+    console.log(" Statistiques:", response.statistics);
     
     if (!response.data || response.data.length === 0) {
       throw new Error(t('no_data_found_widen'));
     }
 
     if (response.data.length < 10) {
-      console.warn(`⚠️ ${t('few_data_imprecise')}`);
+      console.warn(` ${t('few_data_imprecise')}`);
     }
 
     // Étape 2: Entraîner le modèle avec les données structurées
-    console.log("🤖 Entraînement du modèle...");
+    console.log(" Entraînement du modèle...");
     const trainPayload = {
       dataframe: response.data, // Utiliser les données structurées
       target_column: "value" // Toujours 'value' dans le nouveau schéma
@@ -281,18 +281,18 @@ const submitChoices = async () => {
       data: trainPayload  // Changer de 'body' à 'data'
     });
     
-    console.log("🎯 Modèle entraîné avec succès:", trainResponse);
+    console.log(" Modèle entraîné avec succès:", trainResponse);
     
     // Message de succès détaillé
     const rmse = trainResponse.rmse?.toFixed(2) || 'N/A';
     const r2 = trainResponse.r2?.toFixed(3) || 'N/A';
     const dataCount = response.data.length;
     
-    success.value = `✅ ${t('model_trained_success')} 
-📊 ${dataCount} ${t('data_points_used')}
-📈 RMSE: ${rmse}
-🎯 R²: ${r2}
-${trainResponse.future_prediction ? `🔮 ${t('future_prediction')}: ${trainResponse.future_prediction.toFixed(2)} (${trainResponse.future_year})` : ''}`;
+    success.value = ` ${t('model_trained_success')} 
+ ${dataCount} ${t('data_points_used')}
+ RMSE: ${rmse}
+ R²: ${r2}
+${trainResponse.future_prediction ? ` ${t('future_prediction')}: ${trainResponse.future_prediction.toFixed(2)} (${trainResponse.future_year})` : ''}`;
 
     // Rediriger vers la page de graphiques avec toutes les infos
     setTimeout(() => {
@@ -309,7 +309,7 @@ ${trainResponse.future_prediction ? `🔮 ${t('future_prediction')}: ${trainResp
     }, 2000);
 
   } catch (err) {
-    console.error("❌ Erreur lors de la prédiction:", err);
+    console.error(" Erreur lors de la prédiction:", err);
     
     // Messages d'erreur plus informatifs avec détection du problème
     let errorMessage = t('prediction_error');
@@ -320,21 +320,21 @@ ${trainResponse.future_prediction ? `🔮 ${t('future_prediction')}: ${trainResp
       if (detail && Array.isArray(detail)) {
         // Erreurs de validation Pydantic
         const validationErrors = detail.map(e => `${e.loc?.join('.')}: ${e.msg}`).join(', ');
-        errorMessage = `❌ ${t('invalid_parameters')}: ${validationErrors}`;
+        errorMessage = ` ${t('invalid_parameters')}: ${validationErrors}`;
       } else {
-        errorMessage = `❌ ${t('invalid_parameters')}. ${t('detail') || 'Détail'}: ${detail || t('incorrect_data_structure') || 'Structure des données incorrecte'}`;
+        errorMessage = ` ${t('invalid_parameters')}. ${t('detail') || 'Détail'}: ${detail || t('incorrect_data_structure') || 'Structure des données incorrecte'}`;
       }
       
       // Logs de debug pour identifier le problème
-      console.log("🔍 Payload envoyé qui a causé l'erreur 422:", payload);
-      console.log("🔍 Réponse d'erreur complète:", err.response.data);
+      console.log(" Payload envoyé qui a causé l'erreur 422:", payload);
+      console.log(" Réponse d'erreur complète:", err.response.data);
       
     } else if (err.response && err.response.status === 404) {
-      errorMessage = `❌ ${t('no_data_found_region')}`;
+      errorMessage = ` ${t('no_data_found_region')}`;
     } else if (err.response && err.response.status === 500) {
-      errorMessage = `❌ ${t('server_error_check')}`;
+      errorMessage = ` ${t('server_error_check')}`;
     } else if (err.message && err.message.includes('assez de données')) {
-      errorMessage = `❌ ${t('not_enough_data')}`;
+      errorMessage = ` ${t('not_enough_data')}`;
     } else {
       errorMessage = err.message || errorMessage;
     }

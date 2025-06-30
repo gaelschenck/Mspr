@@ -40,7 +40,7 @@
         
         <!-- Message d'aide pour les encodages -->
         <div class="encoding-help">
-          <h4>💡 {{ $t('etl_encoding_help') || 'Help for encoding issues' }}</h4>
+          <h4> {{ $t('etl_encoding_help') || 'Help for encoding issues' }}</h4>
           <p>{{ $t('etl_encoding_text') || 'If you encounter UTF-8 errors, your CSV files may contain special characters (é, è, à...). The system automatically tries multiple encodings.' }}</p>
         </div>
         
@@ -74,9 +74,9 @@
       
       <!-- Message d'aide si pas de fichiers -->
       <div v-if="sourceFiles.length === 0" class="no-files-message">
-        <h3>📁 {{ $t('etl_no_source_files') }}</h3>
+        <h3> {{ $t('etl_no_source_files') }}</h3>
         <p>{{ $t('etl_check_directory') }} <code>backend/NewETL/SourceData/</code></p>
-        <button @click="loadSourceFiles" class="btn-secondary">🔄 {{ $t('etl_reload') }}</button>
+        <button @click="loadSourceFiles" class="btn-secondary"> {{ $t('etl_reload') }}</button>
       </div>
       
       <div v-else class="files-grid">
@@ -93,10 +93,10 @@
           <div class="file-info">
             <p>{{ $t('etl_columns') }}: {{ file.columns?.length || 0 }}</p>
             <p>{{ $t('etl_preview') }}: {{ file.rows_sample || 0 }} {{ $t('etl_lines') }}</p>
-            <p v-if="file.encoding">🔤 {{ $t('etl_encoding') }}: {{ file.encoding }}</p>
+            <p v-if="file.encoding"> {{ $t('etl_encoding') }}: {{ file.encoding }}</p>
           </div>
           <div v-if="file.error" class="file-error">
-            ❌ {{ file.error }}
+             {{ file.error }}
           </div>
         </div>
       </div>
@@ -119,11 +119,11 @@
           <div class="file-info">
             <p>{{ $t('etl_columns') }}: {{ file.columns?.length || 0 }}</p>
             <p>{{ $t('etl_preview') }}: {{ file.rows_sample || 0 }} {{ $t('etl_lines') }}</p>
-            <p v-if="file.encoding">🔤 {{ $t('etl_encoding') }}: {{ file.encoding }}</p>
-            <p v-if="file.separator">📄 {{ $t('etl_separator') }}: {{ file.separator }}</p>
+            <p v-if="file.encoding"> {{ $t('etl_encoding') }}: {{ file.encoding }}</p>
+            <p v-if="file.separator"> {{ $t('etl_separator') }}: {{ file.separator }}</p>
           </div>
           <div v-if="file.error" class="file-error">
-            ❌ {{ file.error }}
+             {{ file.error }}
           </div>
         </div>
       </div>
@@ -138,7 +138,7 @@
         </div>
         <div v-else class="logs-content">
           <div class="logs-header">
-            <small>📊 {{ etlLogs.length }} {{ $t('etl_lines_displayed') }} | 🔄 {{ $t('etl_last_update') }}: {{ logsLastUpdate }}</small>
+            <small> {{ etlLogs.length }} {{ $t('etl_lines_displayed') }} |  {{ $t('etl_last_update') }}: {{ logsLastUpdate }}</small>
           </div>
           <div 
             v-for="(log, index) in etlLogs" 
@@ -164,8 +164,8 @@
           <div class="preview-info">
             <p><strong>{{ $t('etl_lines') }}:</strong> {{ previewData.total_rows }}</p>
             <p><strong>{{ $t('etl_columns') }}:</strong> {{ previewData.columns.length }}</p>
-            <p v-if="previewData.encoding_used"><strong>🔤 {{ $t('etl_encoding') }}:</strong> {{ previewData.encoding_used }}</p>
-            <p v-if="previewData.separator_used"><strong>📄 {{ $t('etl_separator') }}:</strong> {{ previewData.separator_used }}</p>
+            <p v-if="previewData.encoding_used"><strong> {{ $t('etl_encoding') }}:</strong> {{ previewData.encoding_used }}</p>
+            <p v-if="previewData.separator_used"><strong> {{ $t('etl_separator') }}:</strong> {{ previewData.separator_used }}</p>
           </div>
           
           <div class="table-container">
@@ -236,21 +236,21 @@ const loadSystemStatus = async () => {
 
 const loadSourceFiles = async () => {
   try {
-    console.log('🔄 Chargement des fichiers ETL...')
+    console.log(' Chargement des fichiers ETL...')
     const response = await fetchFromAPI('/etl/source-files/')
-    console.log('📨 Réponse API reçue:', response)
+    console.log(' Réponse API reçue:', response)
     
     sourceFiles.value = response.source_files || []
     processedFiles.value = response.processed_files || []
     
     // Afficher des informations de debug
-    console.log(`📁 ${t('etl_source_files_loaded') || 'Fichiers sources chargés'}:`, sourceFiles.value.length)
-    console.log(`📊 ${t('etl_processed_files_loaded') || 'Fichiers traités chargés'}:`, processedFiles.value.length)
+    console.log(` ${t('etl_source_files_loaded') || 'Fichiers sources chargés'}:`, sourceFiles.value.length)
+    console.log(` ${t('etl_processed_files_loaded') || 'Fichiers traités chargés'}:`, processedFiles.value.length)
     
     // Vérifier s'il y a des erreurs dans la réponse
     if (response.error) {
-      console.warn('⚠️ Erreur dans la réponse API:', response.error)
-      showStatus(`⚠️ ${response.error}`, 'error')
+      console.warn(' Erreur dans la réponse API:', response.error)
+      showStatus(` ${response.error}`, 'error')
     }
     
     // Vérifier s'il y a des erreurs dans les fichiers
@@ -258,10 +258,10 @@ const loadSourceFiles = async () => {
     const processedErrors = processedFiles.value.filter(f => f.error).length
     
     if (sourceErrors > 0) {
-      console.warn(`⚠️ ${sourceErrors} ${t('etl_source_files_with_errors') || 'fichier(s) source(s) avec des erreurs'}`)
+      console.warn(` ${sourceErrors} ${t('etl_source_files_with_errors') || 'fichier(s) source(s) avec des erreurs'}`)
     }
     if (processedErrors > 0) {
-      console.warn(`⚠️ ${processedErrors} ${t('etl_processed_files_with_errors') || 'fichier(s) traité(s) avec des erreurs'}`)
+      console.warn(` ${processedErrors} ${t('etl_processed_files_with_errors') || 'fichier(s) traité(s) avec des erreurs'}`)
     }
     
   } catch (error) {
@@ -291,14 +291,14 @@ const loadLogs = async () => {
     
     // Afficher des informations de debug si disponibles
     if (response.encoding_used) {
-      console.log(`📝 ${t('etl_logs_loaded_encoding')}: ${response.encoding_used}`)
+      console.log(` ${t('etl_logs_loaded_encoding')}: ${response.encoding_used}`)
     }
     if (response.total_lines) {
-      console.log(`📊 ${t('etl_total_log_lines') || 'Total de lignes dans le fichier de log'}: ${response.total_lines}`)
+      console.log(` ${t('etl_total_log_lines') || 'Total de lignes dans le fichier de log'}: ${response.total_lines}`)
     }
   } catch (error) {
     console.error(`${t('etl_error_loading_logs') || 'Erreur lors du chargement des logs'}:`, error)
-    etlLogs.value = [`❌ ${t('etl_error_loading_logs') || 'Erreur lors du chargement des logs'}: ${error.message}`]
+    etlLogs.value = [` ${t('etl_error_loading_logs') || 'Erreur lors du chargement des logs'}: ${error.message}`]
     logsLastUpdate.value = new Date().toLocaleTimeString('fr-FR')
   }
 }
@@ -313,15 +313,15 @@ const runETL = async () => {
       method: 'POST'
     })
     
-    console.log(`📋 ${t('etl_complete_response') || 'Réponse ETL complète'}:`, response)
+    console.log(` ${t('etl_complete_response') || 'Réponse ETL complète'}:`, response)
     
     if (response.success) {
-      showStatus(`✅ ${t('etl_success_message')} ${t('etl_check_logs_details') || 'Consultez les logs pour plus de détails.'}`, 'success')
+      showStatus(` ${t('etl_success_message')} ${t('etl_check_logs_details') || 'Consultez les logs pour plus de détails.'}`, 'success')
       
       // Afficher des statistiques si disponibles
       if (response.results && response.results.processing_stats) {
         const stats = response.results.processing_stats
-        console.log(`📊 ${t('etl_stats') || 'Statistiques ETL'}: ${stats.success}/${stats.processed} ${t('etl_lines_processed') || 'lignes traitées'}`)
+        console.log(` ${t('etl_stats') || 'Statistiques ETL'}: ${stats.success}/${stats.processed} ${t('etl_lines_processed') || 'lignes traitées'}`)
       }
       
       await refreshData()
@@ -331,13 +331,13 @@ const runETL = async () => {
       
       // Identifier les erreurs d'encodage spécifiquement
       if (errorMessage.includes('utf-8') && (errorMessage.includes('decode') || errorMessage.includes('codec'))) {
-        showStatus(`❌ ${t('etl_encoding_persistent_error')}`, 'error')
+        showStatus(` ${t('etl_encoding_persistent_error')}`, 'error')
       } else if (errorMessage.includes('UnicodeDecodeError')) {
-        showStatus(`❌ ${t('etl_encoding_problem')}`, 'error')
+        showStatus(` ${t('etl_encoding_problem')}`, 'error')
       } else if (errorMessage.includes('FileNotFoundError') || errorMessage.includes('non trouvé')) {
-        showStatus(`❌ ${t('etl_missing_files_error')}`, 'error')
+        showStatus(` ${t('etl_missing_files_error')}`, 'error')
       } else {
-        showStatus(`❌ ${t('etl_error_message')}: ${errorMessage}`, 'error')
+        showStatus(` ${t('etl_error_message')}: ${errorMessage}`, 'error')
       }
     }
     
@@ -345,37 +345,37 @@ const runETL = async () => {
     await loadLogs()
     
   } catch (error) {
-    console.error(`❌ ${t('etl_error_execution') || 'Erreur lors de l\'exécution ETL'}:`, error)
-    showStatus(`❌ ${t('etl_communication_error')}: ${error.message}`, 'error')
+    console.error(` ${t('etl_error_execution') || 'Erreur lors de l\'exécution ETL'}:`, error)
+    showStatus(` ${t('etl_communication_error')}: ${error.message}`, 'error')
   } finally {
     isRunningETL.value = false
   }
 }
 
 const showFilePreview = async (fileType, fileName) => {
-  console.log(`🔍 Demande de preview: ${fileType}/${fileName}`)
+  console.log(` Demande de preview: ${fileType}/${fileName}`)
   previewLoading.value = true
   showModal.value = true
   
   try {
     const url = `/etl/file-preview/${fileType}/${fileName}`
-    console.log(`📡 Appel API: ${url}`)
+    console.log(` Appel API: ${url}`)
     
     previewData.value = await fetchFromAPI(url)
-    console.log('✅ Preview chargé avec succès:', previewData.value?.file_name)
+    console.log(' Preview chargé avec succès:', previewData.value?.file_name)
   } catch (error) {
-    console.error(`❌ Erreur preview:`, error)
-    console.error(`❌ Type d'erreur:`, error.constructor.name)
-    console.error(`❌ Status:`, error.response?.status)
-    console.error(`❌ Message:`, error.message)
+    console.error(` Erreur preview:`, error)
+    console.error(` Type d'erreur:`, error.constructor.name)
+    console.error(` Status:`, error.response?.status)
+    console.error(` Message:`, error.message)
     
     let errorMessage = t('etl_preview_error')
     if (error.response?.status === 500) {
-      errorMessage = `❌ Erreur serveur lors du preview de ${fileName}. Le backend a rencontré un problème.`
+      errorMessage = ` Erreur serveur lors du preview de ${fileName}. Le backend a rencontré un problème.`
     } else if (error.response?.status === 404) {
-      errorMessage = `❌ Fichier ${fileName} non trouvé.`
+      errorMessage = ` Fichier ${fileName} non trouvé.`
     } else {
-      errorMessage = `❌ Erreur preview: ${error.message}`
+      errorMessage = ` Erreur preview: ${error.message}`
     }
     
     showStatus(errorMessage, 'error')
@@ -395,24 +395,24 @@ const refreshLogs = async () => {
 }
 
 const testFileEncodings = async () => {
-  showStatus(`🔍 ${t('etl_testing_encodings') || 'Test des encodages des fichiers...'}`, 'info')
+  showStatus(` ${t('etl_testing_encodings') || 'Test des encodages des fichiers...'}`, 'info')
   
   try {
     const response = await fetchFromAPI('/etl/test-encodings/')
     
     if (response.results) {
-      let message = `📊 ${t('etl_test_encoding_results')}:\n`
+      let message = ` ${t('etl_test_encoding_results')}:\n`
       response.results.forEach(result => {
         message += `${result.file}: ${result.encoding || t('error') || 'ERREUR'}\n`
       })
       
       // Afficher dans la console pour plus de détails
-      console.log(`📋 ${t('etl_encoding_details') || 'Détails des encodages'}:`, response.results)
+      console.log(` ${t('etl_encoding_details') || 'Détails des encodages'}:`, response.results)
       showStatus(message, 'success')
     }
   } catch (error) {
     console.error(`${t('etl_encoding_test_error')}`, error)
-    showStatus(`❌ ${t('etl_cannot_test_encodings') || 'Impossible de tester les encodages'}`, 'error')
+    showStatus(` ${t('etl_cannot_test_encodings') || 'Impossible de tester les encodages'}`, 'error')
   }
 }
 

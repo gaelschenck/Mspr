@@ -54,7 +54,7 @@ def remove_emojis_from_file(file_path):
             "\U0001F004\U0001F0CF"   # mahjong and playing cards
             "\U0001F18E"             # negative squared ab
             "\U0001F191-\U0001F251"  # enclosed characters
-            "🔥🚀💡⭐️✨🎉🎯🛠️📊🔧🎭💻📱🖼️🌍🏳️📋📁⚪❌✅"  # emojis couramment utilisés
+            ""  # emojis couramment utilisés
             "]+", flags=re.UNICODE)
         
         original_length = len(content)
@@ -144,7 +144,7 @@ def clean_all_project_files():
     
     # Traiter les fichiers dossier par dossier
     for dir_path in sorted(files_by_dir.keys()):
-        print(f"\n📁 Dossier: {dir_path if str(dir_path) != '.' else '(racine)'}")
+        print(f"\n Dossier: {dir_path if str(dir_path) != '.' else '(racine)'}")
         print("-" * 30)
         
         for file_path in sorted(files_by_dir[dir_path]):
@@ -155,11 +155,11 @@ def clean_all_project_files():
             try:
                 if remove_emojis_from_file(file_path):
                     cleaned_count += 1
-                    print(f"  ✅ Nettoyé: {file_name} ({file_ext})")
+                    print(f"   Nettoyé: {file_name} ({file_ext})")
                 else:
-                    print(f"  ⚪ Aucun emoji: {file_name} ({file_ext})")
+                    print(f"   Aucun emoji: {file_name} ({file_ext})")
             except Exception as e:
-                print(f"  ❌ Erreur avec {file_name}: {e}")
+                print(f"   Erreur avec {file_name}: {e}")
     
     print("\n" + "=" * 50)
     print(f"RÉSUMÉ FINAL:")
@@ -170,13 +170,20 @@ def clean_all_project_files():
     print(f"  - Fichiers sans emojis: {processed_count - cleaned_count}")
     
     if cleaned_count > 0:
-        print(f"  🎉 {cleaned_count} fichier(s) ont été nettoyés avec succès!")
+        print(f"   {cleaned_count} fichier(s) ont été nettoyés avec succès!")
     else:
-        print("  ✨ Aucun emoji trouvé dans le projet!")
+        print("   Aucun emoji trouvé dans le projet!")
     
     print("=" * 50)
     
     return cleaned_count > 0
 
 if __name__ == "__main__":
-    clean_all_project_files()
+    try:
+        print("Démarrage du script de nettoyage des emojis...")
+        clean_all_project_files()
+        print("Script terminé avec succès.")
+    except Exception as e:
+        print(f"ERREUR CRITIQUE: {e}")
+        import traceback
+        traceback.print_exc()

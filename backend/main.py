@@ -1370,7 +1370,7 @@ async def get_source_files():
 @app.get("/etl/file-preview/{file_type}/{file_name}")
 async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
     """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur et de l'encodage"""
-    print(f"🔍 Preview demandé: {file_type}/{file_name}")
+    print(f" Preview demandé: {file_type}/{file_name}")
     
     try:
         if file_type == "source":
@@ -1381,10 +1381,10 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
             raise HTTPException(status_code=400, detail="Type de fichier invalide")
         
         if not file_path.exists():
-            print(f"❌ Fichier non trouvé: {file_path}")
+            print(f" Fichier non trouvé: {file_path}")
             raise HTTPException(status_code=404, detail="Fichier non trouvé")
         
-        print(f"📁 Fichier trouvé: {file_path}")
+        print(f" Fichier trouvé: {file_path}")
         
         # Essaie plusieurs encodages dans l'ordre de préférence
         encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
@@ -1406,25 +1406,25 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
                         separator = ','
                 
                 # Charger le fichier avec l'encodage et le séparateur détectés
-                print(f"📖 Tentative lecture avec encodage {encoding}, séparateur '{separator}'")
+                print(f" Tentative lecture avec encodage {encoding}, séparateur '{separator}'")
                 df = pd.read_csv(file_path, nrows=limit, sep=separator, encoding=encoding)
                 encoding_used = encoding
-                print(f"✅ Lecture réussie: {len(df)} lignes, {len(df.columns)} colonnes")
+                print(f" Lecture réussie: {len(df)} lignes, {len(df.columns)} colonnes")
                 break
                 
             except UnicodeDecodeError:
-                print(f"⚠️ Erreur d'encodage avec {encoding}")
+                print(f" Erreur d'encodage avec {encoding}")
                 continue
             except Exception as e:
-                print(f"⚠️ Autre erreur avec {encoding}: {str(e)[:50]}...")
+                print(f" Autre erreur avec {encoding}: {str(e)[:50]}...")
                 continue
         
         if df is None:
             error_msg = f"Impossible de décoder le fichier {file_name} avec les encodages supportés: {', '.join(encodings_to_try)}"
-            print(f"❌ {error_msg}")
+            print(f" {error_msg}")
             raise HTTPException(status_code=500, detail=error_msg)
         
-        print("🔄 Préparation de la réponse JSON...")
+        print(" Préparation de la réponse JSON...")
         
         # Nettoyer les données pour éviter les problèmes JSON
         df_clean = df.replace([np.nan, np.inf, -np.inf], None)
@@ -1444,16 +1444,16 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
             }
         }
         
-        print(f"✅ Réponse préparée: {len(data_records)} enregistrements")
+        print(f" Réponse préparée: {len(data_records)} enregistrements")
         return result
         
     except HTTPException:
-        print("❌ HTTPException re-raised")
+        print(" HTTPException re-raised")
         raise
     except Exception as e:
         error_msg = f"Erreur lors de la lecture: {str(e)}"
-        print(f"❌ Erreur inattendue: {error_msg}")
-        print("📋 Détails de l'erreur:")
+        print(f" Erreur inattendue: {error_msg}")
+        print(" Détails de l'erreur:")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=error_msg)

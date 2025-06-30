@@ -1,10 +1,10 @@
-# 📊 Export CSV dans NewETL - Documentation
+#  Export CSV dans NewETL - Documentation
 
-## 🎯 Objectif
+##  Objectif
 
 Le script `NewETL.py` a été amélioré pour **générer des fichiers CSV dans le dossier `DatasetClean`** en plus de créer la base de données SQLite normalisée.
 
-## 🔧 Améliorations apportées
+##  Améliorations apportées
 
 ### 1. **Nouvelle méthode `export_to_csv_files()`**
 
@@ -45,7 +45,7 @@ id,id_pays,pays,annee,valeur,type_valeur,confiance_min,confiance_max,confiance_m
 id,id_pays,pays,region,id_type_statistique,type_statistique,annee,valeur,type_valeur,valeur_texte,confiance_min,confiance_max,confiance_median,qualite_donnees,fichier_source,date_creation
 ```
 
-## 🚀 Utilisation
+##  Utilisation
 
 ### **Lancement automatique**
 L'export CSV se fait automatiquement lors de l'exécution du pipeline ETL :
@@ -66,7 +66,7 @@ csv_files = etl.export_to_csv_files("../DatasetClean")
 print(f"Fichiers créés: {csv_files}")
 ```
 
-## 🔄 Intégration avec l'interface ETL
+##  Intégration avec l'interface ETL
 
 ### **Endpoints mis à jour**
 
@@ -77,11 +77,11 @@ print(f"Fichiers créés: {csv_files}")
 ### **Interface utilisateur**
 
 L'onglet ETL du dashboard affiche maintenant :
-- ✅ **Fichiers sources** (SourceData/) avec séparateur `,`
-- ✅ **Fichiers transformés** (DatasetClean/) avec séparateur `;`
-- ✅ **Détection automatique** du format lors de la prévisualisation
+-  **Fichiers sources** (SourceData/) avec séparateur `,`
+-  **Fichiers transformés** (DatasetClean/) avec séparateur `;`
+-  **Détection automatique** du format lors de la prévisualisation
 
-## 📋 Cohérence des données
+##  Cohérence des données
 
 ### **Ancien vs Nouveau format**
 
@@ -94,12 +94,12 @@ L'onglet ETL du dashboard affiche maintenant :
 
 ### **Avantages du nouveau format**
 
-✅ **Plus riche** : Inclut noms des pays, intervalles de confiance, qualité des données  
-✅ **Normalisé** : Structure cohérente basée sur le schéma de base de données  
-✅ **Traçable** : Fichier source d'origine, date de création  
-✅ **Compatible** : Même séparateur (`;`) que les anciens fichiers  
+ **Plus riche** : Inclut noms des pays, intervalles de confiance, qualité des données  
+ **Normalisé** : Structure cohérente basée sur le schéma de base de données  
+ **Traçable** : Fichier source d'origine, date de création  
+ **Compatible** : Même séparateur (`;`) que les anciens fichiers  
 
-## 🧪 Tests
+##  Tests
 
 ### **Script de test**
 ```bash
@@ -112,12 +112,12 @@ python test_csv_export.py
 3. Ouvrir les fichiers CSV dans Excel/LibreOffice
 4. Vérifier la cohérence des données
 
-## 🎯 Résultat
+##  Résultat
 
 Maintenant, le processus ETL produit :
-- ✅ **Base de données SQLite** normalisée (pour l'API)
-- ✅ **Fichiers CSV** structurés (pour l'analyse/export)
-- ✅ **Compatibilité** avec l'interface ETL existante
-- ✅ **Documentation** et logs détaillés
+-  **Base de données SQLite** normalisée (pour l'API)
+-  **Fichiers CSV** structurés (pour l'analyse/export)
+-  **Compatibilité** avec l'interface ETL existante
+-  **Documentation** et logs détaillés
 
 Cette approche offre le meilleur des deux mondes : une base de données performante pour l'API et des fichiers CSV facilement exploitables pour l'analyse de données.

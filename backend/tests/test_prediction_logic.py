@@ -42,13 +42,13 @@ def test_prediction_logic():
         print(f"Après preprocess_features: X={X_processed.shape}")
         
         if len(X_processed) < 5:
-            print("❌ ERREUR ATTENDUE: Pas assez de données pour l'entraînement")
+            print(" ERREUR ATTENDUE: Pas assez de données pour l'entraînement")
             print("C'est probablement le problème avec vos données Europe + population_hiv")
         else:
-            print("✅ Données suffisantes")
+            print(" Données suffisantes")
             
     except Exception as e:
-        print(f"❌ ERREUR: {e}")
+        print(f" ERREUR: {e}")
     print()
     
     # Test 2: Données suffisantes
@@ -76,15 +76,15 @@ def test_prediction_logic():
         print(f"Après preprocess_features: X={X_processed.shape}")
         
         if len(X_processed) >= 5 and X_processed.shape[1] > 0:
-            print("✅ Tentative d'entraînement...")
+            print(" Tentative d'entraînement...")
             model = create_voting_regressor()
             trained_model, rmse, r2, future_pred, future_year = train_voting_regressor(model, X_processed, y)
-            print(f"✅ Entraînement réussi! RMSE: {rmse:.2f}, R²: {r2:.2f}")
+            print(f" Entraînement réussi! RMSE: {rmse:.2f}, R²: {r2:.2f}")
         else:
-            print("❌ Pas assez de données ou caractéristiques")
+            print(" Pas assez de données ou caractéristiques")
             
     except Exception as e:
-        print(f"❌ ERREUR: {e}")
+        print(f" ERREUR: {e}")
         import traceback
         traceback.print_exc()
     print()
@@ -107,11 +107,11 @@ def test_prediction_logic():
         print(f"Valeurs cibles uniques: {y.nunique() if y is not None else 0}")
         
         if y is not None and y.nunique() == 1:
-            print("❌ ERREUR ATTENDUE: Toutes les valeurs cibles sont identiques")
+            print(" ERREUR ATTENDUE: Toutes les valeurs cibles sont identiques")
             print("Le modèle ne peut pas apprendre avec une seule valeur cible")
         
     except Exception as e:
-        print(f"❌ ERREUR: {e}")
+        print(f" ERREUR: {e}")
     print()
     
     print("=== RECOMMANDATIONS ===")

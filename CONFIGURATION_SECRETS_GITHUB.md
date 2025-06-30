@@ -1,17 +1,17 @@
-# 🔐 Configuration des Secrets GitHub pour CI/CD
+#  Configuration des Secrets GitHub pour CI/CD
 
 Ce guide vous explique comment configurer les secrets GitHub pour votre pipeline CI/CD MSPR.
 
-## 📋 Vue d'ensemble
+##  Vue d'ensemble
 
 Votre setup actuel :
 - **Déploiement local** : Kind (Kubernetes in Docker)
 - **Script de déploiement** : `init_and_deploy.bat`
 - **Images Docker** : Construites localement sans push vers un registry
 
-## 🎯 Deux options de configuration
+##  Deux options de configuration
 
-### 📦 **Option 1 : Pipeline avec Docker Hub (Recommandée pour le partage)**
+###  **Option 1 : Pipeline avec Docker Hub (Recommandée pour le partage)**
 
 #### Étape 1 : Créer un compte Docker Hub
 
@@ -90,7 +90,7 @@ docker tag votre_nom_dockerhub/mspr-frontend:latest my_frontend_image:latest
 
 ---
 
-### 🏠 **Option 2 : Pipeline sans Docker Hub (Local uniquement)**
+###  **Option 2 : Pipeline sans Docker Hub (Local uniquement)**
 
 Si vous voulez garder tout en local, modifiez votre `ci.yml` :
 
@@ -125,7 +125,7 @@ Si vous voulez garder tout en local, modifiez votre `ci.yml` :
 
 ---
 
-## 🚀 Workflow recommandé
+##  Workflow recommandé
 
 ### Pour le développement (branche `addauth`) :
 
@@ -139,7 +139,7 @@ Si vous voulez garder tout en local, modifiez votre `ci.yml` :
 
 ---
 
-## 🔧 Commandes utiles
+##  Commandes utiles
 
 ### Vérifier vos secrets GitHub :
 ```bash
@@ -161,7 +161,7 @@ docker push gaelschenck/mspr-backend:test
 
 ---
 
-## ❓ FAQ
+##  FAQ
 
 **Q : Dois-je configurer les secrets SERVER_HOST, SERVER_USER, etc. ?**
 **R :** Non, pas avec votre setup Kind local. Ces secrets sont pour un déploiement sur serveur distant.
@@ -183,7 +183,7 @@ docker push gaelschenck/mspr-backend:test
 
 ---
 
-## 🎯 Étapes suivantes
+##  Étapes suivantes
 
 1. Choisissez votre option (1 ou 2)
 2. Configurez les secrets correspondants

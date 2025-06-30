@@ -1,9 +1,9 @@
 # Adaptations Frontend/Backend - Résumé des Modifications
 
-## 🎯 Objectif
+##  Objectif
 Adapter le frontend pour assurer la cohérence des champs avec le backend et garantir l'affichage correct des prédictions.
 
-## 🔧 Modifications Réalisées
+##  Modifications Réalisées
 
 ### 1. TestPrediction.vue - Corrections des champs
 - **Mapping région** : `region` → `who_region` dans le payload
@@ -43,7 +43,7 @@ Le backend utilise ce mapping pour les tables :
 }
 ```
 
-## 📋 Structure de Réponse Backend
+##  Structure de Réponse Backend
 
 Le backend renvoie exactement cette structure après entraînement :
 ```json
@@ -58,13 +58,13 @@ Le backend renvoie exactement cette structure après entraînement :
 }
 ```
 
-## 🧪 Tests de Validation
+##  Tests de Validation
 
 Créés deux scripts de test :
 1. `test_schema_compatibility.py` : Validation des schémas Pydantic
 2. `test_frontend_integration.py` : Test d'intégration complète (nécessite DB)
 
-## 🔄 Workflow Frontend → Backend
+##  Workflow Frontend → Backend
 
 1. **Sélection utilisateur** (TestPrediction.vue)
    - Région WHO → `who_region` 
@@ -85,14 +85,14 @@ Créés deux scripts de test :
    - Métriques de performance (RMSE, R²)
    - Prédiction future si disponible
 
-## ✅ Statut Final
+##  Statut Final
 
-- ✅ Champs cohérents entre frontend et backend
-- ✅ Tables mappées correctement 
-- ✅ Structure de réponse compatible
-- ✅ Affichage robuste des prédictions
-- ✅ Gestion d'erreurs améliorée
-- ✅ Support des deux formats de données (dict/list)
-- ✅ Tests de validation créés
+-  Champs cohérents entre frontend et backend
+-  Tables mappées correctement 
+-  Structure de réponse compatible
+-  Affichage robuste des prédictions
+-  Gestion d'erreurs améliorée
+-  Support des deux formats de données (dict/list)
+-  Tests de validation créés
 
 Le frontend est maintenant entièrement compatible avec le backend ultra-flexible créé.

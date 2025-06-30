@@ -641,24 +641,24 @@ class HealthDataETL:
         try:
             stats = self.get_database_stats()
             print("\n" + "="*60)
-            print("📊 RÉSUMÉ DU PIPELINE ETL")
+            print(" RÉSUMÉ DU PIPELINE ETL")
             print("="*60)
-            print(f"✅ Base de données: {self.db_path}")
-            print(f"📁 Fichiers traités: {len(files_to_process)}")
-            print(f"🏛️  Pays uniques: {stats.get('countries_count', 0)}")
-            print(f"📋 Types d'indicateurs: {stats.get('indicator_types_count', 0)}")
-            print(f"📊 Indicateurs totaux: {stats.get('total_indicators', 0)}")
-            print(f"📊 Avec valeurs numériques: {stats.get('indicators_with_numeric_values', 0)}")
-            print(f"📊 Avec intervalles confiance: {stats.get('indicators_with_confidence', 0)}")
-            print(f"📅 Période des données: {stats.get('data_year_range', 'N/A')}")
+            print(f" Base de données: {self.db_path}")
+            print(f" Fichiers traités: {len(files_to_process)}")
+            print(f"  Pays uniques: {stats.get('countries_count', 0)}")
+            print(f" Types d'indicateurs: {stats.get('indicator_types_count', 0)}")
+            print(f" Indicateurs totaux: {stats.get('total_indicators', 0)}")
+            print(f" Avec valeurs numériques: {stats.get('indicators_with_numeric_values', 0)}")
+            print(f" Avec intervalles confiance: {stats.get('indicators_with_confidence', 0)}")
+            print(f" Période des données: {stats.get('data_year_range', 'N/A')}")
             if schema_file:
-                print(f"📄 Schéma SQL: {schema_file}")
+                print(f" Schéma SQL: {schema_file}")
             if country_sql_files:
-                print(f"🌍 Fichiers SQL par pays: {len(country_sql_files)} fichiers générés")
+                print(f" Fichiers SQL par pays: {len(country_sql_files)} fichiers générés")
                 for country_file in country_sql_files:
                     print(f"   • {Path(country_file).name}")
             if csv_files:
-                print(f"📊 Fichiers CSV: {len(csv_files)} fichiers générés")
+                print(f" Fichiers CSV: {len(csv_files)} fichiers générés")
                 for csv_file in csv_files:
                     print(f"   • {Path(csv_file).name}")
             print("="*60)
@@ -1095,7 +1095,7 @@ class HealthDataETL:
                 countries_file = output_dir / "pays_clean.csv"
                 countries_df.to_csv(countries_file, index=False, encoding='utf-8', sep=';')
                 created_files.append(str(countries_file))
-                logger.info(f"✅ {countries_file.name} créé ({len(countries_df)} pays)")
+                logger.info(f" {countries_file.name} créé ({len(countries_df)} pays)")
                 
                 # 2. Export des types d'indicateurs
                 logger.info("Export des types d'indicateurs...")
@@ -1107,7 +1107,7 @@ class HealthDataETL:
                 indicator_types_file = output_dir / "type_statistique_clean.csv"
                 indicator_types_df.to_csv(indicator_types_file, index=False, encoding='utf-8', sep=';')
                 created_files.append(str(indicator_types_file))
-                logger.info(f"✅ {indicator_types_file.name} créé ({len(indicator_types_df)} types)")
+                logger.info(f" {indicator_types_file.name} créé ({len(indicator_types_df)} types)")
                 
                 # 3. Export par type d'indicateur (fichiers séparés)
                 indicator_mappings = {
@@ -1150,9 +1150,9 @@ class HealthDataETL:
                         output_file = output_dir / filename
                         df.to_csv(output_file, index=False, encoding='utf-8', sep=';')
                         created_files.append(str(output_file))
-                        logger.info(f"✅ {filename} créé ({len(df)} enregistrements)")
+                        logger.info(f" {filename} créé ({len(df)} enregistrements)")
                     else:
-                        logger.warning(f"⚠️ Aucune donnée trouvée pour {indicator_type}")
+                        logger.warning(f" Aucune donnée trouvée pour {indicator_type}")
                 
                 # 4. Export global des statistiques
                 logger.info("Export des statistiques globales...")
@@ -1183,7 +1183,7 @@ class HealthDataETL:
                 all_stats_file = output_dir / "table_statistique.csv"
                 all_stats_df.to_csv(all_stats_file, index=False, encoding='utf-8', sep=';')
                 created_files.append(str(all_stats_file))
-                logger.info(f"✅ {all_stats_file.name} créé ({len(all_stats_df)} enregistrements)")
+                logger.info(f" {all_stats_file.name} créé ({len(all_stats_df)} enregistrements)")
                 
                 # 5. Export des unités (valeurs distinctes)
                 logger.info("Export des types d'unités...")
@@ -1200,7 +1200,7 @@ class HealthDataETL:
                 units_file = output_dir / "unite_clean.csv"
                 units_df.to_csv(units_file, index=False, encoding='utf-8', sep=';')
                 created_files.append(str(units_file))
-                logger.info(f"✅ {units_file.name} créé ({len(units_df)} unités)")
+                logger.info(f" {units_file.name} créé ({len(units_df)} unités)")
                 
         except Exception as e:
             logger.error(f"Erreur lors de l'export CSV: {e}")
@@ -1241,11 +1241,11 @@ def main():
     
     # Affiche le schéma SQL généré
     if results.get('schema_file'):
-        print(f"\n📄 Schéma SQL disponible dans: {results['schema_file']}")
+        print(f"\n Schéma SQL disponible dans: {results['schema_file']}")
     
     # Affiche les fichiers CSV générés
     if results.get('csv_files'):
-        print(f"\n📊 Fichiers CSV générés dans DatasetClean:")
+        print(f"\n Fichiers CSV générés dans DatasetClean:")
         for csv_file in results['csv_files']:
             file_name = Path(csv_file).name
             file_size = Path(csv_file).stat().st_size / 1024  # en KB
@@ -1259,7 +1259,7 @@ def main():
         except (KeyboardInterrupt, EOFError):
             print("\nFin du programme.")
     
-    print("\n✅ ETL terminé avec succès!")
+    print("\n ETL terminé avec succès!")
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,10 @@
-# 🚀 README - Pipeline CI/CD MSPR
+#  README - Pipeline CI/CD MSPR
 
-## 📋 Vue d'ensemble
+##  Vue d'ensemble
 
 Ce projet utilise un pipeline CI/CD automatisé avec GitHub Actions pour tester, construire et déployer une application web composée d'un backend Python (FastAPI) et d'un frontend Vue.js sur un cluster Kubernetes local (Kind).
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -19,9 +19,9 @@ Ce projet utilise un pipeline CI/CD automatisé avec GitHub Actions pour tester,
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🎯 Workflow Automatisé
+##  Workflow Automatisé
 
-### 🔄 **Ce qui se passe automatiquement** :
+###  **Ce qui se passe automatiquement** :
 
 1. **Push sur `addauth` ou `main`** → Déclenche GitHub Actions
 2. **Tests Backend** → Tests Python avec pytest
@@ -30,11 +30,11 @@ Ce projet utilise un pipeline CI/CD automatisé avec GitHub Actions pour tester,
 5. **Push Docker Hub** → Upload des images vers le registry
 6. **Instructions de déploiement** → Affichage des étapes suivantes
 
-### 🖱️ **Ce qui nécessite une action manuelle** :
+###  **Ce qui nécessite une action manuelle** :
 
 7. **Déploiement local** → Lancement de `init_and_deploy.bat`
 
-## 📁 Structure du Projet
+##  Structure du Projet
 
 ```
 MSPR/
@@ -55,9 +55,9 @@ MSPR/
 └── CONFIGURATION_SECRETS_GITHUB.md
 ```
 
-## 🚀 Démarrage Rapide
+##  Démarrage Rapide
 
-### 1️⃣ **Prérequis**
+### 1⃣ **Prérequis**
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
@@ -65,7 +65,7 @@ MSPR/
 - Compte [Docker Hub](https://hub.docker.com)
 - Repository GitHub
 
-### 2️⃣ **Configuration initiale**
+### 2⃣ **Configuration initiale**
 
 1. **Cloner le repository** :
    ```bash
@@ -78,7 +78,7 @@ MSPR/
    - Créer un token Docker Hub
    - Ajouter les secrets dans GitHub
 
-### 3️⃣ **Premier déploiement**
+### 3⃣ **Premier déploiement**
 
 1. **Push sur la branche de développement** :
    ```bash
@@ -90,7 +90,7 @@ MSPR/
 
 2. **Vérifier le pipeline** :
    - Aller sur GitHub → onglet "Actions"
-   - Attendre que tous les tests passent ✅
+   - Attendre que tous les tests passent 
 
 3. **Déployer localement** :
    ```bash
@@ -103,7 +103,7 @@ MSPR/
    - Frontend : http://localhost:8080
    - API : http://localhost:8080/api
 
-## 🔧 Développement Quotidien
+##  Développement Quotidien
 
 ### **Pour ajouter une nouvelle fonctionnalité** :
 
@@ -152,7 +152,7 @@ git push origin addauth
 # Déployer immédiatement avec init_and_deploy.bat
 ```
 
-## 📊 Monitoring et Debugging
+##  Monitoring et Debugging
 
 ### **Vérifier l'état du cluster** :
 
@@ -175,7 +175,7 @@ kubectl logs <nom-du-pod>         # Logs d'un pod spécifique
 3. **Pods en erreur** → `kubectl describe pod <nom-du-pod>`
 4. **Port-forward échoue** → Vérifier que les services sont démarrés
 
-## 🌟 Fonctionnalités Avancées
+##  Fonctionnalités Avancées
 
 ### **Sauvegarde automatique** :
 - **Bases de données** → Sauvegardées automatiquement après chaque déploiement
@@ -191,7 +191,7 @@ kubectl logs <nom-du-pod>         # Logs d'un pod spécifique
 - **Tests obligatoires** → Le déploiement ne se fait que si les tests passent
 - **Isolation** → Cluster Kind isolé du système
 
-## 🆘 Support
+##  Support
 
 ### **Problèmes fréquents** :
 
@@ -208,38 +208,38 @@ kubectl logs <nom-du-pod>         # Logs d'un pod spécifique
 2. **Consulter** les logs dans l'onglet Actions de GitHub
 3. **Créer** une issue avec les logs d'erreur
 
-## 📚 Documentation Complète
+##  Documentation Complète
 
-- 📖 **Configuration détaillée** : `CONFIGURATION_SECRETS_GITHUB.md`
-- 🐛 **Debugging** : `logs_pods/` pour les logs historiques
-- 🔄 **Sauvegarde/Restauration** : `BACKUP_RESTORE.md`
+-  **Configuration détaillée** : `CONFIGURATION_SECRETS_GITHUB.md`
+-  **Debugging** : `logs_pods/` pour les logs historiques
+-  **Sauvegarde/Restauration** : `BACKUP_RESTORE.md`
 
 ---
 
-**🎉 Félicitations !** Vous avez maintenant un pipeline CI/CD moderne, automatisé et robuste pour votre application MSPR !
-## 🔐 Secrets nécessaires pour votre setup Kind
+** Félicitations !** Vous avez maintenant un pipeline CI/CD moderne, automatisé et robuste pour votre application MSPR !
+##  Secrets nécessaires pour votre setup Kind
 
 Pour votre configuration actuelle (déploiement local avec Kind), vous n'avez besoin que de :
 
 | Secret | Description | Obligatoire |
 |--------|-------------|-------------|
-| `DOCKERHUB_USERNAME` | Votre nom d'utilisateur Docker Hub | ✅ Oui |
-| `DOCKERHUB_TOKEN` | Token d'accès Docker Hub | ✅ Oui |
+| `DOCKERHUB_USERNAME` | Votre nom d'utilisateur Docker Hub |  Oui |
+| `DOCKERHUB_TOKEN` | Token d'accès Docker Hub |  Oui |
 
-### ❌ **Secrets NON nécessaires** (ancien pipeline) :
+###  **Secrets NON nécessaires** (ancien pipeline) :
 - ~~`SONAR_ORG` / `SONAR_TOKEN`~~ → Pas de SonarCloud dans votre pipeline
 - ~~`FR_SERVER_HOST`, `FR_SERVER_USER`, `FR_SERVER_SSH_KEY`~~ → Pas de serveur distant
 - ~~`US_SERVER_HOST`, `US_SERVER_USER`, `US_SERVER_SSH_KEY`~~ → Pas de serveur distant  
 - ~~`CH_SERVER_HOST`, `CH_SERVER_USER`, `CH_SERVER_SSH_KEY`~~ → Pas de serveur distant
 - ~~`SMTP_USER`, `SMTP_PASS`~~ → Pas de notifications mail configurées
 
-### 📋 **Configuration simplifiée** :
+###  **Configuration simplifiée** :
 
 1. **Allez sur Docker Hub** → Créer un token
 2. **Allez sur GitHub** → Settings → Secrets → Ajouter les 2 secrets
 3. **C'est tout !** Votre pipeline fonctionnera
 
-### 🎯 **Pourquoi ces 2 secrets suffisent** :
+###  **Pourquoi ces 2 secrets suffisent** :
 
 - **Tests** → Se lancent sur GitHub (pas de secrets requis)
 - **Build** → Se fait sur GitHub (pas de secrets requis)  

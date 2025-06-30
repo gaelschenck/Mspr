@@ -43,7 +43,7 @@
         </tbody>
       </table>
       <div v-else class="no-data">
-        <div class="no-data-icon">📊</div>
+        <div class="no-data-icon"></div>
         <p>{{ $t('aucune_donnee') }} pour la population vivant avec le VIH</p>
       </div>
     </div>
@@ -86,7 +86,7 @@ const endIndex = computed(() => {
 async function loadData() {
   loading.value = true;
   error.value = null;
-  console.log('🔄 PopulationHiv: Chargement des données, page:', page.value);
+  console.log(' PopulationHiv: Chargement des données, page:', page.value);
   
   try {
     const result = await fetchHealthIndicatorsDetailed({
@@ -95,28 +95,28 @@ async function loadData() {
       indicator_type_name: 'People Living with HIV'
     });
     
-    console.log('📊 PopulationHiv: Données reçues:', result.length, 'éléments');
+    console.log(' PopulationHiv: Données reçues:', result.length, 'éléments');
     
     if (result.length > limit) {
       // Il y a plus de données disponibles
       hasNextPage.value = true;
       data.value = result.slice(0, limit); // Prendre seulement les 25 premiers
-      console.log('➡️ PopulationHiv: Page suivante disponible');
+      console.log(' PopulationHiv: Page suivante disponible');
     } else {
       // Pas de page suivante
       hasNextPage.value = false;
       data.value = result;
-      console.log('🔚 PopulationHiv: Dernière page atteinte');
+      console.log(' PopulationHiv: Dernière page atteinte');
     }
     
     // Log des premières données pour debug
     if (data.value.length > 0) {
-      console.log('🔍 PopulationHiv: Premier élément:', data.value[0]);
+      console.log(' PopulationHiv: Premier élément:', data.value[0]);
     }
     
   } catch (err) {
     error.value = err;
-    console.error('❌ PopulationHiv: Erreur lors du chargement des données:', err);
+    console.error(' PopulationHiv: Erreur lors du chargement des données:', err);
   } finally {
     loading.value = false;
   }
@@ -124,14 +124,14 @@ async function loadData() {
 
 function nextPage() {
   if (!loading.value && hasNextPage.value) {
-    console.log('➡️ PopulationHiv: Navigation vers page suivante');
+    console.log(' PopulationHiv: Navigation vers page suivante');
     page.value++;
   }
 }
 
 function prevPage() {
   if (page.value > 0 && !loading.value) {
-    console.log('⬅️ PopulationHiv: Navigation vers page précédente');
+    console.log(' PopulationHiv: Navigation vers page précédente');
     page.value--;
   }
 }
@@ -175,12 +175,12 @@ function translateValueType(valueType) {
 }
 
 onMounted(() => {
-  console.log('🚀 PopulationHiv: Composant monté, chargement initial des données');
+  console.log(' PopulationHiv: Composant monté, chargement initial des données');
   loadData();
 });
 
 watch(page, () => {
-  console.log('📄 PopulationHiv: Changement de page détecté:', page.value);
+  console.log(' PopulationHiv: Changement de page détecté:', page.value);
   loadData();
 });
 </script>

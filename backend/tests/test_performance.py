@@ -49,7 +49,7 @@ def mock_create_async_engine(url, **kwargs):
     """Mock qui force l'utilisation de SQLite en mémoire"""
     print(f"[ISOLATION] Tentative de création d'engine: {url}")
     if "postgresql" in str(url) or "postgres" in str(url):
-        print(f"[ISOLATION] ⚠️  Redirection PostgreSQL vers SQLite!")
+        print(f"[ISOLATION]   Redirection PostgreSQL vers SQLite!")
         url = "sqlite+aiosqlite:///:memory:"
         # Ajuster les paramètres pour SQLite
         kwargs.pop('pool_size', None)
@@ -59,7 +59,7 @@ def mock_create_async_engine(url, **kwargs):
         kwargs.pop('poolclass', None)
         kwargs['poolclass'] = StaticPool
         kwargs['connect_args'] = {"check_same_thread": False}
-    print(f"[ISOLATION] ✅ Utilisation de SQLite: {url}")
+    print(f"[ISOLATION]  Utilisation de SQLite: {url}")
     return original_create_async_engine(url, **kwargs)
 
 # Patcher create_async_engine avant tout import

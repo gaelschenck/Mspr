@@ -2,7 +2,7 @@
 
 ## Structure des Tests
 
-### 📁 Organisation des Fichiers de Tests
+###  Organisation des Fichiers de Tests
 
 ```
 tests/
@@ -22,7 +22,7 @@ tests/
 └── test_performance.py                # Tests de performance
 ```
 
-### 🎯 Types de Tests
+###  Types de Tests
 
 #### 1. **Tests Critiques (test_cicd_critical.py)**
 - Tests de base pour CI/CD
@@ -78,7 +78,7 @@ tests/
 - Efficacité mémoire
 - Scalabilité
 
-## 🚀 Comment Exécuter les Tests
+##  Comment Exécuter les Tests
 
 ### Tests Rapides (Essentiels)
 ```bash
@@ -105,26 +105,26 @@ cd backend
 python -m pytest tests/ --cov=. --cov-report=html
 ```
 
-## 📊 Priorités des Tests
+##  Priorités des Tests
 
-### 🔥 Priorité Critique (CI/CD)
+###  Priorité Critique (CI/CD)
 - `test_cicd_critical.py` - Doit toujours passer
 - `test_models_normalized.py` - Structure de base
 - `test_schemas_normalized.py` - Validation des données
 
-### ⚡ Priorité Haute (Développement)
+###  Priorité Haute (Développement)
 - `test_business_logic.py` - Logique métier
 - `test_api_endpoints.py` - Fonctionnalités API
 
-### 📈 Priorité Moyenne (Stabilité)
+###  Priorité Moyenne (Stabilité)
 - `test_database_integration.py` - Intégrations
 - `test_ml_endpoints.py` - Fonctionnalités ML
 
-### 🔍 Priorité Basse (Optimisation)
+###  Priorité Basse (Optimisation)
 - `test_prediction_ml.py` - ML avancé
 - `test_performance.py` - Performance
 
-## 🛠️ Configuration des Tests
+##  Configuration des Tests
 
 ### Prérequis
 ```bash
@@ -140,22 +140,22 @@ export DATABASE_URL=sqlite+aiosqlite:///:memory:
 ### Configuration Pytest
 Le fichier `pytest.ini` se trouve dans le dossier backend racine.
 
-## 📝 Bonnes Pratiques
+##  Bonnes Pratiques
 
-### ✅ À Faire
+###  À Faire
 - Utiliser `pytest.mark.asyncio` pour les tests async
 - Mocker les dépendances externes
 - Tester les cas d'erreur
 - Vérifier les types de retour
 - Utiliser des fixtures pour les données de test
 
-### ❌ À Éviter
+###  À Éviter
 - Tests dépendants de l'ordre d'exécution
 - Hardcoder des valeurs spécifiques à un environnement
 - Tests trop longs (> 30s)
 - Dépendances entre tests
 
-## 🔧 Debugging des Tests
+##  Debugging des Tests
 
 ### Exécution avec Debug
 ```bash
@@ -172,7 +172,7 @@ python -m pytest tests/test_name.py::TestClass::test_method -v
 python -m pytest tests/ -x
 ```
 
-## 📈 Métriques de Qualité
+##  Métriques de Qualité
 
 ### Couverture Cible
 - Code Coverage > 80%
@@ -185,7 +185,7 @@ python -m pytest tests/ -x
 - Suite complète: < 5 minutes
 - Tests individuels: < 10 secondes
 
-## 🔄 Intégration CI/CD
+##  Intégration CI/CD
 
 ### GitHub Actions
 Les tests sont intégrés dans `.github/workflows/` avec:
@@ -201,7 +201,7 @@ Configurez des hooks pré-commit pour exécuter les tests essentiels:
 cd backend && python tests/run_essential_tests.py
 ```
 
-## 🆘 Résolution de Problèmes
+##  Résolution de Problèmes
 
 ### Tests qui Échouent
 1. Vérifier les logs détaillés

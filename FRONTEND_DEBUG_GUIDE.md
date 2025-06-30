@@ -2,12 +2,12 @@
 
 ## Problème résolu : Erreur 405 sur /columns/health_indicators
 
-### ❌ Problème
+###  Problème
 ```
 GET http://localhost:8080/api/fr/columns/health_indicators 405 (Method Not Allowed)
 ```
 
-### ✅ Solution appliquée
+###  Solution appliquée
 Le composant `TestPrediction.vue` a été corrigé pour ne plus utiliser l'endpoint `/columns/` qui n'existe pas dans le backend.
 
 **Avant** :
@@ -28,7 +28,7 @@ columns.value = columnsByTable[selectedTable.value] || ['value', 'year'];
 
 ## Endpoints Backend Disponibles
 
-### ✅ Endpoints principaux
+###  Endpoints principaux
 - `GET /countries/list/` - Liste des pays
 - `GET /countries/regions/` - Régions OMS disponibles
 - `GET /indicator-types/` - Types d'indicateurs
@@ -39,9 +39,9 @@ columns.value = columnsByTable[selectedTable.value] || ['value', 'year'];
 - `POST /dataframe/` - Création DataFrame pour prédiction
 - `POST /train_model/` - Entraînement modèle ML
 
-### ❌ Endpoints qui N'EXISTENT PAS
-- `GET /columns/{table}` - ⚠️ N'existe pas dans le backend
-- `GET /health-indicators/detailed/` - ⚠️ Remplacé par paginated
+###  Endpoints qui N'EXISTENT PAS
+- `GET /columns/{table}` -  N'existe pas dans le backend
+- `GET /health-indicators/detailed/` -  Remplacé par paginated
 
 ## Dépannage
 
@@ -56,10 +56,10 @@ columns.value = columnsByTable[selectedTable.value] || ['value', 'year'];
 3. **Vérifier les noms de champs** : Les filtres correspondent aux noms exacts de l'API
 
 ### Composants corrigés
-- ✅ `TestPrediction.vue` - Utilise des colonnes prédéfinies
-- ✅ `HealthData.vue` - Utilise l'endpoint paginé + fallbacks
-- ✅ `USMortalite.vue` - Utilise l'endpoint paginé
-- ✅ `PopulationHiv.vue` - Utilise l'endpoint paginé
+-  `TestPrediction.vue` - Utilise des colonnes prédéfinies
+-  `HealthData.vue` - Utilise l'endpoint paginé + fallbacks
+-  `USMortalite.vue` - Utilise l'endpoint paginé
+-  `PopulationHiv.vue` - Utilise l'endpoint paginé
 
 ## Structure API Utilisée
 

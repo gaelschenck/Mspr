@@ -1,10 +1,10 @@
-# 🔄 Migration Frontend - Nouvelle Architecture de Données
+#  Migration Frontend - Nouvelle Architecture de Données
 
-## 📋 Vue d'ensemble des changements
+##  Vue d'ensemble des changements
 
 Le frontend a été mis à jour pour s'adapter à la nouvelle architecture backend unifiée avec les schémas `Country`, `IndicatorType` et `HealthIndicator`.
 
-## 🏗️ Nouvelle Architecture
+##  Nouvelle Architecture
 
 ### Structure des données Backend
 ```
@@ -41,12 +41,12 @@ GET /health-indicators/years/     # Années disponibles
 GET /health-indicators/value-types/ # Types de valeurs
 ```
 
-## 🔧 Fichiers modifiés
+##  Fichiers modifiés
 
 ### 1. Services API (`frontend/services/api.js`)
-- ✅ **Ajout** de nouveaux services pour la structure unifiée
-- ✅ **Maintien** des anciens services pour compatibilité 
-- ✅ **Redirection** des anciens endpoints vers les nouveaux
+-  **Ajout** de nouveaux services pour la structure unifiée
+-  **Maintien** des anciens services pour compatibilité 
+-  **Redirection** des anciens endpoints vers les nouveaux
 
 ```javascript
 // Nouveaux services
@@ -62,27 +62,27 @@ fetchPopulationHiv() → redirigé vers fetchHealthIndicatorsDetailed()
 ```
 
 ### 2. Nouveau composant principal (`src/components/HealthData.vue`)
-- ✅ **Interface moderne** avec filtres avancés
-- ✅ **Pagination** optimisée
-- ✅ **Filtres** par pays, région, type d'indicateur, année
-- ✅ **Tableau responsive** avec toutes les données unifiées
-- ✅ **Gestion d'erreurs** améliorée
+-  **Interface moderne** avec filtres avancés
+-  **Pagination** optimisée
+-  **Filtres** par pays, région, type d'indicateur, année
+-  **Tableau responsive** avec toutes les données unifiées
+-  **Gestion d'erreurs** améliorée
 
 ### 3. Composant de navigation (`src/components/Data.vue`)
-- ✅ **Nouveau design** avec navigation vers la vue unifiée
-- ✅ **Maintien** des liens vers les anciennes vues spécialisées
-- ✅ **Interface moderne** avec descriptions
+-  **Nouveau design** avec navigation vers la vue unifiée
+-  **Maintien** des liens vers les anciennes vues spécialisées
+-  **Interface moderne** avec descriptions
 
 ### 4. Router (`src/router/index.js`)
-- ✅ **Ajout** de la route `/health-data` vers `HealthData.vue`
-- ✅ **Maintien** des routes existantes pour compatibilité
+-  **Ajout** de la route `/health-data` vers `HealthData.vue`
+-  **Maintien** des routes existantes pour compatibilité
 
 ### 5. Types et validation (`src/types/healthDataTypes.js`)
-- ✅ **Documentation** complète des schémas de données
-- ✅ **Fonctions de validation** pour les réponses API
-- ✅ **Constantes** utiles (régions OMS, types de qualité, etc.)
+-  **Documentation** complète des schémas de données
+-  **Fonctions de validation** pour les réponses API
+-  **Constantes** utiles (régions OMS, types de qualité, etc.)
 
-## 🚀 Comment utiliser la nouvelle interface
+##  Comment utiliser la nouvelle interface
 
 ### Accès à la vue unifiée
 1. Naviguez vers `/data` ou cliquez sur "Data" dans le menu
@@ -97,7 +97,7 @@ fetchPopulationHiv() → redirigé vers fetchHealthIndicatorsDetailed()
 - **Messages d'erreur** explicites
 - **Chargement** avec indicateurs visuels
 
-## 🔄 Compatibilité et migration
+##  Compatibilité et migration
 
 ### Anciennes vues maintenues
 Les composants suivants restent fonctionnels :
@@ -107,12 +107,12 @@ Les composants suivants restent fonctionnels :
 - `TransmissionMereEnfant.vue` → utilise `fetchTransmissionMereEnfant()` (redirigé)
 
 ### Migration progressive
-1. **Phase 1** ✅ : Nouvelle API compatible, anciennes vues fonctionnelles
+1. **Phase 1**  : Nouvelle API compatible, anciennes vues fonctionnelles
 2. **Phase 2** : Test de la nouvelle interface `/health-data`
 3. **Phase 3** : Migration des utilisateurs vers la nouvelle interface
 4. **Phase 4** : Suppression progressive des anciennes vues (optionnel)
 
-## 🛠️ Développement
+##  Développement
 
 ### Pour ajouter un nouveau filtre
 1. Modifiez `filters` dans `HealthData.vue`
@@ -129,7 +129,7 @@ Les composants suivants restent fonctionnels :
 2. Ajoutez la colonne dans le `<table>` du template
 3. Implémentez le formatage dans les méthodes
 
-## 📊 Types de données supportés
+##  Types de données supportés
 
 ### Pays (Countries)
 - Nom, région OMS, code ISO
@@ -145,7 +145,7 @@ Les composants suivants restent fonctionnels :
 - Qualité des données
 - Années de 1990 à 2023+
 
-## 🔍 Débogage
+##  Débogage
 
 ### Problèmes courants
 1. **Données vides** → Vérifiez les filtres, la connexion API
@@ -160,7 +160,7 @@ console.log('Requête API:', endpoint, params);
 console.log('Réponse API:', response);
 ```
 
-## 📝 TODO
+##  TODO
 
 ### Améliorations possibles
 - [ ] **Exportation** des données filtrées (CSV, Excel)
@@ -178,4 +178,4 @@ console.log('Réponse API:', response);
 
 ---
 
-**🎯 Objectif** : Fournir une interface moderne et unifiée pour explorer toutes les données de santé, tout en maintenant la compatibilité avec l'existant.
+** Objectif** : Fournir une interface moderne et unifiée pour explorer toutes les données de santé, tout en maintenant la compatibilité avec l'existant.

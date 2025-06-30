@@ -132,6 +132,6 @@ def generate_schema_sql():
 if __name__ == "__main__":
     success = generate_schema_sql()
     if success:
-        print("✅ Schéma SQL généré avec succès!")
+        print(" Schéma SQL généré avec succès!")
     else:
-        print("❌ Erreur lors de la génération du schéma")
+        print(" Erreur lors de la génération du schéma")
