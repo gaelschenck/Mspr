@@ -1,4 +1,10 @@
-name: CI/CD MSPR
+# Configuration pour GitHub Actions avec SonarQube désactivé
+# 
+# Pour une approche hybride : 
+# - GitHub Actions fait les tests et builds
+# - SonarQube local analyse le code localement
+
+name: CI/CD MSPR (sans SonarQube)
 
 on:
   push:
@@ -23,8 +29,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Nécessaire pour SonarCloud
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -47,8 +51,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Nécessaire pour SonarCloud
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -67,35 +69,9 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage/
 
-  sonarcloud:
-    runs-on: ubuntu-latest
-    needs: [backend-tests, frontend-tests]
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/addauth'  # Seulement sur main et addauth
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Download backend coverage
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-coverage
-          path: backend/
-      - name: Download frontend coverage
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-coverage
-          path: frontend/coverage/
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-
   build-and-push:
     runs-on: ubuntu-latest
-    needs: [backend-tests, frontend-tests]  # Ne dépend plus de sonarcloud
-    if: always() && (needs.backend-tests.result == 'success' && needs.frontend-tests.result == 'success')
+    needs: [backend-tests, frontend-tests]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -150,6 +126,10 @@ jobs:
           echo "Images pushed to Docker Hub successfully!"
           echo "Backend: $BACKEND_IMAGE_NAME:latest"
           echo "Frontend: $FRONTEND_IMAGE_NAME:latest"
+          echo ""
+          echo "To analyze with SonarQube locally, run:"
+          echo "  1. start_sonar_quick.bat"
+          echo "  2. run_sonar_analysis.bat"
           echo ""
           echo "To deploy locally, run your init_and_deploy.bat script"
           echo "or pull the images manually:"
