@@ -327,9 +327,22 @@ class HealthDataETL:
         stats = {'processed': 0, 'success': 0, 'failed': 0}
         
         try:
-            # Lit le fichier CSV
-            df = pd.read_csv(file_path)
-            logger.info(f"Fichier {filename} chargé: {len(df)} lignes")
+            # Essaie plusieurs encodages pour les fichiers CSV
+            encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+            df = None
+            encoding_used = None
+            
+            for encoding in encodings_to_try:
+                try:
+                    df = pd.read_csv(file_path, encoding=encoding)
+                    encoding_used = encoding
+                    logger.info(f"Fichier {filename} chargé avec encodage {encoding}: {len(df)} lignes")
+                    break
+                except UnicodeDecodeError:
+                    continue
+            
+            if df is None:
+                raise Exception(f"Impossible de décoder le fichier {filename} avec les encodages supportés")
             
             # Nettoie les noms de colonnes
             df.columns = df.columns.str.strip()

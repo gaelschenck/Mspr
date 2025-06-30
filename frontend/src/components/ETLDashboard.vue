@@ -37,21 +37,34 @@
     <div class="etl-controls">
       <div class="control-card">
         <h3>{{ $t('etl_controls') }}</h3>
-        <button 
-          @click="runETL" 
-          :disabled="isRunningETL"
-          class="btn-primary"
-        >
-          {{ isRunningETL ? $t('etl_running') : $t('etl_run_process') }}
-        </button>
         
-        <button @click="refreshLogs" class="btn-secondary">
-          {{ $t('etl_refresh_logs') }}
-        </button>
+        <!-- Message d'aide pour les encodages -->
+        <div class="encoding-help">
+          <h4>💡 {{ $t('etl_encoding_help') || 'Aide pour les problèmes d\'encodage' }}</h4>
+          <p>{{ $t('etl_encoding_text') || 'Si vous rencontrez des erreurs UTF-8, vos fichiers CSV peuvent contenir des caractères spéciaux (é, è, à...). Le système essaie automatiquement plusieurs encodages.' }}</p>
+        </div>
         
-        <button @click="refreshData" class="btn-secondary">
-          {{ $t('etl_refresh_data') }}
-        </button>
+        <div class="control-row">
+          <button 
+            @click="runETL" 
+            :disabled="isRunningETL"
+            class="btn-primary"
+          >
+            {{ isRunningETL ? $t('etl_running') : $t('etl_run_process') }}
+          </button>
+          
+          <button @click="refreshLogs" class="btn-secondary">
+            {{ $t('etl_refresh_logs') }}
+          </button>
+          
+          <button @click="refreshData" class="btn-secondary">
+            {{ $t('etl_refresh_data') }}
+          </button>
+          
+          <button @click="testFileEncodings" class="btn-secondary">
+            {{ $t('etl_test_encodings') || 'Tester encodages' }}
+          </button>
+        </div>
       </div>
     </div>
 
@@ -234,19 +247,45 @@ const runETL = async () => {
       method: 'POST'
     })
     
+    console.log('📋 Réponse ETL complète:', response)
+    
     if (response.success) {
       showStatus(t('etl_success_message'), 'success')
       await refreshData()
     } else {
-      showStatus(`${t('etl_error_message')}: ${response.error || response.stderr}`, 'error')
+      // Messages d'erreur plus détaillés
+      let errorDetails = []
+      
+      if (response.stderr) {
+        errorDetails.push(`Stderr: ${response.stderr}`)
+      }
+      
+      if (response.error) {
+        errorDetails.push(`Error: ${response.error}`)
+      }
+      
+      if (response.stdout) {
+        errorDetails.push(`Stdout: ${response.stdout}`)
+      }
+      
+      const fullError = errorDetails.length > 0 ? errorDetails.join(' | ') : 'Erreur inconnue'
+      
+      // Identifier les erreurs d'encodage spécifiquement
+      if (fullError.includes('utf-8') && (fullError.includes('decode') || fullError.includes('codec'))) {
+        showStatus('❌ Erreur d\'encodage détectée! Vos fichiers CSV contiennent des caractères spéciaux. Le script ETL a été mis à jour pour gérer automatiquement plusieurs encodages (UTF-8, ISO-8859-1, CP1252). Essayez de relancer l\'ETL.', 'error')
+      } else if (fullError.includes('UnicodeDecodeError')) {
+        showStatus('❌ Problème d\'encodage: Utilisez le bouton "Tester encodages" pour diagnostiquer vos fichiers CSV avant de relancer l\'ETL.', 'error')
+      } else {
+        showStatus(`${t('etl_error_message')}: ${fullError}`, 'error')
+      }
     }
     
     // Actualiser les logs
     await loadLogs()
     
   } catch (error) {
-    console.error('Erreur lors de l\'exécution ETL:', error)
-    showStatus(t('etl_error_message'), 'error')
+    console.error('❌ Erreur lors de l\'exécution ETL:', error)
+    showStatus(`${t('etl_error_message')}: ${error.message}`, 'error')
   } finally {
     isRunningETL.value = false
   }
@@ -274,6 +313,28 @@ const refreshData = async () => {
 
 const refreshLogs = async () => {
   await loadLogs()
+}
+
+const testFileEncodings = async () => {
+  showStatus('🔍 Test des encodages des fichiers...', 'info')
+  
+  try {
+    const response = await fetchFromAPI('/etl/test-encodings/')
+    
+    if (response.results) {
+      let message = '📊 Résultats du test d\'encodage:\n'
+      response.results.forEach(result => {
+        message += `${result.file}: ${result.encoding || 'ERREUR'}\n`
+      })
+      
+      // Afficher dans la console pour plus de détails
+      console.log('📋 Détails des encodages:', response.results)
+      showStatus(message, 'success')
+    }
+  } catch (error) {
+    console.error('Erreur lors du test d\'encodage:', error)
+    showStatus('❌ Impossible de tester les encodages', 'error')
+  }
 }
 
 const closeModal = () => {
@@ -369,6 +430,33 @@ const showStatus = (text, type) => {
 }
 
 .etl-controls .control-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.encoding-help {
+  background-color: #e7f3ff;
+  border: 1px solid #bee5eb;
+  border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.encoding-help h4 {
+  margin: 0 0 0.5em 0;
+  color: #004085;
+  font-size: 0.9em;
+}
+
+.encoding-help p {
+  margin: 0;
+  color: #004085;
+  font-size: 0.8em;
+  line-height: 1.4;
+}
+
+.etl-controls .control-row {
   display: flex;
   gap: 1em;
   align-items: center;
@@ -639,6 +727,11 @@ const showStatus = (text, type) => {
   }
   
   .etl-controls .control-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .etl-controls .control-row {
     flex-direction: column;
     align-items: stretch;
   }

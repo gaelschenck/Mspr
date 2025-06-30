@@ -3,6 +3,39 @@
     <div>
     <h1>{{ $t('testprediction_title') }}</h1>
     
+    <!-- Encart d'informations importantes -->
+    <div class="info-panel">
+      <h3>📊 {{ $t('prediction_guidelines_title') || 'Guide pour une prédiction réussie' }}</h3>
+      
+      <div class="guidelines-grid">
+        <div class="guideline-item success">
+          <h4>✅ {{ $t('what_works') || 'Ce qui fonctionne bien' }}</h4>
+          <ul>
+            <li><strong>{{ $t('region_strategy') || 'Stratégie régionale' }}</strong> : Sélectionnez une région entière (ex: Americas, Europe) pour maximiser les données</li>
+            <li><strong>{{ $t('indicator_popular') || 'Indicateurs recommandés' }}</strong> : 
+              <br>• "People Living with HIV" (excellent)
+              <br>• "HIV-related Deaths" (très bon)
+              <br>• "ART Coverage" (bon)</li>
+            <li><strong>{{ $t('data_range') || 'Période large' }}</strong> : Laissez les années par défaut ou utilisez une plage étendue</li>
+          </ul>
+        </div>
+        
+        <div class="guideline-item warning">
+          <h4>⚠️ {{ $t('what_to_avoid') || 'À éviter' }}</h4>
+          <ul>
+            <li><strong>{{ $t('no_selection') || 'Aucune sélection' }}</strong> : Sélectionnez au moins une région OU un indicateur</li>
+            <li><strong>{{ $t('period_too_short') || 'Période trop courte' }}</strong> : Évitez les plages d\'années de moins de 5 ans</li>
+            <li><strong>{{ $t('rare_indicators') || 'Indicateurs rares' }}</strong> : Certains indicateurs ont peu de données</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="technical-note">
+        <strong>📋 {{ $t('technical_requirement') || 'Exigence technique' }}</strong> : 
+        Le modèle de machine learning nécessite au minimum <strong>5 points de données</strong> pour générer une prédiction fiable.
+      </div>
+    </div>
+    
     <!-- Sélection région WHO -->
     <label for="region">{{ $t('testprediction_choose_region') }}</label>
     <select v-model="selectedRegion" id="region" @change="onRegionChange">
@@ -12,29 +45,11 @@
   </div>
   
   <div>
-    <!-- Sélection pays (filtré par région) -->
-    <label for="pays">{{ $t('testprediction_choose_country') }}</label>
-    <select v-model="selectedPays" id="pays">
-      <option value="">-- {{ $t('all_countries') }} --</option>
-      <option v-for="country in filteredCountries" :key="country.id" :value="country.nom">{{ country.nom }}</option>
-    </select>
-  </div>
-  
-  <div>
     <!-- Sélection type d'indicateur -->
     <label for="indicator_type">{{ $t('indicator_type') }}</label>
     <select v-model="selectedIndicatorType" id="indicator_type" @change="onIndicatorTypeChange">
       <option value="">-- {{ $t('all_indicators') }} --</option>
       <option v-for="type in indicatorTypes" :key="type" :value="type">{{ type }}</option>
-    </select>
-  </div>
-  
-  <div>
-    <!-- Sélection type de valeur -->
-    <label for="value_type">{{ $t('value_type') }}</label>
-    <select v-model="selectedValueType" id="value_type">
-      <option value="">-- {{ $t('all_values') }} --</option>
-      <option v-for="valueType in valueTypes" :key="valueType" :value="valueType">{{ valueType }}</option>
     </select>
   </div>
   
@@ -57,6 +72,12 @@
     <button @click="submitChoices" :disabled="!canSubmit || loading">
       {{ loading ? $t('testprediction_loading') : $t('testprediction_submit') }}
     </button>
+    
+    <!-- Message d'aide simplifié -->
+    <div class="help-info-simple">
+      💡 <strong>{{ $t('quick_tip') || 'Conseil rapide' }}</strong> : 
+      {{ $t('quick_tip_text') || 'Sélectionnez une région pour de meilleurs résultats. Les types de valeurs sont gérés automatiquement.' }}
+    </div>
     
     <!-- Informations de debug -->
     <div v-if="debugInfo" class="debug-info">
@@ -84,17 +105,13 @@ import { fetchFromAPI } from "../../services/api.js";
 
 const router = useRouter();
 
-// État réactif - NOUVEAU SYSTÈME
+// État réactif - VERSION SIMPLIFIÉE
 const regions = ref([]);
-const paysList = ref([]);
 const indicatorTypes = ref([]);
-const valueTypes = ref([]);
 const availableYears = ref([]);
 
 const selectedRegion = ref("");
-const selectedPays = ref("");
 const selectedIndicatorType = ref("");
-const selectedValueType = ref("");
 const yearMin = ref("");
 const yearMax = ref("");
 
@@ -103,61 +120,42 @@ const error = ref(null);
 const success = ref(null);
 const debugInfo = ref(null);
 
-// Pays filtrés par région
-const filteredCountries = computed(() => {
-  if (!selectedRegion.value) return paysList.value;
-  return paysList.value.filter(country => country.region === selectedRegion.value);
-});
-
-// Vérification si on peut soumettre
+// Vérification si on peut soumettre - VERSION SIMPLIFIÉE
 const canSubmit = computed(() => {
-  // Au minimum, on doit avoir soit une région, soit un pays, soit un type d'indicateur
-  return selectedRegion.value || selectedPays.value || selectedIndicatorType.value;
+  // Au moins une région OU un indicateur doit être sélectionné
+  return selectedRegion.value || selectedIndicatorType.value;
 });
 
-// Chargement initial des vraies métadonnées
+// Chargement des métadonnées essentielles
 onMounted(async () => {
-  console.log("🚀 TESTPREDICTION.VUE - VERSION MÉTADONNÉES RÉELLES !");
+  console.log("🚀 TESTPREDICTION.VUE - VERSION SIMPLIFIÉE !");
   
   try {
     loading.value = true;
     error.value = null;
     
-    // Charger toutes les métadonnées en parallèle
+    // Charger seulement les métadonnées nécessaires
     const [
-      responsePays,
       responseRegions, 
       responseIndicatorTypes,
-      responseValueTypes,
       responseYears
     ] = await Promise.all([
-      fetchFromAPI("/countries/"),
       fetchFromAPI("/countries/regions/"),
       fetchFromAPI("/indicator-types/list/"),
-      fetchFromAPI("/health-indicators/value-types/"),
       fetchFromAPI("/health-indicators/years/")
     ]);
 
     console.log("📊 Métadonnées chargées:");
-    console.log("- Pays:", responsePays.length);
     console.log("- Régions:", responseRegions);
     console.log("- Types d'indicateurs:", responseIndicatorTypes);
-    console.log("- Types de valeurs:", responseValueTypes);
     console.log("- Années:", responseYears);
 
     // Stocker les données
-    paysList.value = responsePays.map(country => ({
-      id: country.id,
-      nom: country.name,
-      region: country.who_region
-    }));
-    
     regions.value = responseRegions.who_regions || [];
     indicatorTypes.value = responseIndicatorTypes.indicator_types || [];
-    valueTypes.value = responseValueTypes.value_types || [];
     availableYears.value = responseYears.years || [];
 
-    console.log("✅ Données transformées et prêtes");
+    console.log("✅ Interface simplifiée prête");
 
   } catch (err) {
     console.error("❌ Erreur lors du chargement des métadonnées:", err);
@@ -167,10 +165,8 @@ onMounted(async () => {
   }
 });
 
-// Gestionnaires d'événements
+// Gestionnaires d'événements simplifiés
 const onRegionChange = () => {
-  // Réinitialiser le pays si la région change
-  selectedPays.value = "";
   updateDebugInfo();
 };
 
@@ -181,43 +177,38 @@ const onIndicatorTypeChange = () => {
 const updateDebugInfo = () => {
   const criteria = {
     region: selectedRegion.value,
-    pays: selectedPays.value,
     indicator_type: selectedIndicatorType.value,
-    value_type: selectedValueType.value,
-    year_range: yearMin.value && yearMax.value ? `${yearMin.value}-${yearMax.value}` : null,
-    filtered_countries: filteredCountries.value.length
+    year_range: yearMin.value && yearMax.value ? `${yearMin.value}-${yearMax.value}` : null
   };
   
   debugInfo.value = JSON.stringify(criteria, null, 2);
 };
 
-// Soumettre les choix et lancer la prédiction
+// Soumettre les choix et lancer la prédiction - VERSION SIMPLIFIÉE
 const submitChoices = async () => {
-  // Validation améliorée
+  // Validation simplifiée
   if (!canSubmit.value) {
-    error.value = "Veuillez sélectionner au moins une région, un pays ou un type d'indicateur";
+    error.value = "Veuillez sélectionner au moins une région ou un type d'indicateur";
     return;
   }
 
-  // Construction du payload optimisé
+  // Construction du payload simplifié et optimisé
   const payload = {
     // Filtres géographiques
     who_region: selectedRegion.value || null,
-    pays: selectedPays.value || null,
     
     // Filtres sur les indicateurs
     indicator_types: selectedIndicatorType.value ? [selectedIndicatorType.value] : null,
-    value_types: selectedValueType.value ? [selectedValueType.value] : null,
     
     // Filtres temporels
     year_min: yearMin.value ? parseInt(yearMin.value) : null,
     year_max: yearMax.value ? parseInt(yearMax.value) : null,
     
     // Configuration
-    target_column: "value", // Toujours utiliser 'value' comme cible
-    table: "statistique", // Mode général
-    max_records: 1000, // Limiter pour les performances
-    include_confidence: true // Inclure les intervalles de confiance
+    target_column: "value",
+    table: "statistique", 
+    max_records: 1000, // Minimum 100 requis par l'API
+    include_confidence: true
   };
 
   console.log("📤 Payload optimisé envoyé:", payload);
@@ -292,9 +283,13 @@ ${trainResponse.future_prediction ? `🔮 Prédiction future: ${trainResponse.fu
     let errorMessage = "Erreur lors de la prédiction";
     
     if (err.message.includes('422')) {
-      errorMessage = "Aucune donnée trouvée avec ces critères. Essayez de modifier vos filtres.";
+      errorMessage = "❌ Paramètres invalides. Vérifiez vos sélections.";
+    } else if (err.message.includes('404')) {
+      errorMessage = "❌ Aucune donnée trouvée. Essayez de sélectionner une région entière ou de modifier vos filtres.";
     } else if (err.message.includes('500')) {
-      errorMessage = "Erreur serveur. Vérifiez que les données sont disponibles.";
+      errorMessage = "❌ Erreur serveur. Vérifiez que les données sont disponibles.";
+    } else if (err.message.includes('assez de données')) {
+      errorMessage = "❌ Pas assez de données pour la prédiction. Essayez de sélectionner une région entière ou moins de filtres.";
     } else {
       errorMessage = err.message || errorMessage;
     }
@@ -402,9 +397,95 @@ div > div {
   margin-bottom: 1.5em;
 }
 
+.help-info-simple {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 0.8em;
+  margin: 1em 0;
+  font-size: 0.9em;
+  color: #856404;
+  text-align: center;
+}
+
 h1 {
   color: #333;
   margin-bottom: 1.5em;
+}
+
+/* Encart d'informations importantes */
+.info-panel {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.5em;
+  margin: 1.5em 0 2em 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-panel h3 {
+  margin-top: 0;
+  color: #495057;
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.guidelines-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
+  margin-bottom: 1em;
+}
+
+@media (max-width: 768px) {
+  .guidelines-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.guideline-item {
+  background: white;
+  border-radius: 6px;
+  padding: 1em;
+  border-left: 4px solid;
+}
+
+.guideline-item.success {
+  border-left-color: #28a745;
+  background: #f8fff9;
+}
+
+.guideline-item.warning {
+  border-left-color: #ffc107;
+  background: #fffdf5;
+}
+
+.guideline-item h4 {
+  margin-top: 0;
+  margin-bottom: 0.8em;
+  font-size: 1em;
+}
+
+.guideline-item ul {
+  margin-bottom: 0;
+  padding-left: 1.2em;
+}
+
+.guideline-item li {
+  margin-bottom: 0.5em;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.technical-note {
+  background: #e3f2fd;
+  border: 1px solid #bbdefb;
+  border-radius: 4px;
+  padding: 0.8em;
+  text-align: center;
+  font-size: 0.9em;
+  color: #1565c0;
 }
 
 /* Animation de chargement */

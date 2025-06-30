@@ -911,7 +911,7 @@ async def test_prediction_endpoint(db: AsyncSession = Depends(get_db)):
         ).filter(models.HealthIndicator.value.isnot(None)).limit(50)
         
         result = await db.execute(query)
-        health_indicators = result.scalars().all()
+        health_indicators = result.scalars().all();
         
         if not health_indicators:
             return {"error": "Aucune donnée d'indicateur de santé disponible pour le test"}
@@ -1468,4 +1468,59 @@ async def get_etl_status():
         status["last_etl_run"] = datetime.fromtimestamp(log_file.stat().st_mtime).isoformat()
     
     return status
+
+@app.get("/etl/test-encodings/")
+async def test_file_encodings():
+    """Teste les encodages des fichiers CSV sources"""
+    
+    source_dir = Path("NewETL/SourceData")
+    if not source_dir.exists():
+        return {"error": "Répertoire source non trouvé"}
+    
+    results = []
+    
+    for file_path in source_dir.glob("*.csv"):
+        try:
+            # Tester si le fichier peut être lu avec pandas avec différents encodages
+            test_success = False
+            working_encoding = None
+            error_details = []
+            
+            encodings_to_test = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig', 'latin1']
+            
+            for encoding in encodings_to_test:
+                try:
+                    # Tester la lecture avec pandas
+                    df_test = pd.read_csv(file_path, encoding=encoding, nrows=5)
+                    working_encoding = encoding
+                    test_success = True
+                    break
+                except Exception as e:
+                    error_details.append(f"{encoding}: {str(e)[:50]}")
+                    continue
+            
+            # Obtenir la taille du fichier
+            file_size = file_path.stat().st_size
+            
+            results.append({
+                "file": file_path.name,
+                "working_encoding": working_encoding,
+                "test_success": test_success,
+                "file_size": file_size,
+                "errors": error_details if not test_success else []
+            })
+            
+        except Exception as e:
+            results.append({
+                "file": file_path.name,
+                "error": str(e),
+                "test_success": False
+            })
+    
+    return {
+        "results": results,
+        "total_files": len(results),
+        "successful_files": len([r for r in results if r.get('test_success', False)]),
+        "timestamp": datetime.now().isoformat()
+    }
 
