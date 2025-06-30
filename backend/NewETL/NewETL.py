@@ -130,6 +130,19 @@ class HealthDataETL:
             }
         }
 
+    def init_database(self):
+        """
+        Initialise la base de données en créant le schéma normalisé
+        Cette méthode est utilisée par les tests et les scripts d'initialisation
+        """
+        logger.info("Initialisation de la base de données...")
+        try:
+            self.create_normalized_schema()
+            logger.info("Base de données initialisée avec succès")
+        except Exception as e:
+            logger.error(f"Erreur lors de l'initialisation de la base de données: {e}")
+            raise
+
     def create_normalized_schema(self):
         """Crée le schéma normalisé de la base de données"""
         

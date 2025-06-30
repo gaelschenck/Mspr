@@ -236,13 +236,22 @@ const loadSystemStatus = async () => {
 
 const loadSourceFiles = async () => {
   try {
+    console.log('🔄 Chargement des fichiers ETL...')
     const response = await fetchFromAPI('/etl/source-files/')
+    console.log('📨 Réponse API reçue:', response)
+    
     sourceFiles.value = response.source_files || []
     processedFiles.value = response.processed_files || []
     
     // Afficher des informations de debug
     console.log(`📁 ${t('etl_source_files_loaded') || 'Fichiers sources chargés'}:`, sourceFiles.value.length)
     console.log(`📊 ${t('etl_processed_files_loaded') || 'Fichiers traités chargés'}:`, processedFiles.value.length)
+    
+    // Vérifier s'il y a des erreurs dans la réponse
+    if (response.error) {
+      console.warn('⚠️ Erreur dans la réponse API:', response.error)
+      showStatus(`⚠️ ${response.error}`, 'error')
+    }
     
     // Vérifier s'il y a des erreurs dans les fichiers
     const sourceErrors = sourceFiles.value.filter(f => f.error).length
@@ -344,14 +353,32 @@ const runETL = async () => {
 }
 
 const showFilePreview = async (fileType, fileName) => {
+  console.log(`🔍 Demande de preview: ${fileType}/${fileName}`)
   previewLoading.value = true
   showModal.value = true
   
   try {
-    previewData.value = await fetchFromAPI(`/etl/file-preview/${fileType}/${fileName}`)
+    const url = `/etl/file-preview/${fileType}/${fileName}`
+    console.log(`📡 Appel API: ${url}`)
+    
+    previewData.value = await fetchFromAPI(url)
+    console.log('✅ Preview chargé avec succès:', previewData.value?.file_name)
   } catch (error) {
-    console.error(`${t('etl_preview_error')}:`, error)
-    showStatus(t('etl_preview_error'), 'error')
+    console.error(`❌ Erreur preview:`, error)
+    console.error(`❌ Type d'erreur:`, error.constructor.name)
+    console.error(`❌ Status:`, error.response?.status)
+    console.error(`❌ Message:`, error.message)
+    
+    let errorMessage = t('etl_preview_error')
+    if (error.response?.status === 500) {
+      errorMessage = `❌ Erreur serveur lors du preview de ${fileName}. Le backend a rencontré un problème.`
+    } else if (error.response?.status === 404) {
+      errorMessage = `❌ Fichier ${fileName} non trouvé.`
+    } else {
+      errorMessage = `❌ Erreur preview: ${error.message}`
+    }
+    
+    showStatus(errorMessage, 'error')
     closeModal()
   } finally {
     previewLoading.value = false

@@ -1248,104 +1248,144 @@ from datetime import datetime
 @app.get("/etl/source-files/")
 async def get_source_files():
     """Retourne la liste des fichiers CSV sources et transformés avec gestion multi-encodage"""
-    source_dir = Path("NewETL/SourceData")
-    dataset_dir = Path("NewETL/DatasetClean")
-    
-    files = {
-        "source_files": [],
-        "processed_files": []
-    }
-    
-    def try_read_csv_with_encoding(file_path, nrows=5, separator=','):
-        """Essaie de lire un CSV avec plusieurs encodages"""
-        encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+    try:
+        source_dir = Path("NewETL/SourceData")
+        dataset_dir = Path("NewETL/DatasetClean")
         
-        for encoding in encodings_to_try:
-            try:
-                df = pd.read_csv(file_path, nrows=nrows, sep=separator, encoding=encoding)
-                return df, encoding
-            except UnicodeDecodeError:
-                continue
-            except Exception:
-                # Si c'est une autre erreur, on continue avec l'encodage suivant
-                continue
+        files = {
+            "source_files": [],
+            "processed_files": []
+        }
         
-        # Si aucun encodage ne fonctionne, lever une exception
-        raise Exception(f"Impossible de décoder le fichier avec les encodages supportés")
-    
-    # Fichiers sources
-    if source_dir.exists():
-        for csv_file in source_dir.glob("*.csv"):
-            try:
-                # Lire quelques lignes pour avoir un aperçu avec gestion d'encodage
-                df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5)
-                files["source_files"].append({
-                    "name": csv_file.name,
-                    "path": str(csv_file),
-                    "size": csv_file.stat().st_size,
-                    "rows_sample": len(df),
-                    "columns": list(df.columns),
-                    "preview": df.to_dict('records'),
-                    "encoding": encoding_used,
-                    "type": "source"
-                })
-            except Exception as e:
-                files["source_files"].append({
-                    "name": csv_file.name,
-                    "path": str(csv_file),
-                    "size": csv_file.stat().st_size if csv_file.exists() else 0,
-                    "error": str(e),
-                    "type": "source"
-                })
-    
-    # Fichiers traités (nouveaux fichiers CSV générés par NewETL)
-    if dataset_dir.exists():
-        for csv_file in dataset_dir.glob("*.csv"):
-            try:
-                # Essayer d'abord avec ; puis avec , pour le séparateur
-                separator = ';'
+        def try_read_csv_with_encoding(file_path, nrows=5, separator=','):
+            """Essaie de lire un CSV avec plusieurs encodages"""
+            encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+            
+            for encoding in encodings_to_try:
                 try:
-                    df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
-                except:
-                    separator = ','
-                    df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
-                
-                files["processed_files"].append({
-                    "name": csv_file.name,
-                    "path": str(csv_file),
-                    "size": csv_file.stat().st_size,
-                    "rows_sample": len(df),
-                    "columns": list(df.columns),
-                    "preview": df.to_dict('records'),
-                    "separator": separator,
-                    "encoding": encoding_used,
-                    "type": "processed"
-                })
-            except Exception as e:
-                files["processed_files"].append({
-                    "name": csv_file.name,
-                    "path": str(csv_file),
-                    "size": csv_file.stat().st_size if csv_file.exists() else 0,
-                    "error": str(e),
-                    "type": "processed"
-                })
+                    df = pd.read_csv(file_path, nrows=nrows, sep=separator, encoding=encoding)
+                    return df, encoding
+                except UnicodeDecodeError:
+                    continue
+                except Exception:
+                    # Si c'est une autre erreur, on continue avec l'encodage suivant
+                    continue
+            
+            # Si aucun encodage ne fonctionne, lever une exception
+            raise Exception(f"Impossible de décoder le fichier avec les encodages supportés")
+        
+        # Fichiers sources
+        if source_dir.exists():
+            for csv_file in source_dir.glob("*.csv"):
+                try:
+                    # Lire quelques lignes pour avoir un aperçu avec gestion d'encodage
+                    df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5)
+                    
+                    # Convertir les données en format JSON-safe
+                    preview_data = df.to_dict('records')
+                    # Nettoyer les valeurs NaN qui peuvent poser problème en JSON
+                    for row in preview_data:
+                        for key, value in row.items():
+                            if pd.isna(value):
+                                row[key] = None
+                    
+                    files["source_files"].append({
+                        "name": csv_file.name,
+                        "path": str(csv_file),
+                        "size": csv_file.stat().st_size,
+                        "rows_sample": len(df),
+                        "columns": list(df.columns),
+                        "preview": preview_data,
+                        "encoding": encoding_used,
+                        "type": "source"
+                    })
+                except Exception as e:
+                    files["source_files"].append({
+                        "name": csv_file.name,
+                        "path": str(csv_file),
+                        "size": csv_file.stat().st_size if csv_file.exists() else 0,
+                        "error": str(e),
+                        "type": "source"
+                    })
+        
+        # Fichiers traités (nouveaux fichiers CSV générés par NewETL)
+        if dataset_dir.exists():
+            for csv_file in dataset_dir.glob("*.csv"):
+                try:
+                    # Essayer d'abord avec ; puis avec , pour le séparateur
+                    separator = ';'
+                    try:
+                        df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
+                    except:
+                        separator = ','
+                        df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
+                    
+                    # Convertir les données en format JSON-safe
+                    preview_data = df.to_dict('records')
+                    # Nettoyer les valeurs NaN qui peuvent poser problème en JSON
+                    for row in preview_data:
+                        for key, value in row.items():
+                            if pd.isna(value):
+                                row[key] = None
+                    
+                    files["processed_files"].append({
+                        "name": csv_file.name,
+                        "path": str(csv_file),
+                        "size": csv_file.stat().st_size,
+                        "rows_sample": len(df),
+                        "columns": list(df.columns),
+                        "preview": preview_data,
+                        "separator": separator,
+                        "encoding": encoding_used,
+                        "type": "processed"
+                    })
+                except Exception as e:
+                    files["processed_files"].append({
+                        "name": csv_file.name,
+                        "path": str(csv_file),
+                        "size": csv_file.stat().st_size if csv_file.exists() else 0,
+                        "error": str(e),
+                        "type": "processed"
+                    })
+        
+        return files
     
-    return files
+    except Exception as global_error:
+        # En cas d'erreur globale, retourner une réponse d'erreur structurée
+        print(f"Erreur globale dans get_source_files: {global_error}")
+        import traceback
+        traceback.print_exc()
+        
+        # Retourner une structure minimale en cas d'erreur
+        return {
+            "source_files": [],
+            "processed_files": [],
+            "error": f"Erreur lors du chargement des fichiers: {str(global_error)}",
+            "debug_info": {
+                "source_dir_exists": Path("NewETL/SourceData").exists(),
+                "dataset_dir_exists": Path("NewETL/DatasetClean").exists()
+            }
+        }
 
 @app.get("/etl/file-preview/{file_type}/{file_name}")
 async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
     """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur et de l'encodage"""
-    if file_type == "source":
-        file_path = Path("NewETL/SourceData") / file_name
-    elif file_type == "processed":
-        file_path = Path("NewETL/DatasetClean") / file_name
-    else:
-        raise HTTPException(status_code=400, detail="Type de fichier invalide")
-    
-    if not file_path.exists():
-        raise HTTPException(status_code=404, detail="Fichier non trouvé")
+    print(f"🔍 Preview demandé: {file_type}/{file_name}")
     
     try:
+        if file_type == "source":
+            file_path = Path("NewETL/SourceData") / file_name
+        elif file_type == "processed":
+            file_path = Path("NewETL/DatasetClean") / file_name
+        else:
+            raise HTTPException(status_code=400, detail="Type de fichier invalide")
+        
+        if not file_path.exists():
+            print(f"❌ Fichier non trouvé: {file_path}")
+            raise HTTPException(status_code=404, detail="Fichier non trouvé")
+        
+        print(f"📁 Fichier trouvé: {file_path}")
+        
         # Essaie plusieurs encodages dans l'ordre de préférence
         encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
         df = None
@@ -1366,39 +1406,57 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
                         separator = ','
                 
                 # Charger le fichier avec l'encodage et le séparateur détectés
+                print(f"📖 Tentative lecture avec encodage {encoding}, séparateur '{separator}'")
                 df = pd.read_csv(file_path, nrows=limit, sep=separator, encoding=encoding)
                 encoding_used = encoding
+                print(f"✅ Lecture réussie: {len(df)} lignes, {len(df.columns)} colonnes")
                 break
                 
             except UnicodeDecodeError:
+                print(f"⚠️ Erreur d'encodage avec {encoding}")
                 continue
             except Exception as e:
-                # Si c'est une autre erreur que l'encodage, on l'ignore pour cet encodage
+                print(f"⚠️ Autre erreur avec {encoding}: {str(e)[:50]}...")
                 continue
         
         if df is None:
-            raise HTTPException(
-                status_code=500, 
-                detail=f"Impossible de décoder le fichier {file_name} avec les encodages supportés: {', '.join(encodings_to_try)}"
-            )
+            error_msg = f"Impossible de décoder le fichier {file_name} avec les encodages supportés: {', '.join(encodings_to_try)}"
+            print(f"❌ {error_msg}")
+            raise HTTPException(status_code=500, detail=error_msg)
         
-        return {
+        print("🔄 Préparation de la réponse JSON...")
+        
+        # Nettoyer les données pour éviter les problèmes JSON
+        df_clean = df.replace([np.nan, np.inf, -np.inf], None)
+        data_records = df_clean.to_dict('records')
+        
+        result = {
             "file_name": file_name,
             "file_type": file_type,
-            "total_rows": len(df),
-            "columns": list(df.columns),
-            "data": df.to_dict('records'),
+            "total_rows": len(df_clean),
+            "columns": list(df_clean.columns),
+            "data": data_records,
             "separator_used": separator,
             "encoding_used": encoding_used,
             "info": {
-                "memory_usage": df.memory_usage(deep=True).sum(),
-                "dtypes": {col: str(dtype) for col, dtype in df.dtypes.items()}
+                "memory_usage": int(df_clean.memory_usage(deep=True).sum()),
+                "dtypes": {col: str(dtype) for col, dtype in df_clean.dtypes.items()}
             }
         }
+        
+        print(f"✅ Réponse préparée: {len(data_records)} enregistrements")
+        return result
+        
     except HTTPException:
+        print("❌ HTTPException re-raised")
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture: {str(e)}")
+        error_msg = f"Erreur lors de la lecture: {str(e)}"
+        print(f"❌ Erreur inattendue: {error_msg}")
+        print("📋 Détails de l'erreur:")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=error_msg)
 
 @app.post("/etl/run/")
 async def run_etl_process():
