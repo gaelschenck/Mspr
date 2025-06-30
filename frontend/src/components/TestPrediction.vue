@@ -9,30 +9,48 @@
       
       <div class="guidelines-grid">
         <div class="guideline-item success">
-          <h4>✅ {{ $t('what_works') || 'Ce qui fonctionne bien' }}</h4>
+          <h4>✅ {{ $t('what_works') || 'Combinaisons qui fonctionnent bien' }}</h4>
           <ul>
-            <li><strong>{{ $t('region_strategy') || 'Stratégie régionale' }}</strong> : Sélectionnez une région entière (ex: Americas, Europe) pour maximiser les données</li>
-            <li><strong>{{ $t('indicator_popular') || 'Indicateurs recommandés' }}</strong> : 
+            <li><strong>{{ $t('region_only') || 'Région seule' }}</strong> : Sélectionnez juste une région (Europe, Americas...) - Simple et efficace !</li>
+            <li><strong>{{ $t('region_plus_indicator') || 'Région + Indicateur' }}</strong> : Combinez une région avec un indicateur spécifique</li>
+            <li><strong>{{ $t('popular_indicators') || 'Indicateurs avec beaucoup de données' }}</strong> : 
               <br>• "People Living with HIV" (excellent)
-              <br>• "HIV-related Deaths" (très bon)
-              <br>• "ART Coverage" (bon)</li>
-            <li><strong>{{ $t('data_range') || 'Période large' }}</strong> : Laissez les années par défaut ou utilisez une plage étendue</li>
+              <br>• "ART Coverage" (très bon)
+              <br>• "HIV-related Deaths" (bon)</li>
+            <li><strong>{{ $t('period_tip') || 'Période' }}</strong> : Laissez les années vides pour utiliser toutes les données disponibles</li>
           </ul>
         </div>
         
         <div class="guideline-item warning">
-          <h4>⚠️ {{ $t('what_to_avoid') || 'À éviter' }}</h4>
+          <h4>⚠️ {{ $t('what_to_avoid') || 'À éviter absolument' }}</h4>
           <ul>
-            <li><strong>{{ $t('no_selection') || 'Aucune sélection' }}</strong> : Sélectionnez au moins une région OU un indicateur</li>
-            <li><strong>{{ $t('period_too_short') || 'Période trop courte' }}</strong> : Évitez les plages d\'années de moins de 5 ans</li>
-            <li><strong>{{ $t('rare_indicators') || 'Indicateurs rares' }}</strong> : Certains indicateurs ont peu de données</li>
+            <li><strong>{{ $t('no_filter') || 'Aucun filtre' }}</strong> : Sélectionnez au moins une région OU un indicateur</li>
+            <li><strong>{{ $t('too_specific') || 'Trop de filtres' }}</strong> : Évitez de combiner indicateur rare + période courte</li>
+            <li><strong>{{ $t('short_periods') || 'Périodes très courtes' }}</strong> : Moins de 3-4 ans donnent peu de données</li>
+            <li><strong>{{ $t('rare_combinations') || 'Combinaisons rares' }}</strong> : Indicateurs pédiatriques + petites régions</li>
           </ul>
         </div>
       </div>
       
-      <div class="technical-note">
-        <strong>📋 {{ $t('technical_requirement') || 'Exigence technique' }}</strong> : 
-        Le modèle de machine learning nécessite au minimum <strong>5 points de données</strong> pour générer une prédiction fiable.
+      <div class="guidelines-grid">
+        <div class="guideline-item info">
+          <h4>🎯 {{ $t('recommended_start') || 'Pour commencer facilement' }}</h4>
+          <ul>
+            <li><strong>Débutant</strong> : Sélectionnez juste "Europe" ou "Americas"</li>
+            <li><strong>Intermédiaire</strong> : "Europe" + "People Living with HIV"</li>
+            <li><strong>Avancé</strong> : Ajoutez une période (ex: 2015-2023)</li>
+          </ul>
+        </div>
+        
+        <div class="guideline-item technical">
+          <h4>⚙️ {{ $t('technical_info') || 'Informations techniques' }}</h4>
+          <ul>
+            <li><strong>Minimum requis</strong> : 10+ points de données</li>
+            <li><strong>Optimal</strong> : 50+ points de données</li>
+            <li><strong>Traitement</strong> : Max 1000 enregistrements par requête</li>
+            <li><strong>Colonnes</strong> : Gestion automatique des types de valeurs</li>
+          </ul>
+        </div>
       </div>
     </div>
     
@@ -70,13 +88,13 @@
   </div>
 
     <button @click="submitChoices" :disabled="!canSubmit || loading">
-      {{ loading ? $t('testprediction_loading') : $t('testprediction_submit') }}
+      {{ loading ? '🔄 Traitement en cours...' : '🚀 Lancer la prédiction' }}
     </button>
     
     <!-- Message d'aide simplifié -->
     <div class="help-info-simple">
-      💡 <strong>{{ $t('quick_tip') || 'Conseil rapide' }}</strong> : 
-      {{ $t('quick_tip_text') || 'Sélectionnez une région pour de meilleurs résultats. Les types de valeurs sont gérés automatiquement.' }}
+      💡 <strong>{{ $t('quick_tip') || 'Conseil express' }}</strong> : 
+      {{ $t('quick_tip_text') || 'Pour commencer, sélectionnez juste une région (Europe, Americas...). C\'est simple et ça marche très bien !' }}
     </div>
     
     <!-- Informations de debug -->
@@ -188,30 +206,44 @@ const updateDebugInfo = () => {
 const submitChoices = async () => {
   // Validation simplifiée
   if (!canSubmit.value) {
-    error.value = "Veuillez sélectionner au moins une région ou un type d'indicateur";
+    error.value = "💡 Astuce : Sélectionnez au moins une région (recommandé) ou un type d'indicateur pour commencer";
     return;
   }
 
-  // Construction du payload simplifié et optimisé
+  // Construction du payload simplifié et optimisé selon le schéma backend
   const payload = {
-    // Filtres géographiques
-    who_region: selectedRegion.value || null,
-    
-    // Filtres sur les indicateurs
-    indicator_types: selectedIndicatorType.value ? [selectedIndicatorType.value] : null,
-    
-    // Filtres temporels
-    year_min: yearMin.value ? parseInt(yearMin.value) : null,
-    year_max: yearMax.value ? parseInt(yearMax.value) : null,
-    
-    // Configuration
-    target_column: "value",
-    table: "statistique", 
-    max_records: 1000, // Minimum 100 requis par l'API
+    // Configuration obligatoire
+    table: "statistique", // Valeur obligatoire selon le schéma backend
+    target_column: "value", // Colonne cible obligatoire
+    max_records: 1000, // Plus petit pour commencer
     include_confidence: true
   };
 
+  // Ajouter les filtres seulement s'ils sont définis
+  if (selectedRegion.value) {
+    payload.who_region = selectedRegion.value;
+  }
+  
+  if (selectedIndicatorType.value) {
+    payload.indicator_types = [selectedIndicatorType.value];
+  }
+  
+  if (yearMin.value) {
+    payload.year_min = parseInt(yearMin.value);
+  }
+  
+  if (yearMax.value) {
+    payload.year_max = parseInt(yearMax.value);
+  }
+
   console.log("📤 Payload optimisé envoyé:", payload);
+  console.log("📋 Validation du payload:");
+  console.log(`  - table: ${payload.table} (requis)`);
+  console.log(`  - target_column: ${payload.target_column} (requis)`);
+  console.log(`  - max_records: ${payload.max_records} (entre 100-100000)`);
+  console.log(`  - who_region: ${payload.who_region || 'non défini'}`);
+  console.log(`  - indicator_types: ${payload.indicator_types || 'non défini'}`);
+  console.log(`  - années: ${payload.year_min || 'min non défini'} - ${payload.year_max || 'max non défini'}`);
 
   try {
     loading.value = true;
@@ -222,7 +254,7 @@ const submitChoices = async () => {
     console.log("📊 Création du DataFrame...");
     const response = await fetchFromAPI("/dataframe/", {
       method: "POST",
-      body: JSON.stringify(payload)
+      data: payload  // Changer de 'body' à 'data' pour correspondre au service API
     });
     
     console.log("✅ DataFrame créé:", response);
@@ -246,7 +278,7 @@ const submitChoices = async () => {
 
     const trainResponse = await fetchFromAPI("/train_model/", {
       method: "POST",
-      body: JSON.stringify(trainPayload)
+      data: trainPayload  // Changer de 'body' à 'data'
     });
     
     console.log("🎯 Modèle entraîné avec succès:", trainResponse);
@@ -279,16 +311,29 @@ ${trainResponse.future_prediction ? `🔮 Prédiction future: ${trainResponse.fu
   } catch (err) {
     console.error("❌ Erreur lors de la prédiction:", err);
     
-    // Messages d'erreur plus informatifs
+    // Messages d'erreur plus informatifs avec détection du problème
     let errorMessage = "Erreur lors de la prédiction";
     
-    if (err.message.includes('422')) {
-      errorMessage = "❌ Paramètres invalides. Vérifiez vos sélections.";
-    } else if (err.message.includes('404')) {
+    if (err.response && err.response.status === 422) {
+      // Erreur de validation des paramètres
+      const detail = err.response.data?.detail;
+      if (detail && Array.isArray(detail)) {
+        // Erreurs de validation Pydantic
+        const validationErrors = detail.map(e => `${e.loc?.join('.')}: ${e.msg}`).join(', ');
+        errorMessage = `❌ Paramètres invalides: ${validationErrors}`;
+      } else {
+        errorMessage = `❌ Paramètres invalides. Détail: ${detail || 'Structure des données incorrecte'}`;
+      }
+      
+      // Logs de debug pour identifier le problème
+      console.log("🔍 Payload envoyé qui a causé l'erreur 422:", payload);
+      console.log("🔍 Réponse d'erreur complète:", err.response.data);
+      
+    } else if (err.response && err.response.status === 404) {
       errorMessage = "❌ Aucune donnée trouvée. Essayez de sélectionner une région entière ou de modifier vos filtres.";
-    } else if (err.message.includes('500')) {
+    } else if (err.response && err.response.status === 500) {
       errorMessage = "❌ Erreur serveur. Vérifiez que les données sont disponibles.";
-    } else if (err.message.includes('assez de données')) {
+    } else if (err.message && err.message.includes('assez de données')) {
       errorMessage = "❌ Pas assez de données pour la prédiction. Essayez de sélectionner une région entière ou moins de filtres.";
     } else {
       errorMessage = err.message || errorMessage;
@@ -459,6 +504,16 @@ h1 {
 .guideline-item.warning {
   border-left-color: #ffc107;
   background: #fffdf5;
+}
+
+.guideline-item.info {
+  border-left-color: #17a2b8;
+  background: #f1f9ff;
+}
+
+.guideline-item.technical {
+  border-left-color: #6f42c1;
+  background: #f8f7ff;
 }
 
 .guideline-item h4 {

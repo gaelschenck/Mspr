@@ -123,9 +123,12 @@
       <h2>{{ $t('etl_execution_logs') }}</h2>
       <div class="logs-container">
         <div v-if="etlLogs.length === 0" class="no-logs">
-          {{ $t('etl_no_logs') }}
+          {{ $t('etl_no_logs') || 'Aucun log disponible. Lancez l\'ETL pour voir les logs d\'exécution.' }}
         </div>
         <div v-else class="logs-content">
+          <div class="logs-header">
+            <small>📊 {{ etlLogs.length }} lignes affichées | 🔄 Dernière actualisation: {{ logsLastUpdate }}</small>
+          </div>
           <div 
             v-for="(log, index) in etlLogs" 
             :key="index"
@@ -195,6 +198,7 @@ const systemStatus = ref(null)
 const sourceFiles = ref([])
 const processedFiles = ref([])
 const etlLogs = ref([])
+const logsLastUpdate = ref(null)
 const isRunningETL = ref(false)
 const showModal = ref(false)
 const previewData = ref(null)
@@ -232,8 +236,19 @@ const loadLogs = async () => {
   try {
     const response = await fetchFromAPI('/etl/logs/')
     etlLogs.value = response.logs || []
+    logsLastUpdate.value = new Date().toLocaleTimeString('fr-FR')
+    
+    // Afficher des informations de debug si disponibles
+    if (response.encoding_used) {
+      console.log(`📝 Logs chargés avec encodage: ${response.encoding_used}`)
+    }
+    if (response.total_lines) {
+      console.log(`📊 Total de lignes dans le fichier de log: ${response.total_lines}`)
+    }
   } catch (error) {
     console.error('Erreur lors du chargement des logs:', error)
+    etlLogs.value = [`❌ Erreur lors du chargement des logs: ${error.message}`]
+    logsLastUpdate.value = new Date().toLocaleTimeString('fr-FR')
   }
 }
 
@@ -250,42 +265,37 @@ const runETL = async () => {
     console.log('📋 Réponse ETL complète:', response)
     
     if (response.success) {
-      showStatus(t('etl_success_message'), 'success')
+      showStatus('✅ ETL exécuté avec succès! Consultez les logs pour plus de détails.', 'success')
+      
+      // Afficher des statistiques si disponibles
+      if (response.results && response.results.processing_stats) {
+        const stats = response.results.processing_stats
+        console.log(`📊 Statistiques ETL: ${stats.success}/${stats.processed} lignes traitées`)
+      }
+      
       await refreshData()
     } else {
-      // Messages d'erreur plus détaillés
-      let errorDetails = []
-      
-      if (response.stderr) {
-        errorDetails.push(`Stderr: ${response.stderr}`)
-      }
-      
-      if (response.error) {
-        errorDetails.push(`Error: ${response.error}`)
-      }
-      
-      if (response.stdout) {
-        errorDetails.push(`Stdout: ${response.stdout}`)
-      }
-      
-      const fullError = errorDetails.length > 0 ? errorDetails.join(' | ') : 'Erreur inconnue'
+      // Messages d'erreur améliorés
+      let errorMessage = response.error || 'Erreur inconnue'
       
       // Identifier les erreurs d'encodage spécifiquement
-      if (fullError.includes('utf-8') && (fullError.includes('decode') || fullError.includes('codec'))) {
-        showStatus('❌ Erreur d\'encodage détectée! Vos fichiers CSV contiennent des caractères spéciaux. Le script ETL a été mis à jour pour gérer automatiquement plusieurs encodages (UTF-8, ISO-8859-1, CP1252). Essayez de relancer l\'ETL.', 'error')
-      } else if (fullError.includes('UnicodeDecodeError')) {
-        showStatus('❌ Problème d\'encodage: Utilisez le bouton "Tester encodages" pour diagnostiquer vos fichiers CSV avant de relancer l\'ETL.', 'error')
+      if (errorMessage.includes('utf-8') && (errorMessage.includes('decode') || errorMessage.includes('codec'))) {
+        showStatus('❌ Erreur d\'encodage persistante! Vérifiez que vos fichiers CSV sont dans le bon répertoire SourceData et utilisez le bouton "Tester encodages" pour diagnostiquer.', 'error')
+      } else if (errorMessage.includes('UnicodeDecodeError')) {
+        showStatus('❌ Problème d\'encodage: Utilisez le bouton "Tester encodages" pour diagnostiquer vos fichiers CSV.', 'error')
+      } else if (errorMessage.includes('FileNotFoundError') || errorMessage.includes('non trouvé')) {
+        showStatus('❌ Fichiers sources manquants! Vérifiez que les fichiers CSV sont dans le dossier NewETL/SourceData/', 'error')
       } else {
-        showStatus(`${t('etl_error_message')}: ${fullError}`, 'error')
+        showStatus(`❌ Erreur ETL: ${errorMessage}`, 'error')
       }
     }
     
-    // Actualiser les logs
+    // Toujours actualiser les logs après une tentative d'ETL
     await loadLogs()
     
   } catch (error) {
     console.error('❌ Erreur lors de l\'exécution ETL:', error)
-    showStatus(`${t('etl_error_message')}: ${error.message}`, 'error')
+    showStatus(`❌ Erreur de communication: ${error.message}`, 'error')
   } finally {
     isRunningETL.value = false
   }
@@ -578,6 +588,15 @@ const showStatus = (text, type) => {
 
 .logs-content {
   padding: 1em;
+}
+
+.logs-header {
+  background-color: #f8f9fa;
+  padding: 0.5em;
+  border-bottom: 1px solid #e9ecef;
+  margin: -1em -1em 1em -1em;
+  font-size: 0.8em;
+  color: #666;
 }
 
 .log-line {

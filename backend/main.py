@@ -1313,7 +1313,7 @@ async def get_source_files():
 
 @app.get("/etl/file-preview/{file_type}/{file_name}")
 async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
-    """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur"""
+    """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur et de l'encodage"""
     if file_type == "source":
         file_path = Path("NewETL/SourceData") / file_name
     elif file_type == "processed":
@@ -1325,22 +1325,41 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
         raise HTTPException(status_code=404, detail="Fichier non trouvé")
     
     try:
-        # Détection automatique du séparateur
+        # Essaie plusieurs encodages dans l'ordre de préférence
+        encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+        df = None
+        encoding_used = None
         separator = ','
-        encoding = 'utf-8'
         
-        # Pour les fichiers dans DatasetClean, essayer d'abord le point-virgule
-        if file_type == "processed":
+        for encoding in encodings_to_try:
             try:
-                df = pd.read_csv(file_path, nrows=2, sep=';', encoding=encoding)
-                if len(df.columns) > 1:  # Si on a plusieurs colonnes, le séparateur est correct
-                    separator = ';'
-                else:
-                    raise ValueError("Essayer virgule")
-            except:
-                separator = ','
+                # Pour les fichiers dans DatasetClean, essayer d'abord le point-virgule
+                if file_type == "processed":
+                    try:
+                        test_df = pd.read_csv(file_path, nrows=2, sep=';', encoding=encoding)
+                        if len(test_df.columns) > 1:  # Si on a plusieurs colonnes, le séparateur est correct
+                            separator = ';'
+                        else:
+                            separator = ','
+                    except:
+                        separator = ','
+                
+                # Charger le fichier avec l'encodage et le séparateur détectés
+                df = pd.read_csv(file_path, nrows=limit, sep=separator, encoding=encoding)
+                encoding_used = encoding
+                break
+                
+            except UnicodeDecodeError:
+                continue
+            except Exception as e:
+                # Si c'est une autre erreur que l'encodage, on l'ignore pour cet encodage
+                continue
         
-        df = pd.read_csv(file_path, nrows=limit, sep=separator, encoding=encoding)
+        if df is None:
+            raise HTTPException(
+                status_code=500, 
+                detail=f"Impossible de décoder le fichier {file_name} avec les encodages supportés: {', '.join(encodings_to_try)}"
+            )
         
         return {
             "file_name": file_name,
@@ -1349,11 +1368,14 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
             "columns": list(df.columns),
             "data": df.to_dict('records'),
             "separator_used": separator,
+            "encoding_used": encoding_used,
             "info": {
                 "memory_usage": df.memory_usage(deep=True).sum(),
                 "dtypes": {col: str(dtype) for col, dtype in df.dtypes.items()}
             }
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture: {str(e)}")
 
@@ -1361,41 +1383,58 @@ async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
 async def run_etl_process():
     """Lance le processus ETL"""
     try:
-        # Chemin vers le script NewETL
-        script_path = Path("NewETL/NewETL.py")
+        # Importer et utiliser directement la classe ETL
+        import sys
+        import os
         
-        if not script_path.exists():
-            raise HTTPException(status_code=404, detail="Script ETL non trouvé")
+        # Ajouter le chemin vers NewETL au sys.path
+        etl_dir = Path("NewETL")
+        if str(etl_dir) not in sys.path:
+            sys.path.insert(0, str(etl_dir))
         
-        # Lancer le processus ETL
-        process = subprocess.run(
-            [sys.executable, str(script_path)],
-            cwd=script_path.parent,
-            capture_output=True,
-            text=True,
-            timeout=300  # 5 minutes de timeout
-        )
+        # Changer le répertoire de travail vers NewETL
+        original_cwd = os.getcwd()
+        os.chdir(etl_dir)
         
-        # Lire les logs ETL
-        log_file = script_path.parent / "new_etl.log"
-        logs = []
-        if log_file.exists():
-            with open(log_file, 'r', encoding='utf-8') as f:
-                logs = f.readlines()[-50:]  # Dernières 50 lignes
+        try:
+            # Importer la classe ETL
+            from NewETL import HealthDataETL
+            
+            # Créer une instance de l'ETL
+            etl = HealthDataETL(
+                source_dir="./SourceData",
+                db_path="./DatasetClean/normalized_health_data.db"
+            )
+            
+            # Exécuter le pipeline ETL
+            results = etl.run_etl_pipeline()
+            
+            # Lire les logs ETL récents
+            log_file = Path("new_etl.log")
+            logs = []
+            if log_file.exists():
+                try:
+                    with open(log_file, 'r', encoding='utf-8', errors='replace') as f:
+                        logs = f.readlines()[-50:]  # Dernières 50 lignes
+                except Exception as log_error:
+                    logs = [f"Erreur lecture logs: {str(log_error)}"]
+            
+            return {
+                "success": True,
+                "message": "Pipeline ETL exécuté avec succès",
+                "results": results,
+                "logs": [line.strip() for line in logs],
+                "timestamp": datetime.now().isoformat()
+            }
+            
+        finally:
+            # Restaurer le répertoire de travail original
+            os.chdir(original_cwd)
         
-        return {
-            "success": process.returncode == 0,
-            "return_code": process.returncode,
-            "stdout": process.stdout,
-            "stderr": process.stderr,
-            "logs": logs,
-            "timestamp": datetime.now().isoformat()
-        }
-        
-    except subprocess.TimeoutExpired:
+    except ImportError as e:
         return {
             "success": False,
-            "error": "Timeout: Le processus ETL a pris trop de temps",
+            "error": f"Erreur d'import du module ETL: {str(e)}",
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
@@ -1407,20 +1446,39 @@ async def run_etl_process():
 
 @app.get("/etl/logs/")
 async def get_etl_logs(lines: int = 100):
-    """Retourne les logs de l'ETL"""
+    """Retourne les logs de l'ETL avec gestion robuste de l'encodage"""
     log_file = Path("NewETL/new_etl.log")
     
     if not log_file.exists():
         return {"logs": [], "message": "Aucun log disponible"}
     
     try:
-        with open(log_file, 'r', encoding='utf-8') as f:
-            all_lines = f.readlines()
-            recent_lines = all_lines[-lines:] if len(all_lines) > lines else all_lines
+        # Essaie plusieurs encodages pour lire le fichier de log
+        encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+        all_lines = []
+        encoding_used = None
+        
+        for encoding in encodings_to_try:
+            try:
+                with open(log_file, 'r', encoding=encoding) as f:
+                    all_lines = f.readlines()
+                    encoding_used = encoding
+                    break
+            except UnicodeDecodeError:
+                continue
+        
+        if not all_lines:
+            # Si aucun encodage n'a marché, essaie avec errors='replace'
+            with open(log_file, 'r', encoding='utf-8', errors='replace') as f:
+                all_lines = f.readlines()
+                encoding_used = 'utf-8 (avec remplacement des caractères)'
+        
+        recent_lines = all_lines[-lines:] if len(all_lines) > lines else all_lines
         
         return {
             "logs": [line.strip() for line in recent_lines],
             "total_lines": len(all_lines),
+            "encoding_used": encoding_used,
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
