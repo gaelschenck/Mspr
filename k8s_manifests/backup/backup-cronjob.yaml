@@ -1,0 +1,115 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+  labels:
+    app: backup-cronjob
+spec:
+  # Planification: tous les jours à 2h du matin
+  schedule: "0 2 * * *"
+  # Garder l'historique des 3 derniers jobs réussis et 1 échec
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  # Empêcher l'exécution simultanée de plusieurs sauvegardes
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      labels:
+        app: backup-cronjob
+    spec:
+      # Le job doit se terminer dans les 30 minutes
+      activeDeadlineSeconds: 1800
+      template:
+        metadata:
+          labels:
+            app: backup-cronjob
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: postgres-backup
+            image: postgres:15-alpine
+            command:
+            - /bin/sh
+            - -c
+            - |
+              # Installer les outils nécessaires
+              apk add --no-cache bash coreutils
+              # Rendre le script exécutable et l'exécuter
+              chmod +x /scripts/backup.sh
+              /scripts/backup.sh
+            env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: POSTGRES_PASSWORD
+            - name: DB_FR_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_FR_HOST
+            - name: DB_FR_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_FR_PORT
+            - name: DB_FR_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_FR_NAME
+            - name: DB_US_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_US_HOST
+            - name: DB_US_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_US_PORT
+            - name: DB_US_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_US_NAME
+            - name: DB_CH_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_CH_HOST
+            - name: DB_CH_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_CH_PORT
+            - name: DB_CH_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-backup-credentials
+                  key: DB_CH_NAME
+            volumeMounts:
+            - name: backup-storage
+              mountPath: /backups
+            - name: backup-scripts
+              mountPath: /scripts
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: backup-pvc
+          - name: backup-scripts
+            configMap:
+              name: backup-scripts
+              defaultMode: 0755

@@ -37,7 +37,8 @@ echo  [2] Restauration des bases PostgreSQL
 echo  [3] Deploiement complet (build, apply, logs, etc.)
 echo  [4] Deploiement avec SonarQube (Docker Compose)
 echo  [5] Gestion SonarQube uniquement
-echo  [6] Quitter
+echo  [6] Gestion des sauvegardes automatiques (CronJob)
+echo  [7] Quitter
 echo ============================
 set /p choix="Votre choix : "
 
@@ -46,7 +47,8 @@ if "%choix%"=="2" goto RESTORE
 if "%choix%"=="3" goto DEPLOY
 if "%choix%"=="4" goto DEPLOY_SONAR
 if "%choix%"=="5" goto MANAGE_SONAR
-if "%choix%"=="6" exit
+if "%choix%"=="6" goto AUTO_BACKUP
+if "%choix%"=="7" exit
 goto MENU
 
 :BACKUP
@@ -256,6 +258,17 @@ echo === GESTION SONARQUBE ===
 call manage_sonar.bat
 if errorlevel 1 (
     echo [ERREUR] La gestion SonarQube a echoue.
+    pause
+    goto MENU
+)
+goto MENU
+
+:AUTO_BACKUP
+echo.
+echo === GESTION DES SAUVEGARDES AUTOMATIQUES ===
+call manage_auto_backup.bat
+if errorlevel 1 (
+    echo [ERREUR] La gestion des sauvegardes automatiques a echoue.
     pause
     goto MENU
 )
