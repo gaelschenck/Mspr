@@ -170,9 +170,20 @@ if errorlevel 1 (
 )
 
 echo ============================
-echo [4/5] Redemarrage des pods de base de donnees
+echo [4/5] Redemarrage des pods de base de donnees, frontend et backend
 echo ============================
+echo Redemarrage des pods de base de donnees...
 for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "db-fr db-ch db-us"') do (
+    kubectl delete %%i
+)
+
+echo Redemarrage des pods backend...
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "backend-"') do (
+    kubectl delete %%i
+)
+
+echo Redemarrage du pod frontend...
+for /f "tokens=1" %%i in ('kubectl get pods -o name ^| findstr /i "frontend"') do (
     kubectl delete %%i
 )
 

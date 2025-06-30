@@ -35,8 +35,8 @@ class HealthDataETL:
             source_dir: Répertoire contenant les fichiers CSV source
             db_path: Chemin vers la base de données SQLite
         """
-        self.source_dir = source_dir or ".."
-        self.db_path = db_path or "../../backend/normalized_health_data.db"
+        self.source_dir = source_dir or "./SourceData"
+        self.db_path = db_path or "./DatasetClean/normalized_health_data.db"
         
         # Mapping des régions WHO pour normalisation
         self.who_regions = {
@@ -195,6 +195,10 @@ class HealthDataETL:
         """
         
         try:
+            # S'assurer que le répertoire de la base de données existe
+            db_dir = Path(self.db_path).parent
+            db_dir.mkdir(exist_ok=True)
+            
             with sqlite3.connect(self.db_path) as conn:
                 conn.executescript(schema_sql)
                 logger.info("Schéma de base de données normalisé créé avec succès")
@@ -653,9 +657,10 @@ class HealthDataETL:
             Le chemin du fichier SQL généré
         """
         if output_path is None:
-            # Par défaut, sauvegarde dans le même répertoire que la base
-            db_dir = Path(self.db_path).parent
-            output_path = db_dir / "normalized_health_data_schema.sql"
+            # Par défaut, sauvegarde dans DatasetClean
+            output_dir = Path(self.source_dir).parent / "DatasetClean"
+            output_dir.mkdir(exist_ok=True)
+            output_path = output_dir / "normalized_health_data_schema.sql"
         
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -870,7 +875,9 @@ class HealthDataETL:
         }
         
         generated_files = []
-        db_dir = Path(self.db_path).parent
+        # Utiliser DatasetClean au lieu du répertoire de la base de données
+        output_dir = Path(self.source_dir).parent / "DatasetClean"
+        output_dir.mkdir(exist_ok=True)
         
         try:
             # Récupère le schéma de base depuis la base de données normalisée
@@ -897,7 +904,7 @@ class HealthDataETL:
             
             # Génère un fichier pour chaque pays
             for country_code, config in countries_config.items():
-                file_path = db_dir / config['filename']
+                file_path = output_dir / config['filename']
                 
                 sql_content = [
                     f"-- Schéma SQL pour {country_code.upper()}",
@@ -1025,13 +1032,13 @@ class HealthDataETL:
         Exporte les données de la base SQLite vers des fichiers CSV dans DatasetClean
         
         Args:
-            output_dir: Répertoire de sortie (par défaut ../DatasetClean)
+            output_dir: Répertoire de sortie (par défaut ./DatasetClean)
             
         Returns:
             Liste des fichiers CSV créés
         """
         if output_dir is None:
-            output_dir = Path(self.source_dir) / "../DatasetClean"
+            output_dir = Path(self.source_dir).parent / "DatasetClean"
         
         output_dir = Path(output_dir)
         output_dir.mkdir(exist_ok=True)
@@ -1172,8 +1179,8 @@ def main():
     
     # Détermine les chemins relatifs au script
     script_dir = Path(__file__).parent
-    source_dir = script_dir / ".."  # Un niveau au-dessus pour SourceData
-    db_path = script_dir / "../../backend/normalized_health_data.db"  # Deux niveaux pour backend
+    source_dir = script_dir / "SourceData"  # Dans le même répertoire que le script
+    db_path = script_dir / "DatasetClean/normalized_health_data.db"  # Dans DatasetClean
     
     # Initialise et exécute l'ETL
     etl = HealthDataETL(

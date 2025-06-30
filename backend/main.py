@@ -1248,8 +1248,8 @@ from datetime import datetime
 @app.get("/etl/source-files/")
 async def get_source_files():
     """Retourne la liste des fichiers CSV sources et transformés"""
-    source_dir = Path("../SourceData")
-    dataset_dir = Path("../DatasetClean")
+    source_dir = Path("NewETL/SourceData")
+    dataset_dir = Path("NewETL/DatasetClean")
     
     files = {
         "source_files": [],
@@ -1315,9 +1315,9 @@ async def get_source_files():
 async def get_file_preview(file_type: str, file_name: str, limit: int = 100):
     """Affiche un aperçu d'un fichier CSV avec détection automatique du séparateur"""
     if file_type == "source":
-        file_path = Path("../SourceData") / file_name
+        file_path = Path("NewETL/SourceData") / file_name
     elif file_type == "processed":
-        file_path = Path("../DatasetClean") / file_name
+        file_path = Path("NewETL/DatasetClean") / file_name
     else:
         raise HTTPException(status_code=400, detail="Type de fichier invalide")
     
@@ -1453,12 +1453,12 @@ async def get_etl_status():
             pass
     
     # Compter les fichiers sources
-    source_dir = Path("../SourceData")
+    source_dir = Path("NewETL/SourceData")
     if source_dir.exists():
         status["source_files_count"] = len(list(source_dir.glob("*.csv")))
     
     # Compter les fichiers traités
-    dataset_dir = Path("../DatasetClean")
+    dataset_dir = Path("NewETL/DatasetClean")
     if dataset_dir.exists():
         status["processed_files_count"] = len(list(dataset_dir.glob("*.csv")))
     

@@ -1,22 +1,30 @@
 <template>
   <div class="graphs">
-    <h2>Résultats de Prédiction</h2>
+    <h2>{{ $t('prediction_results_title') }}</h2>
     
     <!-- Métriques de performance -->
     <div v-if="result" class="metrics">
-      <h3>Métriques de Performance</h3>
+      <h3>{{ $t('prediction_metrics_title') }}</h3>
       <div class="metrics-grid">
         <div class="metric-card">
-          <span class="metric-label">RMSE</span>
+          <span class="metric-label">{{ $t('prediction_rmse') }}</span>
           <span class="metric-value">{{ result.rmse?.toFixed(2) || 'N/A' }}</span>
+          <span class="metric-desc">{{ $t('prediction_rmse_desc') }}</span>
         </div>
         <div class="metric-card">
-          <span class="metric-label">R² Score</span>
+          <span class="metric-label">{{ $t('prediction_r2') }}</span>
           <span class="metric-value">{{ result.r2?.toFixed(3) || 'N/A' }}</span>
+          <span class="metric-desc">{{ $t('prediction_r2_desc') }}</span>
         </div>
         <div class="metric-card">
-          <span class="metric-label">Échantillons</span>
+          <span class="metric-label">{{ $t('prediction_data_points') }}</span>
           <span class="metric-value">{{ getDataLength() }}</span>
+          <span class="metric-desc">{{ $t('prediction_data_points_desc') }}</span>
+        </div>
+        <div v-if="result.metadata" class="metric-card">
+          <span class="metric-label">{{ $t('prediction_period') }}</span>
+          <span class="metric-value">{{ result.metadata.year_range || 'N/A' }}</span>
+          <span class="metric-desc">{{ $t('prediction_period_desc') }}</span>
         </div>
       </div>
     </div>
@@ -25,23 +33,25 @@
     <div class="chart-container">
       <canvas v-if="hasValidPredictionData()" id="myChart"></canvas>
       <div v-else class="no-data">
-        <p>Aucune donnée de prédiction disponible</p>
+        <p>{{ $t('prediction_no_data') }}</p>
         <div v-if="result" class="debug-info">
-          <small>Données reçues: {{ Object.keys(result).join(', ') }}</small>
+          <small>{{ $t('prediction_debug_data') }}: {{ Object.keys(result).join(', ') }}</small>
         </div>
       </div>
     </div>
     
     <!-- Prédiction future -->
     <div v-if="result && result.future_prediction !== undefined && result.future_year" class="future-prediction">
-      <h3>
-        Prédiction pour {{ result.future_year }} :
-        <span class="prediction">{{ result.future_prediction?.toFixed(2) }}</span>
-      </h3>
+      <h3>{{ $t('prediction_future_title') }}</h3>
+      <div class="future-content">
+        <div class="future-year">{{ result.future_year }}</div>
+        <div class="future-value">{{ result.future_prediction?.toFixed(2) }}</div>
+        <div class="future-label">{{ $t('prediction_future_desc') }}</div>
+      </div>
     </div>
 
     <div v-else-if="result && result.future_prediction === null" class="no-future">
-      <p>Pas de prédiction future disponible</p>
+      <p>{{ $t('prediction_no_future') }}</p>
     </div>
 
     <!-- Message de succès -->
@@ -54,9 +64,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRoute } from "vue-router";
+import { useI18n } from 'vue-i18n';
 import Chart from "chart.js/auto";
 
 const route = useRoute();
+const { t } = useI18n();
 const result = ref(null);
 let chartInstance = null;
 
@@ -85,6 +97,58 @@ const getDataLength = () => {
 const hasValidPredictionData = () => {
   const dataArray = result.value?.prediction || result.value?.predictions;
   return result.value && dataArray && Array.isArray(dataArray) && dataArray.length > 0;
+};
+
+const getChartTitle = () => {
+  const filters = result.value?.filters;
+  const metadata = result.value?.metadata;
+  
+  let title = t('prediction_chart_title');
+  
+  if (filters) {
+    const parts = [];
+    if (filters.pays) parts.push(filters.pays);
+    if (filters.who_region && !filters.pays) parts.push(`${t('prediction_region')} ${filters.who_region}`);
+    if (filters.indicator_types && filters.indicator_types.length > 0) {
+      parts.push(filters.indicator_types[0]);
+    }
+    
+    if (parts.length > 0) {
+      title = `${parts.join(' - ')}`;
+    }
+  }
+  
+  return title;
+};
+
+const getXAxisLabel = () => {
+  const labelsArray = result.value?.labels;
+  const metadata = result.value?.metadata;
+  
+  if (labelsArray && labelsArray.length > 0) {
+    // Si les labels ressemblent à des années
+    const firstLabel = labelsArray[0];
+    if (typeof firstLabel === 'number' && firstLabel > 1900 && firstLabel < 2100) {
+      return t('prediction_years');
+    }
+  }
+  
+  return t('prediction_period_points');
+};
+
+const getYAxisLabel = () => {
+  const filters = result.value?.filters;
+  
+  if (filters) {
+    if (filters.value_types && filters.value_types.length > 0) {
+      return `${t('prediction_values')} (${filters.value_types[0]})`;
+    }
+    if (filters.indicator_types && filters.indicator_types.length > 0) {
+      return `${t('prediction_values')} - ${filters.indicator_types[0]}`;
+    }
+  }
+  
+  return t('prediction_predicted_values');
 };
 
 const createChart = () => {
@@ -122,46 +186,85 @@ const createChart = () => {
   } else {
     finalLabels = dataArray.map((_, i) => `Point ${i + 1}`);
   }
+
+  // Déterminer le titre dynamique
+  const chartTitle = getChartTitle();
   
-  // Créer le nouveau graphique
+  // Créer le nouveau graphique avec style amélioré
   chartInstance = new Chart(ctx, {
     type: "line",
     data: {
       labels: finalLabels,
       datasets: [
         {
-          label: "Prédictions",
+          label: t('prediction_predicted_values'),
           data: dataArray,
           borderColor: "#1976d2",
           backgroundColor: "rgba(25, 118, 210, 0.1)",
-          borderWidth: 2,
+          borderWidth: 3,
           fill: true,
-          tension: 0.1,
-          pointRadius: 3,
-          pointHoverRadius: 5
+          tension: 0.3,
+          pointRadius: 4,
+          pointHoverRadius: 8,
+          pointBackgroundColor: "#1976d2",
+          pointBorderColor: "#ffffff",
+          pointBorderWidth: 2,
+          pointHoverBackgroundColor: "#0d47a1",
+          pointHoverBorderColor: "#ffffff",
+          pointHoverBorderWidth: 3
         }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      },
       plugins: {
         title: {
           display: true,
-          text: "Résultats de Prédiction",
+          text: chartTitle,
           font: {
-            size: 16,
+            size: 18,
             weight: 'bold'
-          }
+          },
+          color: '#1976d2',
+          padding: 20
         },
         legend: {
           display: true,
-          position: 'top'
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+            padding: 20,
+            font: {
+              size: 14
+            }
+          }
         },
         tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          titleColor: '#ffffff',
+          bodyColor: '#ffffff',
+          borderColor: '#1976d2',
+          borderWidth: 1,
+          cornerRadius: 8,
           callbacks: {
+            title: function(tooltipItems) {
+              return `${t('prediction_tooltip_period')}: ${tooltipItems[0].label}`;
+            },
             label: function(context) {
-              return `Prédiction: ${context.parsed.y.toFixed(2)}`;
+              return `${t('prediction_tooltip_value')}: ${context.parsed.y.toFixed(2)}`;
+            },
+            afterLabel: function(context) {
+              const rmse = result.value?.rmse;
+              const r2 = result.value?.r2;
+              let info = '';
+              if (rmse) info += `RMSE: ${rmse.toFixed(2)}`;
+              if (r2) info += `${info ? ' | ' : ''}R²: ${r2.toFixed(3)}`;
+              return info;
             }
           }
         }
@@ -171,23 +274,55 @@ const createChart = () => {
           beginAtZero: false,
           title: {
             display: true,
-            text: 'Valeurs Prédites'
+            text: getYAxisLabel(),
+            font: {
+              size: 14,
+              weight: 'bold'
+            },
+            color: '#333'
           },
           grid: {
             display: true,
-            color: 'rgba(0,0,0,0.1)'
+            color: 'rgba(0,0,0,0.1)',
+            drawBorder: false
+          },
+          ticks: {
+            font: {
+              size: 12
+            },
+            color: '#666',
+            callback: function(value) {
+              return typeof value === 'number' ? value.toFixed(1) : value;
+            }
           }
         },
         x: {
           title: {
             display: true,
-            text: labelsArray && labelsArray.length ? 'Années' : 'Points de Données'
+            text: getXAxisLabel(),
+            font: {
+              size: 14,
+              weight: 'bold'
+            },
+            color: '#333'
           },
           grid: {
             display: true,
-            color: 'rgba(0,0,0,0.1)'
+            color: 'rgba(0,0,0,0.1)',
+            drawBorder: false
+          },
+          ticks: {
+            font: {
+              size: 12
+            },
+            color: '#666',
+            maxTicksLimit: 10
           }
         }
+      },
+      animation: {
+        duration: 1500,
+        easing: 'easeInOutQuart'
       }
     }
   });
@@ -229,11 +364,13 @@ onUnmounted(() => {
   border-radius: 8px;
   padding: 1.5em;
   text-align: center;
-  transition: box-shadow 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .metric-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
 }
 
 .metric-label {
@@ -241,7 +378,9 @@ onUnmounted(() => {
   font-size: 0.9em;
   color: #666;
   margin-bottom: 0.5em;
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .metric-value {
@@ -249,6 +388,14 @@ onUnmounted(() => {
   font-size: 1.8em;
   font-weight: bold;
   color: #1976d2;
+  margin-bottom: 0.3em;
+}
+
+.metric-desc {
+  display: block;
+  font-size: 0.75em;
+  color: #999;
+  font-style: italic;
 }
 
 .chart-container {
@@ -277,23 +424,45 @@ canvas {
 }
 
 .future-prediction {
-  background: #e3f2fd;
-  border: 1px solid #1976d2;
-  border-radius: 8px;
-  padding: 1.5em;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #1976d2;
+  border-radius: 12px;
+  padding: 2em;
   margin: 2em 0;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
 }
 
 .future-prediction h3 {
-  margin: 0;
+  margin: 0 0 1em 0;
   color: #1976d2;
+  font-size: 1.3em;
 }
 
-.prediction {
+.future-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.future-year {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.future-value {
+  font-size: 2.5em;
   font-weight: bold;
   color: #1976d2;
-  font-size: 1.2em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.future-label {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
 }
 
 .no-future {
