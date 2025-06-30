@@ -35,14 +35,18 @@ echo ============================
 echo  [1] Sauvegarde des bases PostgreSQL
 echo  [2] Restauration des bases PostgreSQL
 echo  [3] Deploiement complet (build, apply, logs, etc.)
-echo  [4] Quitter
+echo  [4] Deploiement avec SonarQube (Docker Compose)
+echo  [5] Gestion SonarQube uniquement
+echo  [6] Quitter
 echo ============================
 set /p choix="Votre choix : "
 
 if "%choix%"=="1" goto BACKUP
 if "%choix%"=="2" goto RESTORE
 if "%choix%"=="3" goto DEPLOY
-if "%choix%"=="4" exit
+if "%choix%"=="4" goto DEPLOY_SONAR
+if "%choix%"=="5" goto MANAGE_SONAR
+if "%choix%"=="6" exit
 goto MENU
 
 :BACKUP
@@ -227,6 +231,35 @@ for /f "skip=1 tokens=1" %%i in ('kubectl get pods --no-headers -o custom-column
     echo Sauvegarde des logs de %%i
     kubectl logs %%i > "%LOG_DIR%\%%i.log"
 )
+
+echo Logs sauvegardes dans %LOG_DIR%
+echo ============================
+
+pause
+goto MENU
+
+:DEPLOY_SONAR
+echo.
+echo === DEPLOIEMENT AVEC SONARQUBE (DOCKER COMPOSE) ===
+call deploy_with_sonar.bat
+if errorlevel 1 (
+    echo [ERREUR] Le deploiement avec SonarQube a echoue.
+    pause
+    goto MENU
+)
+pause
+goto MENU
+
+:MANAGE_SONAR
+echo.
+echo === GESTION SONARQUBE ===
+call manage_sonar.bat
+if errorlevel 1 (
+    echo [ERREUR] La gestion SonarQube a echoue.
+    pause
+    goto MENU
+)
+goto MENU
 
 echo Logs sauvegardes dans %LOG_DIR%
 echo ============================

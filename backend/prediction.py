@@ -402,7 +402,7 @@ def train_voting_regressor(model, X, y):
     print(tr("rmse", rmse=rmse))
     print(tr("r2", r2=r2))
 
-    # Essayer d'afficher le graphique uniquement si possible et si pas en mode test
+    # Sauvegarder le graphique sans l'afficher pour éviter les plantages
     try:
         plt.figure(figsize=(10, 6))
         plt.plot(y_test.values, label="Valeurs réelles", color="blue", marker="o")
@@ -414,13 +414,12 @@ def train_voting_regressor(model, X, y):
         plt.grid(True)
         plt.tight_layout()
         
-        # Ne pas afficher le graphique en mode test
-        if os.getenv('MPLBACKEND') != 'Agg' and 'pytest' not in sys.modules:
-            plt.show()
-        else:
-            plt.savefig('prediction_plot.png')  # Sauvegarder au lieu d'afficher
+        # Sauvegarder le graphique au lieu de l'afficher
+        plt.savefig('prediction_plot.png', dpi=150, bbox_inches='tight')
+        plt.close()  # Fermer la figure pour libérer la mémoire
+        print("Graphique sauvegardé dans 'prediction_plot.png'")
     except Exception as e:
-        print(f"Impossible d'afficher le graphique: {e}")
+        print(f"Impossible de générer le graphique: {e}")
 
     # Prédiction sur l'année suivante (si 'year' ou 'annee' est une feature)
     future_pred_value = None

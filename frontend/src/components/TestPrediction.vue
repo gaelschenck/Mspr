@@ -5,11 +5,11 @@
     
     <!-- Encart d'informations importantes -->
     <div class="info-panel">
-      <h3> {{ $t('prediction_guidelines_title') || 'Guide pour une prédiction réussie' }}</h3>
+      <h3>{{ $t('prediction_guidelines_title') || 'Guide pour une prédiction réussie' }}</h3>
       
       <div class="guidelines-grid">
         <div class="guideline-item success">
-          <h4> {{ $t('what_works') || 'Combinaisons qui fonctionnent bien' }}</h4>
+          <h4>{{ $t('what_works') || 'Combinaisons qui fonctionnent bien' }}</h4>
           <ul>
             <li><strong>{{ $t('region_only') || 'Région seule' }}</strong> : {{ $t('region_simple_effective') || 'Sélectionnez juste une région (Europe, Americas...) - Simple et efficace !' }}</li>
             <li><strong>{{ $t('region_plus_indicator') || 'Région + Indicateur' }}</strong> : {{ $t('combine_region_indicator') || 'Combinez une région avec un indicateur spécifique' }}</li>
@@ -57,7 +57,7 @@
     <!-- Sélection région WHO -->
     <label for="region">{{ $t('testprediction_choose_region') }}</label>
     <select v-model="selectedRegion" id="region" @change="onRegionChange">
-      <option value="">-- {{ $t('all_regions') }} --</option>
+      <option value="">-- Toutes les régions --</option>
       <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
     </select>
   </div>
@@ -66,7 +66,7 @@
     <!-- Sélection type d'indicateur -->
     <label for="indicator_type">{{ $t('indicator_type') }}</label>
     <select v-model="selectedIndicatorType" id="indicator_type" @change="onIndicatorTypeChange">
-      <option value="">-- {{ $t('all_indicators') }} --</option>
+      <option value="">-- Tous les indicateurs --</option>
       <option v-for="type in indicatorTypes" :key="type" :value="type">{{ type }}</option>
     </select>
   </div>
@@ -76,12 +76,12 @@
     <label for="year_range">{{ $t('data_period') }}</label>
     <div class="year-range">
       <select v-model="yearMin" id="year_min">
-        <option value="">{{ $t('min_year') }}</option>
+        <option value="">Année min</option>
         <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
       </select>
       <span> {{ $t('to') }} </span>
       <select v-model="yearMax" id="year_max">
-        <option value="">{{ $t('max_year') }}</option>
+        <option value="">Année max</option>
         <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
       </select>
     </div>
@@ -119,9 +119,11 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { fetchFromAPI } from "../../services/api.js";
 
 const router = useRouter();
+const { t } = useI18n();
 
 // État réactif - VERSION SIMPLIFIÉE
 const regions = ref([]);
