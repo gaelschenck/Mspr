@@ -1247,7 +1247,7 @@ from datetime import datetime
 
 @app.get("/etl/source-files/")
 async def get_source_files():
-    """Retourne la liste des fichiers CSV sources et transformés"""
+    """Retourne la liste des fichiers CSV sources et transformés avec gestion multi-encodage"""
     source_dir = Path("NewETL/SourceData")
     dataset_dir = Path("NewETL/DatasetClean")
     
@@ -1256,12 +1256,29 @@ async def get_source_files():
         "processed_files": []
     }
     
+    def try_read_csv_with_encoding(file_path, nrows=5, separator=','):
+        """Essaie de lire un CSV avec plusieurs encodages"""
+        encodings_to_try = ['utf-8', 'iso-8859-1', 'cp1252', 'utf-8-sig']
+        
+        for encoding in encodings_to_try:
+            try:
+                df = pd.read_csv(file_path, nrows=nrows, sep=separator, encoding=encoding)
+                return df, encoding
+            except UnicodeDecodeError:
+                continue
+            except Exception:
+                # Si c'est une autre erreur, on continue avec l'encodage suivant
+                continue
+        
+        # Si aucun encodage ne fonctionne, lever une exception
+        raise Exception(f"Impossible de décoder le fichier avec les encodages supportés")
+    
     # Fichiers sources
     if source_dir.exists():
         for csv_file in source_dir.glob("*.csv"):
             try:
-                # Lire quelques lignes pour avoir un aperçu
-                df = pd.read_csv(csv_file, nrows=5)
+                # Lire quelques lignes pour avoir un aperçu avec gestion d'encodage
+                df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5)
                 files["source_files"].append({
                     "name": csv_file.name,
                     "path": str(csv_file),
@@ -1269,12 +1286,14 @@ async def get_source_files():
                     "rows_sample": len(df),
                     "columns": list(df.columns),
                     "preview": df.to_dict('records'),
+                    "encoding": encoding_used,
                     "type": "source"
                 })
             except Exception as e:
                 files["source_files"].append({
                     "name": csv_file.name,
                     "path": str(csv_file),
+                    "size": csv_file.stat().st_size if csv_file.exists() else 0,
                     "error": str(e),
                     "type": "source"
                 })
@@ -1283,13 +1302,13 @@ async def get_source_files():
     if dataset_dir.exists():
         for csv_file in dataset_dir.glob("*.csv"):
             try:
-                # Déterminer le séparateur (; pour les nouveaux, , pour les anciens)
+                # Essayer d'abord avec ; puis avec , pour le séparateur
                 separator = ';'
                 try:
-                    df = pd.read_csv(csv_file, nrows=5, sep=separator)
+                    df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
                 except:
                     separator = ','
-                    df = pd.read_csv(csv_file, nrows=5, sep=separator)
+                    df, encoding_used = try_read_csv_with_encoding(csv_file, nrows=5, separator=separator)
                 
                 files["processed_files"].append({
                     "name": csv_file.name,
@@ -1299,12 +1318,14 @@ async def get_source_files():
                     "columns": list(df.columns),
                     "preview": df.to_dict('records'),
                     "separator": separator,
+                    "encoding": encoding_used,
                     "type": "processed"
                 })
             except Exception as e:
                 files["processed_files"].append({
                     "name": csv_file.name,
                     "path": str(csv_file),
+                    "size": csv_file.stat().st_size if csv_file.exists() else 0,
                     "error": str(e),
                     "type": "processed"
                 })
