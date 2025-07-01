@@ -96,7 +96,7 @@ const getDataLength = () => {
 
 const hasValidPredictionData = () => {
   const dataArray = result.value?.prediction || result.value?.predictions;
-  return result.value && dataArray && Array.isArray(dataArray) && dataArray.length > 0;
+  return !!(result.value && dataArray && Array.isArray(dataArray) && dataArray.length > 0);
 };
 
 const getChartTitle = () => {
@@ -332,6 +332,17 @@ onUnmounted(() => {
   if (chartInstance) {
     chartInstance.destroy();
   }
+});
+
+// Expose utility functions for testing
+defineExpose({
+  getDataLength,
+  hasValidPredictionData,
+  getChartTitle,
+  getXAxisLabel,
+  getYAxisLabel,
+  createChart,
+  result
 });
 </script>
 

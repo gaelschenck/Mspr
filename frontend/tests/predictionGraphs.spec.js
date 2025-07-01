@@ -130,5 +130,236 @@ describe('PredictionGraphs.vue', () => {
     expect(wrapper.find('.no-data p').text()).toContain('prediction_no_data');
   });
 
+  // Tests simples pour couvrir les fonctions utilitaires
+  it('should handle getDataLength function correctly', async () => {
+    const wrapper = await mountAndInitComponent();
+    // Accéder à la fonction via l'instance du composant
+    expect(wrapper.vm.getDataLength()).toBe(2);
+  });
+
+  it('should handle getDataLength with empty prediction', async () => {
+    const wrapper = await mountAndInitComponent({ ...mockPredictionResult, prediction: [] });
+    expect(wrapper.vm.getDataLength()).toBe(0);
+  });
+
+  it('should handle getDataLength with null result', async () => {
+    // Vraiment passer null et vérifier que result.value est null
+    useRoute.mockReturnValue({
+      query: {}
+    });
+    const wrapper = mount(PredictionGraphs, {
+      global: {
+        mocks: {
+          $t: (key) => key,
+        },
+      }
+    });
+    vi.runAllTimers();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.getDataLength()).toBe('N/A');
+  });
+
+  it('should handle hasValidPredictionData function correctly', async () => {
+    const wrapper = await mountAndInitComponent();
+    expect(wrapper.vm.hasValidPredictionData()).toBe(true);
+  });
+
+  it('should handle hasValidPredictionData with empty prediction', async () => {
+    const wrapper = await mountAndInitComponent({ ...mockPredictionResult, prediction: [] });
+    expect(wrapper.vm.hasValidPredictionData()).toBe(false);
+  });
+
+  it('should handle hasValidPredictionData with null result', async () => {
+    // Vraiment passer null et vérifier que result.value est null
+    useRoute.mockReturnValue({
+      query: {}
+    });
+    const wrapper = mount(PredictionGraphs, {
+      global: {
+        mocks: {
+          $t: (key) => key,
+        },
+      }
+    });
+    vi.runAllTimers();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.hasValidPredictionData()).toBe(false);
+  });
+
+  it('should handle getChartTitle with filters', async () => {
+    const mockWithFilters = {
+      ...mockPredictionResult,
+      filters: {
+        pays: 'France',
+        indicator_types: ['HIV Prevalence']
+      }
+    };
+    const wrapper = await mountAndInitComponent(mockWithFilters);
+    const title = wrapper.vm.getChartTitle();
+    expect(title).toContain('France');
+  });
+
+  it('should handle getChartTitle with region filter only', async () => {
+    const mockWithRegionFilter = {
+      ...mockPredictionResult,
+      filters: {
+        who_region: 'Europe',
+        indicator_types: ['Mortality Rate']
+      }
+    };
+    const wrapper = await mountAndInitComponent(mockWithRegionFilter);
+    const title = wrapper.vm.getChartTitle();
+    expect(title).toBeTruthy();
+  });
+
+  it('should handle getChartTitle without filters', async () => {
+    const wrapper = await mountAndInitComponent();
+    const title = wrapper.vm.getChartTitle();
+    expect(title).toBe('prediction_chart_title');
+  });
+
+  it('should handle getXAxisLabel with year labels', async () => {
+    const mockWithYearLabels = {
+      ...mockPredictionResult,
+      labels: [2020, 2021, 2022]
+    };
+    const wrapper = await mountAndInitComponent(mockWithYearLabels);
+    const label = wrapper.vm.getXAxisLabel();
+    expect(label).toBe('prediction_years');
+  });
+
+  it('should handle getXAxisLabel without year labels', async () => {
+    const mockWithoutYearLabels = {
+      ...mockPredictionResult,
+      labels: ['label1', 'label2']
+    };
+    const wrapper = await mountAndInitComponent(mockWithoutYearLabels);
+    const label = wrapper.vm.getXAxisLabel();
+    expect(label).toBe('prediction_period_points');
+  });
+
+  it('should handle getXAxisLabel without labels', async () => {
+    const wrapper = await mountAndInitComponent();
+    const label = wrapper.vm.getXAxisLabel();
+    expect(label).toBe('prediction_period_points');
+  });
+
+  it('should handle getYAxisLabel with value_types', async () => {
+    const mockWithValueTypes = {
+      ...mockPredictionResult,
+      filters: {
+        value_types: ['percentage']
+      }
+    };
+    const wrapper = await mountAndInitComponent(mockWithValueTypes);
+    const label = wrapper.vm.getYAxisLabel();
+    expect(label).toContain('percentage');
+  });
+
+  it('should handle getYAxisLabel with indicator_types', async () => {
+    const mockWithIndicatorTypes = {
+      ...mockPredictionResult,
+      filters: {
+        indicator_types: ['HIV Prevalence']
+      }
+    };
+    const wrapper = await mountAndInitComponent(mockWithIndicatorTypes);
+    const label = wrapper.vm.getYAxisLabel();
+    expect(label).toContain('HIV Prevalence');
+  });
+
+  it('should handle getYAxisLabel without filters', async () => {
+    const wrapper = await mountAndInitComponent();
+    const label = wrapper.vm.getYAxisLabel();
+    expect(label).toBe('prediction_predicted_values');
+  });
+
+  it('should handle error in result parsing', async () => {
+    useRoute.mockReturnValue({
+      query: {
+        result: 'invalid-json'
+      },
+    });
+
+    const wrapper = mount(PredictionGraphs, {
+      global: {
+        mocks: {
+          $t: (key) => key,
+        },
+      }
+    });
+
+    vi.runAllTimers();
+    await wrapper.vm.$nextTick();
+    
+    expect(wrapper.vm.result).toBe(null);
+  });
+
+  it('should handle missing route query', async () => {
+    useRoute.mockReturnValue({
+      query: {}
+    });
+
+    const wrapper = mount(PredictionGraphs, {
+      global: {
+        mocks: {
+          $t: (key) => key,
+        },
+      }
+    });
+
+    vi.runAllTimers();
+    await wrapper.vm.$nextTick();
+    
+    expect(wrapper.vm.result).toBe(null);
+  });
+
+  it('should handle alternative predictions format', async () => {
+    const mockWithPredictions = {
+      ...mockPredictionResult,
+      predictions: [
+        { year: 2020, value: 50 },
+        { year: 2021, value: 55 }
+      ]
+    };
+    delete mockWithPredictions.prediction;
+    
+    const wrapper = await mountAndInitComponent(mockWithPredictions);
+    expect(wrapper.vm.hasValidPredictionData()).toBe(true);
+    expect(wrapper.vm.getDataLength()).toBe(2);
+  });
+
+  it('should handle chart creation with missing canvas', async () => {
+    const wrapper = await mountAndInitComponent();
+    
+    // Mock getElementById to return null et créer un spy
+    const mockGetElementById = vi.spyOn(document, 'getElementById').mockReturnValue(null);
+    
+    // Call createChart directly
+    wrapper.vm.createChart();
+    
+    // Check that getElementById was called
+    expect(mockGetElementById).toHaveBeenCalledWith('myChart');
+    
+    // Restore original function
+    mockGetElementById.mockRestore();
+  });
+
+  it('should destroy existing chart instance before creating new one', async () => {
+    const wrapper = await mountAndInitComponent();
+    
+    // Mock chart instance with destroy method
+    const mockDestroy = vi.fn();
+    wrapper.vm.chartInstance = { destroy: mockDestroy };
+    
+    // Mock canvas and context
+    const mockCanvas = { getContext: vi.fn().mockReturnValue({}) };
+    document.getElementById = vi.fn().mockReturnValue(mockCanvas);
+    
+    wrapper.vm.createChart();
+    
+    expect(mockDestroy).toHaveBeenCalled();
+  });
+
 
 });

@@ -18,14 +18,21 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
+      reportsDirectory: './coverage',
+      include: ['src/**/*.{js,vue}'], // Spécifier explicitement les fichiers à inclure
       exclude: [
         'node_modules/',
         'tests/',
         'src/**/*.spec.js',
         'src/**/*.test.js',
         'vitest.config.js',
-        'vitest.setup.js'
-      ]
+        'vitest.setup.js',
+        'src/main.js', // Exclude main.js si pas testé
+        '**/dist/**',
+        '**/build/**'
+      ],
+      all: true, // Inclure tous les fichiers même non importés
+      clean: true // Nettoyer les rapports précédents
     }
   }
 })
