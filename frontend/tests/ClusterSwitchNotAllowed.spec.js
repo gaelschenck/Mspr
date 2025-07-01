@@ -4,6 +4,25 @@ import { createI18n } from 'vue-i18n'
 import { createPinia } from 'pinia'
 import ClusterSwitchNotAllowed from '../src/components/ClusterSwitchNotAllowed.vue'
 
+// Mock useRouter
+const mockRouter = {
+  push: vi.fn(),
+  back: vi.fn()
+}
+
+// Mock vue-router
+vi.mock('vue-router', () => ({
+  useRouter: () => mockRouter
+}))
+
+// Mock userStore
+const mockUserStore = {
+  clearUser: vi.fn()
+}
+vi.mock('../src/stores/userStore', () => ({
+  useUserStore: () => mockUserStore
+}))
+
 // Mock localStorage
 const localStorageMock = {
   getItem: vi.fn(),
@@ -14,12 +33,6 @@ const localStorageMock = {
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock
 })
-
-// Mock router
-const mockRouter = {
-  push: vi.fn(),
-  back: vi.fn()
-}
 
 // Configuration i18n
 const i18n = createI18n({
@@ -47,13 +60,7 @@ describe('ClusterSwitchNotAllowed', () => {
   const createWrapper = () => {
     return mount(ClusterSwitchNotAllowed, {
       global: {
-        plugins: [i18n, pinia],
-        mocks: {
-          $router: mockRouter
-        },
-        provide: {
-          router: mockRouter
-        }
+        plugins: [i18n, pinia]
       }
     })
   }
@@ -81,6 +88,7 @@ describe('ClusterSwitchNotAllowed', () => {
     const logoutButton = wrapper.findAll('button')[0]
     await logoutButton.trigger('click')
     
+    expect(mockUserStore.clearUser).toHaveBeenCalled()
     expect(localStorageMock.removeItem).toHaveBeenCalledWith('selectedCountry')
     expect(mockRouter.push).toHaveBeenCalledWith('/login')
   })
