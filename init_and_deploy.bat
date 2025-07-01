@@ -1,4 +1,5 @@
 @echo off
+echo Verification de Docker Desktop...
 REM Vérifier si Docker Desktop est lancé (optionnel, sinon message d'erreur)
 docker info >nul 2>&1
 if errorlevel 1 (
@@ -6,9 +7,11 @@ if errorlevel 1 (
     pause
     exit /b
 )
+echo Docker Desktop OK.
 
+echo Verification du cluster Kind...
 REM Vérifier si le cluster Kind existe déjà
-kind get clusters | findstr /i "mspr" >nul
+kind get clusters 2>nul | findstr /i "mspr" >nul
 if errorlevel 1 (
     echo Cluster Kind absent, creation en cours...
     kind create cluster --name mspr
@@ -21,6 +24,7 @@ if errorlevel 1 (
     echo Cluster Kind deja present.
 )
 
+echo Verification de l'acces au cluster...
 REM Vérifier que le cluster est bien accessible
 kubectl cluster-info >nul 2>&1
 if errorlevel 1 (
@@ -28,6 +32,7 @@ if errorlevel 1 (
     pause
     exit /b
 )
+echo Cluster Kubernetes accessible.
 
 :MENU
 cls
@@ -203,7 +208,7 @@ echo.
 echo Deploiement termine !
 
 REM ============================
-REM [8/7] Sauvegarde des bases PostgreSQL après déploiement
+REM [6/5] Sauvegarde des bases PostgreSQL après déploiement
 REM ============================
 echo Sauvegarde des bases PostgreSQL après déploiement...
 call sauvegardes_bdd\back_up_postgres.bat
@@ -213,10 +218,9 @@ if errorlevel 1 (
     goto MENU
 )
 echo Sauvegardes post-déploiement terminées.
-echo ============================
 
 REM ============================
-REM [7/7] Sauvegarde des logs de tous les pods
+REM [7/5] Sauvegarde des logs de tous les pods
 REM ============================
 echo Sauvegarde des logs de tous les pods...
 
@@ -272,10 +276,4 @@ if errorlevel 1 (
     pause
     goto MENU
 )
-goto MENU
-
-echo Logs sauvegardes dans %LOG_DIR%
-echo ============================
-
-pause
 goto MENU

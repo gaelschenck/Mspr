@@ -16,7 +16,7 @@
   <script>
   import { ref, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
-  import apiClient from '../services/api.js'
+  import apiClient from '../../services/api.js'
   
   export default {
     name: 'Dashboard',
